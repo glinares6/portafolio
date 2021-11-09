@@ -137,17 +137,6 @@ Proyecto a futuro
                     reporte de indicencias(notificar por correo-app(notify))
                     atencion al cliente
                 
-aspectos legales  ***
-    legalidad de la empresa
-        razon social
-        ruc
-        sunat(registro)
-        impuestos(igv x año)
-        libro de reclamaciones
-        cotizaciones
-        pagos
-            empleado-empleador
-
 
 
 
