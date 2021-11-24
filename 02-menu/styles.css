@@ -1,10 +1,10 @@
  
-  body,html {
+body {
   background-color: lightsalmon;
   box-sizing: border-box;
   margin: 0  ;
   padding: 0 ;
-  height:100%; 
+
 }
 .header {
   position: relative;
@@ -65,138 +65,12 @@ left: 8%;
 
 
 
-/* menu-lateral */
-
 .main{
   position: relative;
-}
-
-.lateral{
-  background-color: lawngreen;
-  position: absolute;
-  width: 15%;
-  height: 100vh;
-}
-
-.lateral>ul{
-  position: absolute;
-  overflow:hidden;
+  background-color: rgb(10, 185, 69);
   width: 100%;
-  height: 100px;
- right: 0%;
-}
-
-.lateral>ul>li{
-
-  position: relative;
-  list-style: none;
-  display: flex;
-  justify-content:center;
-  align-items: center;
-  width: 100%;
-  /* left: 60px; */
 
 }
-
-.lateral>ul>li>a{
-  text-decoration: none;
-}
-
-
-.section-derecho{
-  position: relative;
-  width:85%;
-  left: 15%;
-}
-
-
-.contenedor{
-  position: relative;
-  
-}
-
-.parte{
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  overflow-y: scroll;
-}
-
-
-.parte>section>h2  {
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: right;
-  /* background-color: greenyellow; */
-  width: 95%;
-  left: 2%;
-} 
-
-.parte>p   {
-
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  width: 95%;
-  left: 2%;
-  /* background-color: green; */
-  /* Word-wrap: break-Word; */
-  /* white-space : normal; */
-
- }
-
-
-
-
- .footer{
-   position: relative;
-   width: 100%;
-   
-   /* background-color: forestgreen; */
-  }
-  
-  .footer-social{
-    position: relative;
-    width: 100%;
-  }
-  .footer-elementos{
-    position: absolute;
-    width: 100%;
-    background-color: deepskyblue;
-    top: 100vh;
-    
-}
-
-.footer-elementos>p,span,h1{
-  position: relative;
-      display: flex;
-    align-items: center;
-    justify-content: center;
- 
-}
-
-/* .footer-elementos>div{
-  position: relative;
-  display:flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 100%;
-} */
-.footer-elementos>div>h3{
-  position: relative;
-  display: inline-block;
-  left: 25%;
-  background-color: gold;
-  margin-right: 10%;
-  padding: 5px 8px;
-
-}
-
-
 
 /* texto de lectuta 
   esconder texto
@@ -205,11 +79,6 @@ left: 8%;
       https://developer.mozilla.org/es/docs/Web/CSS/overflow
       https://developer.mozilla.org/en-US/docs/Web/CSS/overflow
 */
-
-
-
-
-
 
 
 /* data-tile */
@@ -244,11 +113,6 @@ a[data-title]{
  */
 
 
-
-
-
-
-
   /* a[data-title]:hover:after {
     content: attr(data-title);
     padding: 4px 8px;
@@ -271,8 +135,6 @@ a[data-title]{
     background-image: -ms-linear-gradient(top, #333, #333);
     background-image: -o-linear-gradient(top, #333, #333);
   } */
-
-
 
 
 /* metodo tooltip usando span */
