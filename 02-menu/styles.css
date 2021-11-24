@@ -140,7 +140,7 @@ bottom: -190px;
 }
 
 .footer-social{
-  position: relative;
+  position: absolute;
 }
 
 .footer-elementos{
@@ -166,7 +166,7 @@ bottom: -190px;
   border: 2px solid  red;
   border-radius: 5px;
   width: 12%;
-  margin: 8px;
+  margin-right: 20px;
   text-align: center;
 }
 
