@@ -1,10 +1,13 @@
  
-  body,html {
-  background-color: lightsalmon;
+  
+  html{
+    min-height: 100%;
+    position: relative;
+  }
+  body {
+  /* background-color: lightsalmon; */
   box-sizing: border-box;
   margin: 0  ;
-  padding: 0 ;
-  height:100%; 
 }
 .header {
   position: relative;
@@ -67,46 +70,157 @@ left: 8%;
 
 /* menu-lateral */
 
-.main{
+.main-general{
+  position: relative;
+  background-color: rgb(184, 143, 188);
+  /* height: 2000px; */
+  /* overflow-y: auto; */
+}
+.main-elementos-1{
+  position: absolute;
+  display: inline-block;
+  min-height: 100%;
+  width: 15%;
+  background-color: rgb(189, 240, 70);
+  color: rgb(0, 0, 0);
+}
+
+.menu-lateral-isquierdo>ul>li{
+  position: relative;
+  right: 15%;
+  text-align: center;
+  list-style: none;
+
+}
+.menu-lateral-isquierdo>ul>li>a{
+  text-decoration: none;
+}
+.main-elementos-2{
+  position: relative;
+  display: inline-block;
+  left: 15%;
+  width: 65%;
+  background-color: rgb(60, 27, 206);
+  color: rgb(0, 0, 0);
+}
+
+.main-elementos-3{
+  position: absolute;
+  /* top: 30%; */
+  /* left: 40%; */
+  display: inline-block;
+  /* left */
+  min-height: 100%;
+left: 80%;
+  width: 20%;
+  background-color: rgb(71, 255, 95);
+  color: rgb(0, 0, 0);
+}
+.elemento-edit{
+
+position: relative;
+width: 80%;
+height: 120px;
+
+
+}
+.elemento-edit-1{
+  background-color: yellow;
+position: absolute;
+  top:25%;
+  left:37%;
+}
+
+
+.footer-parra{
+  position: relative;
+  background-color: rgb(135, 212, 238);
+  padding: 5px ;
+  text-align: center;
+}
+
+
+
+/* .main{
+  position: relative;
+  
+}
+
+.lateral-edit{
+  position: relative;
+  background-color: cyan;
+
+}
+
+.lateral-menu-edit{
+  background-color: darkkhaki;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+}
+
+
+.lateral-derecho-edit{
+  position: relative;
+  background-color: darkorange;
+  display: inline-block;
+  width: 40%;
+}
+.lateral-derecho-edit-v2{
+  position: relative;
+  background-color: rgb(0, 255, 0);
+  display: inline-block;
+  width: 30%;
+}
+.siguiente{
+  background-color: darkorchid;
+}
+
+.footer-parra{
+  position: relative;
+  width: 100%;
+}
+ .main{
   position: relative;
 }
 
 .lateral{
-  background-color: lawngreen;
   position: absolute;
-  width: 15%;
-  height: 100vh;
+width: 15%;
+  background-color: cadetblue;
 }
 
 .lateral>ul{
   position: absolute;
   overflow:hidden;
   width: 100%;
-  height: 100px;
- right: 0%;
+  
+  background-color: chartreuse;
 }
 
 .lateral>ul>li{
-
+  
+  right: 20%;
   position: relative;
   list-style: none;
   display: flex;
   justify-content:center;
   align-items: center;
   width: 100%;
-  /* left: 60px; */
-
 }
 
 .lateral>ul>li>a{
   text-decoration: none;
-}
+  text-align: center;
+} 
 
 
-.section-derecho{
+ .section-derecho{
   position: relative;
+  display: inline-block;
   width:85%;
-  left: 15%;
+  right: 1%;
 }
 
 
@@ -116,10 +230,9 @@ left: 8%;
 }
 
 .parte{
+  background-color: blueviolet;
   position: absolute;
   width: 100%;
-  height: 100vh;
-  overflow-y: scroll;
 }
 
 
@@ -129,7 +242,6 @@ left: 8%;
   display: flex;
   align-items: center;
   justify-content: right;
-  /* background-color: greenyellow; */
   width: 95%;
   left: 2%;
 } 
@@ -142,20 +254,16 @@ left: 8%;
   justify-content: left;
   width: 95%;
   left: 2%;
-  /* background-color: green; */
-  /* Word-wrap: break-Word; */
-  /* white-space : normal; */
-
- }
+ } 
+  */
 
 
 
 
- .footer{
-   position: relative;
+.footer{
+   position: absolute;
    width: 100%;
-   
-   /* background-color: forestgreen; */
+   bottom: 0;
   }
   
   .footer-social{
@@ -166,9 +274,9 @@ left: 8%;
     position: absolute;
     width: 100%;
     background-color: deepskyblue;
-    top: 100vh;
+
     
-}
+  }
 
 .footer-elementos>p,span,h1{
   position: relative;
@@ -178,14 +286,7 @@ left: 8%;
  
 }
 
-/* .footer-elementos>div{
-  position: relative;
-  display:flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 100%;
-} */
+
 .footer-elementos>div>h3{
   position: relative;
   display: inline-block;
@@ -194,7 +295,7 @@ left: 8%;
   margin-right: 10%;
   padding: 5px 8px;
 
-}
+}  
 
 
 
@@ -204,6 +305,8 @@ left: 8%;
     MDN
       https://developer.mozilla.org/es/docs/Web/CSS/overflow
       https://developer.mozilla.org/en-US/docs/Web/CSS/overflow
+      twitter
+        https://www.twitch.tv/edteamlat
 */
 
 
