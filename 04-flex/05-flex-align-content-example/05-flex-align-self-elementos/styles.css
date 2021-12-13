@@ -35,10 +35,9 @@ body{
 .box__contenido{
     display: flex;
     background: crimson;
-    /* margin:  10px 0; */
     color: #fff;
-   width: 100px; 
-    height:100px; 
+    width: 100px; 
+    height:100px;  
 }
 
 .box__contenido:nth-child(4){
