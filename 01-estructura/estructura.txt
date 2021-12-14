@@ -152,7 +152,12 @@ aspectos legales  ***
 
 
 
-
+comandos git impresindibles
+    add
+        https://docs.gitlab.com/ee/gitlab-basics/add-file.html
+    branch
+        https://vabadus.es/blog/otros/trabajando-con-git-eliminar-ramas-locales-y-remotas
+    
 
 
 
