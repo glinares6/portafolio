@@ -12,12 +12,12 @@
 body{
     background: var(--fondo);
     font-family: 'Open Sans' , sans-serif;
+
 }
 
 
 .header{
     padding: 30px 0;
-    
 }
 
 .header__contenedor{
@@ -107,6 +107,115 @@ body{
     margin-right: 1.25em;
 }
 
+
+/* -------------------------------
+        CONTENEDOR TITULO Y CONTROLES
+----------------------------------*/
+
+.main__titulocontrol{
+   margin-bottom: 20px;
+   display: flex;
+   justify-content: space-between;
+   align-items: end;
+   
+}
+
+.main__titulocontrolh3{
+    color: #fff;
+    font-size: 30px;
+    
+}
+
+.main__buttonind{
+    background: #fff;
+    height: 3px;
+    width: 10px;
+    cursor: pointer;
+    border: none;
+    margin: 2px;
+}
+
+.main__buttonind:hover,
+.main__buttonind--activo{
+    background: red ;
+}
+
+/* -------------------------------
+            CONTENNIDO PRINCIPAL Y FLECHAS
+----------------------------------*/
+.main__recomendadas{
+    margin-bottom: 70px;
+}
+
+.main__principalcarousel{
+    display: flex;
+    align-items: center;
+    position: relative;
+
+}
+
+.main__flechaderecha,
+.main__flechaisquierda{
+    position: absolute;
+    border: none;
+    background: rgba(0, 0 , 0 , .3);
+    font-size: 40px;
+    height: 50%;
+    top: calc(50% - 25%);
+    line-height: 40px;
+    width: 50px;
+    color: #fff;
+    cursor: pointer;
+    z-index: 500;
+    transition: .2s ease all;
+}
+
+
+.main__flechaisquierda:hover,
+.main__flechaderecha:hover{
+    background: rgba(0, 0, 0, .9); 
+}
+
+.main__flechaisquierda{
+
+    left: 0;
+}
+.main__flechaderecha{
+    right: 0;
+} 
+
+
+
+/* ----------- CARROUSEL ----------*/
+.main__contenidocarousel{
+    width: 100%;
+    padding: 20px 0;
+    overflow: hidden;
+    /* overflow-x: scroll ; */
+    scroll-behavior: smooth;
+}
+.main__carousel{
+    display: flex;
+    flex-wrap: nowrap;
+} 
+
+.main__peliculas{
+    min-width: 20%;
+    transition:  .3s ease all;
+    box-shadow: 5px 5px 10px rgba(0, 0 , 0, .3);
+    
+}
+
+.main__peliculahover:hover{
+    transform: scale(1.2);
+    transform-origin: center;
+}
+
+.main__img{
+    width: 100%;
+    vertical-align: top;
+}
+
 /* ---- ---- ---- ---- ---- ---- 'MEDIA QUERY ----- ---- ----- ----- ---- */
 
 @media screen and (max-width:810px) {
@@ -125,6 +234,22 @@ body{
     }
     .main__descripcion{
         max-width: 100%;
+    }
+
+    .main__contenidocarousel{
+        overflow: visible;
+    }
+
+    .main__carousel{
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap: 20px;
+    }
+
+    .main__indicadores,
+    .main__flechaisquierda,
+    .main__flechaderecha{
+        display: none;
     }
 }
 
