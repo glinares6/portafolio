@@ -194,6 +194,7 @@ body{
     overflow-x: auto;
     white-space: nowrap;
     scroll-behavior: smooth;
+    
 }
 .main__carousel{
     display: flex;
