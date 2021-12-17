@@ -191,7 +191,7 @@ body{
     width: 100%;
     padding: 20px 0;
     /* overflow: hidden; */
-    overflow-x: hidden;
+    overflow-x: auto;
     white-space: nowrap;
     scroll-behavior: smooth;
 }
