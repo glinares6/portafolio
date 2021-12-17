@@ -196,6 +196,10 @@ body{
     scroll-behavior: smooth;
 
 }
+
+::-webkit-scrollbar {display: none;}
+
+
 .main__carousel{
     display: flex;
     flex-wrap: nowrap;
