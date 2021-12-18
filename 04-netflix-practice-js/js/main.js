@@ -110,9 +110,7 @@ let step=10;
         }else if(fila.scrollLeft===0){
             step = 10;
 
-//? ---------------------------- ELEMENTO QUE SE PINTA  AL INICIO DE LA FILA DE RETORNO  -----------------------
 
-            document.querySelector('.main__buttonind').classList.add('main__buttonind--activo')
         }
 
 
@@ -156,6 +154,10 @@ fila.addEventListener('scroll',()=>{
         if(i==0){
             if(fila.scrollLeft == (0*fila.offsetWidth)){
                 console.log("primernivel");
+
+                //? ---------------------------- ELEMENTO QUE SE PINTA  AL INICIO DE LA FILA DE RETORNO  -----------------------
+
+            document.querySelector('.main__buttonind').classList.add('main__buttonind--activo')
                continue;
 
             }
