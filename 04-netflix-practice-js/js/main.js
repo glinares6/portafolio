@@ -110,7 +110,7 @@ let step=10;
         }else if(fila.scrollLeft===0){
             step = 10;
 
-            // document.querySelector('.main__buttonind--activo').classList.remove('main__buttonind--activo')
+            document.querySelector('.main__buttonind--activo').classList.remove('main__buttonind--activo')
 
             // document.querySelector('.main__buttonind').classList.add('main__buttonind--activo')
         }
