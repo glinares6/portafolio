@@ -178,8 +178,8 @@ fila.addEventListener('scroll',()=>{
         console.log("primernivel");
 
            //? ---------------------------- ELEMENTO QUE SE PINTA  AL INICIO DE LA FILA DE RETORNO  -----------------------
-         
-       
+          document.querySelector('.main__buttonind').classList.add('main__buttonind--activo')
+           nextE()
     }
     if(fila.scrollLeft == (1*fila.offsetWidth)){
             
