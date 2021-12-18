@@ -76,3 +76,142 @@ pelicula.forEach(element => {
 
 });
 
+//? ---------------------------- MOVER SCROLL SIDEBAR  -----------------------
+
+const cantPeliculas=Math.ceil(pelicula.length/5);
+
+
+//? ---------------------------- mod  -----------------------
+
+
+let maxScrollLeft=fila.scrollWidth -fila.clientWidth;
+let intervalo=null;
+
+let step=10;
+
+    const start= () =>{
+        
+        intervalo=setInterval(() => {
+
+        fila.scrollLeft =  fila.scrollLeft + step;
+        
+
+            // 4774
+        // 3637
+    
+
+        if(fila.scrollLeft=== maxScrollLeft){
+            step = -15;
+
+     //? ---------------------------- QUITAR EL ELEMENTO ACTIVO AL FINAL DE LA FILA  -----------------------  
+            document.querySelector('.main__buttonind--activo').classList.remove('main__buttonind--activo')
+
+
+        }else if(fila.scrollLeft===0){
+            step = 10;
+
+//? ---------------------------- ELEMENTO QUE SE PINTA  AL INICIO DE LA FILA DE RETORNO  -----------------------
+
+            document.querySelector('.main__buttonind').classList.add('main__buttonind--activo')
+        }
+
+
+    }, 100);
+
+};
+
+
+
+const stop= ()=>{
+    clearInterval(intervalo);
+}
+
+
+//? ---------------------------- MOV-SCROLL -BARRA -----------------------
+
+const nextE=()=>{
+
+    const nuevo2=document.querySelector('.main__buttonind--activo');
+    if(nuevo2.nextSibling){
+        nuevo2.nextSibling.classList.add('main__buttonind--activo');
+        nuevo2.classList.remove('main__buttonind--activo')
+    }
+}
+const previousE=()=>{
+
+    const nuevo1=document.querySelector('.main__buttonind--activo');
+    if(nuevo1.previousSibling){
+        nuevo1.previousSibling.classList.add('main__buttonind--activo');
+        nuevo1.classList.remove('main__buttonind--activo')
+    }
+}
+
+
+fila.addEventListener('scroll',()=>{
+
+    
+    
+    for (let i = 0; i < cantPeliculas; i++) {
+        
+        if(i==0){
+            if(fila.scrollLeft == (0*fila.offsetWidth)){
+                console.log("primernivel");
+               continue;
+
+            }
+        }
+        if(fila.scrollLeft == (i*fila.offsetWidth)){
+            
+            nextE();
+            
+         
+            }
+
+        
+    }
+})
+
+
+
+//? ---------------------------- INICIALIZA LAS IMAGENES AL CARGAR -----------------------
+
+start();
+
+
+
+fila.addEventListener('mouseout',()=>{
+    start();
+})
+
+fila.addEventListener('mouseover',()=>{
+    stop();
+})
+
+
+//? ---------------------------- INDICADORES EN LA SECCION DE BARRITAS -----------------------
+
+document.querySelector('.main__indicadores').addEventListener('mouseover',()=>{
+    stop();
+})
+document.querySelector('.main__indicadores').addEventListener('mouseout',()=>{
+    start();
+})
+
+
+//? ---------------------------- FLECHAS ISQUIERDA Y DERECHA  -----------------------
+
+botonDerecho.addEventListener('mouseover',()=>{
+    stop();
+})
+botonDerecho.addEventListener('mouseout',()=>{
+    start();
+})
+botonisquierdo.addEventListener('mouseover',()=>{
+    stop();
+})
+botonisquierdo.addEventListener('mouseout',()=>{
+    start();
+})
+
+
+

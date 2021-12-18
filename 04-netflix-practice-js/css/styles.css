@@ -340,11 +340,21 @@ html,body {
      height: 30px;
      background-color: rgb(46, 175, 250);
    } 
+   
 }
 
 /* -------------------------------
         REFERENCIAS IMAGENES
         https://www.themoviedb.org/movie/157336-interstellar
+
+
+        REFERENCIA DE ESTILOS Y COLOR DEL SCROLL
+
+            https://stackoverflow.com/questions/6165472/custom-css-scrollbar-for-firefox
+
+            https://es.stackoverflow.com/questions/70701/ocultar-barra-de-scroll-sin-deshabilitarlo
+
+            https://es.stackoverflow.com/questions/56179/como-ocultar-el-scrollbar/56828
 ----------------------------------*/
 
 
