@@ -149,7 +149,7 @@ fila.addEventListener('scroll',()=>{
 
     
     
-    for (let i = 0; i < cantPeliculas; i++) {
+/*     for (let i = 0; i < cantPeliculas; i++) {
         
         if(i==0){
             if(fila.scrollLeft == (0*fila.offsetWidth)){
@@ -170,7 +170,29 @@ fila.addEventListener('scroll',()=>{
             }
 
         
+    } */
+
+    if(fila.scrollLeft == (0*fila.offsetWidth)){
+        console.log("primernivel");
     }
+    if(fila.scrollLeft == (1*fila.offsetWidth)){
+            
+        nextE();
+        
+     
+        }
+    if(fila.scrollLeft == (2*fila.offsetWidth)){
+            
+        nextE();
+        
+     
+        }
+    if(fila.scrollLeft == (3*fila.offsetWidth)){
+            
+        nextE();
+        
+     
+        }
 })
 
 
