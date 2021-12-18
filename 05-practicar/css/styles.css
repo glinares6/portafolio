@@ -197,7 +197,7 @@ body{
 
 
 }
-::-webkit-scrollbar {display: none;}
+.main__contenidocarousel::-webkit-scrollbar {display: none;}
 
 /* body {
     scrollbar-width: none;
@@ -207,6 +207,11 @@ body{
     scrollbar-color:  transparent transparent;
   }
    */
+
+
+
+
+
 .main__carousel{
     display: flex;
     flex-wrap: nowrap;
