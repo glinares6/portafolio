@@ -299,6 +299,47 @@ html,body {
     .main__flechaderecha{
         display: none;
     }
+
+
+
+      /*? with firefox */
+html,body {
+    /* overflow-y: scroll;  */
+   scrollbar-color: #0A4C95 #C2D2E4;
+ } 
+
+
+
+  /*? with chrome */
+  
+ 
+   ::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+  }
+  
+ ::-webkit-scrollbar-track-piece {
+   background-color: #C2D2E4;
+ }
+ 
+ ::-webkit-scrollbar-thumb:vertical {
+   height: 30px;
+   background-color: #0a4c95;
+ }
+ ::-webkit-scrollbar-thumb:vertical:active {
+   height: 30px;
+   background-color: rgb(46, 175, 250);
+ }
+
+ ::-webkit-scrollbar-thumb:horizontal {
+     height: 30px;
+     background-color: #0a4c95;
+   }
+   
+   ::-webkit-scrollbar-thumb:horizontal:active {
+     height: 30px;
+     background-color: rgb(46, 175, 250);
+   } 
 }
 
 /* -------------------------------
