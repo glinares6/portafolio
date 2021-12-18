@@ -207,15 +207,11 @@ body{
 
   /* with firefox */
  html,body {
-     overflow-y: scroll; 
+     /* overflow-y: scroll;  */
     scrollbar-color: #0A4C95 #C2D2E4;
   } 
 
-
-
    /* with chrome */
-   
-  
    ::-webkit-scrollbar {
      width: 15px;
      height: 15px;
