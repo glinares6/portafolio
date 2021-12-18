@@ -195,28 +195,28 @@ body{
     white-space: nowrap;
     scroll-behavior: smooth;
     /* scrollbar-color: transparent transparent; */
-    scrollbar-width: none;
+    /* scrollbar-width: none; */
 }
 
-.main__contenidocarousel::-webkit-scrollbar {
+/* .main__contenidocarousel::-webkit-scrollbar {
     display: none;
-} 
+}  */
 
 
 
 
   /* with firefox */
-/* html,body {
+ html,body {
      overflow-y: scroll; 
     scrollbar-color: #0A4C95 #C2D2E4;
-  } */
+  } 
 
 
 
    /* with chrome */
    
   
-   /* ::-webkit-scrollbar {
+   ::-webkit-scrollbar {
      width: 15px;
      height: 15px;
    }
@@ -242,7 +242,7 @@ body{
     ::-webkit-scrollbar-thumb:horizontal:active {
       height: 30px;
       background-color: #19e4f3;
-    } */
+    }
 
 
 
