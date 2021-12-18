@@ -194,21 +194,55 @@ body{
     overflow-x: auto;
     white-space: nowrap;
     scroll-behavior: smooth;
-
-
-}
-.main__contenidocarousel::-webkit-scrollbar {display: none;}
-
-/* body {
+    /* scrollbar-color: transparent transparent; */
     scrollbar-width: none;
- } */
+}
 
+.main__contenidocarousel::-webkit-scrollbar {
+    display: none;
+} 
+
+
+
+
+  /* with firefox */
 /* html,body {
-    scrollbar-color:  transparent transparent;
+     overflow-y: scroll; 
+    scrollbar-color: #0A4C95 #C2D2E4;
+  } */
+
+
+
+   /* with chrome */
+   
+  
+   /* ::-webkit-scrollbar {
+     width: 15px;
+     height: 15px;
+   }
+   
+  ::-webkit-scrollbar-track-piece {
+    background-color: #C2D2E4;
   }
-   */
+  
+  ::-webkit-scrollbar-thumb:vertical {
+    height: 30px;
+    background-color: #0a4c95;
+  }
+  ::-webkit-scrollbar-thumb:vertical:active {
+    height: 30px;
+    background-color: #19e4f3;
+  }
 
-
+  ::-webkit-scrollbar-thumb:horizontal {
+      height: 30px;
+      background-color: #0a4c95;
+    }
+    
+    ::-webkit-scrollbar-thumb:horizontal:active {
+      height: 30px;
+      background-color: #19e4f3;
+    } */
 
 
 
