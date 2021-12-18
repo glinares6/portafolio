@@ -104,7 +104,7 @@ let step=10;
             step = -15;
 
      //? ---------------------------- QUITAR EL ELEMENTO ACTIVO AL FINAL DE LA FILA  -----------------------  
-            // document.querySelector('.main__buttonind--activo').classList.remove('main__buttonind--activo')
+            document.querySelector('.main__buttonind--activo').classList.remove('main__buttonind--activo')
 
 
         }else if(fila.scrollLeft===0){
@@ -112,7 +112,7 @@ let step=10;
 
             document.querySelector('.main__buttonind--activo').classList.remove('main__buttonind--activo')
 
-            // document.querySelector('.main__buttonind').classList.add('main__buttonind--activo')
+            document.querySelector('.main__buttonind').classList.add('main__buttonind--activo')
         }
 
 
@@ -178,7 +178,7 @@ fila.addEventListener('scroll',()=>{
         console.log("primernivel");
 
            //? ---------------------------- ELEMENTO QUE SE PINTA  AL INICIO DE LA FILA DE RETORNO  -----------------------
-          document.querySelector('.main__buttonind').classList.add('main__buttonind--activo')
+        //   document.querySelector('.main__buttonind').classList.add('main__buttonind--activo')
            nextE()
     }
     if(fila.scrollLeft == (1*fila.offsetWidth)){
