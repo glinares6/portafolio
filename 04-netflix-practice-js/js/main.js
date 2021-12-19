@@ -69,7 +69,7 @@ fila.removeEventListener('scroll',agre, false);
 }) 
 
 
-document.querySelector('.main__indicadores').addEventListener('mouseout',()=>{
+document.querySelector('.main__indicadores').addEventListener('mouseleave',()=>{
     fila.addEventListener('scroll',agre);
 
 })
@@ -163,6 +163,8 @@ const nextE=()=>{
 
 
 const agre= ()=>{
+
+    
     if(fila.scrollLeft == (1*fila.offsetWidth)){
         nextE()
      
