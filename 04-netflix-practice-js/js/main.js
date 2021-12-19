@@ -234,3 +234,5 @@ botonisquierdo.addEventListener('mouseout',()=>{
 
 
 
+//? ---------------------------- REFERENCIA DEL  REMOVEEVENTLISTENER  -----------------------
+// https://sebhastian.com/javascript-remove-event-listener/
