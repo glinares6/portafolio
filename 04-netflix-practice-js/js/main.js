@@ -164,20 +164,27 @@ const nextE=()=>{
 
 const agre= ()=>{
 
-    
-    if(fila.scrollLeft == (1*fila.offsetWidth)){
-        nextE()
-     
-        }
-    if(fila.scrollLeft == (2*fila.offsetWidth)){
-        nextE()
-     
-        }
-    if(fila.scrollLeft == (3*fila.offsetWidth - 220)){
+    for (let i = 1; i <cantPeliculas; i++) {
+        
 
-        nextE()
-     
+        if(fila.scrollLeft == (i*fila.offsetWidth)){
+            nextE()
+        
+            }
+
+            //? ---------------------------- Para que  la ultima pelicula tenga esta resta y se note la barra  -----------------------
+            
+        if(i== cantPeliculas-1){
+
+            if(fila.scrollLeft == (i*fila.offsetWidth - 220)){
+                nextE()
+             
+                }
         }
+        
+    }
+    
+
 
 }
 fila.addEventListener('scroll',agre)
