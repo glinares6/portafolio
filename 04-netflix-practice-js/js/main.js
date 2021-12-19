@@ -68,6 +68,7 @@ fila.removeEventListener('scroll',agre, false);
 
 }) 
 
+//? ---------------------------- CUANDO SE SALE DEL INDICADOR DE BARRAS SE  SIGA MOVIENDO EL SCROLL  -----------------------
 
 document.querySelector('.main__indicadores').addEventListener('mouseleave',()=>{
     fila.addEventListener('scroll',agre);
@@ -161,6 +162,7 @@ const nextE=()=>{
     }
 }
 
+//? ---------------------------- SE  ASEGINA LA FUNCION PARA USARLO EN EL REMOVEEVENTLISTER  -----------------------
 
 const agre= ()=>{
 
