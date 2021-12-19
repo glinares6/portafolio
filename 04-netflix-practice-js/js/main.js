@@ -49,13 +49,36 @@ for (let i = 0; i <cantidad; i++) {
     } 
     document.querySelector('.main__indicadores').appendChild(boton).classList.add('main__buttonind')
     
+
+
+boton.addEventListener('mouseenter',()=>{
+
     boton.addEventListener('click',(e)=>{
-            fila.scrollLeft = i * fila.offsetWidth
-      document.querySelector('.main__buttonind--activo').classList.remove('main__buttonind--activo')
-      e.target.classList.add('main__buttonind--activo')
-    })
-    
+        fila.scrollLeft = i * fila.offsetWidth
+  document.querySelector('.main__buttonind--activo').classList.remove('main__buttonind--activo')
+  e.target.classList.add('main__buttonind--activo')
+
+
+  //? ---------------------------- PARA QUE AL HACER CLICK NO SE MEZCLE CON EL EVENTO SCROLL (REMOVER LISTENER) -----------------------
+  
+})
+
+fila.removeEventListener('scroll',agre, false);
+
+
+}) 
+
+
+document.querySelector('.main__indicadores').addEventListener('mouseout',()=>{
+    fila.addEventListener('scroll',agre);
+
+})
+
+
 }
+
+
+
 
 
 //? ---------------------------- EXPANSION DE CASA IMAGEN - PELUCLA   -----------------------
@@ -116,7 +139,7 @@ let step=10;
         }
 
 
-    }, 100);
+    }, 200);
 
 };
 
@@ -137,70 +160,25 @@ const nextE=()=>{
         nuevo2.classList.remove('main__buttonind--activo')
     }
 }
-const previousE=()=>{
-
-    const nuevo1=document.querySelector('.main__buttonind--activo');
-    if(nuevo1.previousSibling){
-        nuevo1.previousSibling.classList.add('main__buttonind--activo');
-        nuevo1.classList.remove('main__buttonind--activo')
-    }
-}
 
 
-fila.addEventListener('scroll',()=>{
-
-    
-    
-/*     for (let i = 0; i < cantPeliculas; i++) {
-        
-        if(i==0){
-            if(fila.scrollLeft == (0*fila.offsetWidth)){
-                console.log("primernivel");
-
-                //? ---------------------------- ELEMENTO QUE SE PINTA  AL INICIO DE LA FILA DE RETORNO  -----------------------
-
-            document.querySelector('.main__buttonind').classList.add('main__buttonind--activo')
-               continue;
-
-            }
-        }
-        if(fila.scrollLeft == (i*fila.offsetWidth)){
-            
-            nextE();
-            
-         
-            }
-
-        
-    } */
-
-    if(fila.scrollLeft == (0*fila.offsetWidth)){
-        console.log("primernivel");
-
-           //? ---------------------------- ELEMENTO QUE SE PINTA  AL INICIO DE LA FILA DE RETORNO  -----------------------
-        //   document.querySelector('.main__buttonind').classList.add('main__buttonind--activo')
-           nextE()
-    }
+const agre= ()=>{
     if(fila.scrollLeft == (1*fila.offsetWidth)){
-            
-    
         nextE()
      
         }
     if(fila.scrollLeft == (2*fila.offsetWidth)){
-            
-     
         nextE()
      
         }
-    if(fila.scrollLeft == (3*fila.offsetWidth)){
-            
-       
-        nextE()
-     
-        }
-})
+    if(fila.scrollLeft == (3*fila.offsetWidth - 220)){
 
+        nextE()
+     
+        }
+
+}
+fila.addEventListener('scroll',agre)
 
 
 //? ---------------------------- INICIALIZA LAS IMAGENES AL CARGAR -----------------------
