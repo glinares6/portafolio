@@ -8,6 +8,8 @@ const botonisquierdo=document.getElementById('flecha-isquierda');
 
 
 
+window.addEventListener('load',()=>{
+    
 //? ---------------------------- EVENTOS   -----------------------
 
 
@@ -236,3 +238,5 @@ botonisquierdo.addEventListener('mouseout',()=>{
 
 //? ---------------------------- REFERENCIA DEL  REMOVEEVENTLISTENER  -----------------------
 // https://sebhastian.com/javascript-remove-event-listener/
+
+})
