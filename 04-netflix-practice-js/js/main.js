@@ -73,7 +73,10 @@ fila.removeEventListener('scroll',agre, false);
 //? ---------------------------- CUANDO SE SALE DEL INDICADOR DE BARRAS SE  SIGA MOVIENDO EL SCROLL  -----------------------
 
 document.querySelector('.main__indicadores').addEventListener('mouseleave',()=>{
-    fila.addEventListener('scroll',agre);
+   
+    setTimeout(() => {
+        fila.addEventListener('scroll',agre);
+    }, 1500);
 
 })
 
@@ -142,7 +145,10 @@ let step=10;
 
             //? ---------------------------- PARA QUE DE UN INICIO SALTE A LA SIGUIENTE BARRA  -----------------------
 
-            fila.addEventListener('scroll',agre)
+         
+                fila.addEventListener('scroll',agre)
+                
+      
         }
 
 
