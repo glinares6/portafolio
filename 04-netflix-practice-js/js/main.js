@@ -76,7 +76,7 @@ document.querySelector('.main__indicadores').addEventListener('mouseleave',()=>{
    
     setTimeout(() => {
         fila.addEventListener('scroll',agre);
-    }, 1500);
+    }, 2000);
 
 })
 
