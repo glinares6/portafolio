@@ -137,8 +137,11 @@ let step=10;
             step = 10;
 
             // document.querySelector('.main__buttonind--activo').classList.remove('main__buttonind--activo')
-
+            
             document.querySelector('.main__buttonind').classList.add('main__buttonind--activo')
+
+            //? ---------------------------- PARA QUE DE UN INICIO SALTE A LA SIGUIENTE BARRA  -----------------------
+
             fila.addEventListener('scroll',agre)
         }
 
