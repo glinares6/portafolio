@@ -6,7 +6,8 @@
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
 }
 
 body{
@@ -26,9 +27,15 @@ body{
 }
 
 .header__contenedor--estructura{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .header__logo{
@@ -57,12 +64,18 @@ body{
     font-size: 16px;
     min-height: 40.62em;
     color: #fff;
+    background: -webkit-gradient(linear  , left top, left bottom  , from(rgba(0,0,0,.50))  , to(rgba(0,0,0,.50))), url(../img/backdrop.jpg);
+    background: -o-linear-gradient(rgba(0,0,0,.50)  , rgba(0,0,0,.50)), url(../img/backdrop.jpg);
     background: linear-gradient(rgba(0,0,0,.50)  , rgba(0,0,0,.50)), url(../img/backdrop.jpg);
     background-position: center center;
     background-size: cover;
     margin-bottom: 3.12em;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: flex-end;
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
 }
 
 .main__contenido{
@@ -92,6 +105,8 @@ body{
     color: #fff;
     margin-right: 1.25em;
     cursor: pointer;
+    -webkit-transition:  .3s ease all;
+    -o-transition:  .3s ease all;
     transition:  .3s ease all;
     font-size: 1.12em;
     
@@ -114,9 +129,15 @@ body{
 
 .main__titulocontrol{
    margin-bottom: 20px;
+   display: -webkit-box;
+   display: -ms-flexbox;
    display: flex;
-   justify-content: space-between;
-   align-items: end;
+   -webkit-box-pack: justify;
+       -ms-flex-pack: justify;
+           justify-content: space-between;
+   -webkit-box-align: end;
+       -ms-flex-align: end;
+           align-items: end;
    
 }
 
@@ -148,8 +169,12 @@ body{
 }
 
 .main__principalcarousel{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     position: relative;
 
 }
@@ -167,6 +192,8 @@ body{
     color: #fff;
     cursor: pointer;
     z-index: 500;
+    -webkit-transition: .2s ease all;
+    -o-transition: .2s ease all;
     transition: .2s ease all;
 }
 
@@ -244,20 +271,30 @@ html,body {
     } 
 
 .main__carousel{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
 } 
 
 .main__peliculas{
     min-width: 20%;
+    -webkit-transition:  .3s ease all;
+    -o-transition:  .3s ease all;
     transition:  .3s ease all;
-    box-shadow: 5px 5px 10px rgba(0, 0 , 0, .3);
+    -webkit-box-shadow: 5px 5px 10px rgba(0, 0 , 0, .3);
+            box-shadow: 5px 5px 10px rgba(0, 0 , 0, .3);
     
 }
 
 .main__peliculahover:hover{
-    transform: scale(1.2);
-    transform-origin: center;
+    -webkit-transform: scale(1.2);
+        -ms-transform: scale(1.2);
+            transform: scale(1.2);
+    -webkit-transform-origin: center;
+        -ms-transform-origin: center;
+            transform-origin: center;
 }
 
 .main__img{
@@ -274,7 +311,10 @@ html,body {
     }
 
     .header__contenedor--header{
-        flex-direction: column;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
         text-align: center;
     }
 
@@ -283,16 +323,20 @@ html,body {
     }
     .main__descripcion{
         max-width: 100%;
-        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
     }
 
     .main__contenidocarousel{
         overflow: visible;
-        text-decoration-color: antiquewhite;
+        -webkit-text-decoration-color: antiquewhite;
+                text-decoration-color: antiquewhite;
 }
 
     .main__carousel{
+        display: -ms-grid;
         display: grid;
+        -ms-grid-columns: 1fr 20px 1fr 20px 1fr;
         grid-template-columns: repeat(3,1fr);
         gap: 20px;
     }
@@ -345,19 +389,3 @@ html,body {
    } 
    
 }
-
-/* -------------------------------
-        REFERENCIAS IMAGENES
-        https://www.themoviedb.org/movie/157336-interstellar
-
-
-        REFERENCIA DE ESTILOS Y COLOR DEL SCROLL
-
-            https://stackoverflow.com/questions/6165472/custom-css-scrollbar-for-firefox
-
-            https://es.stackoverflow.com/questions/70701/ocultar-barra-de-scroll-sin-deshabilitarlo
-
-            https://es.stackoverflow.com/questions/56179/como-ocultar-el-scrollbar/56828
-----------------------------------*/
-
-
