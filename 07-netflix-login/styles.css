@@ -295,8 +295,8 @@ body{
 }
 
 .contenedor-footer{
-
-    margin: 0px  3.08em;
+    width: 80%;
+    margin: 0px  auto;
     padding: 30px 0px;
     display: flex;
     flex-direction: column;
