@@ -46,7 +46,12 @@ body{
     height: 90px;
 } 
 
+.contenedor-form{
+    padding: 0px 4.98%;
+    margin: 0 26.8%;
+}
 .contenedor-hero{
+
    margin:0px 0px 90px;
    padding:60px 68px 40px;
     background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7));
@@ -278,7 +283,7 @@ body{
 
 
 .footer{
-    min-width: 200px;
+    min-width: 160px;
     position: absolute;
     bottom: 0;
     background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7));
