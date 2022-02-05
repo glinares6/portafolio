@@ -1,14 +1,15 @@
-*{
-    /*? para que la imagen ocupe todo su espacio */
-    /* background:url(img/paisaje-jpg.jpg);
-    background-size: cover;; */
-
-}
 
 
 body{
+    /*? para que la imagen ocupe todo su espacio */
+    /* background:url(img/paisaje-jpg.jpg);
+    background-size: cover;; */
     margin: 0;
     box-sizing: border-box;
+
+
+    
+    
 
 }
 
