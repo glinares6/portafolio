@@ -38,12 +38,30 @@ btnLeft.addEventListener('click',() =>{
     Prev()
 })
 
-let tem =   setInterval(()=>{
-        Next()
-    },3000)
 
-    slider.addEventListener('mouseenter',()=>{
-        clearInterval(tem)
-    })
+
+
+
+    let fin= setInterval(() => {
+           Next()
+       }, 3000);
+
+   
+
+
+
+
+
+slider.addEventListener('mouseenter',()=>{
+    clearInterval(fin)
+        
+    })    
+    slider.addEventListener('mouseleave',()=>{
+  
+    })    
+
+
+
+    
 
 
