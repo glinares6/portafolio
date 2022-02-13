@@ -1,3 +1,4 @@
+const containerSlider= document.querySelector(".container-slider");
 const slider = document.querySelector("#slider");
 
 let sliderSection = document.querySelectorAll(".slider__section")
@@ -38,26 +39,22 @@ btnLeft.addEventListener('click',() =>{
     Prev()
 })
 
+    let start=()=>{
+       let=loop= setInterval(() => {
+            Next()
+        }, 3000);    
+    } 
 
-
-
-
-    let fin= setInterval(() => {
-           Next()
-       }, 3000);
-
-   
-
-
-
-
-
-slider.addEventListener('mouseenter',()=>{
-    clearInterval(fin)
-        
+    let stop=()=>{
+        clearInterval(loop)     
+    }
+    
+    start()
+    containerSlider.addEventListener('mouseenter',()=>{
+        stop()
     })    
-    slider.addEventListener('mouseleave',()=>{
-  
+    containerSlider.addEventListener('mouseleave',()=>{
+        start()
     })    
 
 

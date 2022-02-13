@@ -15,7 +15,7 @@ body{
     width: 90%;
     max-width: 900px;
     margin: auto;
-    /* overflow: hidden; */
+    overflow: hidden;
     box-shadow:  0 0 0 10px #fff, 0 15px 50px;
     position: relative;
 }
