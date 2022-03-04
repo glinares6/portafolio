@@ -8,9 +8,10 @@
     <title>Document</title>
 </head>
 <body>
-    <video src="img/band.mp4" autoplay loop muted controls ></video>
+    <video id="video-p"src="img/band.mp4" autoplay loop  muteds ></video>
     <!--  ?al cargar el en video muestre una imagen -->
     <!-- poster="img/paisaje-jpg -->
+    <button>hola</button>
     <main>
 
             <h1>mira el video</h1>
@@ -30,5 +31,9 @@
         </p>
     </div>
 </div>
+<script type='text/javascript'>
+    const video=document.getElementById('video-p')
+    video.oncontextmenu = function(){return false}
+</script>
 </body>
 </html>
