@@ -1,0 +1,114 @@
+*{
+    box-sizing: border-box;
+}
+
+
+/* -----------------------------------------------
+    MEDTODO GLOBAL
+---------------------------------------------------*/
+/* body{
+    margin: 0;
+    background-color: #333;
+    font-family: sans-serif;
+    color: aliceblue;
+
+    position: relative;
+    padding-bottom: 7em;
+    min-height: 100vh;
+
+}
+
+.header{
+    background-color: royalblue;
+    padding: 1em 0;
+    text-align: center;
+    letter-spacing: 0.2em;
+    margin-bottom: 1em;
+}
+
+.paragraph{
+    padding: 1em;
+   margin: 0
+    ;
+}
+.footer{
+    position: relative;
+    background-color: lightcoral;
+    text-align: center;
+    padding:  1em 0;
+
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+} */
+/* -----------------------------------------------
+    MEDTODO  ALTERNATIVO 1%
+---------------------------------------------------*/
+/* body{
+    margin: 0;
+    background-color: #333;
+    font-family: sans-serif;
+    color: aliceblue;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header{
+    background-color: royalblue;
+    padding: 1em 0;
+    text-align: center;
+    letter-spacing: 0.2em;
+    margin-bottom: 1em;
+}
+
+.paragraph{
+    padding: 1em;
+   margin: 0
+    ;
+}
+.footer{
+    position: relative;
+    background-color: lightcoral;
+    text-align: center;
+    padding:  1em 0;
+
+    margin-top: auto;
+
+} */
+/* -----------------------------------------------
+    MEDTODO  ALTERNATIVO 1%
+---------------------------------------------------*/
+body{
+    margin: 0;
+    background-color: #333;
+    font-family: sans-serif;
+    color: aliceblue;
+
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+}
+
+.header{
+    background-color: royalblue;
+    padding: 1em 0;
+    text-align: center;
+    letter-spacing: 0.2em;
+    margin-bottom: 1em;
+}
+
+.paragraph{
+    padding: 1em;
+   margin: 0
+    ;
+}
+.footer{
+    position: relative;
+    background-color: lightcoral;
+    text-align: center;
+    padding:  1em 0;
+
+
+}
