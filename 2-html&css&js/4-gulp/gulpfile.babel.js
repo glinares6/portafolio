@@ -49,7 +49,7 @@ import plumber from 'gulp-plumber'
 const cssPlugins = [
     cssnano(),
     autoprefixer({
-        // browsers: ['last 19 versions'],
+        browsers: ['last 19 versions'],
         cascade: false
     })
 ]
