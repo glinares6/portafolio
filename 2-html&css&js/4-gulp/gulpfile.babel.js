@@ -26,7 +26,7 @@ import dartSass from 'sass';
 import gulpSass from 'gulp-sass';
 const sass = gulpSass( dartSass );
 
-import coffee from 'gulp-coffee'
+// import coffee from 'gulp-coffee'
 
 
 // cache bust
@@ -49,7 +49,7 @@ import plumber from 'gulp-plumber'
 const cssPlugins = [
     cssnano(),
     autoprefixer({
-        browsers: ['last 199 versions'],
+        // browsers: ['last 19 versions'],
         cascade: false
     })
 ]
@@ -70,20 +70,20 @@ gulp.task('html-min',()=>{
 
 
 // como funcion
-gulp.task('styles1', () => {
-    return gulp
+// gulp.task('styles1', () => {
+//     return gulp
 
-      .src('./src/css/*.css')
-      .pipe(plumber())
-      .pipe(cssnano1())
-      .pipe(concat('styles-min.css'))
-      .pipe(autoprefixeritem({
-        browsers: 'last 199 versions',
-        cascade: false
-    })) 
-      .pipe(gulp.dest('./public/css'))
-      .pipe(stream())
-  })
+//       .src('./src/css/*.css')
+//       .pipe(plumber())
+//       .pipe(cssnano1())
+//       .pipe(concat('styles-min.css'))
+//       .pipe(autoprefixeritem({
+//         browsers: 'last 199 versions',
+//         cascade: false
+//     })) 
+//       .pipe(gulp.dest('./public/css'))
+//       .pipe(stream())
+//   })
 
 //   como arreglo
 gulp.task('styles', () => {
