@@ -5,7 +5,7 @@ import postcss  from 'gulp-postcss'
 import  cssnano from 'cssnano'   //para [] {}
 import autoprefixer from 'autoprefixer'  //using objeto
 
-
+// use task 'styles1'
 import autoprefixeritem from 'gulp-autoprefixer' //para funcion" 
 import  cssnano1 from 'gulp-cssnano'  //using funcion
 
@@ -49,7 +49,7 @@ import plumber from 'gulp-plumber'
 const cssPlugins = [
     cssnano(),
     autoprefixer({
-        browsers: ['last 19 versions'],
+        // browsers: ['last 19 versions'],
         cascade: false
     })
 ]
@@ -134,7 +134,7 @@ gulp.task('sass', () => {
       .pipe(
           sass({
               outputStyle: 'compressed'
-            })
+            }).on('error', sass.logError)
             )
       .pipe(stream())
       .pipe(postcss(cssPlugins))
