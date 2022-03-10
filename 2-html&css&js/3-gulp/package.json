@@ -1,24 +1,27 @@
 {
-  "name": "gulp-dopodcast",
+  "name": "3-gulp",
   "version": "1.0.0",
-  "description": "App de prueba para la serie de vídeos en DOPodcast",
-  "main": "index.html",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "@juanwmedia",
-  "license": "UNLICENSED",
+  "description": "Repositorio de la serie de vídeos \"Crea tu workflow front-end\" de @juanwmedia: https://www.youtube.com/playlist?list=PLM-Y_YQmMEqBscmoT5y_W91oUnr_D4ulf",
+  "main": "gulpfile.js",
   "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/register": "^7.17.0",
     "browser-sync": "^2.17.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-autoprefixer": "^3.1.1",
+    "gulp-babel": "^8.0.0",
+    "gulp-cli": "^2.3.0",
     "gulp-cssnano": "^2.1.2",
     "gulp-htmlmin": "^3.0.0",
     "gulp-imagemin": "^3.0.3",
     "gulp-sass": "^5.1.0",
     "gulp-uglify": "^2.0.0",
     "pump": "^1.0.1"
-
-
-  }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }
