@@ -1,0 +1,60 @@
+
+se debe tener instalado node.js
+
+creamos una carpeta y nos ubicamos en la referencia
+    crear el paquete
+        npm init -y
+        npm install --save-dev webpack-cli webpack
+
+    en el package.json
+        en el apartado de scripts poner
+            "build" : "webpack
+    
+    por defecto creamos la carpeta 
+        src  
+        ejecutamos 
+            npm run build
+    en la raiz creamos el archivo para manipular lo que vamos hacer
+        webpack.config.js
+
+    para que arraque webpack se deben crear las constantes
+        const path=require("path");
+        const basePath = __dirname;
+        const distPath = 'dist';
+
+    para agilizar las tareas instalamos el modulo
+        en el package.json agregar
+            "build": "rm -rf dist && webpack" //proyectos pequeños
+        npm install --save-dev rimraf
+        una vez instalado el modulo
+            en el package.json y la secion de scripts
+                "build": "rimraf dist && webpack" //proyectos complejos
+
+        
+        instalas los paquetes necesarios para arrancar babel
+            npm install --save-dev @babel/core @babel/preset-env babel-loader
+
+        luego en webpack.config.js en la seccion config
+                 rules:[
+                {
+                        test:/\.js/,
+                        exclude: /node_modules/,
+                        use:["babel-loader"],
+                },
+            ],
+
+        si se quiere ir versiones más antiguas en navegadores instalar 
+            npm install --save-dev @babel/polyfill
+
+                para decir a webpack que ejecute polyfill en  webpack.config.js
+                    en el apartado emtry 
+                        app: ["@babel/polyfill","./src/index.js"] //da soporte a navegadores antiguos
+
+                        en caso de no necesitar polyfill
+                         en el apartado entry poner
+                            app: "./src/index.js"
+
+                    
+
+
+        
