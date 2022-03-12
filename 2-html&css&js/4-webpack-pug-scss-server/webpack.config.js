@@ -12,14 +12,19 @@ module.exports = {
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
+        
       },
     ],
   },
   plugins: [
     new HTMLWebpackPlugin({
-      filename: "index.html",
+      filename: "./index.html",
       template: "./index.html",
+      templateParameters: {
+        titulo: 'Manual de Webpack en Desarrolloweb',
+        encabezamiento: 'Aprendo Webpack en DesarrolloWeb.com',
+      }
     }),
   ],
-  mode: "production",
+  mode: "development",
 };

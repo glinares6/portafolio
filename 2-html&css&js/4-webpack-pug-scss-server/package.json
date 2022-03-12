@@ -5,21 +5,21 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "start": "webpack-dev-server "
+    "build": "webpack  --watch",
+    "start": "webpack-dev-server --mode development --open "
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "webpack": "^5.70.0",
-    "webpack-cli": "^4.9.2"
-  },
-  "devDependencies": {
+    "webpack-cli": "^4.9.2",
     "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
-    "lodash-es": "^4.17.21",
     "style-loader": "^3.3.1",
     "webpack-dev-server": "^4.7.4"
+  },
+  "devDependencies": {
+    "lodash-es": "^4.17.21"
   }
 }
