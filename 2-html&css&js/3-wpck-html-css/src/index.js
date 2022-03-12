@@ -1,5 +1,7 @@
 // para que reconozca el css
 import "./styles.scss";
+
+// alert('hesss1')
 const getPosts= async () =>{
     try{
         const response = await fetch("https://jsonplaceholder.typicode.com");
@@ -8,6 +10,9 @@ const getPosts= async () =>{
     } catch(error){
         console.log(error);
     }
+
+
 }
 
 getPosts();
+

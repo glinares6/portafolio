@@ -4,6 +4,8 @@ const basePath = __dirname;
 // donde queremos que deje el archivo
 const distPath = "dist";
 
+const webpack = require('webpack');
+
 // HTML
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -27,8 +29,10 @@ module.exports = {
              
                 { 
 					test: /\.pug$/, 
-					loader: "pug-loader",
-					// inject: true
+                    use: [
+                        
+                        "pug-loader",
+                    ],
 			},
                   {
                     test: /\.scss$/i,
@@ -40,28 +44,21 @@ module.exports = {
                         //     }
                         // },
                         MiniCssExtractPlugin.loader,
-                        // "style-loader",
                          "css-loader",
                          "postcss-loader",
                          "sass-loader"
 
                         ]
                 },
-                  {
-                    test: /\.css$/i,
-                    use: [
-                        // {
-                        //     loader: MiniCssExtractPlugin.loader,
-                        //     options:{
-                        //         hmr: process.env.NODE_ENV === 'development'
-                        //     }
-                        // },
-                        MiniCssExtractPlugin.loader,
-                        // "style-loader",
-                         "css-loader",
-						 "postcss-loader",
-                        ]
-                },
+                //   {
+                //     test: /\.css$/i,
+                //     use: [
+                //         MiniCssExtractPlugin.loader,
+                //         // "style-loader",
+                //          "css-loader",
+				// 		 "postcss-loader",
+                //         ]
+                // },
                 {
                         test:/\.js/,
                         exclude: /node_modules/,
@@ -77,7 +74,7 @@ module.exports = {
             new HtmlWebpackPlugin({
                 // en desarrollo
                 // scriptLoading: "blocking",
-                // filename: 'index.html',
+                filename: './index.html',
                 template: './src/index.pug',
 				// inject: true,
 				// minify: false,
@@ -86,7 +83,7 @@ module.exports = {
 
             new MiniCssExtractPlugin({
                 // para cambiar el nombre al archivo
-                    filename: "styles1.css",
+                    filename: "styles.css",
             }),
         ],
             // output point = salida del archivo
@@ -98,6 +95,13 @@ module.exports = {
             // en modo desarrollo minifiza el css
         //    optimization: {
         //     minimizer: [new CssMinimizerPlugin()],
-        //     minimize: false,
+        //     // minimize: false,
+        //   },
+        // devServer: {
+        //     static: {
+        //       directory: path.join(__dirname, 'dist'),
+        //     },
+        //     compress: true,
+        //     port: 9000,
         //   },
 }

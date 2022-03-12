@@ -1,7 +1,10 @@
- $red: blue;
+$red: rgb(37, 24, 156);
 body{
     background-color: $red;
     display: flex;
-    transition: all .5s;
+    color: aliceblue;
+    transition: all .4s;
+    cursor: pointer;
+    columns: 2;
 
 }
