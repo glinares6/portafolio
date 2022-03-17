@@ -1,0 +1,63 @@
+
+
+
+devemos tener instalado npm y node en la pc
+
+    npm init @vitejs/app
+        le damos si (y)
+
+    elegimos el marco en que vamos a desarrollar
+
+
+luego instalamos las dependencias para que funcione vitejs
+        nom install
+
+
+para ejecutar vitejs
+    npm run dev
+                mas detalles en el package.json
+                
+
+el css lo compila de inmediato por que no recarga la pagina ya que actua en la misma.
+
+    para usar las dependencias se debe instalar por ejemplo
+        lodash
+            npm install lodash-es
+
+    podemos cambiar el file js a ts , considerar que vite no vendra  tipificado asi que tocara que le asignemos nosotros mismos.
+
+    en el caso de dependencias de node,  vitejs ya lo trae incorporado en pequeños modulos dentro de un archivo(.vite)  que hace que el rendimoento sea más rapido
+
+
+JS
+para mayor información de las texnologias entra a este link
+        https://2021.stateofjs.com/en-US
+
+
+CSS
+
+    https://2021.stateofcss.com/en-US/technologies/
+    hack de la imagen
+    https://css-tricks.com/aspect-ratio-boxes/
+
+
+usando aspect ratio 
+    https://codi.link/PGRpdj48L2Rpdj4=%7CZGl2ewogIGFzcGVjdC1yYXRpbzogMS8xOwogIHdpZHRoOiA1MCU7CiAgYmFja2dyb3VuZC1jb2xvcjogIzA5ZjsKfQ==%7C
+
+        demo
+            shape-outside -> para redimensionar la direecion de una imgaen con el texto
+            shape-outside(circle(50%))
+        
+        drop-shadow
+            filter:drop-shadow(0 0 0.75rem crimson)
+        accent-color -> color para los botones y formas en un formulario
+            accent-color:purple
+
+        scroll-snap -> usado para moviles al dar scroll sin usar js
+            scroll-snap-type: x-mandatory;
+
+
+                resource
+                    josh comeau
+                    https://web.dev/learn/css/   - patrones
+                    https://www.learnwithjason.dev/
