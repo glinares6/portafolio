@@ -19,7 +19,7 @@ const props = defineProps<{
 
 const emits= defineEmits<{
     ( event: 'onChangedSize', value:string ): void,
-    // ( event: 'onNewValue' , value:string ): void,
+    ( event: 'onNewValue' ): void,
 }>();
 
 
