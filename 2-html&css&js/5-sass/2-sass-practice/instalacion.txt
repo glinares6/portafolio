@@ -1,0 +1,39 @@
+
+crear proyecto en sass usando yarn
+    debemos teener node
+    
+    usando yarn inisciamos el proyecto
+        yarn init 
+    
+    instalar de forma global
+    se necesitar tener privilegios de root (usar sudo su)
+        yarn global add <package-name>
+        
+    instalamos sass como dev-dependencia
+        yarn add  sass --dev
+
+    si queremos actualizar
+        yarn upgrade [package]
+
+    si queremos eliminar 
+        yarn remove [package]
+    
+    si queremos instalar dependencias ya existentes
+        yarn
+    
+
+
+*********************************************
+    para compilar sass 
+        instalarlo de forma global
+
+        Para escuchar el sass y el css
+            sass --watch scss:css
+
+        si se quiere ir por un archivo en especifico
+
+            sass --watch scss/index.scss:css
+    
+
+
+    

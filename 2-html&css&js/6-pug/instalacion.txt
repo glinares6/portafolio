@@ -1,0 +1,35 @@
+tener node en el sistema
+
+iniciar un paquete ya existente
+    npm install
+    yarn
+
+
+
+compilar pug en modo desarrollo
+    pug --pretty  --watch pug1 --out  html1
+
+compilar pug en otra carpeta en modo produccion
+    pug --watch pug1  --out  html1
+
+
+
+REFERENCIA
+    PUG-CLI
+    https://github.com/pugjs/pug-cli
+    
+    PUG
+        https://pugjs.org/api/getting-started.html
+
+
+***************************************
+
+información adicional 
+npm notice 
+npm notice New patch version of npm available! 8.5.3 -> 8.5.5
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v8.5.5
+npm notice Run npm install -g npm@8.5.5 to update!
+npm notice 
+
+
+
