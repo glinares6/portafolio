@@ -33,3 +33,29 @@ npm notice
 
 
 
+
+inicializar un proyecto pug en vite
+    via npm 
+        npm init @vitejs/app
+    via yarn
+        yarn create vite
+
+
+lanzar el servidor
+    via npm (previamente se debe hacer las instalción necesarias -webpack)
+        npm run dev
+    via yarn (ya viene integrado)
+        yarn dev
+    
+
+renderizar el pug (en modo local-desarrollo)
+    pug --pretty  --watch pug1 --out ./
+
+rederizar sass (en modo local- desarrollo)
+    sass --watch sass1:./
+
+transpilar pug a html
+    https://pughtml.com/
+    
+
+
