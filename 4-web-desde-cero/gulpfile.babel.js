@@ -1,12 +1,18 @@
 //Constantes para el automatizador de tareas
 const gulp = require("gulp")
 const pug = require('gulp-pug')
-const sass = require("gulp-sass")
+
+//* EN REEMPLAZODE SASS (DOCUMENTACIÓN)
+// const sass = require("gulp-sass")
+const sass = require('gulp-sass')(require('sass'));
+
 const babel = require("gulp-babel")
 const autoprefixer = require("gulp-autoprefixer")
 const concat = require("gulp-concat")
 const uglify = require("gulp-uglify")
 const plumber = require("gulp-plumber")
+
+
 
 //Constante para el modulo de recarga automática del sitio web al hacer cambios
 const browserSync = require('browser-sync')
@@ -29,8 +35,10 @@ gulp.task("styles", () => {
     .pipe(plumber())
     .pipe(
       sass({
-        outputStyle: "compact"
-      })
+
+        // outputStyle: 'compressed'
+        outputStyle:'expanded'
+      }).on('error', sass.logError)
     )
     .pipe(
       autoprefixer()

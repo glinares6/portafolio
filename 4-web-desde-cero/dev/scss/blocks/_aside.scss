@@ -1,0 +1,11 @@
+@use 'mixins/breakpoint' as *;
+.sidebar{
+    @include laptop{
+        background-color: #343434;
+        grid-column: 1/2;
+        grid-row: 1/-1;
+    }
+}
+
+
+
