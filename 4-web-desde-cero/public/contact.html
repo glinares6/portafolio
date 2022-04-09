@@ -33,28 +33,42 @@
     <div class="sidebar" id="sidebar">
       <nav class="main-nav" id="main-nav">
         <ul class="main-menu" id="main-menu">
-          <li class="main-menu__item"><a class="main-menu__link main-menu__link--active" href="/">home</a>
+          <li class="main-menu__item"><a class="main-menu__link" href="/">home</a>
           </li>
           <li class="main-menu__item"><a class="main-menu__link" href="/about.html">about</a>
           </li>
-          <li class="main-menu__item"><a class="main-menu__link" href="/contact.html">contact</a>
+          <li class="main-menu__item"><a class="main-menu__link main-menu__link--active" href="/contact.html">contact</a>
           </li>
         </ul>
       </nav>
     </div>
     <main class="main">
-      <h1 class="title">Home</h1>
-      <div class="gallery" id="gallery">
-        <div class="gallery__item"><img src="assets/img/gallery/1.jpg" alt="imagen de galeria 1"></div>
-        <div class="gallery__item"><img src="assets/img/gallery/2.jpg" alt="imagen de galeria 2"></div>
-        <div class="gallery__item"><img src="assets/img/gallery/3.jpg" alt="imagen de galeria 3"></div>
-        <div class="gallery__item"><img src="assets/img/gallery/4.jpg" alt="imagen de galeria 4"></div>
-        <div class="gallery__item"><img src="assets/img/gallery/5.jpg" alt="imagen de galeria 5"></div>
-        <div class="gallery__item"><img src="assets/img/gallery/1.jpg" alt="imagen de galeria 1"></div>
-        <div class="gallery__item"><img src="assets/img/gallery/2.jpg" alt="imagen de galeria 2"></div>
-        <div class="gallery__item"><img src="assets/img/gallery/3.jpg" alt="imagen de galeria 3"></div>
-        <div class="gallery__item"><img src="assets/img/gallery/4.jpg" alt="imagen de galeria 4"></div>
-        <div class="gallery__item"><img src="assets/img/gallery/5.jpg" alt="imagen de galeria 5"></div>
+      <h1 class="title">Contact</h1>
+      <div class="contact">
+        <div class="contact__form">
+          <form class="form-contact">
+            <div class="form-contact__fields">
+              <input class="form-contact__input" type="text" name="name" placeholder="name">
+              <input class="form-contact__input" type="text" name="email" placeholder="email">
+              <input class="form-contact__input" type="text" name="subject" placeholder="subject">
+            </div>
+            <div class="form-contact__field">
+              <textarea class="form-contact__textarea" name="message" placeholder="message"></textarea>
+            </div>
+          </form>
+          <div class="form-contact__field">
+            <input class="form__submit" type="submit" value="Send">
+          </div>
+        </div>
+        <div class="contact__map">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.8163652177695!2d-77.08670828555861!3d-12.05615254535682!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c946680d0099%3A0xc6def8804064a4e9!2sUniversidad%20Nacional%20Mayor%20de%20San%20Marcos!5e0!3m2!1ses-419!2spe!4v1649200599373!5m2!1ses-419!2spe" style="border:0;" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe><a href="https://www.google.com/maps/@-12.173312,-76.9523712,13z" target="_blank"> <img class="contact__img-map" src="assets/map.png" alt=""></a>
+        </div>
+        <div class="social">
+          <div class="social__icon"><i class="fa-brands fa-twitter-square"></i><i class="fa-brands fa-twitter-square"></i></div>
+          <div class="social__icon"><i class="fa-brands fa-instagram"></i><i class="fa-brands fa-instagram"></i></div>
+          <div class="social__icon"><i class="fa-brands fa-youtube-square"></i><i class="fa-brands fa-youtube-square"></i></div>
+          <div class="social__icon"><i class="fa-brands fa-pinterest-square"></i><i class="fa-brands fa-pinterest-square"></i></div>
+        </div>
       </div>
     </main>
     <div class="lightbox" id="login-modal">
@@ -91,7 +105,6 @@
         </div>
       </form>
     </div>
-    <script src="/js/macy.js"></script>
     <script src="js/scripts-min.js"></script>
   </body>
 </html>

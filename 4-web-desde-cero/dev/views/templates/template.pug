@@ -1,3 +1,4 @@
+include ../config/config
 doctype html
 html(lang="en")
     head
@@ -7,7 +8,7 @@ html(lang="en")
         link(rel="stylesheet", href="css/styles.css")
 
         //*- v-5-pro
-        link(rel="stylesheet", href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" crossorigin="anonymous")
+        //- link(rel="stylesheet", href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" crossorigin="anonymous")
 
         //* v-5
         //- script(defer='', src='https://use.fontawesome.com/releases/v5.0.8/js/all.js', integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ", crossorigin='anonymous')
@@ -34,11 +35,11 @@ html(lang="en")
         header#header.header
             a(href="/").logo
                 img(src="./assets/img/logo.png", alt="web logo")
-            .topbar
-                .topbar__icon
+            #topbar.topbar
+                .topbar__icon(data-type="login")
                     i.fa-thin.fa-user
-                    span Login
-                .topbar__icon
+                    span Log in
+                .topbar__icon(data-type="register")
                     i.fa-thin.fa-user-plus
                     span Register
                 .toggle-menu
@@ -46,7 +47,13 @@ html(lang="en")
                         .first-bar
                         .second-bar
                         .third-bar
-        aside#sidebar.sidebar   
-        main.main   
-           
+        #sidebar.sidebar
+            block   menu
+        main.main
+            block title
+            block main
+        include ../includes/login-modal
+        include ../includes/register-modal
+        block scripts
+        script(src="js/scripts-min.js")
         

@@ -1,5 +1,6 @@
 @use 'mixins/breakpoint' as *;
 
+@use 'config/colors' as *;
 .toggle-menu{
     height: 50px;
     width: 40px;
@@ -15,8 +16,9 @@
         position: absolute;
         width: 30px;
         height: 3px;
-        background: #ccc;
+        background: $text-color;
         border-radius: 5px;
+        transition: transform .2s ;
     }
     & .first-bar{
         top: 15px;
@@ -26,6 +28,17 @@
     }
     & .third-bar{
         top: 35px;
+    }
+    .show .first-bar{
+        transform: rotate(-45deg);
+        top: 1.5rem;
+    }
+    .show .second-bar{
+        width: 0;
+    }
+    .show .third-bar{
+        transform: rotate(45deg);
+        top: 1.5rem;
     }
 
     @include laptop{
