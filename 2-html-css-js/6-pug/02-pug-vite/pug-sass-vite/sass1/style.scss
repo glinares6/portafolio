@@ -1,0 +1,22 @@
+$color: rgb(255, 238, 0);
+
+@use 'sass:meta';
+@use 'sass:list';
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+  }
+
+  $arr: 10px 30px 40px 50rem;
+  $color: white red #333 lightblue;
+  @debug meta.type-of($arr);
+
+  body{
+      background-color: list.nth($color,4);
+      color:  list.nth($color,2);
+      font-size: list.nth($arr,2);
+  }

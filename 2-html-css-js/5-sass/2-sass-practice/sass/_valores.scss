@@ -1,0 +1,82 @@
+
+//* NUMEROS
+$variables: 100;
+$variables:100px;
+
+// 100 * 100 = ??
+
+// @debug 'El valor es igual a  #{  100 * 100 }';
+
+//*  NO SE PUEDE DEBUGEAR 30PX + 40EM 
+
+// @debug 30px + 40em
+
+//* SI SE PUEDE DEBUGEAR  in(pulgada)
+
+// ? @debug 10cm + 3px
+//?   @debug 1in + 100px
+
+//* DIVISIONES
+// ?  mediante interpolación
+// $variable:'2/3';
+
+// body{
+//     animation-duration: #{$variable};
+// }
+
+//? el estadar de sass
+// @use 'sass:math';
+
+// body{
+//     font-size: math.div(25,5) * 1px;
+// }
+
+//* tipos de texto en css
+//?  quoted string ''  con commillas
+
+// $selector: "h1";
+
+// #{$selector}{
+//     color: #000;
+// }
+//?  unquoted string    sin comillas
+
+// $string-commillas: "header header header";
+// $string-sincomiillas: center;
+
+
+// .title{
+//     text-align: $string-sincomiillas;
+    
+// }
+
+// .grid{
+//     grid-template-areas:  $string-commillas;
+// }
+
+//? o quizas conversion de QUOTES   
+
+@use 'sass:string';
+@use 'sass:meta';
+
+$type: false;
+$string-sincomillas: header header header;
+$string-comiillas: "center";
+$numero: 3;
+.title{
+    text-align: string.unquote($string-comiillas);
+    
+}
+
+@debug  meta.type-of($string-sincomillas);
+
+// .grid{
+//     grid-template-areas:  string.quote($string-sincomillas);
+// }
+
+//? si el string tiene espacios se puede interpolar
+.grid{
+    grid-template-areas: '#{$string-sincomillas}';
+    // grid-template-areas: string.quote(#{$string-sincomillas});
+}
+

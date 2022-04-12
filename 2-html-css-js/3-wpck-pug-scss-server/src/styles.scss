@@ -1,0 +1,10 @@
+$red: rgb(37, 24, 156);
+body{
+    background-color: $red;
+    display: flex;
+    color: aliceblue;
+    transition: all .4s;
+    cursor: pointer;
+    columns: 2;
+
+}

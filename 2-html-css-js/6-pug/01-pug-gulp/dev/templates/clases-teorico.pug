@@ -1,0 +1,168 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="styles.css")
+        title Document
+    body 
+        //- h1 hola mundo 
+        //- span soy un span
+        //- h1 hola 
+        //-     span mundo
+
+        //¡`- enlazar cadenas
+        //- div container 
+        //-     div container 2
+        //-         div container 3
+        //- ul
+        //-     li item1
+
+        //- a(href="#") soy un enlace 
+        //*- varios atributos
+        //- img(src="foto.jpg", alt="soy una foto")
+
+        //*- id,class
+        //- p#text parrafo con id
+        //- p.text parrafo on id
+        //- p#firt-text.text  parrafo con ID
+
+        //*- intercalar hijos pie(|)
+        //- p Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nemo voluptas, ut laborum doloribus aperiam accusantium
+        //-     a(href="#")  maiores 
+        //-     | atque laudantium debitis quo recusandae distinctio illum odio ea eos temporibus velit. Expedita?
+        
+        //*- saltos de linea (:)
+        //- ul.menu: li.menu__item: a(href="#").menu__link item 1
+
+        //*- estructura estandar de una pagina web (!)
+        doctype
+        html(lang="es")
+            head
+                meta(charset="UTF-8")
+                meta(http-equiv="X-UA-Compatible", content="IE=edge")
+                meta(name="viewport", content="width=device-width, initial-scale=1.0")
+                //*- css estandar
+                //- link(rel="stylesheet", href="styles.css")
+                //*- style de manera nativa (style.)
+                //- style.
+                //-     body{
+                //-         background-color:red;             
+                //-     }
+                //-     ul li{
+                //-         list-style:none;
+                //-     }
+                //-     ul li a{
+                //-         text-decoration:none;
+                //-         color:#fff;
+                //-     }
+                title Document-frontend
+            body 
+                //- nav#min-nav
+                //-     ul.main-menu
+                //-         li: a(href="#") item 1
+                //-         li: a(href="#") item 2
+                //-         li: a(href="#") item 3
+                //-         li: a(href="#") item 4
+
+                //*- style en el html
+                //- header(style={"background-color":"blue","margin-top":"30px","color":"#fff"}) notify
+
+                //*- style via string
+                //- header(style="background-color:blue;margin-top:30px;color:#fff") no lo puedo
+                //*- variables en html
+                -const name="Dorian"
+                //- p HOla #{name.toUpperCase()}
+                //* template string
+                //- p= `Hola ${name.toUpperCase()}`
+
+                //* importante el = ponerlo junto a la etiqueta
+                //*- Array 
+                -const numbers=[1,2,3,4,5]
+                //- ul
+                //-     li= numbers[0]
+                //-     li= numbers[1]
+                //-     li= numbers[2]
+                //-     li= numbers[3]
+                //-     li= numbers[4]
+                
+                //*- Objetos -> se debe indentar el objeto con salto de linea
+                -
+                    const person = {
+                    name: "Dorian",
+                    surname: "Desings",
+                    age: 30
+                    }
+
+                //*- nomenclatura del punto o de llaves
+                //- ul
+                //-     li= person.name
+                //-     li= person['surname']
+                //-     li= person.age
+                
+                P=`${person.name} ${person.surname} tiene ${person['age']} años`
+
+                //*- importar hoja de js
+                //- script(src="scripts.js")
+
+                //*- javascript embebido
+                //- script.
+                //-    const alert = () =>{
+                //-        alert('hola mundo')
+                //-    }
+                //*- CONDICIONALES
+                //*- if ,else if
+                -let username= true
+
+                //- if username
+                //-     p Bienvenido usuario
+                //- else if username == null
+                //-     p username no existe
+                //- else 
+                //-     p registrese para continuar
+
+                //*- Operador ternario (? :)
+                //- p(class= username ? 'registered' : 'unregistered')
+
+
+                //*- Operador unless ~ a !
+                -let username1 =false
+                //- unless username1
+                //-     p usuario encontrado
+
+                //*- Bucles
+                //- -const names1 = ['dorian', 'laura','marta','carlos']
+                -const names = []
+                
+                //+- each vacio forma string
+                //- each name in names.length ? names  : ['no names']
+                //-     p=`${name.charAt(0).toUpperCase()}${name.substring(1)}`
+
+                //- each name in names
+                //-     p=`${name.charAt(0).toUpperCase()}${name.substring(1)}`
+                //- else
+                //-     p [No Names]
+
+                //*- each objeto
+                -
+                    const person2 = {
+                    name:'Dorian',
+                    email:'dorian@gmail.com'
+                    }
+
+                //*- mas de 2 valores(each)
+                //- each value,key in person2
+                //-     p=`${key}: ${value}`
+
+                //*- usando array(each)
+                //- each value,index in names1
+                //-     p=`${index+1}: ${value}`
+                -let n = 0 
+                    //- ul 
+                    //-     while n<5
+                    //-         li= n++
+
+                //*- TEMPLATES
+                
+                

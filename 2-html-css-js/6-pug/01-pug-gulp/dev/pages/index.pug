@@ -1,0 +1,16 @@
+extends ../templates/template
+include ../mixins/link
+include ../mixins/list
+
+block append header
+    h1 index to
+
+block content
+    //- each  name in names3 
+    //-     li= name
+    +link('/enlace', 'enlace')
+
+block footer
+    h1 este es footer-index
+    ul
+    +list(names3)

@@ -1,0 +1,75 @@
+
+//* CONDICIONALES EN MIXIN
+
+@use 'sass:math';
+// $global: red;
+
+
+// @if ($global == red) {
+//     $global: black;
+// }
+
+// .color{
+//     color:$global
+// }
+// @mixin crearLayout($display,$columnas){
+
+//     @if($display == 'grid'){
+//         display: grid;
+//         grid-template-columns: repeat($columnas, 1fr);
+//     }
+
+//     @else if($display == block){
+//         display: block;
+//     }
+//     @else if($display == inline-block){
+//         display: inline-block;
+//     }
+//     @else{
+//         display: flex;
+//         $tamanoColumnas:math.div(100%,$columnas);
+
+//         & > *{
+//             width: $tamanoColumnas;
+//        }
+//     }
+// }
+
+// .main{
+//     @include crearLayout(grid,8);
+// }
+
+// .hero{
+//     @include  crearLayout(inline-block, 6);
+// }
+
+
+//* OPERADORES BOOLEANOS
+//not and or
+//! los valores boleanos falsos por defecto son el false y el null
+// $variable: null;
+    // @debug false or false;
+
+@mixin elegirColor($numero,$primary){
+    @if($numero == 1 and $primary ){
+        color: crimson;
+    }
+    @else if($numero == 2 or $primary){
+        color: steelblue;
+    }
+    @else if(not $primary){
+        color: teal;
+    }
+    @else{
+        color: black;
+    }
+}
+    
+
+.main{
+    @include elegirColor(3,false);
+}
+
+// .hero{
+//     @include  crearLayout(inline-block, 6);
+// }
