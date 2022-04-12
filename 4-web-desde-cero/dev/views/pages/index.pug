@@ -1,0 +1,32 @@
+extends ../templates/template
+block   menu
+    - pageActive = 'home'
+    include ../includes/main-menu
+block title
+    h1.title Home
+block main
+    #gallery.gallery
+        .gallery__item
+            img(src="assets/img/gallery/1.jpg", alt="imagen de galeria 1")
+        .gallery__item
+            img(src="assets/img/gallery/2.jpg", alt="imagen de galeria 2")
+        .gallery__item
+            img(src="assets/img/gallery/3.jpg", alt="imagen de galeria 3")
+        .gallery__item
+            img(src="assets/img/gallery/4.jpg", alt="imagen de galeria 4")
+        .gallery__item
+            img(src="assets/img/gallery/5.jpg", alt="imagen de galeria 5")
+        .gallery__item
+            img(src="assets/img/gallery/1.jpg", alt="imagen de galeria 1")
+        .gallery__item
+            img(src="assets/img/gallery/2.jpg", alt="imagen de galeria 2")
+        .gallery__item
+            img(src="assets/img/gallery/3.jpg", alt="imagen de galeria 3")
+        .gallery__item
+            img(src="assets/img/gallery/4.jpg", alt="imagen de galeria 4")
+        .gallery__item
+            img(src="assets/img/gallery/5.jpg", alt="imagen de galeria 5")
+block scripts
+    script(src="/js/macy.js")
+        //- libreria macyjs
+    //- http://macyjs.com/

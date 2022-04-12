@@ -1,0 +1,24 @@
+
+/*  Para importar poner los partials con la inicial en mayusculas */
+
+$selector: '.hero';
+$propiedad: 'font-size';
+//* INTERPOLACIÓN #{$variable}
+
+$rem:16;
+
+
+$color:'red';
+
+:root{
+    --color:#{$color};
+}
+
+
+#{$selector}{
+    color:var(--color);
+    #{$propiedad} :$rem * 1rem;   
+}
+
+/* Es recomendable inperpolar el SELECTORES,CUSTON PROPERTY Y EN PROPIEDADES  
+*/

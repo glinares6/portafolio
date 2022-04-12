@@ -1,0 +1,31 @@
+// GUIA DE ESTILOS
+
+
+// MIXINS
+
+// ESTILOS BASE
+@use 'base/base';
+@use 'base/normalize';
+
+// BLOQUES
+@use 'blocks/header';
+@use 'blocks/topbar';
+@use 'blocks/toggle-menu';
+@use 'blocks/menu';
+@use 'blocks/logo';
+@use 'blocks/sidebar';
+@use 'blocks/main';
+@use 'blocks/lightbox';
+@use 'blocks/forms';
+@use 'blocks/titles';
+@use 'blocks/social';
+
+// Pages
+@use 'pages/about';
+@use 'pages/contact';
+
+
+
+
+
+

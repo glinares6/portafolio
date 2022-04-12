@@ -1,0 +1,13 @@
+body{
+    background-color: red;
+}
+
+a{
+    
+    columns: 2;
+
+    transition:  all .5s ease;
+
+    display: flex;
+   
+}

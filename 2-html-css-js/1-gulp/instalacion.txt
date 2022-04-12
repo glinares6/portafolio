@@ -1,0 +1,94 @@
+
+instalaciones unicas
+    1-   
+        npm install  --global gulp-cli
+    Este comando lo tendras que  ejecutar usa sola vez.sirve para instalar gulp de forma global en el equipo para tenerlo disponible en todos los proyectos
+
+    2- instalaciones que se han de generar en casa proyecto en las que querais incluir gulp
+
+        npm init
+        npm install --save-dev gulp
+        npm install --save-dev @babel/core @babel/register @babel/preset-env
+
+    transpilar javascript
+        este modulo se usara para convertir el codigo  a es5 
+            npm install --save-dev  gulp-babel
+    
+    gulp terser
+        es la nueva version de uglify,sirve para ofuscar el codigo 
+            npm install --save-dev gulp-terser
+
+
+    gulp-concat
+        une todos nuestro archivos js en uno solo
+            npm install --save-dev gulp-concat
+
+
+
+
+** para instalar desde otra ubicacion el package.json 
+    copiar el archivo y en teerminal poner
+        npm install
+
+
+
+        https://www.npmjs.com/package/gulp-babel
+
+
+Preconpilador para html & css
+    HTML
+        npm install --save-dev gulp-htmlmin
+        minifica y impia nuestro HTML
+        https://github.com/kangax/html-minifier
+
+    CSS
+        npm install --save-dev gulp-postcss cssnano autoprefixer 
+
+        Para utilizar autoprefixer hay 2 opciones , añadir a los navegadores a los que quieres dar soporte al package ,
+        json o hacerlo en un archivo separado
+        .browserlistrc
+
+        PostCSS
+            https://github.com/postcss/postcss/blob/master/docs/plugins.md
+
+               
+        Convertir pug
+            npm install --save-dev gulp-pug
+
+        
+        Convertir sass
+            npm install --save-dev  gulp sass
+
+            --depreciaded
+            npm install --save-dev gulp-dart-sass gulp sass
+
+
+        purgar/limpiar css  
+            npm install --save-dev gulp-purgecss
+
+            se recomienda instalar purgecss de manera global para cualquier proyecto
+                npm install  purgecss -g
+
+
+                    *** ANTES DE USAR PURGECSS PRIMERO DEBES COMPILAR EL SCSS ***
+
+                    *** Purgecss solo se usa para subir el proyecto a producción ***
+
+                si usas la clase sin compilar el pug
+                    gulp views
+                    gulp sass
+                    gulp clean
+
+        limpiar cache
+            npm install --save-dev gulp-cache-bust
+
+        comprimir imagenes
+            npm install --save-dev gulp-imagemin
+                ***imagemin@8.0.0 no es soportada en debian, instalar la version 7.1.0***
+                https://www.npmjs.com/package/gulp-imagemin
+
+        browser sync
+            npm install --save-dev browser-sync
+
+        gulp plumber
+            npm install --save-dev gulp-plumber

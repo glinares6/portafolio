@@ -1,0 +1,52 @@
+// to -> a
+// through -> hasta
+
+//* CICLO FOR
+// @for $iterador from 1 through 5{
+
+//     // $dinamico 1
+//     // $dinamico 2
+//     // $dinamico 3
+//     // $dinamico 4
+//     // $dinamico 5
+//     // $dinamico 6 ... 10
+
+//     // .selector-#{$iterador}{
+//     //     color: crimson;
+//     // }
+
+//* FOR EN ANIMACIONES
+//         .animation__name--#{$iterador}{
+//             animation-name: name#{$iterador};
+//             animation-duration: 1s * $iterador;
+//                 @keyframes name#{$iterador}{
+//                     100%{
+//                         transform:  translate(100% * $iterador);
+//                     }
+//                 }
+//         }
+
+    
+// }
+
+
+
+//* FOR USANDO GRID
+// 4columnas y 2 filas
+// 5 elementos
+@for $iterador from 1 through 5{
+    .grid__item--#{$iterador}{
+        @if($iterador == 5){
+            grid-row:  2/3;
+            grid-column: 1/-1;
+        }@else{
+            grid-row: 1/2;
+
+            // 1/2
+            // 2/3
+            // 3/4
+            // 4/5
+            grid-column: #{$iterador}/#{$iterador+1};
+        }
+    }
+}

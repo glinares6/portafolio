@@ -1,0 +1,22 @@
+@use 'mixins/breakpoint' as *;
+
+.logo{
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: .2rem;
+    left: .1rem;
+    z-index: 200;
+
+    &__img{
+        max-width: 100%;
+    }
+    @include laptop{
+        position: absolute;
+        left:  45px;
+        top: 1rem;
+        width: 5%;
+    }
+}

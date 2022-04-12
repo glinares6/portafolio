@@ -1,0 +1,1 @@
+"use strict";var numbers=[4,71,38,43],numberTriple=numbers.map((function(r){return 3*r}));

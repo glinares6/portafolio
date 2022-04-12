@@ -1,0 +1,142 @@
+
+se debe tener instalado node.js
+
+creamos una carpeta y nos ubicamos en la referencia
+    crear el paquete
+        npm init -y
+        npm install --save-dev webpack-cli webpack
+
+    en el package.json
+        en el apartado de scripts poner
+            "build" : "webpack
+    
+    por defecto creamos la carpeta 
+        src  
+        ejecutamos 
+            npm run build
+    en la raiz creamos el archivo para manipular lo que vamos hacer
+        webpack.config.js
+
+    para que arraque webpack se deben crear las constantes
+        const path=require("path");
+        const basePath = __dirname;
+        const distPath = 'dist';
+
+    para agilizar las tareas instalamos el modulo
+        en el package.json agregar
+            "build": "rm -rf dist && webpack" //proyectos pequeños
+        npm install --save-dev rimraf
+        una vez instalado el modulo
+            en el package.json y la secion de scripts
+                "build": "rimraf dist && webpack" //proyectos complejos
+
+        
+        instalas los paquetes necesarios para arrancar babel
+            npm install --save-dev @babel/core @babel/preset-env babel-loader
+
+        luego en webpack.config.js en la seccion config
+                 rules:[
+                {
+                        test:/\.js/,
+                        exclude: /node_modules/,
+                        use:["babel-loader"],
+                },
+            ],
+
+        si se quiere ir versiones más antiguas en navegadores instalar 
+            npm install --save-dev @babel/polyfill
+
+                para decir a webpack que ejecute polyfill en  webpack.config.js
+                    en el apartado emtry 
+                        app: ["@babel/polyfill","./src/index.js"] //da soporte a navegadores antiguos
+
+                        en caso de no necesitar polyfill
+                         en el apartado entry poner
+                            app: "./src/index.js"
+
+                    
+
+WEBPACK-HTML
+    ***** en caso sea un proyecto nuevo se debe iniciar package.json  ****
+    npm init -y
+
+
+html en la carpeta que se va crear
+    npm install --save-dev html-webpack-plugin
+    npm run build
+
+para que web pack nos lea los archivos html desbemos ir a la configuración de web pack 
+    webpack.config.js
+        const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+        debemos crear en el apartado plugins
+              plugins: [
+            new HtmlWebpackPlugin(),
+        ],
+
+            en caso de creer que el scrippts en el html se coloque al final agregar al apartado el "bloking" (navegadores legacy)
+                        plugins: [
+                new HtmlWebpackPlugin({
+                    minify: false,
+                    scriptLoading: "blocking",
+                }),
+            ],
+
+
+WEBPACK-CSS
+    instalamos el plugins
+        npm install --save-dev mini-css-extract-plugin
+    
+    para que reconozca en el css en el scripts se debe importar em src/index.js
+            import "./styles.css";
+
+    luego nos ditigimos a la configuración del webpack
+        y agregamos sus modulos
+            const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+        
+        en el apartados de plugins agregar
+            new MiniCssExtractPlugin(),
+
+        y en el apartado de modules propiedad de rules agregamos
+                         {
+                    test: /\.css$/i,
+                    use: [MiniCssExtractPlugin.loader, "css-loader"],
+                }
+        
+        instalamos el css-loader
+            npm i --save-dev css-loader 
+
+                    semantica -> 
+                        MiniCssExtractPlugin.loader = sirve para detectar la importación del css al js
+
+                        css-loader = toma el css y lo extrae a un archivo aparte
+
+            luego ejecutamos npm run build
+
+        si queremos cambiar el nombre el archivo css  nos dirigimos al apartado plugins modificamos su atributo
+
+                   new MiniCssExtractPlugin({
+                // para cambiar el nombre al archivo
+                    filename: "styles.css",
+            }),
+
+
+        para minificar el css instalar CssMinimizerWebpackPlugin
+            npm install css-minimizer-webpack-plugin --save-dev
+
+        en la configuracion agregar
+            const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+
+            para optimizar agregamos en el apartado output
+                minimizer: [new CssMinimizerPlugin()],
+
+                                leyenda -> autoprefixer,
+                                            spporte a navegadores
+                                dentro de postCSS
+            
+
+
+
+
+
+        

@@ -1,0 +1,60 @@
+//* MAPAS CON MODULO INTEGRADO ---
+//?  modulo integrado map y tipo para evaluar si se envia color o medida
+@use 'sass:map';
+@use 'sass:meta';
+$textos: (
+    "titulo": 4em,
+    "subtitulo":3em,
+    "parrafo":1em,
+    "cta":1.5em
+);
+
+$colores: (
+    "primary": #000,
+    "secondary":#f00,
+    "titulo": steelblue,
+    "rt": 1em
+);
+
+
+
+
+@mixin recorrerMap($mapa){
+    @each $clave, $valor in $mapa{
+        #{$clave}{
+            @if(meta.type-of($valor) == color){
+                color:$valor;
+            }@else{
+                font-size: $valor;
+            }
+        }
+    }
+}
+
+
+//* MODIFICAR Y AGREGAR MAPAS
+//?  $newMapa: map.set('mapa, "key', value);
+$textos2:map.set($textos, "parrafo",53em);  //?EDITADO
+
+
+$colores2: map.set($colores, "prim",coral); 
+$colores3: map.set($colores, "rawbon",blue);
+
+$colores4: map.merge($colores2,$colores3);
+
+
+//! EN UN MERGE NO  PERMITE MODIFICAR SI AGREGAS MÁS PROPIEDADES
+// TODO::  si se va hacer un merge no se pueden editar los valores pero si puedes agregar mas propiedades, estos cambios se dan cuando inicializar el MIXIN
+
+
+// $textos2: map.set($textos, "cta1",5em);
+// $textos2: map.set($textos, "subtitulo",blue);
+
+// @include recorrerMap($textos2);
+
+
+//* FUSIONAR MAPAS
+$estilosGenerales: map.merge($textos2,$colores4);
+//? Papra agregar valores al mapa lo agregamos por medio de un mixin
+
+@include recorrerMap($estilosGenerales);
