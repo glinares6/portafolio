@@ -1,9 +1,9 @@
 {
-  "name": "11-xk-site",
+  "name": "4-hamburger-navigation",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "deploy": "gh-pages -d  /home/linarespc/Documentos/portafolio/11-xk-site"
+    "deploy":"gh-pages -d /home/linarespc/Documentos/portafolio/14-animated-navbar/4-hamburger-navigation"
   },
   "license": "MIT",
   "devDependencies": {
