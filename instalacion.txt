@@ -1,0 +1,5 @@
+
+yarn init
+    yarn add gh-pages --dev
+    npx gh-pages -d  (en caso el directorio sea la raiz)
+    
