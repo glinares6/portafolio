@@ -1,9 +1,9 @@
 {
-  "name": "4-hamburger-navigation",
+  "name": "03-firebase-auth",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "deploy":"gh-pages -d /home/linarespc/Documentos/portafolio/14-animated-navbar/4-hamburger-navigation"
+    "deploy":"gh-pages -d /home/linarespc/Documentos/portafolio/2-html-css-js/7-firebase/03-firebase-auth"
   },
   "license": "MIT",
   "devDependencies": {
