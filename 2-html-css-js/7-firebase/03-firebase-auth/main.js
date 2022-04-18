@@ -103,7 +103,7 @@ logOut.addEventListener('click', e =>{
     //* mostrar unaventana adicional con google
     
   //  linkWith(auth, providerAuth).then((result) => {
-    popupGoogle,popupFacebook().then((result) => {
+    popupGoogle().then((result) => {
       console.log(result)
       console.log('google sign in')
 
