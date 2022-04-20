@@ -4,12 +4,13 @@ nav#main-nav.main-nav
             if page == pageActive
                 li.main-menu__item
                     if index==0
-                        a(href=`/`).main-menu__link.main-menu__link--active=page
+                        a(href=`./`).main-menu__link.main-menu__link--active=page
                     else
-                        a(href=`/${page}.html`).main-menu__link.main-menu__link--active=page
+                        a(href=`./${page}.html`).main-menu__link.main-menu__link--active=page
             else
                 li.main-menu__item
                     if index==0
-                        a(href=`/`).main-menu__link=page
+                        a(href=`./`).main-menu__link=page
                     else
-                        a(href=`/${page}.html`).main-menu__link=page
+                        a(href=`./${page}.html`).main-menu__link=page
+                        
