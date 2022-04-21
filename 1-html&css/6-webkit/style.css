@@ -93,7 +93,7 @@ https://www.campusmvp.es/recursos/post/como-personalizar-los-estilos-css-de-las-
       }
       /** en firefox */
       *{
-        scrollbar-width: thin;          /* "auto" or "thin" */
+        scrollbar-width: auto;          /* "auto" or "thin" */
         scrollbar-color: blue  orange;   /* scroll thumb and track */
       }
       body::-webkit-scrollbar {
@@ -114,7 +114,7 @@ https://www.campusmvp.es/recursos/post/como-personalizar-los-estilos-css-de-las-
 
 
       .contenedor {
-        scrollbar-width: thin;
+        scrollbar-width: auto;
         scrollbar-color: blue orange;
        
       }
