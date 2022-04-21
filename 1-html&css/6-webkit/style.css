@@ -89,19 +89,26 @@ https://www.campusmvp.es/recursos/post/como-personalizar-los-estilos-css-de-las-
     body{
         background: #333;
         color: #fff;
-    }
-    body::-webkit-scrollbar {
-        width: 12px;               /* width of the entire scrollbar */
+
+      }
+      /** en firefox */
+      *{
+        scrollbar-width: thin;          /* "auto" or "thin" */
+        scrollbar-color: blue  orange;   /* scroll thumb and track */
+      }
+      body::-webkit-scrollbar {
+        width: 10px;               /* width of the entire scrollbar */
       }
       
       body::-webkit-scrollbar-track {
         background: orange;        /* color of the tracking area */
+        width: 12px;
       }
       
       body::-webkit-scrollbar-thumb {
         background-color: blue;    /* color of the scroll thumb */
-        border-radius: 20px;       /* roundness of the scroll thumb */
-        border: 3px solid orange;  /* creates padding around scroll thumb */
+        border-radius: 20px;       /*roundness of the scroll thumb */
+        /* border: 3px solid orange; creates padding around scroll thumb */
         height: 70px;
       }
 
@@ -109,6 +116,7 @@ https://www.campusmvp.es/recursos/post/como-personalizar-los-estilos-css-de-las-
       .contenedor {
         scrollbar-width: thin;
         scrollbar-color: blue orange;
+       
       }
       
 
@@ -118,6 +126,7 @@ https://www.campusmvp.es/recursos/post/como-personalizar-los-estilos-css-de-las-
       
       .contenedor::-webkit-scrollbar-track {
         background: rgb(0, 0, 0);
+        
       }
       
       .contenedor::-webkit-scrollbar-thumb {
