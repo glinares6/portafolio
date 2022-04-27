@@ -16,6 +16,7 @@ images.forEach(image =>{
    
         addImage(image.getAttribute('src'),image.getAttribute('alt'))
        
+        
     })
 
 })
