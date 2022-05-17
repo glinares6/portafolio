@@ -64,7 +64,7 @@ object-fit: cover;
 }
 
 .header-content p{
-    font-style: 1.5rem;
+    font-size: 1.5rem;
     display: block;
     padding-bottom: 2rem;
 }
