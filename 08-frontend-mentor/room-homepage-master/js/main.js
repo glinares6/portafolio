@@ -1,5 +1,3 @@
-
-// LLAMADO DE LOS ELEMENTOS
 const previous = document.getElementById('previous');
 const next = document.getElementById('next');
 

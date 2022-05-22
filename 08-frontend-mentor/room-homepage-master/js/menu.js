@@ -7,26 +7,33 @@ const size=document.getElementById('size');
 const mainLogo=document.querySelector('.main__logo');
 const mainLinks=document.querySelector('.main__links');
 
-// const transparent = document.querySelector('.transparent')
 
 mainH.addEventListener('click',()=>{
-   mainHamburguer.classList.toggle('main__menu--top')
-   console.log('dentro');
-   buttonClose.classList.add('main__close--active') 
-   mainLinks.classList.add('main__links--active')
-
-    size.classList.add('sizef')
-    
-   mainH.style.display="none"
+    togleMenuAdd(mainHamburguer, buttonClose, mainLinks)
    
 })
 
 buttonClose.addEventListener('click',()=>{
-    mainHamburguer.classList.toggle('main__menu--top')
-    buttonClose.classList.remove('main__close--active') 
-    mainLinks.classList.remove('main__links--active')
+    togleMenuRemove(mainHamburguer, buttonClose, mainLinks)
+})
+
+const togleMenuAdd = (a,b,c) =>{
+    a.classList.toggle('main__menu--top')
+    c.classList.add('main__close--active') 
+    c.classList.add('main__links--active')
+
+
+    size.classList.add('sizef')
+
+    mainH.style.display="none"
+}
+const togleMenuRemove = (a,b,c) =>{
+    a.classList.toggle('main__menu--top')
+   b.classList.remove('main__close--active') 
+   c.classList.remove('main__links--active')
+
 
     size.classList.remove('sizef')
 
     mainH.style.display="block"
-})
+}
