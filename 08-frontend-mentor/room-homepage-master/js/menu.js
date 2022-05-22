@@ -19,7 +19,7 @@ buttonClose.addEventListener('click',()=>{
 
 const togleMenuAdd = (a,b,c) =>{
     a.classList.toggle('main__menu--top')
-    c.classList.add('main__close--active') 
+    b.classList.add('main__close--active') 
     c.classList.add('main__links--active')
 
 
