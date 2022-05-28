@@ -10,7 +10,6 @@ form{
 .field{
     grid-column: span 4;
     display: grid;
-    grid: inherit;
     grid-template-columns: 6em 20%;
     
     /** compatible con firefox */
