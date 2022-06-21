@@ -69,3 +69,18 @@
         observacio
         izicode
             https://www.youtube.com/watch?v=m0fTjbFDrcw&ab_channel=izicode
+
+
+
+
+    github-copilot
+        https://docs.github.com/es/organizations/managing-peoples-access-to-your-organization-with-roles/roles-in-an-organization
+
+        https://github.com/organizations/glinaresl/invite
+            Welcome to glinaresl
+            Add organization members
+            Organization members will be able to view repositories, organize into teams, review code, and tag other members using @mentions.
+
+            Learn more about permissions for organizations →
+
+            Search by username, full name or email address
