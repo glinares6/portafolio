@@ -58,11 +58,9 @@
         
     code with steve
         https://www.youtube.com/watch?v=IWHMDPQ5-xE&ab_channel=CodewithSteve
-    daft creation
+    daft creation  ~
         https://www.youtube.com/watch?v=clSWS46SKW0&ab_channel=DaftCreation
-    doce with creative code
-        https://www.youtube.com/watch?v=mYCXaJmJ4G8&t=14s&ab_channel=Codewithcreativecoder
-    inside thediv
+    inside thediv ~
         https://www.youtube.com/watch?v=kQr_G2u3Dx8&ab_channel=insideTheDiv
     
 
