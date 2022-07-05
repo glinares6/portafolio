@@ -32,6 +32,13 @@ instalar corepack desde yarn
         typescript importer ~ react
 
 
+    para formatear pretier automaticamente
+        configuracion
+            en el buscador
+                save -> editor.formatOnSave > true
+
+
+
     instalar las lightures en vsc   
         fuente
             sudo apt install fonts-firacode
