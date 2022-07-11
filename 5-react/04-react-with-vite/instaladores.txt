@@ -4,7 +4,7 @@ instalar VITE
      sudo npm i --location=global npm yarn
 
 creat vite con yarn
-    yarn create vite
+    yarn create vite79 WPM
 
 usar vite 
 
