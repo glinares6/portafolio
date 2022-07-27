@@ -1,0 +1,19 @@
+
+useState -> para iniciañizar y modificar valores
+    requiere un valor inicial (0)  ,  se ejecuta cada que hay un cambio en el estado 
+useEffect -> para modificar a nivel de cliente(navegador) pero no ejecutar en el servidor
+            Toma control de useState
+
+Si se usa boostrap 
+            convertir html a jsx
+
+preventDefault
+    evita que el navegador se recarge
+
+
+Cleanup -> useEffect
+    en caso que la condiciòn no se cumpla ~ (if -  return)
+
+-------------------------------------
+- - - - -ACTIVAR ES-LINT - - - - -
+-------------------------------------
