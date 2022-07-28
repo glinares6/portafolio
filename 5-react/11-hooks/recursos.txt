@@ -3,6 +3,10 @@ useState -> para iniciañizar y modificar valores
     requiere un valor inicial (0)  ,  se ejecuta cada que hay un cambio en el estado 
 useEffect -> para modificar a nivel de cliente(navegador) pero no ejecutar en el servidor
             Toma control de useState
+            se ejecuta al crear el componente (simultaneo)
+
+uselayoutEffect
+            rederizar o ejecutar la logica después de crear el componente
 
 Si se usa boostrap 
             convertir html a jsx
