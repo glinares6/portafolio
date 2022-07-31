@@ -1,7 +1,10 @@
 //* FUNCTIONAL COMPONENTS
 //TODO rafce
 
-import Ref from "./components/Ref";
+// import Custom from "./components/menos/Custom";
+import Memorize from "./components/menos/Memorize";
+
+// import Ref from "./components/Ref";
 
 // import LayoutEffect from "./components/LayoutEffect";
 
@@ -14,10 +17,12 @@ import Ref from "./components/Ref";
 //* COMPONENTES COMENTADOS
 // <Effect />
 // <LayoutEffect />;
+// <Ref />
+// <Custom />
 const App = () => {
   return (
     <div className="container text-center">
-      <Ref />
+      <Memorize />
     </div>
     // <div className="container text-center">
     //   <h1>Calculadora - PWA</h1>
