@@ -1,0 +1,49 @@
+instalaciones necesarias del proyecto
+
+create react app
+    yarn create react-app my-app
+    npx create-react-app 05-image-gallery-app --template cra-template-pwa
+
+vite
+    yarn create vite
+    yarn create vite proy-reac --template  react
+
+
+
+unsplash developer
+    https://unsplash.com/developers
+
+
+    logearte a la cuenta
+        crear appp
+            obtener el api key
+        
+    postman
+        header
+            Authorization: Client-ID YOUR_ACCESS_KEY
+        url
+            https://api.unsplash.com/photos/?client_id=YOUR_ACCESS_KEY
+
+    
+    validación ppostman in proyect
+        https://api.unsplash.com/photos/random?client_id=7z9AGmq0APUrPC9L7-x7onnHLrYPNFO8Bhk-cQe7NZk
+
+
+
+
+----------------------------------------------------------------------------------------------
+REFERENCIAS
+    https://api.unsplash.com/photos/?client_id=7z9AGmq0APUrPC9L7-x7onnHLrYPNFO8Bhk-cQe7NZk
+
+    bOOSTRAP
+        https://getbootstrap.com/docs/4.3/components/card/
+    
+    key
+        https://unsplash.com/oauth/applications/351534
+    documentation
+        https://unsplash.com/documentation
+
+-----------------------------------------------------------------------------------------------
+
+
+
