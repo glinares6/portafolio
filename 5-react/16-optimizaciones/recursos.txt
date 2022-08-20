@@ -1,0 +1,48 @@
+optimización 
+    nos dirigimos a network
+        presionamos en borrar cache
+        luego en limitacion se cambia 3g slow
+
+    lazy loading 
+        carga peresoza ( html)
+        dentro del html(<img>) agregar loading="lazy"
+
+    code splitnik (routes)
+        reusar la ventana de carga el los diversos componentes
+            suspense - fallback
+
+        Debemos importar las rutas en la funcion lazy(react)
+
+            services-wowrker.map
+            200.html
+            statics
+                chunk*.js
+
+    react-snap (index.js , package.json)
+        guarda la información para luego ser usada
+        una vez cargado los archivos se visualizan de forma directa sin volver a cargar
+        pre-rendering
+
+        https://www.npmjs.com/package/react-snap
+
+        yarn add --dev react-snap
+
+        luego de subir a produccion postbuild el react-snap
+
+        dentro de ljson agregar 
+                   "reactSnap": {
+                    "inlineCss": true
+                    }
+
+    PWA
+        activar el services worker
+        configurar el manifest.json
+    
+    lightHouse
+        testea el estado del sitio(rendimiento,accesibilidad,buenas-practicas,seo,PWA,)
+
+    
+
+
+
+        
