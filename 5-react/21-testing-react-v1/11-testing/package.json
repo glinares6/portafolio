@@ -1,5 +1,5 @@
 {
-  "name": "11-testing-v1",
+  "name": "11-testing",
   "packageManager": "yarn@3.2.1",
   "dependencies": {
     "@testing-library/jest-dom": "5.16.5",
