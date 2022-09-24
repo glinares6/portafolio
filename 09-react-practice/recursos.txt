@@ -1,0 +1,23 @@
+pasos generales
+
+    install react
+        npx create-react-app 01-file
+        PWA
+            npx create-react-app 01-file-pwa --template cra-template-pwa
+        
+        vite
+            yarn create vite 
+            yarn create vite my-app --template react
+
+    yarn 
+        yarn install
+
+    para usar sass 
+        npm install <paquete>
+        yarn add sass
+
+
+    server
+        yarn start
+
+
