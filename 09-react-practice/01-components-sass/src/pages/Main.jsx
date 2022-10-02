@@ -1,10 +1,13 @@
-import React from "react";
-import Contenido from "../components/Contenido";
+import Articulos from "../components/Articulos";
+import Content from "../components/Content";
+import Section from "../components/Section";
 
 const Main = () => {
   return (
     <div className="main__app">
-      <Contenido />
+      <Articulos />
+      <Content />
+      <Section />
     </div>
   );
 };

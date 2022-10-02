@@ -3,7 +3,7 @@ import React from "react";
 const Pie = () => {
   return (
     <div>
-      <ul>
+      <ul className="pie__footer">
         <li>
           <a href="#">Redes Sociales</a>
         </li>

@@ -2,7 +2,7 @@ import React from "react";
 
 const Contenido = () => {
   return (
-    <div className="borde">
+    <div className="borde__main">
       <h1>INTERES</h1>
       <p>
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet

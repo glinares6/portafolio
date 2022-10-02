@@ -21,3 +21,59 @@ pasos generales
         yarn start
 
 
+    components
+    pages
+    
+    sass
+
+    landing page
+        header
+            menu
+        main
+            articulos
+            contenido
+            section
+                img
+        footer
+            nav
+                link
+            
+
+    usecallback , usememo memo
+            https://coffeebytes.dev/react-usecallback-usememo-y-memo-diferencias-y-usos/
+
+    5 librerias react
+        https://coffeebytes.dev/5-librerias-geniales-de-react-que-debes-conocer/
+
+    hooks documentacion react
+        https://es.reactjs.org/docs/hooks-reference.html
+
+            HOC hight order components
+
+
+
+custon hook
+    usefetch
+
+helper
+    operaciones  objeto de objetos
+    userData.js   info(datos) variados(propiedades)
+
+models
+    datos ciclicos array de objetos
+    caracteres (propiedades repetidas)
+
+constext
+https://reactjs.org/docs/hooks-reference.html#usecontext
+    AuthContext.js
+
+routes
+
+reducers
+    store
+
+    types
+        AuthTypes.js
+
+
+
