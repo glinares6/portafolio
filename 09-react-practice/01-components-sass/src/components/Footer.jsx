@@ -1,5 +1,5 @@
 import React from "react";
-import Pie from "../components/Pie";
+import Pie from "./Pie";
 
 const Footer = () => {
   return (

@@ -1,11 +1,25 @@
 import { useContext } from "react";
 import { UseContext } from "../contexts/AuthContext";
 import { useMain } from "../hooks/useMain";
+import Contador from "./Contador";
+
+import { useReducer } from "react";
+import { AuthReducers } from "../reducers/AuthReducers";
 
 const Section = () => {
   //* custon Hooks
   const [getInfo, localidad, num, real2] = useMain();
+
+  //* useContext
   const { appcontext } = useContext(UseContext);
+
+  //* useReducers
+  const initialState = { count: 0 };
+
+  const [state, dispatch] = useReducer(AuthReducers, initialState);
+
+  //* useReducers.payload (reset)
+
   return (
     <div className="section__main">
       <h1>Section</h1>
@@ -38,6 +52,8 @@ const Section = () => {
       </p>
       <h1>{getInfo()}</h1>
       <h1> La fecha {new Date().toLocaleDateString()}</h1>
+      <hr />
+      <h1>Use Effect</h1>
       <h1>{localidad}</h1>
       <h1>{num}</h1>
       <button onClick={real2}> HORA</button>
@@ -57,6 +73,8 @@ const Section = () => {
           </div>
         )}
       </div>
+      <hr />
+      <Contador state={state} dispatch={dispatch} initialState={initialState} />
     </div>
   );
   // <button onClick={real}> HORA</button>

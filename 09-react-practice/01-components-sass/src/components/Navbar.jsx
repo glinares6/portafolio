@@ -1,20 +1,21 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <div>
       <ul className="nav__header">
         <li className="item__nav">
-          <a href="#">Inicio</a>
+          <Link to="/inicio">Inicio</Link>
         </li>
         <li className="item__nav">
-          <a href="#">Quienes somos</a>
+          <Link to="/somos">Quienes somos</Link>
         </li>
         <li className="item__nav">
-          <a href="#">Productos</a>
+          <Link to="/productos">Productos</Link>
         </li>
         <li className="item__nav">
-          <a href="#">Contactos</a>
+          <Link to="/contactos">Contactos</Link>
         </li>
       </ul>
     </div>

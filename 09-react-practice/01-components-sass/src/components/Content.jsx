@@ -1,5 +1,7 @@
 import React, { useContext, useMemo, useState } from "react";
 import { useCallback } from "react";
+import { Link } from "react-router-dom";
+
 import { UseContext } from "../contexts/AuthContext";
 import { themes } from "../helpers/Pictures";
 import MemoComponent from "../memo/MemoComponent";
@@ -148,6 +150,19 @@ const Content = () => {
           En simultaneo 1
         </div>
       )}
+      <hr />
+      <h1>Routes</h1>
+      <Link
+        to="/info/todo-lo-que-necesitas"
+        style={{
+          background: "blue",
+          color: "white",
+          padding: "10px 25px",
+          borderRadius: "15px",
+        }}
+      >
+        Más información
+      </Link>
     </div>
   );
 };

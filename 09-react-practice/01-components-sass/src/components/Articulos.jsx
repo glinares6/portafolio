@@ -1,17 +1,24 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Articulos = () => {
   return (
     <div className="article__main">
       <ul className="navlink__main">
         <li>
-          <a href="#">CAPITULO I</a>
+          <Link to="/capitulo1/0">CAPITULO I</Link>
         </li>
         <li>
-          <a href="#">CAPITULO II</a>
+          <Link to="/capitulo2/lo-que-llevaremos-consigo">CAPITULO II</Link>
         </li>
         <li>
-          <a href="#">CAPITULO III</a>
+          <Link to="/capitulo3">CAPITULO III</Link>
+        </li>
+        <li>
+          <Link to="/capitulo4/0">CAPITULO IV</Link>
+        </li>
+        <li>
+          <Link to="/capitulo5">CAPITULO V</Link>
         </li>
       </ul>
     </div>

@@ -56,24 +56,59 @@ custon hook
     usefetch
 
 helper
-    operaciones  objeto de objetos
-    userData.js   info(datos) variados(propiedades)
+    operaciones  ,objeto de objetos
+    userData.js   info(datos) (propiedades que varian)
 
 models
-    datos ciclicos array de objetos
-    caracteres (propiedades repetidas)
+    datos ciclicos, array de objetos
+    caracteres (propiedades repetidas)  valor variante
 
 constext
 https://reactjs.org/docs/hooks-reference.html#usecontext
     AuthContext.js
 
 routes
+    yarn add react-router-dom
+
+        AppRouter.jsx
+
+    https://v5.reactrouter.com/web/guides/quick-start
+
+    BrowserRouter
+        routes
+        switch
+        route
+    UseRouteMatch
+        useparams
+    redirect
+        public
+        protected
+
+    useHistory
+    useLocation    
 
 reducers
-    store
+    https://reactjs.org/docs/hooks-reference.html#usereducer
+    store, AuthReducers.js
 
     types
         AuthTypes.js
+
+
+
+examples0
+e.
+
+    recursive path
+    sidebar
+    animated-transitions
+    modal gallery
+
+    
+
+useRef
+uselayouteffect
+useId
 
 
 

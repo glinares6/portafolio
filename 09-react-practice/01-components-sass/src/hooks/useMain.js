@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 export const useMain = () => {
+  //* Content.jsx
   const [num, setNum] = useState("Mostrar hora");
   const [localidad, setLocalidad] = useState(new Date().toTimeString());
 
@@ -26,6 +27,8 @@ export const useMain = () => {
   useEffect(() => {
     real();
   }, []);
+
+  //* Contador.jsx
 
   return [getInfo, localidad, num, real2];
 };
