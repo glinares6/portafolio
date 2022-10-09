@@ -8,6 +8,7 @@ import AppRouter from "./routes/AppRouter";
 
 const App = () => {
   const [appcontext, setAppcontext] = useState("");
+  const [sliderc, setSliderc] = useState("");
 
   const [log, setLog] = useState(false);
 
@@ -44,6 +45,8 @@ const App = () => {
       value={{
         appcontext,
         setAppcontext,
+        sliderc,
+        setSliderc,
         log,
         setLog,
         user,

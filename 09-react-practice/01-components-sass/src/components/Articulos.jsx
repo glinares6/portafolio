@@ -18,7 +18,7 @@ const Articulos = () => {
           <Link to="/capitulo4/0">CAPITULO IV</Link>
         </li>
         <li>
-          <Link to="/capitulo5">CAPITULO V</Link>
+          <Link to="/capitulo5/ ">CAPITULO V</Link>
         </li>
       </ul>
     </div>
