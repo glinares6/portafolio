@@ -35,6 +35,33 @@ const Contactos = () => {
       >
         Cerrar sesion
       </Link>
+
+      <div style={{ display: "block" }}>
+        <h1>Login Example 2.0</h1>
+
+        <Link
+          to="/inicio"
+          style={{
+            background: "crimson",
+            color: "white",
+            padding: "10px 25px",
+            borderRadius: "15px",
+          }}
+        >
+          Regresar
+        </Link>
+        <Link
+          to="/loginexample"
+          style={{
+            background: "blue",
+            color: "white",
+            padding: "10px 25px",
+            borderRadius: "15px",
+          }}
+        >
+          loginexample
+        </Link>
+      </div>
     </div>
   );
 };

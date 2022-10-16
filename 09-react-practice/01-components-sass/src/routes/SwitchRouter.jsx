@@ -15,6 +15,10 @@ import Contactos from "../pages/Contactos";
 import Capitulo4 from "../pages/Capitulo4";
 // import C5 from "../components/C5";
 import Capitulo5 from "../pages/Capitulo5";
+import Capitulo6 from "../pages/Capitulo6";
+import Capitulo7 from "../pages/Capitulo7";
+import LoginExample from "../pages/LoginExample";
+// import Login from "../pages/Login";
 // import LoginPage from "../pages/LoginPage";
 // import PrivateRoute from "./PrivateRoute";
 // import ProtectedPage from "../pages/ProtectedPage";
@@ -48,6 +52,12 @@ const SwitchRouter = () => {
       <Route path="/capitulo5">
         <Capitulo5 />
       </Route>
+      <Route path="/capitulo6">
+        <Capitulo6 />
+      </Route>
+      <Route path="/capitulo7">
+        <Capitulo7 />
+      </Route>
       <Route path="/somos">
         <Somos />
       </Route>
@@ -56,6 +66,9 @@ const SwitchRouter = () => {
       </Route>
       <Route path="/contactos">
         <Contactos />
+      </Route>
+      <Route path="/loginexample">
+        <LoginExample />
       </Route>
     </Switch>
   );

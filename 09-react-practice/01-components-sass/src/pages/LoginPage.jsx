@@ -16,6 +16,7 @@ const LoginPage = () => {
   };
   return (
     <div>
+      <h2>*history.replace*</h2>
       <p>You must log in to view the page at {from.pathname}</p>
       <button onClick={login}>Log in</button>
     </div>

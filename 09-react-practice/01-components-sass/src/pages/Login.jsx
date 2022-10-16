@@ -30,6 +30,7 @@ const Login = () => {
       >
         Inicio
       </Link>
+
       <hr />
       <h1>Redirect Auth</h1>
 

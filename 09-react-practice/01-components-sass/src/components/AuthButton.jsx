@@ -7,16 +7,19 @@ const AuthButton = () => {
   let { user, signout } = useContext(UseContext);
 
   return user ? (
-    <p>
-      Welcome!{" "}
-      <button
-        onClick={() => {
-          signout(() => history.push("/"));
-        }}
-      >
-        Sign out
-      </button>
-    </p>
+    <>
+      <h2>*History.push*</h2>
+      <p>
+        Welcome!{" "}
+        <button
+          onClick={() => {
+            signout(() => history.push("/"));
+          }}
+        >
+          Sign out
+        </button>
+      </p>
+    </>
   ) : (
     <p>You are not logged in.</p>
   );

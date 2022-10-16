@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 
 import {
   BrowserRouter as Router,
+  Redirect,
 
   // Switch,
   // Route,
@@ -28,9 +29,10 @@ import Footer from "../components/Footer";
 
 import { UseContext } from "../contexts/AuthContext";
 import SwitchRouter from "./SwitchRouter";
-import Login from "../pages/Login";
+// import Login from "../pages/Login";
 
 import LoginRouter from "./LoginRouter";
+
 // import Capitulo1 from "../pages/Capitulo1";
 // import PublicPage from "../pages/PublicPage";
 // import LoginPage from "../pages/LoginPage";
@@ -50,8 +52,8 @@ const AppRouter = () => {
         </div>
       ) : (
         <div style={{ padding: " 0px 20px" }}>
-          <Login />
           <LoginRouter />
+          <Redirect to="/" />
         </div>
       )}
     </Router>

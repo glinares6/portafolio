@@ -3,7 +3,7 @@ import React from "react";
 const PublicPage = () => {
   return (
     <div>
-      <h3>Public</h3>
+      <h2>Public</h2>
     </div>
   );
 };

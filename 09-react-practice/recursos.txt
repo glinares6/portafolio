@@ -98,13 +98,26 @@ reducers
 
 examples0
 e.
-
+    custon link *
     recursive path
     sidebar
-    animated-transitions
-    modal gallery
+    animated-transitions *
+    router config *
+    modal gallery *
+    query parameters *
+
 
     
+useHistory*
+useLocation
+    pathname
+        npx react-codemod rename-unsafe-lifecycles
+
+        Thank you for using react-codemods!
+
+But before we continue, please stash or commit your git changes.
+
+You may use the --force flag to override this safety check.
 
 useRef
 uselayouteffect

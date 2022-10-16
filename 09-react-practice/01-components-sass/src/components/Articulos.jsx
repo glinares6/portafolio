@@ -20,6 +20,12 @@ const Articulos = () => {
         <li>
           <Link to="/capitulo5/ ">CAPITULO V</Link>
         </li>
+        <li>
+          <Link to="/capitulo6">CAPITULO VI</Link>
+        </li>
+        <li>
+          <Link to="/capitulo7">CAPITULO VI</Link>
+        </li>
       </ul>
     </div>
   );
