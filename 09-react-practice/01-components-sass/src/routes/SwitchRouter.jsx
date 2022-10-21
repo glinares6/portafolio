@@ -19,9 +19,10 @@ import Capitulo6 from "../pages/Capitulo6";
 import Capitulo7 from "../pages/Capitulo7";
 import LoginExample from "../pages/LoginExample";
 import Capitulo8 from "../pages/Capitulo8";
+import Capitulo9 from "../pages/Capitulo9";
+import ModalGallery from "../components/ModalGallery";
 import VisitGallery from "../pages/VisitGallery";
 import TomatoCrimson from "../pages/TomatoCrimson";
-import ModalGallery from "../components/ModalGallery";
 
 // import Login from "../pages/Login";
 // import LoginPage from "../pages/LoginPage";
@@ -33,6 +34,7 @@ const SwitchRouter = () => {
   let location = useLocation();
 
   let background = location.state && location.state.background;
+
   return (
     <>
       <Switch location={background || location}>
@@ -76,7 +78,9 @@ const SwitchRouter = () => {
         <Route path="/img/:id">
           <TomatoCrimson />
         </Route>
-
+        <Route path="/capitulo9">
+          <Capitulo9 />
+        </Route>
         <Route path="/somos">
           <Somos />
         </Route>
@@ -90,7 +94,6 @@ const SwitchRouter = () => {
           <LoginExample />
         </Route>
       </Switch>
-
       {background && (
         <Route path="/img/:id">
           <ModalGallery />

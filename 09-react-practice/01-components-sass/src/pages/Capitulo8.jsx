@@ -6,6 +6,7 @@ import {
   // useLocation,
   // useRouteMatch,
 } from "react-router-dom";
+
 // import ModalGallery from "../components/ModalGallery";
 // import TomatoCrimson from "./TomatoCrimson";
 
@@ -21,6 +22,9 @@ const Capitulo8 = () => {
     { id: 4, name: "Crimson" },
   ];
 
+  // let location = useLocation();
+
+  // let background = location.state && location.state.background;
   return (
     <div style={{ padding: " 0px 20px" }}>
       <h1>Capitulo8 </h1>

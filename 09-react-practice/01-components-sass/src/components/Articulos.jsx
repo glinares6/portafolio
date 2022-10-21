@@ -29,6 +29,9 @@ const Articulos = () => {
         <li>
           <Link to="/capitulo8">CAPITULO VIII</Link>
         </li>
+        <li>
+          <Link to="/capitulo9">CAPITULO IX</Link>
+        </li>
       </ul>
     </div>
   );

@@ -101,14 +101,14 @@ e.
     custon link *
     recursive path
     sidebar
-    animated-transitions *
+    animated-transitions 
     router config *
-    modal gallery *
-    query parameters *
+    modal gallery 
+    query parameters **
 
 
     
-useHistory*
+useHistory
 useLocation
     pathname
         npx react-codemod rename-unsafe-lifecycles
