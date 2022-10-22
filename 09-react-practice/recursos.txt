@@ -102,9 +102,9 @@ e.
     recursive path
     sidebar
     animated-transitions 
-    router config *
+    router config **
     modal gallery 
-    query parameters **
+    query parameters 
 
 
     

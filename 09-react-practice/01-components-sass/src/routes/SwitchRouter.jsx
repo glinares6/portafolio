@@ -23,6 +23,8 @@ import Capitulo9 from "../pages/Capitulo9";
 import ModalGallery from "../components/ModalGallery";
 import VisitGallery from "../pages/VisitGallery";
 import TomatoCrimson from "../pages/TomatoCrimson";
+import Capitulo10 from "../pages/Capitulo10";
+import Capitulo11 from "../pages/Capitulo11";
 
 // import Login from "../pages/Login";
 // import LoginPage from "../pages/LoginPage";
@@ -80,6 +82,12 @@ const SwitchRouter = () => {
         </Route>
         <Route path="/capitulo9">
           <Capitulo9 />
+        </Route>
+        <Route path="/capitulo10">
+          <Capitulo10 />
+        </Route>
+        <Route path="/capitulo11">
+          <Capitulo11 />
         </Route>
         <Route path="/somos">
           <Somos />
