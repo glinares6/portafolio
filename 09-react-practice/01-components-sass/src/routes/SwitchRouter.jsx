@@ -25,6 +25,7 @@ import VisitGallery from "../pages/VisitGallery";
 import TomatoCrimson from "../pages/TomatoCrimson";
 import Capitulo10 from "../pages/Capitulo10";
 import Capitulo11 from "../pages/Capitulo11";
+import Capitulo12 from "../pages/Capitulo12";
 
 // import Login from "../pages/Login";
 // import LoginPage from "../pages/LoginPage";
@@ -88,6 +89,9 @@ const SwitchRouter = () => {
         </Route>
         <Route path="/capitulo11">
           <Capitulo11 />
+        </Route>
+        <Route path="/capitulo12">
+          <Capitulo12 />
         </Route>
         <Route path="/somos">
           <Somos />

@@ -98,22 +98,31 @@ reducers
 
 examples0
 e.
-    custon link *
+    custon link **
     recursive path
     sidebar
     animated-transitions 
-    router config **
+    router config 
     modal gallery 
     query parameters 
 
 
     
 useHistory
+    go back **
+    push
+    rename
 useLocation
     pathname
+    search
+        queryparams
+            react.useMemo
+                URLSearchParams
+                name={query.get("name")}
         npx react-codemod rename-unsafe-lifecycles
-
+    state
         Thank you for using react-codemods!
+
 
 But before we continue, please stash or commit your git changes.
 

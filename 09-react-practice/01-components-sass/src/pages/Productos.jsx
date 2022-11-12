@@ -16,6 +16,17 @@ const Productos = () => {
       >
         Regresar
       </Link>
+      <Link
+        to="/capitulo12"
+        style={{
+          background: "crimson",
+          color: "white",
+          padding: "10px 25px",
+          borderRadius: "15px",
+        }}
+      >
+        Regresar
+      </Link>
     </div>
   );
 };
