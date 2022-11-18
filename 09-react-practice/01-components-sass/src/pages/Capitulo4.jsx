@@ -38,9 +38,7 @@ const Capitulo4 = () => {
       <hr />
 
       <Switch>
-        <Route path={`${path}/:any`}>
-          <C4 />
-        </Route>
+        <Route path={`${path}/:any`} element={<C4 />} />
       </Switch>
     </div>
   );
