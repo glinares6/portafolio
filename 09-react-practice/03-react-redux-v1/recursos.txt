@@ -1,0 +1,10 @@
+instalar npm
+    dentro de la carpeta agregar
+        npm i -S redux
+    
+    loose-envify
+        proyecta variables de entorno ~ 4 year ago
+    lodash
+        colección de funciones utilitarias para programación funcional ~ 2 year ago
+
+    

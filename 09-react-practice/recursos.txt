@@ -133,4 +133,44 @@ uselayouteffect
 useId
 
 
+----------------------------------------------------------------------
+React Redux
+    https://react-redux.js.org/introduction/getting-started
+        https://handsonreact.com/docs/react-redux
+    https://programmerclick.com/article/45807023/
+
+    https://redux.js.org/faq/react-redux
+    https://react-redux.js.org/introduction/why-use-react-redux
+        https://es.redux.js.org/
+    
+
+
+    http://developinginspanish.com/2020/09/15/react-redux-tutorial-para-principiantes/
+    https://ichi.pro/es/una-guia-para-principiantes-de-redux-con-react-88169687063060
+
+
+
+        https://es.redux.js.org/ **
+        https://handsonreact.com/docs/react-redux
+        https://redux.js.org/usage/
+        https://tutoriales.edu.lat/pub/redux/redux-quick-guide/redux-guia-rapida
+        https://www.thecodingwalrus.com/react/08guia-rapida-de-redux/#gu%C3%ADa-r%C3%A1pida-de-redux
+
+
+30 videos del creador ~ Chris Dhanaraj  / @dan_abramov
+    https://app.egghead.io/playlists/fundamentals-of-redux-course-from-dan-abramov-bd5cc867
+
+    https://www.npmjs.com/package/react-redux
+    librerias
+        npx create-react-app my-app --template redux
+        npx create-react-app my-app --template redux-typescript
+
+    si existe el proyecto instalar las dependencias
+            npm install react-redux
+            yarn add react-redux
+
+
+        Contador vanilla js 
+            https://blog.revathskumar.com/2016/02/redux-using-with-vanilla-js.html
+
 
