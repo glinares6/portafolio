@@ -7,4 +7,7 @@ instalar npm
     lodash
         colección de funciones utilitarias para programación funcional ~ 2 year ago
 
+React
+    npm i -S react-redux
+
     
