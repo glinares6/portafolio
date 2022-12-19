@@ -28,8 +28,9 @@ const Somes = () => {
   };
   const [state, dispatch] = useReducer(AuthReducers, initialState);
 
-  console.log("+++current state+++ ", store.getState().outCounter.count);
+  console.log("+++current state+++ ", store.getState());
 
+  console.log(this);
   return (
     <div style={{ paddingLeft: "20px" }}>
       <h1> Use Reducer</h1>

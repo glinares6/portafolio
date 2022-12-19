@@ -13,34 +13,38 @@ import { BrowserRouter as Router } from "react-router-dom";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 //* initial state
-const initialState = {
-  count: 0,
-};
 
+const initialState = {
+  count: 10,
+};
 //* reducer
 const contador = (state = initialState, action) => {
   switch (action.type) {
     case "INCREMENT":
-      return { ...state, count: state.count + 1 };
+      return { count: state.count + 1 };
     case "DECREMENT":
-      return { ...state, count: state.count - 1 };
+      return { count: state.count - 1 };
     case "RESET":
       return action.payload;
-
+    default:
+      return state;
+  }
+};
+const usuario = (state = [], action) => {
+  switch (action.type) {
+    case "ADD_USER":
+      return [...state, action.payload];
     default:
       return state;
   }
 };
 
 //* rootReducer
-const rootCounter = combineReducers({
-  outCounter: contador,
-});
+const rootCounter = combineReducers({ contador, usuario });
 
 //* store
 export const store = createStore(
   rootCounter,
-  {},
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 

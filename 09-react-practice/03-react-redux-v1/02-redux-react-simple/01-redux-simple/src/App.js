@@ -1,10 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { store } from "./index";
 function App() {
   const dispatch = useDispatch();
   const myCounter = useSelector((state) => state.outCounter.count);
 
+  //* estado actual
   console.log("*******mi estado es ******", myCounter);
+
+  const unsubscribe = store.subscribe(() => {
+    // vemos el nuevo store
+    console.log("suscribe watch", store.getState());
+    // nos desuscribimos
+    unsubscribe();
+  });
   return (
     <div
       style={{
