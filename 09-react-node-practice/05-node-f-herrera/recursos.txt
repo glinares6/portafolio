@@ -58,9 +58,15 @@ node
 
     instalar nuevamente las dependencias
       npm install
+      
 
   yargs
     https://yargs.js.org/docs/#api-reference-optionkey-opt
+
+    git
+      regresionar git cambios
+        git checkout -- .
+        
 
     
 
