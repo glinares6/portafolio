@@ -81,9 +81,7 @@ const main = async () => {
     //* guardar en el json
     guardarDB(tareas.listadoArr);
 
-    if (opt !== "0") {
-      await pausa();
-    }
+    await pausa();
 
     // if (opt !== "0") await pausa();
   } while (opt !== "0");

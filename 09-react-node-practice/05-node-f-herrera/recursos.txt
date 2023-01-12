@@ -22,6 +22,30 @@ instalaciones necesarias
     uuid
       https://www.npmjs.com/package/uuid
 
+    peticiones http
+      reqres
+        https://reqres.in/
+          extension
+            JSON view axios
+          
+      mapbox.com
+      mapbox.com/api/search/geocoding
+        https://fakecredit.cards/Credit-Card-Generator-With-Money/index.html
+        googleplaces geolocalizacion
+
+          dotenv
+            npm.com/package/dotenv
+
+      openweather
+          https://openweathermap.org/
+        
+      request
+        https://www.npmjs.com/package/request
+      fetch
+        https://www.npmjs.com/package/fetch
+      axios
+
+
     extensiones
         activity-bar
         Material Icon Theme
