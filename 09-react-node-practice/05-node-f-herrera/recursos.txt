@@ -44,6 +44,20 @@ instalaciones necesarias
       fetch
         https://www.npmjs.com/package/fetch
       axios
+        https://www.npmjs.com/package/axios
+      
+
+      express
+        https://www.npmjs.com/package/express
+        https://expressjs.com/
+
+          handlebars
+            https://www.npmjs.com/package/handlebars
+              hbs
+                https://github.com/pillarjs/hbs
+      deploy
+        necesito que te actualizes
+
 
 
     extensiones
