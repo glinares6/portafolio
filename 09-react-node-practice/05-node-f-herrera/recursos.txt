@@ -58,7 +58,9 @@ instalaciones necesarias
       deploy
         necesito que te actualizes
 
-
+      http-server en desarrollo
+        sudo npm install --global http-server
+        https://www.npmjs.com/package/http-server
 
     extensiones
         activity-bar
