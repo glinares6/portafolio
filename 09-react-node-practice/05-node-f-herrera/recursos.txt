@@ -56,9 +56,15 @@ instalaciones necesarias
               hbs
                 https://github.com/pillarjs/hbs
       deploy
-        necesito que te actualizes
+        http-server
+           https://www.npmjs.com/package/httpserver
+        
+        cors
+          https://www.npmjs.com/package/cors
 
-
+      http-server en desarrollo
+        sudo npm install --global http-server
+        https://www.npmjs.com/package/http-server
 
     extensiones
         activity-bar
