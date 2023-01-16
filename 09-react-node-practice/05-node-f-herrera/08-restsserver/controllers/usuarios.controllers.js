@@ -11,7 +11,7 @@ const usuariosGet = (req = request, res = response) => {
   // ok: true,
   //* res.status(403).json({
   res.json({
-    msg: "get API - usuariosGet",
+    msg: "get API - usuariosGet desde el portafolio raiz",
     q,
     nombre,
     apikey,
