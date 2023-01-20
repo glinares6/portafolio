@@ -2,6 +2,7 @@ const { response, request } = require("express");
 const Usuario = require("../models/usuario");
 
 const bcryptjs = require("bcryptjs");
+const { findByIdAndDelete } = require("../models/usuario");
 
 //todo nos traemos el response para mostrar las funciones que tiene express
 
@@ -13,14 +14,21 @@ const usuariosGet = async (req = request, res = response) => {
   // const { q, nombre = "no name", apikey, page = 1, limit } = req.query;
 
   const { limite = 5, desde = 0 } = req.query;
-  const usuarios = await Usuario.find()
-    .skip(Number(desde))
-    .limit(Number(limite));
+  const query = { estado: true };
+
   // ok: true,
+
+  const [total, usuarios] = await Promise.all([
+    Usuario.countDocuments(query),
+    Usuario.find(query).skip(Number(desde)).limit(Number(limite)),
+  ]);
+
   //* res.status(403).json({
   res.json({
     // msg: "get API - usuariosGet",
+    total,
     usuarios,
+
     // q,
     // nombre,
     // apikey,
@@ -57,7 +65,7 @@ const usuariosPost = async (req, res = response) => {
 
 const usuariosPut = async (req, res = response) => {
   const { id } = req.params;
-  const { _id, password, google, ...resto } = req.body;
+  const { _id, password, google, correo, ...resto } = req.body;
 
   //todo validar contra base de datos
   if (password) {
@@ -83,11 +91,20 @@ const usuariosPatch = (req, res) => {
   });
 };
 
-const usuariosDelete = (req, res) => {
+const usuariosDelete = async (req, res) => {
+  const { id } = req.params;
+
+  //todo fisicamente lo barramos
+  //* const usuario = await Usuario.findByIdAndDelete(id);
+
+  //*eliminación logica
+  const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
+
   // ok: true,
   //* res.status(403).json({
   res.json({
-    msg: "delete API - usuariosDelete",
+    // msg: "delete API - usuariosDelete",
+    usuario,
   });
 };
 
