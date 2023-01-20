@@ -31,11 +31,7 @@ class Server {
     this.app.use(express.json());
 
     // Directorio Público
-    this.app.use(
-      express.static(
-        "09-react-node-practice/05-node-f-herrera/08-restsserver/public"
-      )
-    );
+    this.app.use(express.static("public"));
   }
 
   routes() {
