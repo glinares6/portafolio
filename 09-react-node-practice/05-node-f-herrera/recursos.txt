@@ -56,9 +56,38 @@ instalaciones necesarias
               hbs
                 https://github.com/pillarjs/hbs
       deploy
-        necesito que te actualizes
+        http-server
+           https://www.npmjs.com/package/httpserver
+        
+        cors
+          https://www.npmjs.com/package/cors
+
+      http-server en desarrollo
+        sudo npm install --global http-server
+        https://www.npmjs.com/package/http-server
+
+    programa de modelado base de datos
+      https://www.draw.io
+      https://app.diagrams.net/
+    
+    mongoDB
+      compress
+        https://www.mongodb.com/try/download/compass
+      atlas
+        https://www.mongodb.com/atlas/database
+      mongoose
+        https://mongoosejs.com/
+        https://mongoosejs.com/docs/index.html
+        queries
+        conexiones
+      encrypt
+        npm i bcryptjs
+      express-validator
+        npm i express-validator
 
 
+
+****************************************************************************
 
     extensiones
         activity-bar
