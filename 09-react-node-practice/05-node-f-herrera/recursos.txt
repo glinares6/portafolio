@@ -84,6 +84,9 @@ instalaciones necesarias
         npm i bcryptjs
       express-validator
         npm i express-validator
+        JWT
+          npm i jsonwebtoken
+      
 
 
 
