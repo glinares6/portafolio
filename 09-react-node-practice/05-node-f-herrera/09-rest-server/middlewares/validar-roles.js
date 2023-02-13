@@ -20,7 +20,17 @@ const esAdminRole = (req = request, res = response, next) => {
 
 const tieneRole = (...roles) => {
   return (req = request, res = response, next) => {
-    console.log(roles);
+    // console.log(roles);
+    if (!req.usuario) {
+      return res.status(500).json({
+        msg: " se quiere verificar el role sin validar  el token primero ",
+      });
+    }
+    if (!roles.includes(req.usuario.rol)) {
+      return res.status(401).json({
+        msg: `EL servicio requiere uno de estos  roles ${roles}`,
+      });
+    }
     next();
   };
 };
