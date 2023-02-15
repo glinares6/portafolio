@@ -24,11 +24,11 @@
 
 
 
+        <button id="google_signout">Signout</button>
         <script>
             function handleCredentialResponse(response) {
                 // decodeJwtResponse() is a custom function defined by you
                 // to decode the credential response.
-
 
 
                 //    google tooken  ID token 
@@ -47,11 +47,12 @@
                 ).then(
                     r => r.json()
                 ).then(
-                    resp =>
+                    resp => {
+
                         console.log(resp)
+                        localStorage.setItem('email', resp.usuario.correo)
 
-
-
+                    }
 
                 )
                     .catch(console.warn)
@@ -64,6 +65,16 @@
                 // console.log('Family Name: ' + responsePayload.family_name);
                 // console.log("Image URL: " + responsePayload.picture);
                 // console.log("Email: " + responsePayload.email);
+            }
+
+            const button = document.getElementById('google_signout')
+            button.onclick = () => {
+                console.log(google.accounts.id);
+                google.accounts.id.disableAutoSelect()
+                google.accounts.id.revoke(localStorage.getItem('email'), done => {
+                    localStorage.clear()
+                    location.reload()
+                })
             }
         </script>
 
