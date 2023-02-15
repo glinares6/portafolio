@@ -22,6 +22,7 @@ para agregar cuenta sig in de google
             manejo de respuestas de credenciales con funciones de javascript
                 https://developers.google.com/identity/gsi/web/guides/handle-credential-responses-js-functions?hl=es-419
             Verifica el token de ID de Google en tu servidor 
+                Using a Google API Client Library
                 https://developers.google.com/identity/gsi/web/guides/verify-google-id-token?hl=es-419
             
             
