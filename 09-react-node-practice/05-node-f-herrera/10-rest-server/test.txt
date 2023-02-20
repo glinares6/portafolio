@@ -26,3 +26,14 @@ para agregar cuenta sig in de google
                 https://developers.google.com/identity/gsi/web/guides/verify-google-id-token?hl=es-419
             
             
+    documentacion POSTMAN
+        registrarse en postman 
+        logearse con nuestro usuario
+            click derecho a la coleccion
+                view documentation
+                luego modificar deliberadamente
+                    publicar
+                si queremos editar los enviroments
+                    editamos la publicacion y cambiamos la opcion de publicar
+                    https://documenter.getpostman.com/view/25954358/2s93CKPE2w
+                    
