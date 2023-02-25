@@ -40,3 +40,10 @@ para agregar cuenta sig in de google
 
     mongoose populate 
         https://www.geeksforgeeks.org/mongoose-populate-method/
+
+
+    para busquedas en mongo compas 
+        en el filter agregar el id
+            {categoria:ObjectId('63f808244fcd99a106679a36') }
+
+                se  mostrara todos los resultados que incluyen categoria GALLETAS(id)
