@@ -8,11 +8,13 @@ const obtenerCategorias = async (req, res = response) => {
 
   const query = { estado: true };
 
-  const total = await Categoria.countDocuments(query);
-  const categorias = await Categoria.find(query)
-    .skip(Number(desde))
-    .limit(Number(limite))
-    .populate("usuario");
+  const [total, categorias] = await Promise.all([
+    Categoria.countDocuments(query),
+    Categoria.find(query)
+      .skip(Number(desde))
+      .limit(Number(limite))
+      .populate("usuario", "nombre"),
+  ]);
 
   res.json({
     total,
@@ -26,7 +28,7 @@ const obtenerCategorias = async (req, res = response) => {
 // 63f79164208596a9c55f8aec
 const obtenerCategoria = async (req, res = response) => {
   const { id } = req.params;
-  const categorias = await Categoria.findById(id).populate("usuario");
+  const categorias = await Categoria.findById(id).populate("usuario", "nombre");
 
   res.json({
     categorias,
@@ -62,10 +64,12 @@ const crearCategoria = async (req, res = response) => {
 
 const actualizarCategoria = async (req, res = response) => {
   const { id } = req.params;
-  const nombre = req.body.nombre.toUpperCase();
+  const { estado, usuario, ...data } = req.body;
+  data.nombre = data.nombre.toUpperCase();
+  data.usuario = req.usuario._id;
 
-  const categoria = await Categoria.findByIdAndUpdate(id, { nombre });
-  res.json({ categoria });
+  const categoria = await Categoria.findByIdAndUpdate(id, data, { new: true });
+  res.json(categoria);
 };
 
 //* borrarCategoria - estado:false
@@ -73,11 +77,13 @@ const actualizarCategoria = async (req, res = response) => {
 const borrarCategoria = async (req, res) => {
   const { id } = req.params;
 
-  const categoria = await Categoria.findByIdAndUpdate(id, { estado: false });
+  const categoria = await Categoria.findByIdAndUpdate(
+    id,
+    { estado: false },
+    { new: true }
+  );
 
-  res.json({
-    categoria,
-  });
+  res.json(categoria);
 };
 
 module.exports = {

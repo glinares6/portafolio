@@ -7,9 +7,14 @@ const {
   actualizarCategoria,
   borrarCategoria,
 } = require("../controllers/categorias");
-const { existeCategoria } = require("../helpers/db-validators");
+const { existeCategoriaPorId } = require("../helpers/db-validators");
 
-const { validarJWT, validarCampos, tieneRole } = require("../middlewares");
+const {
+  validarJWT,
+  validarCampos,
+  esAdminRole,
+  tieneRole,
+} = require("../middlewares");
 
 const router = Router();
 
@@ -22,7 +27,11 @@ router.get("/", obtenerCategorias);
 router.get(
   "/:id",
   //todo debe tener un helper  existeCategoria ~ _id
-  [check("id").custom(existeCategoria), validarCampos],
+  [
+    check("id", "No es un id de Mongo valido").isMongoId(),
+    check("id").custom(existeCategoriaPorId),
+    validarCampos,
+  ],
   obtenerCategoria
 );
 
@@ -44,6 +53,7 @@ router.put(
   [
     validarJWT,
     check("nombre", "El nombre es obligatorio").not().isEmpty(),
+    check("id").custom(existeCategoriaPorId),
     validarCampos,
   ],
   actualizarCategoria
@@ -55,7 +65,9 @@ router.delete(
   "/:id",
   [
     validarJWT,
+    esAdminRole,
     check("id", "El id no es valido").isMongoId(),
+    check("id").custom(existeCategoriaPorId),
     tieneRole("ADMIN_ROLE", "VENTAS_ROLE", "OTRO_ROLE"),
     validarCampos,
   ],
