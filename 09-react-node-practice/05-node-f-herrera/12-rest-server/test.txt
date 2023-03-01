@@ -59,3 +59,9 @@ para agregar cuenta sig in de google
         se volvera usar uuid , para generar identificadores a los archivos 
             npm i uuid
             https://npmjs.com/package/uuid
+
+        servidor de imagenees
+            https://cloudinary.com/
+
+        sdk cloudinary
+            https://www.npmjs.com/package/cloudinary
