@@ -1,0 +1,13 @@
+
+instalaciones necesarias
+    npm install
+
+    nodemon server/server
+
+
+    chat de la sala
+        http://localhost:3000/chat.html?nombre=Fernando
+    
+    para ingresar al chat privado de desde la consola del cliente
+         socket.emit('mensajePrivado',{mensaje:'Hola  a juan',para:"VRn9UwjHMgO_j4u-AAAN"})
+
