@@ -11,3 +11,11 @@ instalaciones necesarias
     para ingresar al chat privado de desde la consola del cliente
          socket.emit('mensajePrivado',{mensaje:'Hola  a juan',para:"VRn9UwjHMgO_j4u-AAAN"})
 
+
+    mejoras para el char con node 
+        filtro en los contactos en el lado superior isquierdo 
+        al darle click a un contacto que se abra una nueva ventana para hacer mensajerias de uno a uno 
+            cambiar el titulo de la sala de forma dinamica
+        
+        ** persistir los datos de los usuarios y sus mensajes **
+
