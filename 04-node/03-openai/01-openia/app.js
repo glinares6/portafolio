@@ -13,11 +13,13 @@ const main = async () => {
 
   const completion = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: "capital de peru",
+    prompt:
+      "listame  los  primeros restos humanos prehistóricos encontrados en el Perú ",
+    max_tokens: 2048,
   });
 
-  //   console.log(completion.data.choices[0].text);
-  console.log(completion.data.choices);
+  console.log(completion.data.choices[0].text);
+  // console.log(completion.data.choices);
 };
 
 main();
