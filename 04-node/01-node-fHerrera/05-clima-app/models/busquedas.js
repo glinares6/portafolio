@@ -13,6 +13,7 @@ class Busquedas {
   get historialCapitalizado() {
     //*capitalizar cada palabra
     return this.historial.map((lugar) => {
+      let palabras = lugar.split(" ");
       palabras = palabras.map((p) => p[0].toUpperCase() + p.substring(1));
 
       return palabras.join(" ");
