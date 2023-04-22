@@ -1,0 +1,148 @@
+
+*********************************************************************
+            DEFINIR LAS APLICACIONES DE CONSOLA EN UNA CARPETA
+*********************************************************************
+
+
+rest server
+    librerias
+        bcryptjs
+        cors
+        dotenv
+        express
+        express-validator
+        mongoose  5.11.15
+
+    "start":"node add.js"
+
+        la version actual al momento de hacer esta repractica  de mongoose es la v7 .
+
+
+app.js
+
+    dptemv
+    path models server
+
+    models -> Server
+        server.listen()
+
+
+     server.js       
+            express
+            cors
+            {dbConnection} fron '..database/config'
+
+            constructor
+                this.app=express()
+                this.port=process.env.PORT
+                this.usuariosPath='api/usuarios'
+
+
+            this.conectarDB()
+            this.middlewares()
+            this.routes()
+
+
+        async conectarDB(){
+            await dbConnection()
+        }
+
+        midlewares(){
+            this.app.use(cors())
+            this.app.use(express.json())
+            this.app.use(express.static("public"))
+
+        }
+
+        routes(){
+            this.app.use(this.usuariosPath,require('..routes/usuarios'))
+        }
+        
+        listen(){
+            this.port,() => { console.log('servidor corriendo en el puerto',this.port) }
+        }
+
+
+        
+        usuarios.js
+            {Router} fron 'express'
+            {check} fron 'express-validator
+
+
+            {validarCampos} from '..midlewares/validar-campos'
+
+            {esRoleValido,emailExiste,existeUsuarioPorId} from '../helpers/db-validator'
+
+
+            {usuariosGet,usuariosPut,usuariosPost,usuariosDelete,usuariosPatch} fron '..controlers/usuarios'
+
+
+
+        const router = Router()
+
+        router.get('/',usuariosGet)
+
+        router.put('/:id', [
+            check('id','No es un id valido',isMongoId()),
+            check('id').custom(existeUsuarioPorId),
+            check('role').custon(esRoleValido),
+            validarCampos
+        ], usuariosPut)
+
+        router.post('/',[... , validarCampos],usuariosPost)
+
+            const{nombre,correo,password,rol} = req.body
+
+        router.delete('/:id',[... , validarCampos],usuariosDelete)
+
+        router.patch('/',usuariosPatch)
+
+
+        module.exports = router
+
+
+    
+    ..models/usuario.js
+
+    const {Schema,model} = require('mongoose')
+
+    usuarioSchema= Schema({
+        nombre
+            type
+            required
+        correo
+            type
+            required
+            unique
+        password
+            type
+            required
+        img
+            type
+        rol
+            type
+            required
+            enum
+        estado
+            type
+            default
+        google
+            type
+            default
+
+    })
+
+    UsuarioSchema.method.toJSON = function(){
+        const { __v,password,...usuarios} =this.toObject()
+        return usuarios
+    }
+
+    module.exports= model('Usuario',UsuarioSchema)
+
+
+
+        accesos a la api
+
+            localhost:8080/api/usuarios?limite=7&desde=0
+
+        
