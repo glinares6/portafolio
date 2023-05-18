@@ -3,9 +3,9 @@ const { Router } = require("express");
 const { check } = require("express-validator");
 
 const {
+  crearCategoria,
   obtenerCategorias,
   obtenerCategoria,
-  crearCategoria,
   actualizarCategoria,
   borrarCategoria,
 } = require("../controllers/categorias");

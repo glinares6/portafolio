@@ -2,12 +2,19 @@ const express = require("express");
 const cors = require("cors");
 
 const fileUpload = require("express-fileupload");
+const { createServer } = require("http");
+
 const { dbConnection } = require("../database/config");
+
+const { socketController } = require("../sockets/controller");
 
 class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
+
+    this.server = createServer(this.app);
+    this.io = require("socket.io")(this.server);
 
     this.paths = {
       auth: "/api/auth",
@@ -18,15 +25,10 @@ class Server {
       uploads: "/api/uploads",
     };
 
-    // this.auth = "/api/auth";
-    // this.buscar = "/api/buscar";
-    // this.categorias = "/api/categorias";
-    // this.productos = "/api/productos";
-    // this.usuarios = "/api/usuarios";
-
     this.conectarDB();
     this.midlewares();
     this.routes();
+    this.sockets();
   }
 
   async conectarDB() {
@@ -57,8 +59,12 @@ class Server {
     this.app.use(this.paths.uploads, require("../routes/uploads"));
   }
 
+  sockets() {
+    this.io.on("connection", (socket) => socketController(socket, this.io));
+  }
+
   listen() {
-    this.app.listen(this.port, () =>
+    this.server.listen(this.port, () =>
       console.log("conectado desde el puerto ", this.port)
     );
   }

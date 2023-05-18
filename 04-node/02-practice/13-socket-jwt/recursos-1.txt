@@ -14,7 +14,9 @@ package.json
         "express-fileupload": "^1.2.1",
         "express-validator": "^6.9.2",
         "google-auth-library": "^6.1.6",
-        "jsonwebtoken": "^8.5.1",
+        "jsonwebtoken": "^8.5.1",fer.js
+        borrado:        13-socket-jwt/node_modules/smart-buffer/build/smartbuffer.js.map
+        borrado:        13-socket-jwt/node_modules/smart-buffer/build/utils.js
         "mongoose": "^5.11.15",
         "socket.io": "^4.6.1",
         "uuid": "^8.3.2"
@@ -961,20 +963,6 @@ const login = async (req, res = response) => {
     const { Usuario, Categoria, Producto } = require('../models');
 
     const coleccionesPermitidas = [
-    'usuarios',
-    'categorias',
-    'productos',
-    'roles'
-    ];
-
-
-
-    const { response } = require('express');
-    const { ObjectId } = require('mongoose').Types;
-
-    const { Usuario, Categoria, Producto } = require('../models');
-
-    const coleccionesPermitidas = [
         'usuarios',
         'categorias',
         'productos',
@@ -1134,6 +1122,7 @@ const login = async (req, res = response) => {
         esAdminRole,
         check('id', 'No es un id de Mongo válido').isMongoId(),
         check('id').custom( existeCategoriaPorId ),
+        //tieneRole("ADMIN_ROLE","VENTAS_ROLE","OTRO_ROLE")
         validarCampos,
     ],borrarCategoria);
 
@@ -1224,6 +1213,14 @@ const login = async (req, res = response) => {
 
         res.json( categoriaBorrada );
     }
+
+    module.exports = {
+    obtenerCategorias,
+    obtenerCategoria,
+    crearCategoria,
+    actualizarCategoria,
+    borrarCategoria,
+    };
 
 
 ../routes/productos
@@ -1570,7 +1567,10 @@ const login = async (req, res = response) => {
 ../uploads
     crear directorio
 
-../uploads/imgs
+../public/img
+    crear directorio
+    
+//*../uploads/imgs
     crear directorio
 
 ../assets
@@ -1800,6 +1800,7 @@ const login = async (req, res = response) => {
     io.emit("usuarios-activos", chatMensajes.usuariosArr);
     socket.emit("recibir-mensajes", chatMensajes.ultimos10);
 
+***************
     //Conectar a una sala especial
     socket.join(usuario.id); //global,socket.id,usuario.id
 
@@ -1918,11 +1919,11 @@ const login = async (req, res = response) => {
     fetch(url + "login", {
         method: "POST",
         body: JSON.stringify(formData),
-        headers: { "COntent-Type": "application/json" },
+        headers: { "Content-Type": "application/json" },
     })
         .then((resp) => resp.json())
         .then(({ msg, token }) => {
-        if (msg) {
+        //if (msg) {
             return console.error(msg);
         }
         localStorage.setItem("token", token);
@@ -1970,6 +1971,7 @@ const login = async (req, res = response) => {
     }
 
     const button = document.getElementById("google_signout");
+
     button.onclick = () => {
     console.log(google.accounts.id);
     google.accounts.id.disableAutoSelect();

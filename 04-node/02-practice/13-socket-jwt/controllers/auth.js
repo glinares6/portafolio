@@ -20,7 +20,7 @@ const login = async (req = request, res = response) => {
 
     if (!usuario.estado) {
       return res.status(400).json({
-        msg: "El usuario  con estado false",
+        msg: "El usuario/password  con estado false",
       });
     }
 
@@ -83,4 +83,14 @@ const googleSignIn = async (req = request, res = response) => {
   });
 };
 
-module.exports = { login, googleSignIn };
+const renovarToken = async (req, res = response) => {
+  const { usuario } = req;
+
+  const token = await generarJWT(usuario.id);
+
+  res.json({
+    usuario,
+    token,
+  });
+};
+module.exports = { login, googleSignIn, renovarToken };
