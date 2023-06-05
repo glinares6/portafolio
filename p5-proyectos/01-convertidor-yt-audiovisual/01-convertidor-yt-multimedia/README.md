@@ -1,4 +1,4 @@
-# Proyecto 1 Convertidor multimedia
+# Proyecto 1 Convertidor multimedia youtube
 
 Descarga archivos de video mp4
 Descarga archivos de audio mp3,m4a
@@ -27,6 +27,14 @@ Para iniciar los proyectos luego de descargar (npm/yarn)
             nodemon app.js
 
 
+    Para la implementación del proyecto usaremos netlify para el lado del frondtend y railway para el lado del backend.
+
     Si va subir proyectos (node) en produccion debe tener
     las variables de entorno(se debe obtener del archivo .env)
-     para agregarlo a railway / heroku .
+     para agregarlo a railway / heroku.
+
+Proyecto inspirado de Online video converter(frontend)
+
+        https://es.onlinevideoconverter.pro/127EQ/
+
+Proyecto diseñado e implementado por Gianmarco Linares L.
