@@ -23,7 +23,7 @@ Para iniciar los proyectos luego de descargar (npm/yarn)
                                                 credenciales y generar una  api
 
                                         En la paleta del buscador buscar   y habilitar:
-                                                YouTube Data API v3
+                                                YouTYouTube Data API v3ube Data API v3
 
 
     Las variables para la concexion con el servidor desde  react las va encontar en:
