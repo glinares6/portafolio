@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  position: relative;
+  width: 100%;
+
+  .menu {
+    display: flex;
+    justify-content: space-around;
+    height: 40px;
+    border: 1px solid black;
+    margin-bottom: 30px;
+
+    .items__menu {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      margin: 0;
+
+      & li {
+        /* display: flex; */
+        list-style: none;
+        width: 80px;
+        gap: 10px;
+
+        & a {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
