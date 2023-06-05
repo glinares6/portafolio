@@ -16,6 +16,16 @@ Para iniciar los proyectos luego de descargar (npm/yarn)
             .env
                 Contiene credenciales que no estan en el proyecto, debe agregarlas para que puedan compilar
 
+                        Para extraer los datos de youtube se necesita la api que debemos extraer de:
+                                https://developers.google.com/youtube/v3/getting-started?hl=es-419
+
+                                        Seguir los pasos y en consola de api ir a
+                                                credenciales y generar una  api
+
+                                        En la paleta del buscador buscar   y habilitar:
+                                                YouTube Data API v3
+
+
     Las variables para la concexion con el servidor desde  react las va encontar en:
             ./src/app.jsx
 
