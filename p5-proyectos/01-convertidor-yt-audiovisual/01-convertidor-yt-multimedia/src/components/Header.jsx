@@ -17,9 +17,6 @@ const Header = () => {
               <li>
                 <Link to="/faq">FAQ</Link>
               </li>
-              <li>
-                <Link to="/idioma">español</Link>
-              </li>
             </ul>
           </div>
         </div>
