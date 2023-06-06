@@ -1,5 +1,5 @@
 env:
-  PYTHON_PATH: /python_env
+  PYTHON_PATH: ./python_env
 
   start: |
-    source python_env/bin/activate
+    source ./python_env/bin/activate
