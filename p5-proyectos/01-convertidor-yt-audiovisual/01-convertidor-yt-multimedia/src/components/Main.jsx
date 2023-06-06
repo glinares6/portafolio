@@ -304,7 +304,7 @@ const Main = () => {
             className="select__main"
           >
             <div>
-              <b>Fromat </b>
+              <b>Format </b>
               <span id="selectboxValue">.mp3</span>
             </div>
             <div className="angle-down">
@@ -392,7 +392,7 @@ const Main = () => {
                 </div>
 
                 <div className="descripcion__yt">
-                  <h2>Descripcion</h2>
+                  <h2>Descripción</h2>
                   <div className="txtDescripcion__yt">
                     <div>
                       <pre>{descripcionYt}</pre>
