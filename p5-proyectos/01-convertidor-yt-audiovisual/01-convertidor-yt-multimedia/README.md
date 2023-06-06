@@ -39,6 +39,13 @@ Para iniciar los proyectos luego de descargar (npm/yarn)
 
     Para la implementación del proyecto usaremos netlify para el lado del frondtend y railway para el lado del backend.
 
+        En caso de querer tener ambos desarrollo(frontend y backend ) tenemos que el frontend subirlo a produccion:
+                npm run build
+
+                        luego agregar el contenido a la carpeta public
+
+                        Subir nuestro proyecto con ambos enfoques a railway
+
     Si va subir proyectos (node) en produccion debe tener
     las variables de entorno(se debe obtener del archivo .env)
      para agregarlo a railway / heroku.
