@@ -28,8 +28,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",
     "sass": "^1.62.1",
-    "youtube-dl-exec": "^2.4.3",
-    "ytdl-core": "^4.11.4"
+    "youtube-dl-exec": "^2.4.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
