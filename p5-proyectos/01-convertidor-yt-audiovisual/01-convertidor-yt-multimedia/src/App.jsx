@@ -9,8 +9,14 @@ import RouterYt from "./router/RouterYt";
 
 function App() {
   const [hostServidor] = useState("http://localhost:3000");
+
+  const urlPrimeraOpcion = "http://localhost:3000";
+  const urlSegundaOpcion = "https://portafolio-production-ed0a.up.railway.app/";
+
+  const urlFinal =
+    hostServidor === urlPrimeraOpcion ? urlPrimeraOpcion : urlSegundaOpcion;
   return (
-    <UseContext.Provider value={{ hostServidor }}>
+    <UseContext.Provider value={{ urlFinal }}>
       <RouterYt />
     </UseContext.Provider>
   );

@@ -6,7 +6,7 @@ import { UseContext } from "../contexts/AuthContext";
 // import parse from "html-react-parser";
 
 const Main = () => {
-  const { hostServidor } = useContext(UseContext);
+  const { urlFinal } = useContext(UseContext);
 
   const [toggle, setToggle] = useState(false);
 
@@ -27,7 +27,7 @@ const Main = () => {
   //   setCount((contador) => contador + 1);
   // };
 
-  const urlServidor = hostServidor;
+  const urlServidor = urlFinal;
   const handleChange = (e) => {
     setInput(e.target.value);
   };
