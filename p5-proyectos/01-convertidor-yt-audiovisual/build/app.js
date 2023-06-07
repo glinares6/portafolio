@@ -1,5 +1,5 @@
 const express = require("express");
-const { request } = require("express");
+const request = require("request");
 const http = require("http");
 const cors = require("cors");
 
