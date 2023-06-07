@@ -8,12 +8,10 @@ import { UseContext } from "./contexts/AuthContext";
 import RouterYt from "./router/RouterYt";
 
 function App() {
-  const [hostServidor] = useState(
-    "https://portafolio-production-ed0a.up.railway.app"
-  );
+  const [hostServidor] = useState("https://test-docker-zt45.onrender.com");
 
   const urlPrimeraOpcion = "http://localhost:3000";
-  const urlSegundaOpcion = "https://portafolio-production-ed0a.up.railway.app";
+  const urlSegundaOpcion = "https://test-docker-zt45.onrender.com";
 
   const urlFinal =
     hostServidor === urlPrimeraOpcion ? urlPrimeraOpcion : urlSegundaOpcion;
