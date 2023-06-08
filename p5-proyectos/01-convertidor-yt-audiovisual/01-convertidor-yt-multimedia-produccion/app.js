@@ -322,7 +322,6 @@ app.post("/data", async (req, res) => {
   if (v1) {
     idUrl = lpInput.split("=")[1].slice(0, 11);
   } else {
-    console.log("preformato\n", idUrl);
     idUrl = lpInput.substr(-11);
   }
 
