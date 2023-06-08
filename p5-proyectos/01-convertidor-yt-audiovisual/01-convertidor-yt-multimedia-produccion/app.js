@@ -314,9 +314,16 @@ app.post("/data", async (req, res) => {
 
   //todo usando la api publica de youtube
 
-  let lpInput = body.urlEx.trim();
+  let idUrl;
 
-  const idUrl = lpInput.split("=")[1];
+  let lpInput = body.urlEx.trim();
+  let v1 = lpInput.includes("v=");
+
+  if (v1) {
+    idUrl = lpInput.split("=")[1].slice(0, 11);
+  } else {
+    idUrl = lpInput.substr(-11);
+  }
 
   let uriTitulo;
   let uriDescripcion;
