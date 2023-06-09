@@ -279,7 +279,7 @@ app.post("/m4a", (req, res) => {
       let ext;
 
       output.formats.some((format) => {
-        if (format.acodec === "mp4a.40.2") {
+        if (format.acodec === "mp4a.40.2" && format.format_note === "medium") {
           mp3Url = format.url;
           ext = "m4a";
           return true; // Detener la iteración
@@ -288,7 +288,7 @@ app.post("/m4a", (req, res) => {
 
       if (!mp3Url) {
         output.formats.some((format) => {
-          if (format.acodec === "opus") {
+          if (format.acodec === "opus" && format.format_note === "medium") {
             mp3Url = format.url;
             ext = "mp3";
             return true; // Detener la iteración
@@ -408,7 +408,10 @@ app.post("/data", async (req, res) => {
         .then((output) => {
           data = output;
           output.formats.some((format) => {
-            if (format.acodec === "mp4a.40.2") {
+            if (
+              format.acodec === "mp4a.40.2" &&
+              format.format_note === "medium"
+            ) {
               infoLink = format.url;
               return true; // Detener la iteración
             }
@@ -416,7 +419,7 @@ app.post("/data", async (req, res) => {
 
           if (!infoLink) {
             output.formats.some((format) => {
-              if (format.acodec === "opus") {
+              if (format.acodec === "opus" && format.format_note === "medium") {
                 infoLink = format.url;
                 return true; // Detener la iteración
               }
@@ -480,7 +483,10 @@ app.post("/data", async (req, res) => {
           // console.log(output);
 
           output.formats.some((format) => {
-            if (format.acodec === "mp4a.40.2") {
+            if (
+              format.acodec === "mp4a.40.2" &&
+              format.format_note === "medium"
+            ) {
               infoLink = format.url;
               return true; // Detener la iteración
             }
@@ -488,7 +494,7 @@ app.post("/data", async (req, res) => {
 
           if (!infoLink) {
             output.formats.some((format) => {
-              if (format.acodec === "opus") {
+              if (format.acodec === "opus" && format.format_note === "medium") {
                 infoLink = format.url;
                 return true; // Detener la iteración
               }
