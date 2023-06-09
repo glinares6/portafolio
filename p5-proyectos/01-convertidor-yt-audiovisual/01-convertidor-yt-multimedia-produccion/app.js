@@ -63,7 +63,10 @@ app.post("/mp4", (req, res) => {
       let mp4Url;
 
       output.formats.some((format) => {
-        if (format.vcodec === "avc1.64001F") {
+        if (format.vcodec === "vp9" && format.resolution === "1920x1080") {
+          mp4Url = format.url;
+          return true; // Detener la iteración
+        } else if (format.vcodec === "avc1.64001F") {
           mp4Url = format.url;
           return true; // Detener la iteración
         }
@@ -156,7 +159,10 @@ app.post("/mp3", (req, res) => {
       let mp4Url;
 
       output.formats.some((format) => {
-        if (format.vcodec === "avc1.64001F") {
+        if (format.vcodec === "vp9" && format.resolution === "1920x1080") {
+          mp4Url = format.url;
+          return true; // Detener la iteración
+        } else if (format.vcodec === "avc1.64001F") {
           mp4Url = format.url;
           return true; // Detener la iteración
         }
