@@ -383,7 +383,6 @@ app.post("/data", async (req, res) => {
     .then((response) => response.json())
     .then((data) => {
       // console.log(data);
-      data = output;
       //*En caso no se visualize los objetos probar desde  el navegador la url
       uriTitulo = data.items[0].snippet.title;
       uriDescripcion = data.items[0].snippet.description;
@@ -406,6 +405,7 @@ app.post("/data", async (req, res) => {
         addHeader: ["referer:youtube.com", "user-agent:googlebot"],
       })
         .then((output) => {
+          data = output;
           output.formats.some((format) => {
             if (
               format.acodec === "mp4a.40.2" &&
