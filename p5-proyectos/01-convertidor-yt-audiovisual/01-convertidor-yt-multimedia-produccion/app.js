@@ -357,7 +357,7 @@ app.post("/data", async (req, res) => {
       // infoLink = "mp3 -switch";
 
       //todo usando la api de youtube-dl-exec
-      await youtubedl(body.urlEx, {
+      await youtubedl(lpInput, {
         dumpSingleJson: true,
         noCheckCertificates: true,
         noWarnings: true,
@@ -392,7 +392,7 @@ app.post("/data", async (req, res) => {
       // infoLink = "mp4 -switch";
 
       //todo usando la api de youtube-dl-exec
-      await youtubedl(body.urlEx, {
+      await youtubedl(lpInput, {
         dumpSingleJson: true,
         noCheckCertificates: true,
         noWarnings: true,
@@ -427,7 +427,7 @@ app.post("/data", async (req, res) => {
       // infoLink = "ma4 -switch";
 
       //todo usando la api de youtube-dl-exec
-      await youtubedl(body.urlEx, {
+      await youtubedl(lpInput, {
         dumpSingleJson: true,
         noCheckCertificates: true,
         noWarnings: true,
