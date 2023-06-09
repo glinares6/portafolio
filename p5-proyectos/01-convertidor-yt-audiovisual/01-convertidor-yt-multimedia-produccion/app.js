@@ -445,7 +445,7 @@ app.post("/data", async (req, res) => {
       })
         .then((output) => {
           output.formats.some((format) => {
-            if (format.vcodec === "vp9") {
+            if (format.vcodec === "avc1.640028") {
               infoLink = format.url;
               return infoLink; // Detener la iteración
             }
