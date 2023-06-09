@@ -374,7 +374,6 @@ app.post("/data", async (req, res) => {
   let uriImg;
 
   let infoLink;
-  let data;
 
   //*envio de el titulo ,descripcion,img de la api de youtube
   await fetch(
@@ -406,7 +405,6 @@ app.post("/data", async (req, res) => {
         addHeader: ["referer:youtube.com", "user-agent:googlebot"],
       })
         .then((output) => {
-          data = output;
           output.formats.some((format) => {
             if (
               format.acodec === "mp4a.40.2" &&
@@ -520,7 +518,6 @@ app.post("/data", async (req, res) => {
     img: uriImg,
     descripcion: uriDescripcion,
     uri: infoLink,
-    data,
   });
   //todo usando la api de youtube-dl-exec
   // youtubedl(body.urlEx, {
