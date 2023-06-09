@@ -42,7 +42,7 @@ app.post("/mp4", (req, res) => {
   if (v3) {
     let dat1 = lpInput.split("=")[0];
     let dat2 = lpInput.split("=")[1].slice(0, 11);
-    lpInput = dat1.concat(dat2);
+    lpInput = dat1.concat("=", dat2).trim();
   }
 
   console.log("enviado del cliente -  mp4", body.urlEx, body.format);
@@ -122,7 +122,7 @@ app.post("/mp3", (req, res) => {
   if (v3) {
     let dat1 = lpInput.split("=")[0];
     let dat2 = lpInput.split("=")[1].slice(0, 11);
-    lpInput = dat1.concat(dat2);
+    lpInput = dat1.concat("=", dat2).trim();
   }
 
   //* body.urlEx y body.format se extraen del cliente por el metodo fetch
@@ -258,7 +258,7 @@ app.post("/m4a", (req, res) => {
   if (v3) {
     let dat1 = lpInput.split("=")[0];
     let dat2 = lpInput.split("=")[1].slice(0, 11);
-    lpInput = dat1.concat(dat2);
+    lpInput = dat1.concat("=", dat2).trim();
   }
 
   console.log("enviado del cliente -  m4a", body.urlEx, body.format);
@@ -347,8 +347,8 @@ app.post("/data", async (req, res) => {
   let idUrl;
   let lpInput;
   lpInput = body.urlEx.trim();
-  let v1 = lpInput.includes("v=");
 
+  let v1 = lpInput.includes("v=");
   let v2 = lpInput.includes("shorts/");
   let v3 = lpInput.includes("list=");
 
@@ -366,7 +366,7 @@ app.post("/data", async (req, res) => {
     let dat1 = lpInput.split("=")[0];
     let dat2 = lpInput.split("=")[1].slice(0, 11);
 
-    lpInput = dat1 + dat2;
+    lpInput = dat1.concat("=", dat2).trim();
   }
 
   let uriTitulo;
