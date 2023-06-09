@@ -445,20 +445,12 @@ app.post("/data", async (req, res) => {
       })
         .then((output) => {
           output.formats.some((format) => {
-            if (format.vcodec === "avc1.640028") {
+            if (format.vcodec === "avc1.64001F") {
               infoLink = format.url;
               return infoLink; // Detener la iteración
             }
           });
 
-          if (!infoLink) {
-            output.formats.some((format) => {
-              if (format.vcodec === "avc1.64001F") {
-                infoLink = format.url;
-                return infoLink; // Detener la iteración
-              }
-            });
-          }
           if (!infoLink) {
             output.formats.some((format) => {
               if (format.vcodec === "avc1.42001E") {
