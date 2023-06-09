@@ -447,15 +447,15 @@ app.post("/data", async (req, res) => {
           output.formats.some((format) => {
             if (format.vcodec === "avc1.64002a") {
               infoLink = format.url;
-              return infoLink; // Detener la iteración
+              return true; // Detener la iteración
             }
           });
 
           if (!infoLink) {
             output.formats.some((format) => {
-              if (format.vcodec === "avc1.42001E") {
+              if (format.vcodec === "avc1.64001F") {
                 infoLink = format.url;
-                return infoLink; // Detener la iteración
+                return true; // Detener la iteración
               }
             });
           }
@@ -463,7 +463,7 @@ app.post("/data", async (req, res) => {
             output.formats.some((format) => {
               if (format.vcodec === "avc1.42001E") {
                 infoLink = format.url;
-                return infoLink; // Detener la iteración
+                return true; // Detener la iteración
               }
             });
           }
