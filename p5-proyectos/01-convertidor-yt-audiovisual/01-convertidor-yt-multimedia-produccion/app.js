@@ -363,9 +363,11 @@ app.post("/data", async (req, res) => {
   }
 
   if (v3) {
+    let arr = [];
     let dat1 = lpInput.split("=")[0];
     let dat2 = lpInput.split("=")[1].slice(0, 11);
-    lpInput = dat1.concat(dat2);
+
+    lpInput = arr.push(dat1, dat2).join();
   }
 
   let uriTitulo;
