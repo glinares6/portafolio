@@ -317,11 +317,16 @@ app.post("/data", async (req, res) => {
   let idUrl;
   let lpInput = body.urlEx.trim();
   let v1 = lpInput.includes("v=");
+  let v2 = lpInput.includes("shorts/");
 
   if (v1) {
     idUrl = lpInput.split("=")[1].slice(0, 11);
   } else {
-    idUrl = lpInput.substr(-11);
+    if (v2) {
+      idUrl = lpInput.split("/")[4].slice(0, 11);
+    } else {
+      idUrl = lpInput.substr(-11);
+    }
   }
 
   console.log("link ya formateado", idUrl);
