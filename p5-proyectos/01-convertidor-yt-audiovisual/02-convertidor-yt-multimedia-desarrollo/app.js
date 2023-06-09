@@ -340,8 +340,6 @@ app.post("/m4a", (req, res) => {
 app.post("/data", async (req, res) => {
   const body = req.body;
 
-  console.log("enviado del cliente -  data", body.urlEx, body.format);
-
   //todo usando la api publica de youtube
 
   let idUrl;
@@ -367,6 +365,7 @@ app.post("/data", async (req, res) => {
 
     lpInput = dat1.concat("=", dat2).trim();
   }
+  console.log("enviado del cliente -  data", body.urlEx, body.format);
 
   console.log("link ya formateado", idUrl);
   console.log("link concatenado", lpInput);
