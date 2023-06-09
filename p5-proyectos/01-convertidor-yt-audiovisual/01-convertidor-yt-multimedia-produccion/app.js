@@ -35,9 +35,19 @@ app.use(express.static("public"));
 app.post("/mp4", (req, res) => {
   const body = req.body;
 
+  let lpInput;
+  lpInput = body.urlEx.trim();
+
+  let v3 = lpInput.includes("list=");
+  if (v3) {
+    let dat1 = lpInput.split("=")[0];
+    let dat2 = lpInput.split("=")[1].slice(0, 11);
+    lpInput = dat1.concat(dat2);
+  }
+
   console.log("enviado del cliente -  mp4", body.urlEx, body.format);
 
-  youtubedl(body.urlEx, {
+  youtubedl(lpInput, {
     dumpSingleJson: true,
     noCheckCertificates: true,
     noWarnings: true,
@@ -105,6 +115,16 @@ app.post("/mp3", (req, res) => {
 
   const body = req.body;
 
+  let lpInput;
+  lpInput = body.urlEx.trim();
+
+  let v3 = lpInput.includes("list=");
+  if (v3) {
+    let dat1 = lpInput.split("=")[0];
+    let dat2 = lpInput.split("=")[1].slice(0, 11);
+    lpInput = dat1.concat(dat2);
+  }
+
   //* body.urlEx y body.format se extraen del cliente por el metodo fetch
   console.log("enviado del cliente -  mp3", body.urlEx, body.format);
 
@@ -116,7 +136,7 @@ app.post("/mp3", (req, res) => {
 
   console.log("limpiar temporales");
 
-  youtubedl(body.urlEx, {
+  youtubedl(lpInput, {
     dumpSingleJson: true,
     noCheckCertificates: true,
     noWarnings: true,
@@ -231,8 +251,18 @@ app.post("/mp3", (req, res) => {
 app.post("/m4a", (req, res) => {
   const body = req.body;
 
+  let lpInput;
+  lpInput = body.urlEx.trim();
+
+  let v3 = lpInput.includes("list=");
+  if (v3) {
+    let dat1 = lpInput.split("=")[0];
+    let dat2 = lpInput.split("=")[1].slice(0, 11);
+    lpInput = dat1.concat(dat2);
+  }
+
   console.log("enviado del cliente -  m4a", body.urlEx, body.format);
-  youtubedl(body.urlEx, {
+  youtubedl(lpInput, {
     dumpSingleJson: true,
     noCheckCertificates: true,
     noWarnings: true,
@@ -333,8 +363,9 @@ app.post("/data", async (req, res) => {
   }
 
   if (v3) {
-    let dat1 = "https://www.youtube.com/watch?v=";
-    lpInput = dat1.concat(lpInput.split("=")[1].slice(0, 11));
+    let dat1 = lpInput.split("=")[0];
+    let dat2 = lpInput.split("=")[1].slice(0, 11);
+    lpInput = dat1.concat(dat2);
   }
 
   let uriTitulo;
