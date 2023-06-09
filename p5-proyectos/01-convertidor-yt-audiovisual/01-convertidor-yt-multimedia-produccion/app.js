@@ -374,6 +374,7 @@ app.post("/data", async (req, res) => {
   let uriImg;
 
   let infoLink;
+  let data;
 
   //*envio de el titulo ,descripcion,img de la api de youtube
   await fetch(
@@ -382,7 +383,7 @@ app.post("/data", async (req, res) => {
     .then((response) => response.json())
     .then((data) => {
       // console.log(data);
-
+      data = output;
       //*En caso no se visualize los objetos probar desde  el navegador la url
       uriTitulo = data.items[0].snippet.title;
       uriDescripcion = data.items[0].snippet.description;
@@ -518,6 +519,7 @@ app.post("/data", async (req, res) => {
     img: uriImg,
     descripcion: uriDescripcion,
     uri: infoLink,
+    data,
   });
   //todo usando la api de youtube-dl-exec
   // youtubedl(body.urlEx, {
