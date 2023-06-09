@@ -451,7 +451,7 @@ app.post("/data", async (req, res) => {
       })
         .then((output) => {
           output.formats.some((format) => {
-            if (format.vcodec === "vp9" && format.resolution === "1920x1080") {
+            if (format.vcodec === "avc1.64002a") {
               infoLink = format.url;
               return true; // Detener la iteración
             } else if (format.vcodec === "avc1.64001F") {
