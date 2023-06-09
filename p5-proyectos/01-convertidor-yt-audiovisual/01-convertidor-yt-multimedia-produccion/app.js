@@ -447,7 +447,7 @@ app.post("/data", async (req, res) => {
           output.formats.some((format) => {
             if (format.vcodec === "avc1.64002a") {
               infoLink = format.url;
-              return true; // Detener la iteración
+              return infoLink; // Detener la iteración
             }
           });
 
@@ -455,7 +455,7 @@ app.post("/data", async (req, res) => {
             output.formats.some((format) => {
               if (format.vcodec === "avc1.42001E") {
                 infoLink = format.url;
-                return true; // Detener la iteración
+                return infoLink; // Detener la iteración
               }
             });
           }
@@ -463,7 +463,7 @@ app.post("/data", async (req, res) => {
             output.formats.some((format) => {
               if (format.vcodec === "avc1.42001E") {
                 infoLink = format.url;
-                return true; // Detener la iteración
+                return infoLink; // Detener la iteración
               }
             });
           }
