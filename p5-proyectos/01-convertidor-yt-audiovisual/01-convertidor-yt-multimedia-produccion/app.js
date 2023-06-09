@@ -283,9 +283,6 @@ app.post("/m4a", (req, res) => {
           mp3Url = format.url;
           ext = "m4a";
           return true; // Detener la iteración
-        } else if (format.acodec === "mp4a.40.5") {
-          infoLink = format.url;
-          return true;
         }
       });
 
@@ -414,9 +411,6 @@ app.post("/data", async (req, res) => {
             if (format.acodec === "mp4a.40.2") {
               infoLink = format.url;
               return true; // Detener la iteración
-            } else if (format.acodec === "mp4a.40.5") {
-              infoLink = format.url;
-              return true;
             }
           });
 
@@ -489,9 +483,6 @@ app.post("/data", async (req, res) => {
             if (format.acodec === "mp4a.40.2") {
               infoLink = format.url;
               return true; // Detener la iteración
-            } else if (format.acodec === "mp4a.40.5") {
-              infoLink = format.url;
-              return true;
             }
           });
 
