@@ -156,7 +156,7 @@ app.post("/mp3", (req, res) => {
       let mp4Url;
 
       output.formats.some((format) => {
-        if (format.acodec === "mp4a.40.2") {
+        if (format.vcodec === "avc1.64001F") {
           mp4Url = format.url;
           return true; // Detener la iteración
         }
@@ -164,7 +164,7 @@ app.post("/mp3", (req, res) => {
 
       if (!mp4Url) {
         output.formats.some((format) => {
-          if (format.acodec === "opus") {
+          if (format.vcodec === "avc1.42001E") {
             mp4Url = format.url;
             return true; // Detener la iteración
           }
@@ -283,6 +283,9 @@ app.post("/m4a", (req, res) => {
           mp3Url = format.url;
           ext = "m4a";
           return true; // Detener la iteración
+        } else if (format.acodec === "mp4a.40.5") {
+          infoLink = format.url;
+          return true;
         }
       });
 
@@ -408,15 +411,18 @@ app.post("/data", async (req, res) => {
         .then((output) => {
           data = output;
           output.formats.some((format) => {
-            if (format.vcodec === "avc1.64001F") {
+            if (format.acodec === "mp4a.40.2") {
               infoLink = format.url;
               return true; // Detener la iteración
+            } else if (format.acodec === "mp4a.40.5") {
+              infoLink = format.url;
+              return true;
             }
           });
 
           if (!infoLink) {
             output.formats.some((format) => {
-              if (format.vcodec === "avc1.42001E") {
+              if (format.acodec === "opus") {
                 infoLink = format.url;
                 return true; // Detener la iteración
               }
@@ -483,6 +489,9 @@ app.post("/data", async (req, res) => {
             if (format.acodec === "mp4a.40.2") {
               infoLink = format.url;
               return true; // Detener la iteración
+            } else if (format.acodec === "mp4a.40.5") {
+              infoLink = format.url;
+              return true;
             }
           });
 
