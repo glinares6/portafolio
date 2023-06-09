@@ -333,7 +333,8 @@ app.post("/data", async (req, res) => {
   }
 
   if (v3) {
-    lpInput = lpInput.split("=")[0].concat(lpInput.split("=")[1].slice(0, 11));
+    let dat1 = "https://www.youtube.com/watch?v=";
+    lpInput = dat1.concat(lpInput.split("=")[1].slice(0, 11));
   }
 
   let uriTitulo;
