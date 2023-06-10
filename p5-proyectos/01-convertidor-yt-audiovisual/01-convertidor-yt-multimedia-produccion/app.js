@@ -350,20 +350,23 @@ app.post("/data", async (req, res) => {
 
   let v1 = lpInput.includes("v=");
   let v2 = lpInput.includes("shorts/");
+  let v3 = lpInput.includes("live/");
 
-  let v3 = lpInput.includes("list=");
+  let v4 = lpInput.includes("list=");
 
   if (v1) {
     idUrl = lpInput.split("=")[1].slice(0, 11);
+  } else if (v2) {
+    // idUrl = lpInput.split("/")[4].slice(0, 11);
+    idUrl = lpInput.split("shorts/")[1].slice(0, 11);
+  } else if (v3) {
+    idUrl = lpInput.split("live/")[1].slice(0, 11);
   } else {
-    if (v2) {
-      idUrl = lpInput.split("/")[4].slice(0, 11);
-    } else {
-      idUrl = lpInput.substr(-11);
-    }
+    idUrl = lpInput.split("/")[3].slice(0, 11);
+    // idUrl = lpInput.substr(-11);
   }
 
-  if (v3) {
+  if (v4) {
     let dat1 = lpInput.split("=")[0];
     let dat2 = lpInput.split("=")[1].slice(0, 11);
 
