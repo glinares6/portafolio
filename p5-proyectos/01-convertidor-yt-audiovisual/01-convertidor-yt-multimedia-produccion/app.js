@@ -350,6 +350,7 @@ app.post("/data", async (req, res) => {
 
   let v1 = lpInput.includes("v=");
   let v2 = lpInput.includes("shorts/");
+
   let v3 = lpInput.includes("list=");
 
   if (v1) {
@@ -367,6 +368,12 @@ app.post("/data", async (req, res) => {
     let dat2 = lpInput.split("=")[1].slice(0, 11);
 
     lpInput = dat1.concat("=", dat2).trim();
+  } else {
+    if (v2) {
+      let dat3 = lpInput.split("shorts/")[0];
+      let dat4 = lpInput.split("shorts/")[1].slice(0, 11);
+      lpInput = dat3.concat("shorts/", dat4).trim();
+    }
   }
 
   let uriTitulo;
