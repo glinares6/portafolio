@@ -6,7 +6,7 @@ const Faq = () => {
       <Header />
       <div className="faq__main">
         <div className="faq__posicion">
-          <p>El video en formato mp4 con una resolucion de::</p>
+          <p>El video en formato mp4 con una resolucion de:</p>
           <p className="faq__formato">720p , 360p , etc</p>
           <p>El formato del audio es:</p>
           <p className="faq__formato"> mp3, m4a</p>
