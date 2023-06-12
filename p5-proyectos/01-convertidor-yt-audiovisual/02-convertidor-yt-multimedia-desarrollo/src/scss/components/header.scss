@@ -61,7 +61,7 @@ body {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1050px) {
   .header {
     position: relative;
     font-size: 6px;
@@ -70,7 +70,7 @@ body {
     // border: 1px solid rgb(138, 131, 183);
     .menu {
       // border: 1px solid rgb(20, 142, 97);
-      height: 7em;
+      height: 6.7em;
 
       .items__menu {
         &.items__menu:nth-child(1) {
@@ -81,7 +81,7 @@ body {
           height: 100%;
 
           .txt__header {
-            font-size: 4em;
+            font-size: 5em;
           }
         }
         &.items__menu:nth-child(2) {
@@ -93,8 +93,8 @@ body {
           width: 100%;
           ul {
             & li {
-              width: 40px;
-              font-size: 1.8em;
+              width: 70px;
+              font-size: 2em;
               // border: 1px solid red;
 
               & a {
@@ -144,7 +144,7 @@ body {
           width: 100%;
           ul {
             & li {
-              width: 40px;
+              width: 50px;
               font-size: 1.8em;
               // border: 1px solid red;
 

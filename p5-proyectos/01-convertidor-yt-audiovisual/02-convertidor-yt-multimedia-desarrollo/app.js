@@ -296,6 +296,19 @@ app.post("/m4a", (req, res) => {
         });
       }
 
+      if (!mp3Url) {
+        output.formats.some((format) => {
+          if (
+            format.acodec === "mp4a.40.2" &&
+            format.format_note === "English original (default), medium"
+          ) {
+            mp3Url = format.url;
+            ext = "m4a";
+            return true; // Detener la iteración
+          }
+        });
+      }
+
       console.log("salida de la extension", ext);
       // const mp4Url = output.formats.find(
       //   (format) => format.vcodec === "avc1.64001F"
@@ -387,7 +400,7 @@ app.post("/data", async (req, res) => {
   let uriImg;
 
   let infoLink;
-
+  let data;
   //*envio de el titulo ,descripcion,img de la api de youtube
   await fetch(
     `https://www.googleapis.com/youtube/v3/videos?id=${idUrl}&key=${apiKeyYt}&part=snippet`
@@ -418,6 +431,7 @@ app.post("/data", async (req, res) => {
         addHeader: ["referer:youtube.com", "user-agent:googlebot"],
       })
         .then((output) => {
+          data = output;
           output.formats.some((format) => {
             if (
               format.acodec === "mp4a.40.2" &&
@@ -431,6 +445,18 @@ app.post("/data", async (req, res) => {
           if (!infoLink) {
             output.formats.some((format) => {
               if (format.acodec === "opus" && format.format_note === "medium") {
+                infoLink = format.url;
+                return true; // Detener la iteración
+              }
+            });
+          }
+
+          if (!infoLink) {
+            output.formats.some((format) => {
+              if (
+                format.acodec === "mp4a.40.2" &&
+                format.format_note === "English original (default), medium"
+              ) {
                 infoLink = format.url;
                 return true; // Detener la iteración
               }
@@ -511,6 +537,17 @@ app.post("/data", async (req, res) => {
               }
             });
           }
+          if (!infoLink) {
+            output.formats.some((format) => {
+              if (
+                format.acodec === "mp4a.40.2" &&
+                format.format_note === "English original (default), medium"
+              ) {
+                infoLink = format.url;
+                return true; // Detener la iteración
+              }
+            });
+          }
 
           console.log("Ruta del archivo m4a enviado -switch");
         })
@@ -531,6 +568,7 @@ app.post("/data", async (req, res) => {
     img: uriImg,
     descripcion: uriDescripcion,
     uri: infoLink,
+    data,
   });
   //todo usando la api de youtube-dl-exec
   // youtubedl(body.urlEx, {
