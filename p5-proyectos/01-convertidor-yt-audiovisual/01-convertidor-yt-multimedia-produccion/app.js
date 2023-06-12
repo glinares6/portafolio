@@ -296,6 +296,19 @@ app.post("/m4a", (req, res) => {
         });
       }
 
+      if (!mp3Url) {
+        output.formats.some((format) => {
+          if (
+            format.acodec === "mp4a.40.2" &&
+            format.format_note === "English original (default), medium"
+          ) {
+            mp3Url = format.url;
+            ext = "m4a";
+            return true; // Detener la iteración
+          }
+        });
+      }
+
       console.log("salida de la extension", ext);
       // const mp4Url = output.formats.find(
       //   (format) => format.vcodec === "avc1.64001F"
@@ -434,6 +447,18 @@ app.post("/data", async (req, res) => {
               }
             });
           }
+
+          if (!infoLink) {
+            output.formats.some((format) => {
+              if (
+                format.acodec === "mp4a.40.2" &&
+                format.format_note === "English original (default), medium"
+              ) {
+                infoLink = format.url;
+                return true; // Detener la iteración
+              }
+            });
+          }
         })
         .catch((error) => {
           console.error("Ocurrió un error:", error);
@@ -504,6 +529,18 @@ app.post("/data", async (req, res) => {
           if (!infoLink) {
             output.formats.some((format) => {
               if (format.acodec === "opus" && format.format_note === "medium") {
+                infoLink = format.url;
+                return true; // Detener la iteración
+              }
+            });
+          }
+
+          if (!infoLink) {
+            output.formats.some((format) => {
+              if (
+                format.acodec === "mp4a.40.2" &&
+                format.format_note === "English original (default), medium"
+              ) {
                 infoLink = format.url;
                 return true; // Detener la iteración
               }
