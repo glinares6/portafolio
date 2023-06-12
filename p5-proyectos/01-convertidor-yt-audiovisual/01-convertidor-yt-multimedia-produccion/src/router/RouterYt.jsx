@@ -7,7 +7,9 @@ import {
   // Link,
   Route,
   createRoutesFromElements,
+  Navigate,
 } from "react-router-dom";
+
 import Home from "../pages/Home";
 import Faq from "../pages/Faq";
 import Idioma from "../pages/Idioma";
@@ -23,6 +25,7 @@ const RouterYt = () => {
         <Route path="/faq" element={<Faq />} />
 
         <Route path="/idioma" element={<Idioma />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </>
     )
   );
