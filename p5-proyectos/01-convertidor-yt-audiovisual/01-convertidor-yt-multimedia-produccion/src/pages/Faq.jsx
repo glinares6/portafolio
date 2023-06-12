@@ -12,7 +12,7 @@ const Faq = () => {
           <p className="faq__formato"> mp3, m4a</p>
           <p>No soporta la reproducción y descarga en tiempo real.</p>
           <p>
-            Inspirado de
+            Inspirado de &nbsp;
             <a
               className="faq__link"
               target="__blank"
