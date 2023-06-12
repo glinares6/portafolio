@@ -279,7 +279,7 @@ app.post("/m4a", (req, res) => {
       let ext;
 
       output.formats.some((format) => {
-        if (format.acodec === "mp4a.40.2") {
+        if (format.acodec === "mp4a.40.2" && format.format_note === "medium") {
           mp3Url = format.url;
           ext = "m4a";
           return true; // Detener la iteración
@@ -288,7 +288,7 @@ app.post("/m4a", (req, res) => {
 
       if (!mp3Url) {
         output.formats.some((format) => {
-          if (format.acodec === "opus") {
+          if (format.acodec === "opus" && format.format_note === "medium") {
             mp3Url = format.url;
             ext = "mp3";
             return true; // Detener la iteración
@@ -340,32 +340,44 @@ app.post("/m4a", (req, res) => {
 app.post("/data", async (req, res) => {
   const body = req.body;
 
+  console.log("enviado del cliente -  data", body.urlEx, body.format);
+
   //todo usando la api publica de youtube
 
   let idUrl;
   let lpInput;
   lpInput = body.urlEx.trim();
+
   let v1 = lpInput.includes("v=");
   let v2 = lpInput.includes("shorts/");
-  let v3 = lpInput.includes("list=");
+  let v3 = lpInput.includes("live/");
+
+  let v4 = lpInput.includes("list=");
 
   if (v1) {
     idUrl = lpInput.split("=")[1].slice(0, 11);
+  } else if (v2) {
+    // idUrl = lpInput.split("/")[4].slice(0, 11);
+    idUrl = lpInput.split("shorts/")[1].slice(0, 11);
+  } else if (v3) {
+    idUrl = lpInput.split("live/")[1].slice(0, 11);
   } else {
-    if (v2) {
-      idUrl = lpInput.split("/")[4].slice(0, 11);
-    } else {
-      idUrl = lpInput.substr(-11);
-    }
+    idUrl = lpInput.split("/")[3].slice(0, 11);
+    // idUrl = lpInput.substr(-11);
   }
 
-  if (v3) {
+  if (v4) {
     let dat1 = lpInput.split("=")[0];
     let dat2 = lpInput.split("=")[1].slice(0, 11);
 
     lpInput = dat1.concat("=", dat2).trim();
+  } else {
+    if (v2) {
+      let dat3 = lpInput.split("shorts/")[0];
+      let dat4 = lpInput.split("shorts/")[1].slice(0, 11);
+      lpInput = dat3.concat("shorts/", dat4).trim();
+    }
   }
-  console.log("enviado del cliente -  data", body.urlEx, body.format);
 
   console.log("link ya formateado", idUrl);
   console.log("link concatenado", lpInput);
@@ -407,7 +419,10 @@ app.post("/data", async (req, res) => {
       })
         .then((output) => {
           output.formats.some((format) => {
-            if (format.acodec === "mp4a.40.2") {
+            if (
+              format.acodec === "mp4a.40.2" &&
+              format.format_note === "medium"
+            ) {
               infoLink = format.url;
               return true; // Detener la iteración
             }
@@ -415,7 +430,7 @@ app.post("/data", async (req, res) => {
 
           if (!infoLink) {
             output.formats.some((format) => {
-              if (format.acodec === "opus") {
+              if (format.acodec === "opus" && format.format_note === "medium") {
                 infoLink = format.url;
                 return true; // Detener la iteración
               }
@@ -479,7 +494,10 @@ app.post("/data", async (req, res) => {
           // console.log(output);
 
           output.formats.some((format) => {
-            if (format.acodec === "mp4a.40.2") {
+            if (
+              format.acodec === "mp4a.40.2" &&
+              format.format_note === "medium"
+            ) {
               infoLink = format.url;
               return true; // Detener la iteración
             }
@@ -487,7 +505,7 @@ app.post("/data", async (req, res) => {
 
           if (!infoLink) {
             output.formats.some((format) => {
-              if (format.acodec === "opus") {
+              if (format.acodec === "opus" && format.format_note === "medium") {
                 infoLink = format.url;
                 return true; // Detener la iteración
               }

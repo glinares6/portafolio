@@ -112,15 +112,23 @@ const Main = () => {
     }
   };
 
-  const handleEnlace = async () => {
+  const handleEnlace = async (e) => {
     const abc = self.abc;
 
     const divConvert = self.divConvert;
+    const btnConvert1 = self.btnConvert1;
 
     if (!abc.value) {
       console.log("esta en blanco descargar");
     } else {
       // setInput(abc.value);
+
+      console.log(e.target.className);
+      if (e.target.className.split(" ")[1] === "rosa") {
+        btnConvert1.classList.remove("rosa");
+      } else {
+        btnConvert1.classList.add("rosa");
+      }
 
       setLinkPh(input);
 
@@ -282,9 +290,9 @@ const Main = () => {
     <>
       <div className="main__home">
         <div className="convertidor">
-          <h3 className="tipico">
+          <p className="tipico">
             --------------------- CONVERTIDOR MP4 ------------------------
-          </h3>
+          </p>
         </div>
         <div className="input__div">
           <input
@@ -370,8 +378,7 @@ const Main = () => {
             <div className="informacion__main">
               <div className="titulo__yt">
                 <div className="txt__formato">
-                  <h1>Titulo</h1>
-                  <h1>{tituloYt}</h1>
+                  <p>{tituloYt}</p>
                 </div>
               </div>
               <div className="info__img">
@@ -392,7 +399,6 @@ const Main = () => {
                 </div>
 
                 <div className="descripcion__yt">
-                  <h2>Descripción</h2>
                   <div className="txtDescripcion__yt">
                     <div>
                       <pre>{descripcionYt}</pre>
@@ -403,7 +409,11 @@ const Main = () => {
             </div>
 
             <div className="enlace2">
-              <button onClick={handleEnlace} className="button-item">
+              <button
+                id="btnConvert1"
+                onClick={handleEnlace}
+                className="button-item"
+              >
                 DESCARGAR
               </button>
             </div>

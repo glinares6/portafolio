@@ -7,10 +7,10 @@ const Header = () => {
       <div className="header">
         <div className="menu">
           <div className="items__menu">
-            <h1>Online Video Converter </h1>
+            <p className="txt__header">Online Video Converter </p>
           </div>
-          <div>
-            <ul className="items__menu">
+          <div className="items__menu">
+            <ul>
               <li>
                 <Link to="/">Home</Link>
               </li>
