@@ -576,6 +576,10 @@ app.post("/data", async (req, res) => {
   //     console.error("Ocurrió un error:", error);
   //   });
 });
+
+app.get("*", (req, res) => {
+  res.redirect("/");
+});
 //* test
 app.get("/verificar", (req, res) => {
   youtubedl(urlTesting, {
