@@ -561,13 +561,23 @@ app.post("/data", async (req, res) => {
 
   // *se va enviar al cliente los datos solicitados
 
-  res.json({
-    titulo: uriTitulo,
-    img: uriImg,
-    descripcion: uriDescripcion,
-    uri: infoLink,
-    data,
-  });
+  if (!infoLink) {
+    res.json({
+      titulo: uriTitulo,
+      img: uriImg,
+      descripcion: uriDescripcion,
+      uri: "ERROR",
+      data,
+    });
+  } else {
+    res.json({
+      titulo: uriTitulo,
+      img: uriImg,
+      descripcion: uriDescripcion,
+      uri: infoLink,
+      data,
+    });
+  }
   //todo usando la api de youtube-dl-exec
   // youtubedl(body.urlEx, {
   //   dumpSingleJson: true,

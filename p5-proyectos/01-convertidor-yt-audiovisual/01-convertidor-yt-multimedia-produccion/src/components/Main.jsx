@@ -209,10 +209,12 @@ const Main = () => {
   };
 
   const handleConvert = async (e) => {
+    let dataError;
     const abc = self.abc;
     const divConvert = self.divConvert;
 
     const btnConvert2 = self.btnConvert2;
+    const btnDanger = self.btnDanger;
 
     if (!abc.value) {
       return console.log("esta en blanco convert");
@@ -257,6 +259,9 @@ const Main = () => {
         .then((data) => {
           console.log(data);
 
+          if (data.uri == "ERROR") {
+            dataError = data.uri;
+          }
           uriTitulo = data.titulo;
           uriDescripcion = data.descripcion;
           uriImg = data.img;
@@ -265,16 +270,27 @@ const Main = () => {
           // high 360 * 480
         });
 
-      setTituloYt(uriTitulo);
-      setDescripcionYt(uriDescripcion);
-      setImageYt(uriImg);
-      seturiLinkYt(uriPkYt);
-      //*mostrar el pantalla los datos
-      setTimeout(() => {
-        if (e.target.className.split(" ")[0] === "button-item") {
-          divConvert.style.display = "flex";
-        }
-      }, 600);
+      if (dataError) {
+        btnDanger.style.display = "flex";
+        setTimeout(() => {
+          if (e.target.className.split(" ")[0] === "button-item") {
+            divConvert.style.display = "none";
+          }
+        }, 600);
+      } else {
+        btnDanger.style.display = "none";
+        setTituloYt(uriTitulo);
+        setDescripcionYt(uriDescripcion);
+        setImageYt(uriImg);
+        seturiLinkYt(uriPkYt);
+        //*mostrar el pantalla los datos
+        // btnDanger.style.display = "none";
+        setTimeout(() => {
+          if (e.target.className.split(" ")[0] === "button-item") {
+            divConvert.style.display = "flex";
+          }
+        }, 600);
+      }
     }
   };
 
@@ -305,6 +321,11 @@ const Main = () => {
             autoComplete="off"
           />
         </div>
+        <div id="btnDanger" className="input__div">
+          <div className="danger">
+            <p className="txt__danger">El video no esta disponible</p>
+          </div>
+        </div>
         <span className="select__wraper">
           <div
             onClick={clickFormat1}
@@ -319,7 +340,6 @@ const Main = () => {
               <span>&#8964;</span>
             </div>
           </div>
-
           <div
             onClick={clickFormat1}
             id="dropdown"
