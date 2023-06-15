@@ -591,38 +591,13 @@ app.post("/data", async (req, res) => {
   } else {
     //* validar que la url del archivo exista
 
-    try {
-      const response = await fetch(infoLink);
-      if (response.status === 200) {
-        request.get(infoLink).on("error", (err) => {
-          console.error("data err", err);
-          // response.status(500).send("Error al descargar el archivo");
-        });
-        // .pipe(response);
-
-        res.json({
-          titulo: uriTitulo,
-          img: uriImg,
-          descripcion: uriDescripcion,
-          uri: infoLink,
-          data,
-        });
-
-        // const contentType = response.headers.get("content-type");
-        // if (contentType && contentType.includes("video/" + body.format)) {
-        //   console.log("URL válida");
-        // } else {
-        //   console.log("La URL no contiene el formato deseado");
-        // }
-      } else {
-        console.log(
-          "La URL no es accesible (código de estado:",
-          response.status + ")"
-        );
-      }
-    } catch (error) {
-      console.error("Error al verificar la URL:", error);
-    }
+    res.json({
+      titulo: uriTitulo,
+      img: uriImg,
+      descripcion: uriDescripcion,
+      uri: infoLink,
+      data,
+    });
   }
 
   //todo usando la api de youtube-dl-exec
