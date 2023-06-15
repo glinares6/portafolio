@@ -593,23 +593,20 @@ app.post("/data", async (req, res) => {
 
     try {
       const response = await fetch(infoLink);
-      if (response.status === 200) {
-        console.log(" la ruta es accesible", response.status);
-
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes(body.format)) {
-          console.log("URL válida", response.status);
-        } else {
-          console.log("La URL no contiene el formato deseado", response.status);
-        }
+      // Verificar el código de estado de la respuesta
+      if (response.status === 403) {
+        // Manejar el error 403 como desees
+        console.log("Error: Acceso prohibido (403)");
+        res.status(403).send("Acceso prohibido");
       } else {
-        console.log(
-          "La URL no es accesible (código de estado:",
-          response.status + ")"
-        );
+        // Continuar con el manejo de la respuesta normalmente
+        const data = await response.text();
+        res.send("file recibido con exito");
       }
     } catch (error) {
-      console.error("Error al verificar la URL:", error);
+      // Manejar cualquier otro error
+      console.error("Error al hacer la solicitud:", error);
+      res.status(500).send("Error interno del servidor");
     }
 
     res.json({
