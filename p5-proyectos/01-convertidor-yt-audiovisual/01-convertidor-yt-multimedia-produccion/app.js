@@ -595,7 +595,7 @@ app.post("/data", async (req, res) => {
       try {
         console.log("contenido cargado");
       } catch (error) {
-        console.log("no se puede cargar el contenido", err);
+        console.log("no se puede cargar el contenido", error);
       }
     }
 
