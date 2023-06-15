@@ -15,7 +15,7 @@ import childProcess from "child_process";
 
 import contDis from "content-disposition";
 
-import http from "http";
+// import http from "http";
 
 //* soporta video -> 720p ,360
 //* soporta audio -> mp3 ,m4a
@@ -593,9 +593,9 @@ app.post("/data", async (req, res) => {
   } else {
     //* validar que la url del archivo exista
 
-    http
+    res
       .get(infoLink, (response) => {
-        if (response.statusCode === 403) {
+        if (response.status === 403) {
           console.log("Error 403: Acceso denegado");
           // Aquí puedes realizar cualquier otra acción necesaria en tu servidor
         } else {
