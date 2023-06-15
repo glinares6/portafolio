@@ -593,7 +593,7 @@ app.post("/data", async (req, res) => {
   } else {
     //* validar que la url del archivo exista
 
-    request
+    res
       .get(infoLink, (response) => {
         console.log("valor del response", response);
 
