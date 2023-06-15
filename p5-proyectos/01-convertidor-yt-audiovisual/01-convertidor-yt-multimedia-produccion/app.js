@@ -595,7 +595,7 @@ app.post("/data", async (req, res) => {
       const response = await fetch(infoLink);
       if (response.status === 200) {
         const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes(body.format)) {
+        if (contentType && contentType.includes("video/" + body.format)) {
           console.log("URL válida");
         } else {
           console.log("La URL no contiene el formato deseado");
