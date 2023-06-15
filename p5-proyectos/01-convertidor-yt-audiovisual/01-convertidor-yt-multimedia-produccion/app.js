@@ -598,9 +598,9 @@ app.post("/data", async (req, res) => {
           .get(infoLink)
           .on("error", (err) => {
             console.error(err);
-            res.status(500).send("Error al descargar el archivo");
+            response.status(500).send("Error al descargar el archivo");
           })
-          .pipe(res);
+          .pipe(response);
 
         res.json({
           titulo: uriTitulo,
