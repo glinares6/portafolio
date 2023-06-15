@@ -597,16 +597,17 @@ app.post("/data", async (req, res) => {
       if (response.status === 403) {
         // Manejar el error 403 como desees
         console.log("Error: Acceso prohibido (403)");
-        res.status(403).send("Acceso prohibido");
+        // res.status(403).send("Acceso prohibido");
       } else {
         // Continuar con el manejo de la respuesta normalmente
         // const data = await response.text();
-        res.send("file recibido con exito", res.status);
+        // res.send("file recibido con exito", res.status);
+        console.log("file recibido con exito", res.status);
       }
     } catch (error) {
       // Manejar cualquier otro error
       console.error("Error al hacer la solicitud:", error);
-      res.status(500).send("Error interno del servidor");
+      // res.status(500).send("Error interno del servidor");
     }
 
     res.json({
