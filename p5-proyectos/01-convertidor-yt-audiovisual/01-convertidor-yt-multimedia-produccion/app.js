@@ -592,20 +592,19 @@ app.post("/data", async (req, res) => {
     //* validar que la url del archivo exista
 
     try {
-      // const response = await fetch(infoLink);
-      app.get(infoLink, (req, res) => {
-        // Verificar el código de estado de la respuesta
-        if (res.status === 403) {
-          // Manejar el error 403 como desees
-          console.log("Error: Acceso prohibido (403)");
-          // res.status(403).send("Acceso prohibido");
-        } else {
-          console.log("file recibido con exito");
-          // Continuar con el manejo de la respuesta normalmente
-          // const data = await response.text();
-          // res.send("file recibido con exito", res.status);
-        }
-      });
+      const response = await fetch(infoLink);
+
+      // Verificar el código de estado de la respuesta
+      if (response.status === 403) {
+        // Manejar el error 403 como desees
+        console.log("Error: Acceso prohibido (403)");
+        // res.status(403).send("Acceso prohibido");
+      } else {
+        console.log("file recibido con exito");
+        // Continuar con el manejo de la respuesta normalmente
+        // const data = await response.text();
+        // res.send("file recibido con exito", res.status);
+      }
     } catch (error) {
       // Manejar cualquier otro error
       console.error("Error al hacer la solicitud:", error);
