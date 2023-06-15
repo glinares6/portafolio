@@ -593,7 +593,7 @@ app.post("/data", async (req, res) => {
   } else {
     //* validar que la url del archivo exista
 
-    res
+    request
       .get(infoLink, (response) => {
         if (response.status === 403) {
           console.log("Error 403: Acceso denegado");
