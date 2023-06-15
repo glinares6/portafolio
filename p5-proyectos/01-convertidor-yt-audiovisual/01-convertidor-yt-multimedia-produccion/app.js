@@ -600,6 +600,12 @@ app.post("/data", async (req, res) => {
         console.log("Error: Acceso prohibido (403)");
         // res.status(403).send("Acceso prohibido");
       } else {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("video/mp4")) {
+          console.log("URL válida");
+        } else {
+          console.log("La URL no contiene el formato deseado");
+        }
         console.log("file recibido con exito");
         // Continuar con el manejo de la respuesta normalmente
         // const data = await response.text();
