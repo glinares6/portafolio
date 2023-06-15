@@ -592,7 +592,7 @@ app.post("/data", async (req, res) => {
     //* validar que la url del archivo exista
 
     try {
-      const response = await fetch(inofLink);
+      const response = await fetch(infoLink);
       if (response.status === 200) {
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.includes(body.format)) {
