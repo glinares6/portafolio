@@ -359,6 +359,11 @@ app.post("/data", async (req, res) => {
 
   let idUrl;
   let lpInput;
+
+  let errorCliente;
+  let errApiYt;
+  let errApiTercero;
+
   lpInput = body.urlEx.trim();
 
   let v1 = lpInput.includes("v=");
@@ -367,29 +372,34 @@ app.post("/data", async (req, res) => {
 
   let v4 = lpInput.includes("list=");
 
-  if (v1) {
-    idUrl = lpInput.split("=")[1].slice(0, 11);
-  } else if (v2) {
-    // idUrl = lpInput.split("/")[4].slice(0, 11);
-    idUrl = lpInput.split("shorts/")[1].slice(0, 11);
-  } else if (v3) {
-    idUrl = lpInput.split("live/")[1].slice(0, 11);
-  } else {
-    idUrl = lpInput.split("/")[3].slice(0, 11);
-    // idUrl = lpInput.substr(-11);
-  }
-
-  if (v4) {
-    let dat1 = lpInput.split("=")[0];
-    let dat2 = lpInput.split("=")[1].slice(0, 11);
-
-    lpInput = dat1.concat("=", dat2).trim();
-  } else {
-    if (v2) {
-      let dat3 = lpInput.split("shorts/")[0];
-      let dat4 = lpInput.split("shorts/")[1].slice(0, 11);
-      lpInput = dat3.concat("shorts/", dat4).trim();
+  try {
+    if (v1) {
+      idUrl = lpInput.split("=")[1].slice(0, 11);
+    } else if (v2) {
+      // idUrl = lpInput.split("/")[4].slice(0, 11);
+      idUrl = lpInput.split("shorts/")[1].slice(0, 11);
+    } else if (v3) {
+      idUrl = lpInput.split("live/")[1].slice(0, 11);
+    } else {
+      idUrl = lpInput.split("/")[3].slice(0, 11);
+      // idUrl = lpInput.substr(-11);
     }
+
+    if (v4) {
+      let dat1 = lpInput.split("=")[0];
+      let dat2 = lpInput.split("=")[1].slice(0, 11);
+
+      lpInput = dat1.concat("=", dat2).trim();
+    } else {
+      if (v2) {
+        let dat3 = lpInput.split("shorts/")[0];
+        let dat4 = lpInput.split("shorts/")[1].slice(0, 11);
+        lpInput = dat3.concat("shorts/", dat4).trim();
+      }
+    }
+  } catch (error) {
+    console.log("error en la busqueda - res cliente", error);
+    errorCliente = "ERRCLIENT";
   }
 
   console.log("link ya formateado", idUrl);
@@ -415,7 +425,8 @@ app.post("/data", async (req, res) => {
       uriImg = data.items[0].snippet.thumbnails.high.url;
     })
     .catch((error) => {
-      console.error("Ocurrió un error:", error);
+      console.error("Ocurrió un error - api youtube :", error);
+      errApiYt = "APIYT";
     });
 
   switch (body.format) {
@@ -464,7 +475,8 @@ app.post("/data", async (req, res) => {
           }
         })
         .catch((error) => {
-          console.error("Ocurrió un error:", error);
+          console.error("Ocurrió un error: -fetch api terceros", error);
+          errApiTercero = "APITERCERO-MP3";
         });
 
       //todo archivo guardado en nuestro servidor
@@ -501,7 +513,8 @@ app.post("/data", async (req, res) => {
           console.log("Ruta del archivo MP4 enviado -switch");
         })
         .catch((error) => {
-          console.error("Ocurrió un error:", error);
+          console.error("Ocurrió un error: api-terceros", error);
+          errApiTercero = "APITERCERO-MP4";
         });
 
       break;
@@ -552,7 +565,8 @@ app.post("/data", async (req, res) => {
           console.log("Ruta del archivo m4a enviado -switch");
         })
         .catch((error) => {
-          console.error("Ocurrió un error:", error);
+          console.error("Ocurrió un error:  api -tercero", error);
+          errApiTercero = "APITERCERO-M4A";
         });
 
       break;
@@ -563,13 +577,29 @@ app.post("/data", async (req, res) => {
 
   // *se va enviar al cliente los datos solicitados
 
-  res.json({
-    titulo: uriTitulo,
-    img: uriImg,
-    descripcion: uriDescripcion,
-    uri: infoLink,
-    data,
-  });
+  if (!infoLink) {
+    res.json({
+      titulo: uriTitulo,
+      img: uriImg,
+      descripcion: uriDescripcion,
+      uri: "ERROR",
+      errYt: errApiYt,
+      errApiTercero,
+      errClient: errorCliente,
+      data,
+    });
+  } else {
+    //* validar que la url del archivo exista
+
+    res.json({
+      titulo: uriTitulo,
+      img: uriImg,
+      descripcion: uriDescripcion,
+      uri: infoLink,
+      data,
+    });
+  }
+
   //todo usando la api de youtube-dl-exec
   // youtubedl(body.urlEx, {
   //   dumpSingleJson: true,
@@ -619,9 +649,7 @@ app.post("/data", async (req, res) => {
 app.get("*", (req, res) => {
   res.redirect("/");
 });
-app.get("*", (req, res) => {
-  res.redirect("/");
-});
+
 //* test
 app.get("/verificar", (req, res) => {
   youtubedl(urlTesting, {
