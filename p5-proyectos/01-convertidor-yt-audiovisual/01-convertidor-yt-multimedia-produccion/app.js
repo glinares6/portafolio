@@ -366,7 +366,7 @@ app.post("/data", async (req, res) => {
   let v2 = lpInput.includes("shorts/");
   let v3 = lpInput.includes("live/");
 
-  let v4 = lpInput.includes("list=");
+  // let v4 = lpInput.includes("list=");
 
   if (v1) {
     idUrl = lpInput.split("=")[1].slice(0, 11);
@@ -380,18 +380,18 @@ app.post("/data", async (req, res) => {
     // idUrl = lpInput.substr(-11);
   }
 
-  if (v4) {
-    let dat1 = lpInput.split("=")[0];
-    let dat2 = lpInput.split("=")[1].slice(0, 11);
+  // if (v4) {
+  //   let dat1 = lpInput.split("=")[0];
+  //   let dat2 = lpInput.split("=")[1].slice(0, 11);
 
-    lpInput = dat1.concat("=", dat2).trim();
-  } else {
-    if (v2) {
-      let dat3 = lpInput.split("shorts/")[0];
-      let dat4 = lpInput.split("shorts/")[1].slice(0, 11);
-      lpInput = dat3.concat("shorts/", dat4).trim();
-    }
-  }
+  //   lpInput = dat1.concat("=", dat2).trim();
+  // } else {
+  //   if (v2) {
+  //     let dat3 = lpInput.split("shorts/")[0];
+  //     let dat4 = lpInput.split("shorts/")[1].slice(0, 11);
+  //     lpInput = dat3.concat("shorts/", dat4).trim();
+  //   }
+  // }
 
   console.log("link ya formateado", idUrl);
   console.log("link concatenado", lpInput);
