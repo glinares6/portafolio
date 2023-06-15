@@ -34,17 +34,16 @@ app.use(express.static("public"));
 
 app.post("/mp4", (req, res) => {
   const body = req.body;
-
   let lpInput;
-  lpInput = body.urlEx.trim();
 
+  lpInput = body.urlEx.trim();
   let v3 = lpInput.includes("list=");
   if (v3) {
     let dat1 = lpInput.split("=")[0];
     let dat2 = lpInput.split("=")[1].slice(0, 11);
+
     lpInput = dat1.concat("=", dat2).trim();
   }
-
   console.log("enviado del cliente -  mp4", body.urlEx, body.format);
 
   youtubedl(lpInput, {
@@ -122,6 +121,7 @@ app.post("/mp3", (req, res) => {
   if (v3) {
     let dat1 = lpInput.split("=")[0];
     let dat2 = lpInput.split("=")[1].slice(0, 11);
+
     lpInput = dat1.concat("=", dat2).trim();
   }
 
@@ -253,11 +253,11 @@ app.post("/m4a", (req, res) => {
 
   let lpInput;
   lpInput = body.urlEx.trim();
-
   let v3 = lpInput.includes("list=");
   if (v3) {
     let dat1 = lpInput.split("=")[0];
     let dat2 = lpInput.split("=")[1].slice(0, 11);
+
     lpInput = dat1.concat("=", dat2).trim();
   }
 
@@ -359,6 +359,7 @@ app.post("/data", async (req, res) => {
 
   let idUrl;
   let lpInput;
+
   lpInput = body.urlEx.trim();
 
   let v1 = lpInput.includes("v=");
@@ -392,13 +393,15 @@ app.post("/data", async (req, res) => {
     }
   }
 
+  console.log("link ya formateado", idUrl);
+  console.log("link concatenado", lpInput);
+
   let uriTitulo;
   let uriDescripcion;
   let uriImg;
 
   let infoLink;
   let data;
-
   //*envio de el titulo ,descripcion,img de la api de youtube
   await fetch(
     `https://www.googleapis.com/youtube/v3/videos?id=${idUrl}&key=${apiKeyYt}&part=snippet`
@@ -406,6 +409,7 @@ app.post("/data", async (req, res) => {
     .then((response) => response.json())
     .then((data) => {
       // console.log(data);
+
       //*En caso no se visualize los objetos probar desde  el navegador la url
       uriTitulo = data.items[0].snippet.title;
       uriDescripcion = data.items[0].snippet.description;
@@ -534,7 +538,6 @@ app.post("/data", async (req, res) => {
               }
             });
           }
-
           if (!infoLink) {
             output.formats.some((format) => {
               if (
@@ -578,6 +581,7 @@ app.post("/data", async (req, res) => {
       data,
     });
   }
+
   //todo usando la api de youtube-dl-exec
   // youtubedl(body.urlEx, {
   //   dumpSingleJson: true,
@@ -627,6 +631,7 @@ app.post("/data", async (req, res) => {
 app.get("*", (req, res) => {
   res.redirect("/");
 });
+
 //* test
 app.get("/verificar", (req, res) => {
   youtubedl(urlTesting, {
