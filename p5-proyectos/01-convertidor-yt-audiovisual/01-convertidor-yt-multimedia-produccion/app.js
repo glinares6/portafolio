@@ -591,12 +591,23 @@ app.post("/data", async (req, res) => {
   } else {
     //* validar que la url del archivo exista
 
-    if (infoLink) {
-      try {
-        console.log("contenido cargado");
-      } catch (error) {
-        console.log("no se puede cargar el contenido", error);
+    try {
+      const response = await fetch(infoLink);
+      if (response.status === 200) {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes(body.format)) {
+          console.log("URL válida");
+        } else {
+          console.log("La URL no contiene el formato deseado");
+        }
+      } else {
+        console.log(
+          "La URL no es accesible (código de estado:",
+          response.status + ")"
+        );
       }
+    } catch (error) {
+      console.error("Error al verificar la URL:", error);
     }
 
     res.json({
