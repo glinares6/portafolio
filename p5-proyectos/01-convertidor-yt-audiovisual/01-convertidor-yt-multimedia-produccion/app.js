@@ -15,9 +15,6 @@ import childProcess from "child_process";
 
 import contDis from "content-disposition";
 
-import fetchNode from "node-fetch";
-import mime from "mime-types";
-
 //* soporta video -> 720p ,360
 //* soporta audio -> mp3 ,m4a
 //* las url y los accesos estan en el archivo  .env (.example.env)
@@ -594,18 +591,12 @@ app.post("/data", async (req, res) => {
   } else {
     //* validar que la url del archivo exista
 
-    try {
-      const response = await fetchNode(infoLink);
-      const contentType = response.headers.get("content-type");
-      const extension = mime.extension(contentType);
-
-      if (extension === "mp3" || extension === "mp4" || extension === "m4a") {
-        console.log("El formato es válido.", extension);
-      } else {
-        console.log("El formato no es válido.", extension);
+    if (infoLink) {
+      try {
+        console.log("contenido cargado");
+      } catch (error) {
+        console.log("no se puede cargar el contenido", err);
       }
-    } catch (error) {
-      console.error("Ocurrió un error al verificar el formato:", error);
     }
 
     res.json({
