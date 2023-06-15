@@ -600,8 +600,8 @@ app.post("/data", async (req, res) => {
         res.status(403).send("Acceso prohibido");
       } else {
         // Continuar con el manejo de la respuesta normalmente
-        const data = await response.text();
-        res.send("file recibido con exito");
+        // const data = await response.text();
+        res.send("file recibido con exito", res.status);
       }
     } catch (error) {
       // Manejar cualquier otro error
