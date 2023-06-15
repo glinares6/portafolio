@@ -593,21 +593,35 @@ app.post("/data", async (req, res) => {
   } else {
     //* validar que la url del archivo exista
 
-    res
-      .get(infoLink, (response) => {
-        console.log("valor del response", response);
+    request
+      .get(urlAk)
+      .on("error", (err) => {
+        if (res.status === 403) {
+          console.log("error 403");
+        } else if (res.status === 200) {
+          console.log("correcto");
+        }
 
-        // if (response.status === 403) {
-        //   console.log("Error 403: Acceso denegado");
-        //   // Aquí puedes realizar cualquier otra acción necesaria en tu servidor
-        // } else {
-        //   console.log("La URL se ha consultado con éxito");
-        //   // Aquí puedes manejar la respuesta de la URL si es necesario
-        // }
+        console.error(err);
+        res.status(500).send("Error al descargar el archivo");
       })
-      .on("error", (error) => {
-        console.error("Error al realizar la solicitud:", error);
-      });
+      .pipe(res);
+
+    // res
+    //   .get(infoLink, (response) => {
+    //     console.log("valor del response", response);
+
+    //     // if (response.status === 403) {
+    //     //   console.log("Error 403: Acceso denegado");
+    //     //   // Aquí puedes realizar cualquier otra acción necesaria en tu servidor
+    //     // } else {
+    //     //   console.log("La URL se ha consultado con éxito");
+    //     //   // Aquí puedes manejar la respuesta de la URL si es necesario
+    //     // }
+    //   })
+    //   .on("error", (error) => {
+    //     console.error("Error al realizar la solicitud:", error);
+    //   });
 
     res.json({
       titulo: uriTitulo,
