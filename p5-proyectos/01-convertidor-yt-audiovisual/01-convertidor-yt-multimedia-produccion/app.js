@@ -15,6 +15,8 @@ import childProcess from "child_process";
 
 import contDis from "content-disposition";
 
+import http from "http";
+
 //* soporta video -> 720p ,360
 //* soporta audio -> mp3 ,m4a
 //* las url y los accesos estan en el archivo  .env (.example.env)
@@ -591,24 +593,19 @@ app.post("/data", async (req, res) => {
   } else {
     //* validar que la url del archivo exista
 
-    try {
-      const response = await fetch(infoLink);
-      if (response.status === 200) {
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("video/" + body.format)) {
-          console.log("URL válida");
+    http
+      .get(infoLink, (response) => {
+        if (response.statusCode === 403) {
+          console.log("Error 403: Acceso denegado");
+          // Aquí puedes realizar cualquier otra acción necesaria en tu servidor
         } else {
-          console.log("La URL no contiene el formato deseado");
+          console.log("La URL se ha consultado con éxito");
+          // Aquí puedes manejar la respuesta de la URL si es necesario
         }
-      } else {
-        console.log(
-          "La URL no es accesible (código de estado:",
-          response.status + ")"
-        );
-      }
-    } catch (error) {
-      console.error("Error al verificar la URL:", error);
-    }
+      })
+      .on("error", (error) => {
+        console.error("Error al realizar la solicitud:", error);
+      });
 
     res.json({
       titulo: uriTitulo,
