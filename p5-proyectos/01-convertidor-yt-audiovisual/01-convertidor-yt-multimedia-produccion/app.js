@@ -601,7 +601,7 @@ app.post("/data", async (req, res) => {
         // res.status(403).send("Acceso prohibido");
       } else {
         const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("video/mp4")) {
+        if (contentType && contentType.includes(body.format)) {
           console.log("URL válida");
         } else {
           console.log("La URL no contiene el formato deseado");
