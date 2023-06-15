@@ -599,6 +599,13 @@ app.post("/data", async (req, res) => {
         if (res.status === 403) {
           console.log("error 403");
         } else if (res.status === 200) {
+          res.json({
+            titulo: uriTitulo,
+            img: uriImg,
+            descripcion: uriDescripcion,
+            uri: infoLink,
+            data,
+          });
           console.log("correcto");
         }
 
@@ -622,14 +629,6 @@ app.post("/data", async (req, res) => {
     //   .on("error", (error) => {
     //     console.error("Error al realizar la solicitud:", error);
     //   });
-
-    res.json({
-      titulo: uriTitulo,
-      img: uriImg,
-      descripcion: uriDescripcion,
-      uri: infoLink,
-      data,
-    });
   }
 
   //todo usando la api de youtube-dl-exec
