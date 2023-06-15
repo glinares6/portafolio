@@ -594,13 +594,11 @@ app.post("/data", async (req, res) => {
     try {
       const response = await fetch(infoLink);
       if (response.status === 200) {
-        request
-          .get(infoLink)
-          .on("error", (err) => {
-            console.error(err);
-            response.status(500).send("Error al descargar el archivo");
-          })
-          .pipe(response);
+        request.get(infoLink).on("error", (err) => {
+          console.error("data err", err);
+          // response.status(500).send("Error al descargar el archivo");
+        });
+        // .pipe(response);
 
         res.json({
           titulo: uriTitulo,
