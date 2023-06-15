@@ -595,13 +595,15 @@ app.post("/data", async (req, res) => {
 
     request
       .get(infoLink, (response) => {
-        if (response.status === 403) {
-          console.log("Error 403: Acceso denegado");
-          // Aquí puedes realizar cualquier otra acción necesaria en tu servidor
-        } else {
-          console.log("La URL se ha consultado con éxito");
-          // Aquí puedes manejar la respuesta de la URL si es necesario
-        }
+        console.log("valor del response", response);
+
+        // if (response.status === 403) {
+        //   console.log("Error 403: Acceso denegado");
+        //   // Aquí puedes realizar cualquier otra acción necesaria en tu servidor
+        // } else {
+        //   console.log("La URL se ha consultado con éxito");
+        //   // Aquí puedes manejar la respuesta de la URL si es necesario
+        // }
       })
       .on("error", (error) => {
         console.error("Error al realizar la solicitud:", error);
