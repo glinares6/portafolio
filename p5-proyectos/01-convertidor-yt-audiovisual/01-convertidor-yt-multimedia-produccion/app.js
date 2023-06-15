@@ -595,6 +595,13 @@ app.post("/data", async (req, res) => {
       const response = await fetch(infoLink);
       if (response.status === 200) {
         console.log(" la ruta es accesible", response.status);
+
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes(body.format)) {
+          console.log("URL válida", response.status);
+        } else {
+          console.log("La URL no contiene el formato deseado", response.status);
+        }
       } else {
         console.log(
           "La URL no es accesible (código de estado:",
