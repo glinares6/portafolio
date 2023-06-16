@@ -602,15 +602,9 @@ app.post("/data", async (req, res) => {
           if (!response.ok) {
             throw new Error("Error de la solicitud: " + response.status);
           }
-
-          const contentType = response.headers.get("content-type");
-          if (contentType && contentType.includes("application/json")) {
-            return response.json();
-          } else {
-            throw new Error("La respuesta no es un JSON válido");
-          }
+          return response.text(); // Obtener el contenido de la respuesta como texto
         })
-        .then((output) => console.log("salida de los datos de url1k", output))
+        .then((output) => console.log("Contenido de la respuesta:", output))
         .catch((error) => console.log("Error de la URL:", error.message));
     } catch (error) {
       console.log("Error en el bloque catch:", error);
