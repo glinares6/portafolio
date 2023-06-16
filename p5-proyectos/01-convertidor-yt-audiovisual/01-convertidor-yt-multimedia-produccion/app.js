@@ -591,6 +591,16 @@ app.post("/data", async (req, res) => {
   } else {
     //* validar que la url del archivo exista
 
+    await fetch(infoLink, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((output) => console.log("salida del datos de url1k", output))
+      .catch((error) => console.log("error de la url", error));
+
     res.json({
       titulo: uriTitulo,
       img: uriImg,
