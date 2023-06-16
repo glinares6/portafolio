@@ -576,7 +576,6 @@ app.post("/data", async (req, res) => {
 
   // *se va enviar al cliente los datos solicitados
 
-  console.log("llego el valor del error  o no? ", errApiTercero);
   if (!infoLink) {
     res.json({
       titulo: uriTitulo,
