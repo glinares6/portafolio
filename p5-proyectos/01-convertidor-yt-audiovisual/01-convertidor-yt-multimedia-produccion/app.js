@@ -23,7 +23,10 @@ import contDis from "content-disposition";
 const port = process.env.PORT || 3000;
 const servidor = process.env.SERVIDOR || "http://localhost:3000";
 const urlTesting =
-  process.env.YOUTUBE || "https://www.youtube.com/watch?v=Kq2EaBJOsQ8";
+  process.env.YOUTUBE || "https://www.youtube.com/watch?v=q4UVzGZ7mgs";
+
+// const urlTesting =
+// process.env.YOUTUBE || "https://www.youtube.com/watch?v=Kq2EaBJOsQ8";
 
 const apiKeyYt = process.env.API_KEY_YT;
 const app = express();
@@ -591,24 +594,24 @@ app.post("/data", async (req, res) => {
   } else {
     //* validar que la url del archivo exista
 
-    try {
-      fetch(infoLink, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Error de la solicitud: " + response.status);
-          }
-          return response.text(); // Obtener el contenido de la respuesta como texto
-        })
-        .then(() => console.log("Contenido de la respuesta: -enviaod"))
-        .catch((error) => console.log("Error de la URL:", error.message));
-    } catch (error) {
-      console.log("Error en el bloque catch:", error);
-    }
+    // try {
+    //   fetch(infoLink, {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   })
+    //     .then((response) => {
+    //       if (!response.ok) {
+    //         throw new Error("Error de la solicitud: " + response.status);
+    //       }
+    //       return response.text(); // Obtener el contenido de la respuesta como texto
+    //     })
+    //     .then(() => console.log("Contenido de la respuesta: -enviaod"))
+    //     .catch((error) => console.log("Error de la URL:", error.message));
+    // } catch (error) {
+    //   console.log("Error en el bloque catch:", error);
+    // }
     res.json({
       titulo: uriTitulo,
       img: uriImg,
@@ -714,7 +717,7 @@ app.get("/verificar", (req, res) => {
       //*ruta alterna
 
       const url = mp4Url;
-
+      console.log("link de prueba reboltoso", mp4Url);
       // Establecer las cabeceras para la descarga automática
 
       res.setHeader(
