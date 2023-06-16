@@ -598,7 +598,7 @@ app.post("/data", async (req, res) => {
           "Content-Type": "application/json",
         },
       })
-        .then((response) => response.json())
+        .then((response) => response.blob())
         .then((output) => console.log("salida del datos de url1k", output))
         .catch((error) => console.log("error de la url", error));
     } catch (error) {
