@@ -22,11 +22,9 @@ import contDis from "content-disposition";
 
 const port = process.env.PORT || 3000;
 const servidor = process.env.SERVIDOR || "http://localhost:3000";
-const urlTesting =
-  process.env.YOUTUBE || "https://www.youtube.com/watch?v=q4UVzGZ7mgs";
 
-// const urlTesting =
-//   process.env.YOUTUBE || "https://www.youtube.com/watch?v=Kq2EaBJOsQ8";
+const urlTesting =
+  process.env.YOUTUBE || "https://www.youtube.com/watch?v=Kq2EaBJOsQ8";
 
 const apiKeyYt = process.env.API_KEY_YT;
 const app = express();
@@ -445,41 +443,48 @@ app.post("/data", async (req, res) => {
         addHeader: ["referer:youtube.com", "user-agent:googlebot"],
       })
         .then((output) => {
-          data = output;
-          output.formats.some((format) => {
-            if (
-              format.acodec === "mp4a.40.2" &&
-              format.format_note === "medium"
-            ) {
-              infoLink = format.url;
-              return true; // Detener la iteración
-            }
-          });
-
-          if (!infoLink) {
-            output.formats.some((format) => {
-              if (format.acodec === "opus" && format.format_note === "medium") {
-                infoLink = format.url;
-                return true; // Detener la iteración
-              }
-            });
-          }
-
-          if (!infoLink) {
+          try {
+            data = output;
             output.formats.some((format) => {
               if (
                 format.acodec === "mp4a.40.2" &&
-                format.format_note === "English original (default), medium"
+                format.format_note === "medium"
               ) {
                 infoLink = format.url;
                 return true; // Detener la iteración
               }
             });
+
+            if (!infoLink) {
+              output.formats.some((format) => {
+                if (
+                  format.acodec === "opus" &&
+                  format.format_note === "medium"
+                ) {
+                  infoLink = format.url;
+                  return true; // Detener la iteración
+                }
+              });
+            }
+
+            if (!infoLink) {
+              output.formats.some((format) => {
+                if (
+                  format.acodec === "mp4a.40.2" &&
+                  format.format_note === "English original (default), medium"
+                ) {
+                  infoLink = format.url;
+                  return true; // Detener la iteración
+                }
+              });
+            }
+          } catch (error) {
+            console.log("pased - error permiso- mp3", error);
+            errApiTercero = "APITERCERO-MP3";
           }
         })
         .catch((error) => {
           console.error("Ocurrió un error: -fetch api terceros", error);
-          errApiTercero = "APITERCERO-MP3";
         });
 
       //todo archivo guardado en nuestro servidor
@@ -497,27 +502,30 @@ app.post("/data", async (req, res) => {
         addHeader: ["referer:youtube.com", "user-agent:googlebot"],
       })
         .then((output) => {
-          output.formats.some((format) => {
-            if (format.vcodec === "avc1.64001F") {
-              infoLink = format.url;
-              return true; // Detener la iteración
-            }
-          });
-
-          if (!infoLink) {
+          try {
             output.formats.some((format) => {
-              if (format.vcodec === "avc1.42001E") {
+              if (format.vcodec === "avc1.64001F") {
                 infoLink = format.url;
                 return true; // Detener la iteración
               }
             });
-          }
 
+            if (!infoLink) {
+              output.formats.some((format) => {
+                if (format.vcodec === "avc1.42001E") {
+                  infoLink = format.url;
+                  return true; // Detener la iteración
+                }
+              });
+            }
+          } catch (error) {
+            console.log("pased - error permiso- m4a", error);
+            errApiTercero = "APITERCERO-MP4";
+          }
           console.log("Ruta del archivo MP4 enviado -switch");
         })
         .catch((error) => {
           console.error("Ocurrió un error: api-terceros", error);
-          errApiTercero = "APITERCERO-MP4";
         });
 
       break;
@@ -535,41 +543,48 @@ app.post("/data", async (req, res) => {
         .then((output) => {
           // console.log(output);
 
-          output.formats.some((format) => {
-            if (
-              format.acodec === "mp4a.40.2" &&
-              format.format_note === "medium"
-            ) {
-              infoLink = format.url;
-              return true; // Detener la iteración
-            }
-          });
-
-          if (!infoLink) {
-            output.formats.some((format) => {
-              if (format.acodec === "opus" && format.format_note === "medium") {
-                infoLink = format.url;
-                return true; // Detener la iteración
-              }
-            });
-          }
-          if (!infoLink) {
+          try {
             output.formats.some((format) => {
               if (
                 format.acodec === "mp4a.40.2" &&
-                format.format_note === "English original (default), medium"
+                format.format_note === "medium"
               ) {
                 infoLink = format.url;
                 return true; // Detener la iteración
               }
             });
+
+            if (!infoLink) {
+              output.formats.some((format) => {
+                if (
+                  format.acodec === "opus" &&
+                  format.format_note === "medium"
+                ) {
+                  infoLink = format.url;
+                  return true; // Detener la iteración
+                }
+              });
+            }
+            if (!infoLink) {
+              output.formats.some((format) => {
+                if (
+                  format.acodec === "mp4a.40.2" &&
+                  format.format_note === "English original (default), medium"
+                ) {
+                  infoLink = format.url;
+                  return true; // Detener la iteración
+                }
+              });
+            }
+          } catch (error) {
+            console.log("pased - error permiso- m4a", error);
+            errApiTercero = "APITERCERO-M4A";
           }
 
           console.log("Ruta del archivo m4a enviado -switch");
         })
         .catch((error) => {
           console.error("Ocurrió un error:  api -tercero", error);
-          errApiTercero = "APITERCERO-M4A";
         });
 
       break;
@@ -587,7 +602,6 @@ app.post("/data", async (req, res) => {
       descripcion: uriDescripcion,
       uri: "ERROR",
       errYt: errApiYt,
-      errApiTercero,
       errClient: errorCliente,
       data,
     });
@@ -617,6 +631,7 @@ app.post("/data", async (req, res) => {
       img: uriImg,
       descripcion: uriDescripcion,
       uri: infoLink,
+      errApiTercero,
       data,
     });
   }
