@@ -435,7 +435,7 @@ app.post("/data", async (req, res) => {
       // infoLink = "mp3 -switch";
 
       //todo usando la api de youtube-dl-exec
-      await youtubedl(lpInput, {
+      await youtubedl(body.urlEx, {
         dumpSingleJson: true,
         noCheckCertificates: true,
         noWarnings: true,
@@ -443,10 +443,6 @@ app.post("/data", async (req, res) => {
         addHeader: ["referer:youtube.com", "user-agent:googlebot"],
       })
         .then((output) => {
-          if (!output) {
-            errApiTercero = "APITERCERO-MP3";
-          }
-
           try {
             data = output;
             output.formats.some((format) => {
@@ -484,7 +480,10 @@ app.post("/data", async (req, res) => {
             }
           } catch (error) {
             console.log("pased - error permiso- mp3", error);
+            errApiTercero = "APITERCERO-MP3";
           }
+
+          console.log("Ruta del archivo mp3 enviado -switch");
         })
         .catch((error) => {
           console.error("Ocurrió un error: -fetch api terceros", error);
@@ -497,7 +496,7 @@ app.post("/data", async (req, res) => {
       // infoLink = "mp4 -switch";
 
       //todo usando la api de youtube-dl-exec
-      await youtubedl(lpInput, {
+      await youtubedl(body.urlEx, {
         dumpSingleJson: true,
         noCheckCertificates: true,
         noWarnings: true,
@@ -505,10 +504,6 @@ app.post("/data", async (req, res) => {
         addHeader: ["referer:youtube.com", "user-agent:googlebot"],
       })
         .then((output) => {
-          if (!output) {
-            errApiTercero = "APITERCERO-MP4";
-          }
-
           try {
             output.formats.some((format) => {
               if (format.vcodec === "avc1.64001F") {
@@ -526,9 +521,10 @@ app.post("/data", async (req, res) => {
               });
             }
           } catch (error) {
-            console.log("pased - error permiso- m4a", error);
+            console.log("pased - error permiso- mp4", error);
+            errApiTercero = "APITERCERO-MP4";
           }
-          console.log("Ruta del archivo MP4 enviado -switch");
+          console.log("Ruta del archivo mp4 enviado -switch");
         })
         .catch((error) => {
           console.error("Ocurrió un error: api-terceros", error);
@@ -539,7 +535,7 @@ app.post("/data", async (req, res) => {
       // infoLink = "ma4 -switch";
 
       //todo usando la api de youtube-dl-exec
-      await youtubedl(lpInput, {
+      await youtubedl(body.urlEx, {
         dumpSingleJson: true,
         noCheckCertificates: true,
         noWarnings: true,
@@ -549,9 +545,6 @@ app.post("/data", async (req, res) => {
         .then((output) => {
           // console.log(output);
 
-          if (!output) {
-            errApiTercero = "APITERCERO-M4A";
-          }
           try {
             output.formats.some((format) => {
               if (
@@ -585,6 +578,8 @@ app.post("/data", async (req, res) => {
                 }
               });
             }
+
+            errApiTercero = "APITERCERO-M4A";
           } catch (error) {
             console.log("pased - error permiso- m4a", error);
           }
@@ -617,24 +612,6 @@ app.post("/data", async (req, res) => {
   } else {
     //* validar que la url del archivo exista
 
-    // try {
-    //   fetch(infoLink, {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   })
-    //     .then((response) => {
-    //       if (!response.ok) {
-    //         throw new Error("Error de la solicitud: " + response.status);
-    //       }
-    //       return response.text(); // Obtener el contenido de la respuesta como texto
-    //     })
-    //     .then(() => console.log("Contenido de la respuesta: -enviaod"))
-    //     .catch((error) => console.log("Error de la URL:", error.message));
-    // } catch (error) {
-    //   console.log("Error en el bloque catch:", error);
-    // }
     res.json({
       titulo: uriTitulo,
       img: uriImg,
