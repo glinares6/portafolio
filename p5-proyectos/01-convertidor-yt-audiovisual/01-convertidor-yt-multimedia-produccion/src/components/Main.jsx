@@ -300,20 +300,6 @@ const Main = () => {
             console.log("Ocurrió un error al acceder a la URL", error);
             // Mostrar un mensaje o realizar acciones adicionales en caso de error
           });
-        fetch(uriPkYt)
-          .then((response) => {
-            if (response.ok) {
-              console.log("La URL tiene acceso válido");
-              // Realizar acciones adicionales si la URL es válida
-            } else {
-              console.log("La URL tiene acceso denegado");
-              // Mostrar un mensaje o realizar acciones adicionales si la URL tiene acceso denegado
-            }
-          })
-          .catch((error) => {
-            console.log("Ocurrió un error al acceder a la URL", error);
-            // Mostrar un mensaje o realizar acciones adicionales en caso de error
-          });
 
         setTimeout(() => {
           if (e.target.className.split(" ")[0] === "button-item") {
