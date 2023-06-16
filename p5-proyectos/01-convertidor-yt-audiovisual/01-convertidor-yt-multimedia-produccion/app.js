@@ -667,10 +667,6 @@ app.post("/data", async (req, res) => {
   //   });
 });
 
-app.get("*", (req, res) => {
-  res.redirect("/");
-});
-
 //* test
 app.get("/verificar", (req, res) => {
   youtubedl(urlTesting, {
@@ -905,6 +901,10 @@ app.get("/mix", (req, res) => {
     .catch((error) => {
       console.error("Ocurrió un error:", error);
     });
+});
+
+app.get("*", (req, res) => {
+  res.redirect("/");
 });
 
 app.listen(port, () => {
