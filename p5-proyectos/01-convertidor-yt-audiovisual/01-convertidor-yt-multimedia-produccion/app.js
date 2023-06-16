@@ -443,6 +443,10 @@ app.post("/data", async (req, res) => {
         addHeader: ["referer:youtube.com", "user-agent:googlebot"],
       })
         .then((output) => {
+          if (!output) {
+            errApiTercero = "APITERCERO-MP3";
+          }
+
           try {
             data = output;
             output.formats.some((format) => {
@@ -480,7 +484,6 @@ app.post("/data", async (req, res) => {
             }
           } catch (error) {
             console.log("pased - error permiso- mp3", error);
-            errApiTercero = "APITERCERO-MP3";
           }
         })
         .catch((error) => {
@@ -502,6 +505,10 @@ app.post("/data", async (req, res) => {
         addHeader: ["referer:youtube.com", "user-agent:googlebot"],
       })
         .then((output) => {
+          if (!output) {
+            errApiTercero = "APITERCERO-MP4";
+          }
+
           try {
             output.formats.some((format) => {
               if (format.vcodec === "avc1.64001F") {
@@ -520,7 +527,6 @@ app.post("/data", async (req, res) => {
             }
           } catch (error) {
             console.log("pased - error permiso- m4a", error);
-            errApiTercero = "APITERCERO-MP4";
           }
           console.log("Ruta del archivo MP4 enviado -switch");
         })
@@ -543,6 +549,9 @@ app.post("/data", async (req, res) => {
         .then((output) => {
           // console.log(output);
 
+          if (!output) {
+            errApiTercero = "APITERCERO-M4A";
+          }
           try {
             output.formats.some((format) => {
               if (
@@ -578,7 +587,6 @@ app.post("/data", async (req, res) => {
             }
           } catch (error) {
             console.log("pased - error permiso- m4a", error);
-            errApiTercero = "APITERCERO-M4A";
           }
 
           console.log("Ruta del archivo m4a enviado -switch");
