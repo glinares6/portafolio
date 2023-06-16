@@ -604,7 +604,7 @@ app.post("/data", async (req, res) => {
           }
           return response.text(); // Obtener el contenido de la respuesta como texto
         })
-        .then((output) => console.log("Contenido de la respuesta:", output))
+        .then(() => console.log("Contenido de la respuesta: -enviaod"))
         .catch((error) => console.log("Error de la URL:", error.message));
     } catch (error) {
       console.log("Error en el bloque catch:", error);
