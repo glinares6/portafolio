@@ -362,6 +362,7 @@ app.post("/data", async (req, res) => {
 
   let errorCliente;
   let errApiYt;
+  let errTercero;
 
   lpInput = body.urlEx.trim();
 
@@ -410,6 +411,7 @@ app.post("/data", async (req, res) => {
 
   let infoLink;
   let data;
+
   //*envio de el titulo ,descripcion,img de la api de youtube
   await fetch(
     `https://www.googleapis.com/youtube/v3/videos?id=${idUrl}&key=${apiKeyYt}&part=snippet`
@@ -472,9 +474,11 @@ app.post("/data", async (req, res) => {
               }
             });
           }
+          console.log("Ruta del archivo mp3 enviado -switch");
         })
         .catch((error) => {
           console.error("Ocurrió un error: -fetch api terceros", error);
+          errTercero = "ERRAPITERCEROS-MP3";
         });
 
       //todo archivo guardado en nuestro servidor
@@ -508,10 +512,11 @@ app.post("/data", async (req, res) => {
             });
           }
 
-          console.log("Ruta del archivo MP4 enviado -switch");
+          console.log("Ruta del archivo mp4 enviado -switch");
         })
         .catch((error) => {
           console.error("Ocurrió un error: api-terceros", error);
+          errTercero = "ERRAPITERCEROS-MP4";
         });
 
       break;
@@ -563,6 +568,7 @@ app.post("/data", async (req, res) => {
         })
         .catch((error) => {
           console.error("Ocurrió un error:  api -tercero", error);
+          errTercero = "ERRAPITERCEROS-M4A";
         });
 
       break;
@@ -581,6 +587,7 @@ app.post("/data", async (req, res) => {
       uri: "ERROR",
       errYt: errApiYt,
       errClient: errorCliente,
+      errTercero,
       data,
     });
   } else {
