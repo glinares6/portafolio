@@ -285,6 +285,27 @@ const Main = () => {
         setDescripcionYt(uriDescripcion);
         setImageYt(uriImg);
         seturiLinkYt(uriPkYt);
+        // seturiLinkYt(
+        //   "https://rr5---sn-nx57ynss.googlevideo.com/videoplayback?expire=1686951544&ei=GIKMZK6HDPLLkwbGnZBg&ip=35.160.120.126&id=o-AN8Utm6p2ZVQwDFCBohOkj_Yzw8noQNFhkSqVj3dbMSZ&itag=22&source=youtube&requiressl=yes&mh=jj&mm=31%2C29&mn=sn-nx57ynss%2Csn-nx5s7nel&ms=au%2Crdu&mv=m&mvi=5&pl=21&gcr=us&initcwndbps=1206250&spc=qEK7B5u3kYJuSUBKRA3heqtQ3k8PgMU&vprv=1&svpuc=1&mime=video%2Fmp4&cnr=14&ratebypass=yes&dur=293.802&lmt=1670075666171751&mt=1686929609&fvip=5&fexp=24007246&beids=24350018&c=ANDROID&txp=5532434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cgcr%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRAIgPcRAwCeiokAIshErVxKUUYSXb4pMcx48H3v-H0U19zICIHDJD9PQBt0lC8F9s2V5bROKbg1owkT6GZ0dJTuPaJPi&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhAMwL1SFq0382pVU52H3OQJ6QU2pEt_Q3-eaIqwJaKveOAiEAgm1q8UKr6AE8eDQ3HKK2H-aS7k01ruWlRuLGfTs2xM0%3D"
+        // );
+
+        fetch(uriPkYt)
+          .then((response) => {
+            if (response.ok) {
+              console.log("La URL tiene acceso válido");
+              // Realizar acciones adicionales si la URL es válida
+            } else {
+              console.log("La URL tiene acceso denegado");
+              // Mostrar un mensaje o realizar acciones adicionales si la URL tiene acceso denegado
+            }
+          })
+          .catch((error) => {
+            console.log("Ocurrió un error al acceder a la URL", error);
+            // Mostrar un mensaje o realizar acciones adicionales en caso de error
+          });
+
+        // console.log("este es el link", uriPkYt);
+
         //*mostrar el pantalla los datos
         // btnDanger.style.display = "none";
         setTimeout(() => {

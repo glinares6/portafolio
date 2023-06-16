@@ -362,7 +362,6 @@ app.post("/data", async (req, res) => {
 
   let errorCliente;
   let errApiYt;
-  let errApiTercero;
 
   lpInput = body.urlEx.trim();
 
@@ -476,7 +475,6 @@ app.post("/data", async (req, res) => {
         })
         .catch((error) => {
           console.error("Ocurrió un error: -fetch api terceros", error);
-          errApiTercero = "APITERCERO-MP3";
         });
 
       //todo archivo guardado en nuestro servidor
@@ -514,7 +512,6 @@ app.post("/data", async (req, res) => {
         })
         .catch((error) => {
           console.error("Ocurrió un error: api-terceros", error);
-          errApiTercero = "APITERCERO-MP4";
         });
 
       break;
@@ -566,7 +563,6 @@ app.post("/data", async (req, res) => {
         })
         .catch((error) => {
           console.error("Ocurrió un error:  api -tercero", error);
-          errApiTercero = "APITERCERO-M4A";
         });
 
       break;
@@ -584,7 +580,6 @@ app.post("/data", async (req, res) => {
       descripcion: uriDescripcion,
       uri: "ERROR",
       errYt: errApiYt,
-      errApiTercero,
       errClient: errorCliente,
       data,
     });
@@ -644,10 +639,6 @@ app.post("/data", async (req, res) => {
   //   .catch((error) => {
   //     console.error("Ocurrió un error:", error);
   //   });
-});
-
-app.get("*", (req, res) => {
-  res.redirect("/");
 });
 
 //* test
@@ -884,6 +875,10 @@ app.get("/mix", (req, res) => {
     .catch((error) => {
       console.error("Ocurrió un error:", error);
     });
+});
+
+app.get("*", (req, res) => {
+  res.redirect("/");
 });
 
 app.listen(port, () => {
