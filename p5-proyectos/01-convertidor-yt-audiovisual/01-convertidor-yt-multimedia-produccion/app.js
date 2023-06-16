@@ -592,7 +592,7 @@ app.post("/data", async (req, res) => {
     //* validar que la url del archivo exista
 
     try {
-      await fetch(infoLink, {
+      fetch(infoLink, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
