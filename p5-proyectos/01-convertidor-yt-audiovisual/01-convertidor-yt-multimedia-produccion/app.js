@@ -435,7 +435,7 @@ app.post("/data", async (req, res) => {
       // infoLink = "mp3 -switch";
 
       //todo usando la api de youtube-dl-exec
-      await youtubedl(body.urlEx, {
+      await youtubedl(lpInput, {
         dumpSingleJson: true,
         noCheckCertificates: true,
         noWarnings: true,
@@ -496,7 +496,7 @@ app.post("/data", async (req, res) => {
       // infoLink = "mp4 -switch";
 
       //todo usando la api de youtube-dl-exec
-      await youtubedl(body.urlEx, {
+      await youtubedl(lpInput, {
         dumpSingleJson: true,
         noCheckCertificates: true,
         noWarnings: true,
@@ -535,7 +535,7 @@ app.post("/data", async (req, res) => {
       // infoLink = "ma4 -switch";
 
       //todo usando la api de youtube-dl-exec
-      await youtubedl(body.urlEx, {
+      await youtubedl(lpInput, {
         dumpSingleJson: true,
         noCheckCertificates: true,
         noWarnings: true,
@@ -578,10 +578,9 @@ app.post("/data", async (req, res) => {
                 }
               });
             }
-
-            errApiTercero = "APITERCERO-M4A";
           } catch (error) {
             console.log("pased - error permiso- m4a", error);
+            errApiTercero = "APITERCERO-M4A";
           }
 
           console.log("Ruta del archivo m4a enviado -switch");
