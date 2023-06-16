@@ -631,7 +631,7 @@ app.post("/data", async (req, res) => {
       img: uriImg,
       descripcion: uriDescripcion,
       uri: infoLink,
-      errApiTercero,
+      errApiTercero: errApiTercero,
       data,
     });
   }
