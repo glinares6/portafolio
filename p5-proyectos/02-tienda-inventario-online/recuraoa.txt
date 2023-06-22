@@ -1,0 +1,11 @@
+
+DOCUMENTACIÓN
+    react -> https://es.react.dev/learn/start-a-new-react-project
+    typescript -> https://www.typescriptlang.org/docs/
+    nest.js -> https://docs.nestjs.com/first-steps
+    next.js -> https://nextjs.org/
+
+
+BASE DE DATOS
+    mariadb -> https://mariadb.org/documentation/
+    mysql -> https://dev.mysql.com/doc/
