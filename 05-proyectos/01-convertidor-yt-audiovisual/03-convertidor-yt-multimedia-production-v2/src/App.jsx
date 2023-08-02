@@ -8,10 +8,10 @@ import { UseContext } from "./contexts/AuthContext";
 import RouterYt from "./router/RouterYt";
 
 function App() {
-  const [hostServidor] = useState("http://localhost:3000");
+  const [hostServidor] = useState("https://test-yt-v2.onrender.com");
 
   const urlPrimeraOpcion = "http://localhost:3000";
-  const urlSegundaOpcion = "https://test-docker-zt45.onrender.com";
+  const urlSegundaOpcion = "https://test-yt-v2.onrender.com";
 
   const urlFinal =
     hostServidor === urlPrimeraOpcion ? urlPrimeraOpcion : urlSegundaOpcion;
