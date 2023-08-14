@@ -197,7 +197,7 @@ app.post("/mp3", (req, res) => {
               const inputFilePath = `./public/uploads/temp.mp4`;
               const outputFilePath = `./public/uploads/temp.mp3`;
 
-              const command = `${ffmpeg} -i "${inputFilePath}" -vn -acodec libmp3lame "${outputFilePath}"`;
+              const command = `${ffmpeg} -i "${inputFilePath}" -vn -b:a 512k -acodec libmp3lame "${outputFilePath}"`;
 
               const { exec } = childProcess;
 
