@@ -31,3 +31,27 @@ HTML
 
 CSS
     https://www.w3.org/Style/CSS/Overview.en.html
+
+
+
+mockup
+    vivanda
+        https://www.vivanda.com.pe/lacteos-y-huevos/yogurt?page=2
+    plaza vea
+        https://www.plazavea.com.pe/tecnologia/telefonia?page=2
+    faraella tottus
+        https://www.falabella.com.pe/falabella-pe/category/cat760702/Telefonia?page=2
+    metro
+        https://www.metro.pe/lacteos/yogures
+    wong
+        https://www.wong.pe/lacteos?page=2
+    infotec
+        https://www.infotec.com.pe/18-venta-impresoras?resultsPerPage=12&page=2
+    
+
+
+    props en next typescript
+        https://cinthialandia.com/es/blog/props/
+
+    comveritr cadena a html 
+        https://www.delftstack.com/es/howto/javascript/javascript-string-to-html/
