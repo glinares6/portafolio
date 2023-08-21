@@ -5,6 +5,9 @@ import Link from "next/link";
 import { useEffect } from 'react';
 import { useRef } from 'react';
 
+import { useState } from 'react';
+
+
 // export default function Page() {
 //   return(
 //     <>
@@ -54,16 +57,102 @@ const Page: React.FC = () => {
     //   window.addEventListener("resize", adjustSecondLineSize);
   }, []);
 
-  return (
-    <div className=" p-4 w-full border-gray-500 border-2">
-      <p ref={dynamicParagRef} id="dynamicparag" className="w-full line-clamp-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit Lorem ipsum dolor sit.  Lorem ipsum dolor sit amet consectetur adipisicing  elit Fugiat praesentium delectus nam eaque quis animi at, totam v</p>
+  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const data = Array.from({ length: 1200 }, (_, index) => index + 1); // Datos simulados.
+
+
+
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const pageRange = 3; // Cantidad de páginas a mostrar alrededor de la página actual.
+
+  const getPageNumbers = () => {
+    if (currentPage <= pageRange + 1) {
+      return Array.from({ length: Math.min(pageRange * 2 + 1, totalPages) }, (_, index) => index + 1);
+    }
+    if (currentPage >= totalPages - pageRange) {
+      return Array.from({ length: pageRange * 2 + 1 }, (_, index) => totalPages - pageRange * 2 + index);
+    }
+    return Array.from({ length: pageRange * 2 + 1 }, (_, index) => currentPage - pageRange + index);
+  };
+
+  const renderPage = (page: number) => {
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const pageData = data.slice(startIndex, endIndex);
+
+    return (
+      <div>
+        {pageData.map(item => (
+          <div key={item}>Item {item}</div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderPagination = () => (
+    <div>
+
+      {currentPage > 1 && (
+        <button onClick={() => setCurrentPage(currentPage - 1)}>&lt;</button>
+      )}
+      {currentPage > pageRange + 1 && (
+        <button onClick={() => setCurrentPage(1)}>1</button>
+      )}
+      {currentPage > pageRange + 2 && (
+        <span>...</span>
+      )}
+
+      {getPageNumbers().map(page => (
+        <button
+          key={page}
+          onClick={() => setCurrentPage(page)}
+          style={{
+            margin: '0px 3px',
+            padding: '0px 5px',
+            fontWeight: currentPage === page ? 'bold' : 'normal',
+            backgroundColor: currentPage === page ? "black" : "transparent",
+            color: currentPage === page ? "white" : "black"
+          }}
+        >
+          {page}
+        </button>
+      ))}
+      {currentPage < totalPages - pageRange && (
+        <span>...</span>
+      )}
+
+      {currentPage < totalPages - pageRange && (
+        <button onClick={() => setCurrentPage(totalPages)}>{totalPages}</button>
+      )}
+      {currentPage < totalPages && (
+        <button onClick={() => setCurrentPage(currentPage + 1)}>&gt;</button>
+      )}
     </div>
+  );
+  return (
+    <>
+      <div className=" p-4 w-full border-gray-500 border-2">
+        <p ref={dynamicParagRef} id="dynamicparag" className="w-full line-clamp-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit Lorem ipsum dolor sit.  Lorem ipsum dolor sit amet consectetur adipisicing  elit Fugiat praesentium delectus nam eaque quis animi at, totam v</p>
+      </div>
+
+
+
+
+      <div className="px-5">
+        <h1>Paginación</h1>
+        {renderPage(currentPage)}
+        {renderPagination()}
+      </div>
+    </>
   );
 };
 
 export default Page;
 
 
+//*orimer borrador
 
 // import { useEffect, useRef, useState } from 'react';
 
@@ -97,3 +186,153 @@ export default Page;
 // };
 
 // export default ParagraphComponent;
+
+
+
+//*segundo borrador
+
+
+// 'use client'
+
+
+// import Link from "next/link";
+// import { useEffect } from 'react';
+// import { useRef } from 'react';
+
+// import { useState } from 'react';
+
+
+// export default function Page() {
+//   return(
+//     <>
+//        <div>¡Bienvenido a mi perfil!</div>
+//        <Link href="/">volver</Link>
+//        </>
+//    );
+//   }
+
+
+// const Page: React.FC = () => {
+//   const dynamicParagRef = useRef<HTMLParagraphElement | null>(null);
+
+
+//   useEffect(() => {
+
+
+//     if (dynamicParagRef.current) {
+//       const idValue = dynamicParagRef.current;
+//       const secondLine = idValue.innerHTML.split(".")[1];
+
+
+//       const newElement = ` continuara Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, quibusdam veniam consequatur, quo nesciunt quasi quas  <br/> corrupti architecto consequuntur consectetur neque veritatis magnam eligendi ducimus excepturi sunt sed dolorem alias.
+//        laceat illum?`;
+//       idValue.innerHTML = idValue.innerHTML.replace(secondLine, newElement);
+
+
+//       // idValue.innerHTML += newElement;
+
+
+//     } else {
+//       console.log('El elemento es nulo');
+//     }
+
+
+
+
+//     //   function adjustSecondLineSize() {
+//     //   const fontSize = parseFloat(window.getComputedStyle(dynamicParagraph).getPropertyValue("width"));
+//     //   const newSize = fontSize * 2; // Ajusta el tamaño como desees
+//     //   idValue.innerHTML = idValue.innerHTML.replace(secondLine, `todo achorado`);
+//     // }
+
+//     //   // `<small className="bg-red-500">${secondLine}</small>
+//     //   // adjustSecondLineSize();
+
+//     //   window.addEventListener("resize", adjustSecondLineSize);
+//   }, []);
+
+
+
+
+
+
+//   const itemsPerPage = 10;
+//   const [currentPage, setCurrentPage] = useState(1);
+
+//   const data = Array.from({ length: 299 }, (_, index) => index + 1); // Datos simulados.
+
+//   const totalPages = Math.ceil(data.length / itemsPerPage);
+//   const pageRange = 3; // Cantidad de páginas a mostrar alrededor de la página actual.
+
+//   const getPageNumbers = () => {
+//     let startPage = Math.max(currentPage - pageRange, 1);
+//     let endPage = Math.min(currentPage + pageRange, totalPages);
+
+//     // Asegurarse de que haya suficientes páginas antes y después de la página actual.
+//     if (currentPage - startPage < pageRange) {
+//       endPage = startPage + pageRange * 2;
+//     }
+//     if (endPage - currentPage < pageRange) {
+//       startPage = endPage - pageRange * 2;
+//     }
+
+//     return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
+//   };
+
+//   const renderPage = (page: number) => {
+//     const startIndex = (page - 1) * itemsPerPage;
+//     const endIndex = startIndex + itemsPerPage;
+//     const pageData = data.slice(startIndex, endIndex);
+
+//     return (
+//       <div>
+//         {pageData.map(item => (
+//           <div key={item}>Item {item}</div>
+//         ))}
+//       </div>
+//     );
+//   };
+
+//   const renderPagination = () => (
+//     <div>
+//       {currentPage > pageRange + 1 && (
+//         <button onClick={() => setCurrentPage(1)}>Inicio</button>
+//       )}
+//       {getPageNumbers().map(page => (
+//         <button
+//           key={page}
+//           onClick={() => setCurrentPage(page)}
+//           style={{ margin: '5px' }}
+//         >
+//           {page}
+//         </button>
+//       ))}
+//       {currentPage < totalPages - pageRange && (
+//         <button onClick={() => setCurrentPage(totalPages)}>Fin</button>
+//       )}
+//     </div>
+//   );
+
+
+
+//   return (
+//     <>
+//       <div className=" p-4 w-full border-gray-500 border-2">
+//         <p ref={dynamicParagRef} id="dynamicparag" className="w-full line-clamp-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit Lorem ipsum dolor sit.  Lorem ipsum dolor sit amet consectetur adipisicing  elit Fugiat praesentium delectus nam eaque quis animi at, totam v</p>
+//       </div>
+
+
+
+
+//       <div>
+//         <h1>Paginación</h1>
+//         {renderPage(currentPage)}
+//         {renderPagination()}
+//       </div>
+
+
+//     </>
+//   );
+// };
+
+// export default Page;

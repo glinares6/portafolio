@@ -5,9 +5,13 @@ DOCUMENTACIÓN
     typescript -> https://www.typescriptlang.org/docs/
 
     nest.js -> https://docs.nestjs.com/first-steps
+            
+            express -> https://expressjs.com/es/
 
     
-    next.js -> https://nextjs.org/docs/getting-started/project-structure
+    next.js -> https://nextjs.org/docs/getting-started/
+    
+    project-structure
         https://www.freecodecamp.org/espanol/news/aprende-next-js-desde-cero/
         https://web.dev/i18n/es/route-prefetching-in-nextjs/
 
