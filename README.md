@@ -1,24 +1,49 @@
-# portafolio sections
+## Description
 
-Para iniciar los proyectos luego de descargar (npm/yarn)
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-    Agragar npm o yarn segun sea el caso.
+## Installation
 
-        npm install
-        yarn install
+```bash
+$ npm install
+```
 
-    Los archivos
-        .env
+## Running the app
 
-            Contiene credenciales que no estan en el proyecto, debe agregarlas para que puedan compilar algunos proyectos (node)
+```bash
+# development
+$ npm run start
 
+# watch mode
+$ npm run start:dev
 
-    Para compilar la parte de ts (node)
-        Para ejecutar los proyectos con TypeScrip
-            tsc --watch
-            nodemon server/server
+# production mode
+$ npm run start:prod
+```
 
+## Test
 
-    Si va subir proyectos (node) en produccion debe tener
-    las variables de entorno(se debe obtener del archivo .env)
-     para agregarlo a railway / heroku .
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```
+
+## Support
+
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+## License
+
+Nest is [MIT licensed](LICENSE).
