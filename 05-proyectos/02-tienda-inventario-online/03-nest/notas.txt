@@ -1,0 +1,76 @@
+
+iniciar proyecto
+    via cli
+        $ npm i -g @nestjs/cli
+        $ nest new project-name
+
+        forzar tipado
+            nest new proyect-name --strict
+
+        swc ~ fast-box
+            npm run start -- -b swc
+
+
+        create CRUD fast
+            nest g resource [name]
+            nest g controller [name]
+            nest g service [name]
+
+            
+    clene proyecto 
+        git clone https://github.com/nestjs/typescript-starter.git project
+
+        cd project
+        npm install
+        npm run start
+
+            si se quiere usar javascript 
+                git clone https://github.com/nestjs/javascript-starter.git project
+
+
+        
+    crear manualmente 
+        archivois base (configuración,etc por si mismo)
+            npm i --save @nestjs/core @nestjs/common rxjs reflect-metadata
+
+
+
+            cambiar-statuts
+                @HttpCode(...)
+
+            inyectar libreria
+                @Res()
+                findAll(@Res() response)
+                    para ambos enfoques
+                        @Res({ passthrough: true })
+
+            router propios
+                response.status(200).send()
+
+            importar todas las peticiones
+                @types/express
+
+            parametro 
+                @types/express
+                @Body()
+                @Query()
+            
+            
+
+
+            
+
+iniciamos el proyecto 
+    cd newProyect 
+    npm run start
+
+
+
+
+
+tomar en cuenta 
+    npm notice 
+    npm notice New minor version of npm available! 9.6.1 -> 9.8.1
+    npm notice Changelog: https://github.com/npm/cli/releases/tag/v9.8.1
+    npm notice Run npm install -g npm@9.8.1 to update!
+    npm notice 
