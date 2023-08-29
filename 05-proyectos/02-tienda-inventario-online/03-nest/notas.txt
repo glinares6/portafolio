@@ -55,8 +55,14 @@ iniciar proyecto
                 @Body()
                 @Query()
             
-            
 
+    Database
+        mysql or mariadb
+            npm install --save @nestjs/typeorm typeorm mysql2
+
+        implements help
+            https://medium.com/@moisescastro_15074/como-crear-un-crud-utilizando-nestjs-typeorm-y-postgressql-1ff604264e46
+      
 
             
 
