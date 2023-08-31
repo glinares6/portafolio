@@ -5,8 +5,13 @@ import { CatsModule } from './cats/cats.module';
 import { PerModule } from './per/per.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
+import { Photo } from './photo/entities/photo.entity';
+import { PhotoModule } from './photo/photo.module';
+// import { PhotoModule } from './photo/photo.module';
+import { ClienteModule } from './cliente/cliente.module';
+import { Cliente } from './cliente/entities/cliente.entity';
+import { User } from './users/entities/user.entity';
 
 @Module({
   controllers: [AppController],
@@ -19,12 +24,14 @@ import { UsersModule } from './users/users.module';
       username: 'root',
       password: '',
       database: 'nestCli',
-      entities: [User],
+      entities: [User, Photo, Cliente],
       synchronize: true,
     }),
     CatsModule,
     PerModule,
     UsersModule,
+    PhotoModule,
+    ClienteModule,
   ],
 })
 export class AppModule {

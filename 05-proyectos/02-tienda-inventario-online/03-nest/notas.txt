@@ -64,7 +64,13 @@ iniciar proyecto
             https://medium.com/@moisescastro_15074/como-crear-un-crud-utilizando-nestjs-typeorm-y-postgressql-1ff604264e46
       
 
-            
+        typeORM
+            relations 
+                https://typeorm.io/many-to-one-one-to-many-relations
+
+        DW
+            https://desarrolloweb.com/articulos/relacion-uno-a-muchos-typeorm-nest
+                
 
 iniciamos el proyecto 
     cd newProyect 

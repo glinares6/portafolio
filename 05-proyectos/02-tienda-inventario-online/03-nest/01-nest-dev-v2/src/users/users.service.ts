@@ -11,6 +11,8 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
+// import { Photo } from './entities/photo.entity';
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -22,6 +24,7 @@ export class UsersService {
   // }
   async create(createUserDto: CreateUserDto): Promise<User> {
     // return `This action adds a new user ${firstName} y ${lastName}`;
+
     const createValue = await this.usersRepository.save({
       firsName: createUserDto.firsName,
       lastName: createUserDto.lastName,
@@ -48,7 +51,9 @@ export class UsersService {
   }
 
   findAll(): Promise<User[]> {
-    return this.usersRepository.find({ where: { isActive: true } });
+    return this.usersRepository.find({
+      where: { isActive: true },
+    });
     // return `This action returns all users`;
   }
 
@@ -68,7 +73,7 @@ export class UsersService {
   async update(id: number, updateUserDto: UpdateUserDto) {
     // return `This action updates a #${id} user`;
     const updateList = await this.usersRepository.update(id, {
-      // firsName: updateUserDto.firsName,
+      firsName: updateUserDto.firsName,
       lastName: updateUserDto.lastName,
     });
 
