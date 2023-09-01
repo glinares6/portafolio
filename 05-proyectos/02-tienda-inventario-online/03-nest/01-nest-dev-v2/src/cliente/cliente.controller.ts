@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ClienteService } from './cliente.service';
 import { CreateClienteDto } from './dto/create-cliente.dto';
@@ -18,6 +19,13 @@ export class ClienteController {
   @Post()
   create(@Body() createClienteDto: CreateClienteDto) {
     return this.clienteService.create(createClienteDto);
+  }
+  @Post(':id/dni')
+  createDni(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() createClienteDto: CreateClienteDto,
+  ) {
+    return this.clienteService.saveClientWithDniOneToOne(+id, createClienteDto);
   }
 
   @Get()

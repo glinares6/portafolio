@@ -16,12 +16,12 @@ export class PhotoService {
     private PhotoRepository: Repository<Photo>,
   ) {}
 
-  // create(createPhotoDto: CreatePhotoDto) {
-  //   return 'This action adds a new photo';
-  // }
-  async savePhoto(id: number, body: CreatePhotoDto) {
+  create(createPhotoDto: CreatePhotoDto) {
+    return this.PhotoRepository.save(createPhotoDto);
+  }
+  async savePhotoWithClientManyToOne(id: number, body: CreatePhotoDto) {
     const cliente = await this.ClienteRepository.findOneBy({ id });
-    console.log(cliente, id);
+    // console.log(cliente, id);
     if (cliente) {
       const photos = this.PhotoRepository.create(body);
       photos.cliente = cliente;

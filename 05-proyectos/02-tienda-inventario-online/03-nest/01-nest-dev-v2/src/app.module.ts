@@ -12,6 +12,8 @@ import { PhotoModule } from './photo/photo.module';
 import { ClienteModule } from './cliente/cliente.module';
 import { Cliente } from './cliente/entities/cliente.entity';
 import { User } from './users/entities/user.entity';
+import { Dni } from './cliente/dni/entities/dni.entity';
+import { Banco } from './cliente/banco/entities/banco.entity';
 
 @Module({
   controllers: [AppController],
@@ -24,7 +26,7 @@ import { User } from './users/entities/user.entity';
       username: 'root',
       password: '',
       database: 'nestCli',
-      entities: [User, Photo, Cliente],
+      entities: [User, Photo, Cliente, Dni, Banco],
       synchronize: true,
     }),
     CatsModule,

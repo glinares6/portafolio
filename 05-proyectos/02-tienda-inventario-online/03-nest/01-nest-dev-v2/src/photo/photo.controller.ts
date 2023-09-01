@@ -16,12 +16,17 @@ import { CreatePhotoDto } from './dto/create-photo.dto';
 export class PhotoController {
   constructor(private readonly photoService: PhotoService) {}
 
-  @Post(':id/photo')
+  @Post()
+  create(@Body() createPhotoDto: CreatePhotoDto) {
+    return this.photoService.create(createPhotoDto);
+  }
+
+  @Post(':id/cliente')
   async createPhoto(
     @Param('id', ParseIntPipe) id: number,
     @Body() body: CreatePhotoDto,
   ) {
-    return this.photoService.savePhoto(id, body);
+    return this.photoService.savePhotoWithClientManyToOne(id, body);
     // return this.photoService.create(id);
   }
 
