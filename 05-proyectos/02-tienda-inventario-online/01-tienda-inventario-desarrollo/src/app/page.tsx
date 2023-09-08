@@ -7,6 +7,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ListSmartphone from "./components/list-smartphone";
 import data from "./db/data.json"
 import Paginacion from "./components/paginacion";
+import Paginacion2 from "./components/paginacion2";
 
 
 
@@ -17,12 +18,13 @@ export default function Page() {
 
 
   const [idx, setIdx] = useState(0)
+  const [smart, setSmart]: any = useState([])
+
   const router = useRouter();
   const searchParams = useSearchParams()
   const pathname = usePathname()
 
   const search: any = searchParams.get('page')
-
 
   const itemGroup = 12
   const currentSelected = idx
@@ -37,11 +39,28 @@ export default function Page() {
     }
 
 
+
   }, [search])
+
+
+  useEffect(() => {
+
+    fetch('http://localhost:3000/smartphone').then(response => response.json()).then(data => setSmart(data))
+
+  }, [search])
+
+
+  // console.log("valores", smart.map((item: any) => item.picture));
 
 
 
   const newPagination = data.filter((item, indice) => {
+
+    const totalGroup = Math.floor(indice / itemGroup)
+    return totalGroup === currentSelected
+
+  })
+  const newPagination2 = smart.filter((item: any, indice: number) => {
 
     const totalGroup = Math.floor(indice / itemGroup)
     return totalGroup === currentSelected
@@ -59,6 +78,13 @@ export default function Page() {
     cadena.push(i)
 
   }
+
+  const enumPaginas2 = Math.ceil(smart.length / itemGroup)
+  const cadena2 = Array.from({ length: enumPaginas2 }, (_v, i) => i + 1)
+
+  console.log("cadena2", cadena2);
+
+
 
 
 
@@ -103,14 +129,24 @@ export default function Page() {
 
             <div className="h-full grid grid-cols-3  grid-rows-[repeat(3,1fr)]	">
 
-              {
+              {/* {
                 newPagination.map((item, i) => (
 
                   <ListSmartphone key={i} picture={item.picture} title={item.title} from={item.from} offer1={item.offer1} offer2={item.offer2} current={item.current} />
 
                 ))
 
+              } */}
+              {
+                newPagination2.map((item: any, i: number) => (
+
+                  <ListSmartphone key={i} picture={item.picture} title={item.title} from={item.from} offer1={item.offer1} offer2={item.offer2} current={item.current} />
+
+                ))
+
               }
+
+
 
             </div>
 
@@ -122,8 +158,19 @@ export default function Page() {
 
 
 
-                {
+                {/* {
                   cadena.map((item, i) => (
+
+                    <button key={i} onClick={() => handlePaginacion("page", `${item}`)}
+                      className={idx === i ? ' hover:bg-black hover:text-white w-9 h-8  bg-black  text-white' : ' hover:bg-yellow-300  w-9 h-8'}
+                    >{item}</button>
+
+                  ))
+
+
+                } */}
+                {
+                  cadena2.map((item, i) => (
 
                     <button key={i} onClick={() => handlePaginacion("page", `${item}`)}
                       className={idx === i ? ' hover:bg-black hover:text-white w-9 h-8  bg-black  text-white' : ' hover:bg-yellow-300  w-9 h-8'}
@@ -154,7 +201,8 @@ export default function Page() {
               {
                 // cadena.map((item, i) => (
 
-                <Paginacion />
+                // <Paginacion />
+                <Paginacion2 />
 
 
 
@@ -183,10 +231,20 @@ export default function Page() {
             </div>
 
 
-            <div>todos estan aqui {search && <h1>{search}</h1>}</div>
+            <div className="col-span-2 text-2xl border-blue-800 border-2">todos estan aqui {search && <h1>{search}</h1>}</div>
+
+            {/* {
+              smart.map((item: any, i: number) => (
+
+                <button className="col-span-2 text-2xl border-blue-800 border-2" key={i}
+                >{item.offer1}</button>
+
+              ))
+
+
+            } */}
+
           </div>
-
-
 
 
 

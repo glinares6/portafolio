@@ -70,7 +70,12 @@ iniciar proyecto
 
         DW
             https://desarrolloweb.com/articulos/relacion-uno-a-muchos-typeorm-nest
-                
+
+    CORS
+        https://github.com/expressjs/cors#configuration-options
+
+            CORS Asynchronously
+                https://github.com/expressjs/cors#configuring-cors-asynchronously        
 
 iniciamos el proyecto 
     cd newProyect 
