@@ -14,6 +14,8 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
+
+
 }) {
   return (
     <html lang="en">
@@ -30,6 +32,9 @@ export default function RootLayout({
           </Link>
           <Link className="text-white font-bold" href="/productos">
             productos
+          </Link>
+          <Link className="text-white font-bold" href="/crud">
+            crud
           </Link>
         </div>
 
