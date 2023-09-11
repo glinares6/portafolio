@@ -38,21 +38,25 @@ export default async function Layout({ children, get, post, patch, remove, folde
             {/* <button className="border-blue-500 border-2" >Cambio</button> */}
             <br />
             <div className=' flex  flex-row justify-around  text-center border-blue-500 border-2  '>
-                <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' type="button" onClick={() => router.push('/crud/at')}>
+                <Link className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/at'} >get</Link>
+                {/* <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' onClick={() => router.push('/crud/at')}>
                     get
-                </button>
+                </button> */}
                 <br />
-                <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' type="button" onClick={() => router.push('/crud/ax')}>
+                <Link className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/ax'} >post</Link>
+                {/* <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' onClick={() => router.push('/crud/ax')}>
                     post
-                </button>
+                </button> */}
                 <br />
-                <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' type="button" onClick={() => router.push('/crud/aw')}>
+                <Link className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/aw'} >patch</Link>
+                {/* <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' onClick={() => router.push('/crud/aw')}>
                     patch
-                </button>
+                </button> */}
                 <br />
-                <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' type="button" onClick={() => router.push('/crud/az')}>
+                <Link className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/az'} >delete</Link>
+                {/* <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' onClick={() => router.push('/crud/az')}>
                     delete
-                </button>
+                </button> */}
             </div>
             {/* <Link href="/crud/at">analytics</Link>
             <br />
@@ -64,6 +68,7 @@ export default async function Layout({ children, get, post, patch, remove, folde
             {path.includes('az') ? remove : ""}
 
 
+            {/*  //*Rutas paraleas ejemplo */}
             {/* <div className="flex  justify-around text-center ">
                 <div className="border-blue-500 border-2 py-12 w-full">{folder1}</div>
                 <div className="border-blue-500 border-2 py-12 w-full ">{folder2}</div>

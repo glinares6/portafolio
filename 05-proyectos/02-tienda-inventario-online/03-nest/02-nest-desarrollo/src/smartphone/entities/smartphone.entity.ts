@@ -14,12 +14,12 @@ export class Smartphone {
   @Column()
   from: string;
 
-  @Column()
+  @Column({ default: 0 })
   offer1: number;
 
   @Column()
   offer2: number;
 
-  @Column()
+  @Column({ default: 0 })
   current: number;
 }

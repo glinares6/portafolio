@@ -1,19 +1,335 @@
+'use client'
 
-export default async function Page() {
+import React, { useState } from "react"
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+
+// import { useRouter } from "next/navigation"
+
+
+interface Props {
+
+}
+
+type typeSmart = {
+    picture: string;
+    title: string;
+    from: string;
+    offer1: string;
+    offer2: string;
+    current: string
+}
+
+const Page: React.FC<Props> = () => {
+
+    // const searchSmart = useSearchParams()
+    const [formData, setFormData] = useState<typeSmart>({
+        picture: '',
+        title: '',
+        from: '',
+        offer1: '0',
+        offer2: '',
+        current: '0'
+    });
+
+    // useEffect(() => {
+
+    //     if (searchSmart) {
+    //         const pictureSmart = searchSmart.get('picture')
+    //         const titleSmart = searchSmart.get('title')
+    //         const fileSmartphoneSmart = searchSmart.get('fileSmartphone')
+    //         const fromSmart = searchSmart.get('from')
+    //         const offer1Smart = searchSmart.get('offer1')
+    //         const offer2Smart = searchSmart.get('offer2')
+    //         const currentSmart = searchSmart.get('current')
+
+
+    //         if (pictureSmart) {
+    //             const bodySmartPhone = {
+    //                 picture: pictureSmart,
+    //                 title: titleSmart,
+    //                 from: fromSmart,
+    //                 offer1: offer1Smart,
+    //                 offer2: offer2Smart,
+    //                 current: currentSmart
+
+    //             }
+
+    //             fetch('http://localhost:3000/smartphone', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 },
+    //                 body: JSON.stringify(bodySmartPhone)
+    //             }).then(response => {
+    //                 if (response.ok) {
+    //                     console.log('la URL tiene el acceso - POST');
+
+    //                 } else {
+    //                     console.log('No se puede conectar a la URL - POST');
+
+    //                 }
+    //             }).catch(error => {
+    //                 console.log('fallo la conexion con el servidor - POST', error);
+
+    //             }
+
+    //             )
+
+
+
+
+    //             // .then((response) => response.json())
+    //             // .then((data) => {
+    //             //   console.log(data);
+
+    //             //   uriTitulo = data.titulo;
+    //             // });   
+
+
+    //             // .then((response) => {
+    //             //     if (response.ok) {
+    //             //       console.log("La URL tiene acceso válido");
+    //             //       // Realizar acciones adicionales si la URL es válida
+    //             //     } else {
+    //             //       console.log("La URL tiene acceso denegado");
+    //             //       // Mostrar un mensaje o realizar acciones adicionales si la URL tiene acceso denegado
+    //             //     }
+    //             //   })
+    //             //   .catch((error) => {
+    //             //     console.log("Ocurrió un error al acceder a la URL", error);
+    //             //     // Mostrar un mensaje o realizar acciones adicionales en caso de error
+    //             //   });
+
+
+    //             // .catch((error) => {
+    //             //     console.error("Error al descargar el archivo:", error);
+    //             //   });
+
+
+    //         }
+    //     }
+    // }, [searchSmart])
+
+
+
+
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault(); // Prevenir la recarga de la página
+
+        try {
+
+            fetch('http://localhost:3000/smartphone', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            }).then(response => {
+                if (response.ok) {
+                    console.log('la URL tiene el acceso - POST');
+
+                    setFormData({
+                        picture: '',
+                        title: '',
+                        from: '',
+                        offer1: '0',
+                        offer2: '',
+                        current: '0'
+                    })
+
+                } else {
+                    console.log('No se puede conectar a la URL - POST');
+
+                }
+            }).catch(error => {
+                console.log('fallo la conexion con el servidor - POST', error);
+            })
+
+        } catch (error) {
+            console.error('Error al enviar el formulario:', error);
+        }
+    };
+
+
+
+
+
+
+    // const handlePass = () => {
+    //     if (searchSmart) {
+    //         const pictureSmart = searchSmart.get('picture')
+    //         const titleSmart = searchSmart.get('title')
+    //         const fileSmartphoneSmart = searchSmart.get('fileSmartphone')
+    //         const fromSmart = searchSmart.get('from')
+    //         const offer1Smart = searchSmart.get('offer1')
+    //         const offer2Smart = searchSmart.get('offer2')
+    //         const currentSmart = searchSmart.get('current')
+
+
+    //         if (pictureSmart) {
+    //             const bodySmartPhone = {
+    //                 picture: pictureSmart,
+    //                 title: titleSmart,
+    //                 from: fromSmart,
+    //                 offer1: offer1Smart,
+    //                 offer2: offer2Smart,
+    //                 current: currentSmart
+
+    //             }
+
+    //             fetch('http://localhost:3000/smartphone', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 },
+    //                 body: JSON.stringify(bodySmartPhone)
+    //             }).then(response => {
+    //                 if (response.ok) {
+    //                     console.log('la URL tiene el acceso - POST');
+
+    //                 } else {
+    //                     console.log('No se puede conectar a la URL - POST');
+
+    //                 }
+    //             }).catch(error => {
+    //                 console.log('fallo la conexion con el servidor - POST', error);
+
+    //             }
+
+    //             )
+
+
+
+
+    //             // .then((response) => response.json())
+    //             // .then((data) => {
+    //             //   console.log(data);
+
+    //             //   uriTitulo = data.titulo;
+    //             // });   
+
+
+    //             // .then((response) => {
+    //             //     if (response.ok) {
+    //             //       console.log("La URL tiene acceso válido");
+    //             //       // Realizar acciones adicionales si la URL es válida
+    //             //     } else {
+    //             //       console.log("La URL tiene acceso denegado");
+    //             //       // Mostrar un mensaje o realizar acciones adicionales si la URL tiene acceso denegado
+    //             //     }
+    //             //   })
+    //             //   .catch((error) => {
+    //             //     console.log("Ocurrió un error al acceder a la URL", error);
+    //             //     // Mostrar un mensaje o realizar acciones adicionales en caso de error
+    //             //   });
+
+
+    //             // .catch((error) => {
+    //             //     console.error("Error al descargar el archivo:", error);
+    //             //   });
+
+
+    //         }
+    //     }
+
+    // }
+
+
+    // const handleClick = (e: any) => {
+
+    //     let dataSmart = []
+
+    //     for (let i = 0; i < 7; i++) {
+    //         dataSmart.push(e.target.parentElement.parentElement[i].value);
+
+    //     }
+
+    //     const objSmart = {
+    //         picture: dataSmart[0],
+    //         title: dataSmart[1],
+    //         fileSmart: dataSmart[2],
+    //         from: dataSmart[3],
+    //         offer1: dataSmart[4],
+    //         offer2: dataSmart[5],
+    //         current: dataSmart[6]
+
+    //     }
+
+
+    //     return console.log(objSmart['picture']);
+
+    //     for (let i = 0; i < 7; i++) {
+    //         e.target.parentElement.parentElement[i].value = "";
+
+    //     }
+
+
+    // }
+
     return (
         <>
             <div className="flex  justify-center text-2xl">Insertar datos a la tabla smartphone </div>
-            <form className="flex flex-col w-full    items-center gap-2 " >
-                <input className="w-1/4 border-gray-500 border-2 border-dashed  h-[40px]" type="text" name="picture" id="picture" placeholder="picture" required />
-                <input className="w-1/4 border-gray-500 border-2 h-[40px]" type="text" name="title" id="title" placeholder="title" required />
-                <input className="w-1/4 " type="file" name="fileSmartphone" id="fileSmartphone" required />
-                <input className="w-1/4 border-gray-500 border-2 h-[40px]" type="text" name="offer1" id="offer1" placeholder="offer1" />
-                <input className="w-1/4 border-gray-500 border-2 h-[40px]" type="text" name="offer2" id="offer2" placeholder="offer2" required />
-                <input className="w-1/4 border-gray-500 border-2 h-[40px]" type="text" name="current" id="current" placeholder="current" />
-                <div className="flex w-1/12 justify-center  border-gray-500 border-2 cursor-pointer h-[40px]">
-                    <input className=" w-full text-white bg-red-500" type="submit" value="Enviar" />
+            <form onSubmit={handleSubmit} className="flex flex-col w-full    items-center gap-2 " >
+                <div className="flex w-2/4 items-center justify-between">
+                    <label htmlFor="picture">Picture:</label>
+                    <input className="w-[88%] border-gray-500 border-2 border-dashed  h-[40px]" type="text" name="picture" value={formData.picture} id="picture" placeholder="picture" required autoComplete="off" onChange={(e) =>
+                        setFormData({ ...formData, picture: e.target.value })
+                    } />
+                </div>
+                <div className="flex w-2/4 items-center justify-between">
+                    <label htmlFor="title">Title:</label>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="title" value={formData.title} id="title" placeholder="title" required autoComplete="off" onChange={(e) =>
+                        setFormData({ ...formData, title: e.target.value })
+                    } />
+                </div>
+                <div className="flex w-2/4 items-center justify-end">
+                    <input className="w-[88%] " type="file" name="fileSmartphone" id="fileSmartphone" />
+
+                </div>
+                <div className="flex w-2/4 items-center justify-between">
+                    <label htmlFor="from">from:</label>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="from" id="from" value={formData.from} placeholder="from" required autoComplete="off" onChange={(e) =>
+                        setFormData({ ...formData, from: e.target.value })
+                    } />
+                </div>
+
+                <div className="flex w-2/4 items-center justify-between">
+                    <label htmlFor="offer1">Offer1:</label>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="offer1" id="offer1" placeholder="offer1" value={formData.offer1} autoComplete="off" onChange={(e) =>
+                        setFormData({ ...formData, offer1: e.target.value })
+                    } />
+                </div>
+                <div className="flex w-2/4 items-center justify-between">
+                    <label htmlFor="offer2">Offer2:</label>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="offer2" id="offer2" value={formData.offer2} placeholder="offer2" required autoComplete="off" onChange={(e) =>
+                        setFormData({ ...formData, offer2: e.target.value })
+                    } />
+                </div>
+
+                <div className="flex w-2/4 items-center justify-between">
+                    <label htmlFor="current">Current:</label>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="current" id="current" placeholder="current" value={formData.current} autoComplete="off" onChange={(e) =>
+                        setFormData({ ...formData, current: e.target.value })
+                    } />
+                </div>
+
+                <div className="flex w-full my-2  justify-center   cursor-pointer h-[40px]">
+                    <input type="submit" className=" w-1/12 text-white bg-red-500 cursor-pointer" value="Enviar" />
                 </div>
             </form>
         </>
     )
 }
+
+
+
+export default Page;
+
+
+// anidar useSearch params
+// searchParams.set('parametro1', 'valor1');
+// searchParams.set('parametro2', 'valor2');
+// searchParams.set('parametro3', 'valor3');
+
+// router.push({ search: searchParams.toString() });
