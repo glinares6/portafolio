@@ -1,6 +1,6 @@
 'use client'
 
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react"
 
 type TypeDel = {
@@ -9,13 +9,17 @@ type TypeDel = {
 }
 export default function Page() {
 
+    const searchDelete = useSearchParams()
+    const idSearch = searchDelete.get('id') || 108
+
 
     const [delId, setDelId] = useState<TypeDel>({
-        id: ''
+        id: `${idSearch}`
     })
 
+    const router = useRouter()
 
-    // const searchDelete = useSearchParams()
+
 
     // useEffect(() => {
 
@@ -76,14 +80,14 @@ export default function Page() {
             })
                 .then(res => {
                     if (res.ok) {
-                        console.log('La url es valida');
+                        console.log('La url es valida - DELETE');
                         setDelId({ id: '' })
                     } else {
-                        console.log('la url fallo ');
+                        console.log('la url fallo - DELETE ');
 
                     }
                 }).catch(error => {
-                    console.log('error al conectarse al servidor', error);
+                    console.log('error al conectarse al servidor - DELETE', error);
 
                 });
 
@@ -112,8 +116,13 @@ export default function Page() {
                 </div>
 
 
-                <div className="flex w-full my-2  justify-center   cursor-pointer h-[40px]">
-                    <input type="submit" className=" w-1/12 text-white bg-red-500 cursor-pointer" value="Enviar" />
+                <div className="flex  gap-2 ">
+                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[80px] h-[40px]">
+                        <input type="submit" className=" w-full text-white bg-red-500 cursor-pointer" value="Enviar" />
+                    </div>
+                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[80px] h-[40px]">
+                        <input type="button" className=" w-full text-white bg-red-500 cursor-pointer" onClick={() => router.back()} value="Volver" />
+                    </div>
                 </div>
             </form>
         </>

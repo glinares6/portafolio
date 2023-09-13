@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 
-export default async function Layout({ children, get, post, patch, remove, folder1, folder2 }: {
+export default function Layout({ children, get, post, patch, remove, folder1, folder2 }: {
     children: React.ReactNode
     get: React.ReactNode
     post: React.ReactNode
@@ -38,22 +38,22 @@ export default async function Layout({ children, get, post, patch, remove, folde
             {/* <button className="border-blue-500 border-2" >Cambio</button> */}
             <br />
             <div className=' flex  flex-row justify-around  text-center border-blue-500 border-2  '>
-                <Link className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/at'} >get</Link>
+                <Link rel="preload" className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/at'} >get</Link>
                 {/* <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' onClick={() => router.push('/crud/at')}>
                     get
                 </button> */}
                 <br />
-                <Link className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/ax'} >post</Link>
+                <Link rel="preload" className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/ax'} >post</Link>
                 {/* <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' onClick={() => router.push('/crud/ax')}>
                     post
                 </button> */}
                 <br />
-                <Link className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/aw'} >patch</Link>
+                <Link rel="preload" className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/aw'} >patch</Link>
                 {/* <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' onClick={() => router.push('/crud/aw')}>
                     patch
                 </button> */}
                 <br />
-                <Link className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/az'} >delete</Link>
+                <Link rel="preload" className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/az'} >delete </Link>
                 {/* <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' onClick={() => router.push('/crud/az')}>
                     delete
                 </button> */}

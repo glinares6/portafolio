@@ -1,5 +1,6 @@
 'use client'
 import { useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
 type DatosType = {
@@ -26,11 +27,12 @@ export default function Page() {
         }
     );
     // const [datos2, setDatos2] = useState(false);
-    // const searchSmart = useSearchParams()
+    const searchSmart = useSearchParams()
+    const router = useRouter()
 
+    const updateIdSmart = searchSmart.get('id')
 
-
-    let numId = 11
+    let numId = updateIdSmart || 1
     // let arrSmart: any = []
     useEffect(() => {
         async function fetchData() {
@@ -198,13 +200,13 @@ export default function Page() {
                 </div>
                 <div className="flex w-2/4 items-center justify-between">
                     <label htmlFor="picture">Picture:</label>
-                    <input className="w-[88%] border-gray-500 border-2   h-[40px]" type="text" name="picture" id="picture" value={datos.picture} autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2   h-[40px]" type="text" name="picture" id="picture" value={datos.picture} required autoComplete="off" onChange={(e) =>
                         setDatos({ ...datos, picture: e.target.value })
                     } />
                 </div>
                 <div className="flex w-2/4 items-center justify-between">
                     <label htmlFor="title">Title:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="title" id="title" value={datos.title} autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="title" id="title" value={datos.title} required autoComplete="off" onChange={(e) =>
                         setDatos({ ...datos, title: e.target.value })
                     } />
                 </div>
@@ -214,33 +216,38 @@ export default function Page() {
                 </div>
                 <div className="flex w-2/4 items-center justify-between">
                     <label htmlFor="from">from:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="from" id="from" value={datos.from} autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="from" id="from" value={datos.from} required autoComplete="off" onChange={(e) =>
                         setDatos({ ...datos, from: e.target.value })
                     } />
                 </div>
 
                 <div className="flex w-2/4 items-center justify-between">
                     <label htmlFor="offer1">Offer1:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="offer1" id="offer1" value={datos.offer1} autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="offer1" id="offer1" value={datos.offer1} required autoComplete="off" onChange={(e) =>
                         setDatos({ ...datos, offer1: e.target.value })
                     } />
                 </div>
                 <div className="flex w-2/4 items-center justify-between">
                     <label htmlFor="offer2">Offer2:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="offer2" id="offer2" value={datos.offer2} autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="offer2" id="offer2" value={datos.offer2} required autoComplete="off" onChange={(e) =>
                         setDatos({ ...datos, offer2: e.target.value })
                     } />
                 </div>
 
                 <div className="flex w-2/4 items-center justify-between">
                     <label htmlFor="current">Current:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="current" id="current" value={datos.current} autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="current" id="current" value={datos.current} required autoComplete="off" onChange={(e) =>
                         setDatos({ ...datos, current: e.target.value })
                     } />
                 </div>
 
-                <div className="flex w-full my-2  justify-center   cursor-pointer h-[40px]">
-                    <input type="submit" className=" w-1/12 text-white bg-red-500 cursor-pointer" value="Enviar" />
+                <div className="flex  gap-2 ">
+                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[80px] h-[40px]">
+                        <input type="submit" className=" w-full text-white bg-red-500 cursor-pointer" value="Enviar" />
+                    </div>
+                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[80px] h-[40px]">
+                        <input type="button" className=" w-full text-white bg-red-500 cursor-pointer" onClick={() => router.back()} value="Volver" />
+                    </div>
                 </div>
             </form>
             {/* <button onClick={handleClick}> dar</button> */}

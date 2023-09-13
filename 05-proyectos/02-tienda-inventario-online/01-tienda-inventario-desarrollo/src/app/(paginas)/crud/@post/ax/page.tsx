@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from "react"
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 // import { useRouter } from "next/navigation"
@@ -22,6 +22,7 @@ type typeSmart = {
 
 const Page: React.FC<Props> = () => {
 
+    const router = useRouter()
     // const searchSmart = useSearchParams()
     const [formData, setFormData] = useState<typeSmart>({
         picture: '',
@@ -296,7 +297,7 @@ const Page: React.FC<Props> = () => {
 
                 <div className="flex w-2/4 items-center justify-between">
                     <label htmlFor="offer1">Offer1:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="offer1" id="offer1" placeholder="offer1" value={formData.offer1} autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="offer1" id="offer1" placeholder="offer1" value={formData.offer1} required autoComplete="off" onChange={(e) =>
                         setFormData({ ...formData, offer1: e.target.value })
                     } />
                 </div>
@@ -309,13 +310,18 @@ const Page: React.FC<Props> = () => {
 
                 <div className="flex w-2/4 items-center justify-between">
                     <label htmlFor="current">Current:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="current" id="current" placeholder="current" value={formData.current} autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="current" id="current" placeholder="current" value={formData.current} autoComplete="off" required onChange={(e) =>
                         setFormData({ ...formData, current: e.target.value })
                     } />
                 </div>
 
-                <div className="flex w-full my-2  justify-center   cursor-pointer h-[40px]">
-                    <input type="submit" className=" w-1/12 text-white bg-red-500 cursor-pointer" value="Enviar" />
+                <div className="flex  gap-2 ">
+                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[80px] h-[40px]">
+                        <input type="submit" className=" w-full text-white bg-red-500 cursor-pointer" value="Enviar" />
+                    </div>
+                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[80px] h-[40px]">
+                        <input type="button" className=" w-full text-white bg-red-500 cursor-pointer" onClick={() => router.back()} value="Volver" />
+                    </div>
                 </div>
             </form>
         </>
