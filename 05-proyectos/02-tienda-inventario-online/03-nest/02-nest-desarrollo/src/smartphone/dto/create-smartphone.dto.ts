@@ -12,4 +12,6 @@ export class CreateSmartphoneDto {
   offer2: number;
 
   current: number;
+
+  file: string;
 }

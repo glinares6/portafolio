@@ -242,10 +242,10 @@ export default function Page() {
                 </div>
 
                 <div className="flex  gap-2 ">
-                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[80px] h-[40px]">
+                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
                         <input type="submit" className=" w-full text-white bg-red-500 cursor-pointer" value="Enviar" />
                     </div>
-                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[80px] h-[40px]">
+                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
                         <input type="button" className=" w-full text-white bg-red-500 cursor-pointer" onClick={() => router.back()} value="Volver" />
                     </div>
                 </div>

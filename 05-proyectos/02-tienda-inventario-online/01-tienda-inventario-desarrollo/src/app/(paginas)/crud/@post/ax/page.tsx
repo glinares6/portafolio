@@ -17,7 +17,8 @@ type typeSmart = {
     from: string;
     offer1: string;
     offer2: string;
-    current: string
+    current: string;
+    file: any;
 }
 
 const Page: React.FC<Props> = () => {
@@ -30,7 +31,8 @@ const Page: React.FC<Props> = () => {
         from: '',
         offer1: '0',
         offer2: '',
-        current: '0'
+        current: '0',
+        file: ''
     });
 
     // useEffect(() => {
@@ -118,34 +120,65 @@ const Page: React.FC<Props> = () => {
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault(); // Prevenir la recarga de la página
 
+        console.log("test dato", formData.file);
+        console.log("test dato picture", formData.picture);
+        const payload = new FormData();
+        payload.append('file', formData.file)
+
         try {
 
-            fetch('http://localhost:3000/smartphone', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            }).then(response => {
-                if (response.ok) {
-                    console.log('la URL tiene el acceso - POST');
 
-                    setFormData({
-                        picture: '',
-                        title: '',
-                        from: '',
-                        offer1: '0',
-                        offer2: '',
-                        current: '0'
+
+            await fetch('http://localhost:3000/smartphone/file', {
+                method: 'POST',
+                // headers: {
+                //     // 'Content-Type': 'multipart/form-data;'
+                // },
+                body: payload,
+
+            }).then(async response => {
+                if (response.ok) {
+                    console.log('Se envio el archivo - POST');
+
+
+                    await fetch('http://localhost:3000/smartphone', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    }).then(response => {
+                        if (response.ok) {
+                            console.log('la URL tiene el acceso - POST');
+
+                            setFormData({
+                                picture: '',
+                                title: '',
+                                from: '',
+                                offer1: '0',
+                                offer2: '',
+                                current: '0',
+                                file: ''
+                            })
+
+                        } else {
+                            console.log('No se puede conectar a la URL - POST');
+
+                        }
+                    }).catch(error => {
+                        console.log('fallo la conexion con el servidor - POST', error);
                     })
 
                 } else {
-                    console.log('No se puede conectar a la URL - POST');
+                    console.log('No se envio el archivo - POST');
 
                 }
             }).catch(error => {
                 console.log('fallo la conexion con el servidor - POST', error);
             })
+
+
+
 
         } catch (error) {
             console.error('Error al enviar el formulario:', error);
@@ -267,12 +300,56 @@ const Page: React.FC<Props> = () => {
 
 
     // }
+    const handleFile = () => {
+        console.log("test dato", formData.file);
+        console.log("test dato picture", formData.picture);
+        const payload = new FormData();
+        payload.append('file', formData.file)
 
+
+        try {
+
+            fetch('http://localhost:3000/smartphone/file', {
+                method: 'POST',
+                // headers: {
+                //     // 'Content-Type': 'multipart/form-data;'
+                // },
+                body: payload,
+
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Se envio el archivo - POST');
+                    setFormData({
+                        picture: '',
+                        title: '',
+                        from: '',
+                        offer1: '0',
+                        offer2: '',
+                        current: '0',
+                        file: ''
+                    })
+
+
+
+                } else {
+                    console.log('No se envio el archivo - POST');
+
+                }
+            }).catch(error => {
+                console.log('fallo la conexion con el servidor - POST', error);
+            })
+
+        } catch (error) {
+            console.error('Error al enviar el formulario:', error);
+        }
+
+
+    }
     return (
         <>
             <div className="flex  justify-center text-2xl">Insertar datos a la tabla smartphone </div>
-            <form onSubmit={handleSubmit} className="flex flex-col w-full    items-center gap-2 " >
-                <div className="flex w-2/4 items-center justify-between">
+            <form onSubmit={handleSubmit} className="flex flex-col w-full    items-center gap-2 " encType="multipart/form-data" >
+                <div className="flex w-2/4 items-center justify-between" >
                     <label htmlFor="picture">Picture:</label>
                     <input className="w-[88%] border-gray-500 border-2 border-dashed  h-[40px]" type="text" name="picture" value={formData.picture} id="picture" placeholder="picture" required autoComplete="off" onChange={(e) =>
                         setFormData({ ...formData, picture: e.target.value })
@@ -285,7 +362,11 @@ const Page: React.FC<Props> = () => {
                     } />
                 </div>
                 <div className="flex w-2/4 items-center justify-end">
-                    <input className="w-[88%] " type="file" name="fileSmartphone" id="fileSmartphone" />
+                    <input className="w-[88%] " type="file" name="fileSmartphone" id="fileSmartphone" onChange={(e) => {
+                        if (!e.target.files) return;
+                        setFormData({ ...formData, file: e.target.files[0] })
+                    }
+                    } />
 
                 </div>
                 <div className="flex w-2/4 items-center justify-between">
@@ -315,12 +396,15 @@ const Page: React.FC<Props> = () => {
                     } />
                 </div>
 
-                <div className="flex  gap-2 ">
-                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[80px] h-[40px]">
+                <div className="flex w-1/3  gap-2 border-gray-500 border-2">
+                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
                         <input type="submit" className=" w-full text-white bg-red-500 cursor-pointer" value="Enviar" />
                     </div>
-                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[80px] h-[40px]">
+                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
                         <input type="button" className=" w-full text-white bg-red-500 cursor-pointer" onClick={() => router.back()} value="Volver" />
+                    </div>
+                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
+                        <input type="button" className=" w-full text-white bg-red-500 cursor-pointer" onClick={handleFile} value="FIle" />
                     </div>
                 </div>
             </form>

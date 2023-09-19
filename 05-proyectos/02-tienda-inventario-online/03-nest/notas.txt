@@ -56,6 +56,13 @@ iniciar proyecto
                 @Query()
             
 
+    SERVER STATIC
+        https://docs.nestjs.com/recipes/serve-static
+            all files
+                https://stackoverflow.com/questions/63429380/how-to-serve-static-images-in-nestjs
+
+        npm install --save @nestjs/serve-static
+        
     Database
         mysql or mariadb
             npm install --save @nestjs/typeorm typeorm mysql2
@@ -75,8 +82,27 @@ iniciar proyecto
         https://github.com/expressjs/cors#configuration-options
 
             CORS Asynchronously
-                https://github.com/expressjs/cors#configuring-cors-asynchronously        
+                https://github.com/expressjs/cors#configuring-cors-asynchronously  
 
+    FILE UPLOAD
+        npm i -D @types/multer  
+
+        upload local server
+            https://blog.bitsrc.io/upload-file-with-nestjs-d7dd74701b38
+
+            https://stackoverflow.com/questions/61573872/typescript-object-is-possibly-null-when-getting-files-from-event
+
+        CLIENT
+            https://bommidinaveen.medium.com/nestjs-file-upload-2d5c36d34dff
+
+        async await
+            update 
+                https://kamilmysliwiec.com/typescript-2-1-introduction-async-await
+
+                https://github.com/nestjs/nest/issues/2136
+
+                
+        
 iniciamos el proyecto 
     cd newProyect 
     npm run start
