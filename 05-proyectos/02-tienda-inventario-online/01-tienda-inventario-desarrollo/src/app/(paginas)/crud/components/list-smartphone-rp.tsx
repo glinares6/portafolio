@@ -54,13 +54,14 @@ const ListSmartphoneRp: React.FC<Props> = ({ id, picture, title, from, offer1, o
     return (
         <div className="grid grid-cols-1 grid-rows-[1fr_200px_50px] border-purple-700 border-2">
             <div className="flex justify-center pt-3 ">
-                <Image
+                {(picture.includes('.webp') || picture.includes('.jpeg') || picture.includes('.png')) ? <Image
                     className="w-auto h-auto px-9 "
                     src={picture}
                     width="250"
                     height="300"
                     alt="Picture of the author"
-                />
+                /> : ''}
+                {(picture.includes('.mp4') || picture.includes('.mp3')) ? <video src={picture} controls>{title}</video> : ''}
             </div>
             <div className="px-2 py-2  ">
 

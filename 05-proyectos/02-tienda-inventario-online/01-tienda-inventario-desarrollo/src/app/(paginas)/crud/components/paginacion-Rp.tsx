@@ -90,7 +90,7 @@ const PaginacionRp: React.FC<Props> = () => {
         return Array.from({ length: pageRange * 2 + 1 }, (_, index) => search - pageRange + index);
     };
 
-    console.log("todal actuales", getPageNumbers());
+    // console.log("todal actuales", getPageNumbers());log
 
 
 

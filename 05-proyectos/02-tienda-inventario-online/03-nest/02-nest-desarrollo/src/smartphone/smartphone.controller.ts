@@ -8,6 +8,7 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  HttpStatus,
   Res,
 } from '@nestjs/common';
 import { SmartphoneService } from './smartphone.service';
@@ -17,52 +18,74 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 
 import * as fs from 'fs';
-import { Response } from 'express';
 import * as path from 'path';
+import { Response } from 'express';
+
 @Controller('smartphone')
 export class SmartphoneController {
   constructor(private readonly smartphoneService: SmartphoneService) {}
 
   @Post()
   create(@Body() createSmartphoneDto: CreateSmartphoneDto) {
+    createSmartphoneDto.picture = decodeURIComponent(
+      createSmartphoneDto.picture,
+    );
     return this.smartphoneService.create(createSmartphoneDto);
   }
   @Post('file')
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: 'public/img',
+        destination: 'public/img/03-mix',
         filename: (req, file, cb) => {
-          // const uniqueSuffix =
+          const uniqueSuffix =
+            Date.now() + '-' + Math.round(Math.random() * 1e9);
+
+          const extname = path.extname(file.originalname);
+          file.originalname = path.basename(
+            Buffer.from(file.originalname, 'latin1').toString('utf-8'),
+            extname,
+          );
+          // const uniqueSuflix =
           //   Date.now() + '-' + Math.round(Math.random() * 1e9);
-          cb(null, `${file.originalname}`);
+          // const filename = file.fieldname + '-' + uniqueSuflix + extname;
+
+          const filename = uniqueSuffix + file.originalname + extname;
+          cb(null, filename);
         },
       }),
     }),
   )
-  createWriteFile(
-    @UploadedFile() file: Express.Multer.File,
-    @Res() res: Response,
-  ) {
+  createWriteFile(@UploadedFile() file, @Res() response: Response) {
     // return this.smartphoneService.create(createSmartphoneDto);
     console.log(file);
-    if (file) {
-      const filePath = path.join(__dirname, `../../${file.path}`);
 
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader(
-        'Content-Disposition',
-        `attachment; filename=${file.originalname}`,
-      );
+    //*Peticion al cliente para realizar la descarga
+    // const archivoPath = path.join(
+    //   __dirname,
+    //   `../../public/img/${file.originalname}`,
+    // );
 
-      res.sendFile(filePath);
-    } else {
-      console.log('demoro en el envio del archivo');
-    }
-    return {
-      statusCode: 200,
-      data: 'archivo subido correctamente',
+    // res.setHeader('Content-Type', 'application/pdf');
+    // res.setHeader(
+    //   'Content-Disposition',
+    //   `attachment; filename=${file.originalname}`,
+    // );
+    // res.sendFile(archivoPath);
+    const pay = {
+      randPicture: file.filename,
     };
+    response.status(HttpStatus.CREATED).json(pay);
+  }
+
+  @Post(':id/res')
+  serveDatos(@Res() response: Response) {
+    const pay = {
+      nombre: 'gianmarco',
+      nacionalidad: 'peruano',
+      edad: 30,
+    };
+    response.status(HttpStatus.OK).json(pay);
   }
 
   @Get()
@@ -116,14 +139,24 @@ export class SmartphoneController {
     }
   }
 
-  //* solo si el elemento existe
+  //* guarda el archivo y crea un nombrebase
   @Patch(':id/filetest')
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: 'public/img',
+        destination: 'public/img/03-mix',
         filename: (req, file, cb) => {
-          cb(null, file.originalname);
+          const extname = path.extname(file.originalname);
+          file.originalname = path.basename(
+            Buffer.from(file.originalname, 'latin1').toString('utf-8'),
+            extname,
+          );
+          const uniqueSuflix =
+            Date.now() + '-' + Math.round(Math.random() * 1e9);
+          // const filename = file.fieldname + '-' + uniqueSuflix + extname;
+
+          const filename = uniqueSuflix + file.originalname + extname;
+          cb(null, filename);
         },
       }),
     }),
@@ -131,20 +164,46 @@ export class SmartphoneController {
   async patchFileprueba(
     @Param('id') id: string,
     @UploadedFile() file: Express.Multer.File,
+    @Res() response: Response,
   ) {
+    console.log(file);
+    const pay = {
+      randonPicture: file.filename,
+    };
+    response.status(HttpStatus.CREATED).json(pay);
+  }
+
+  //* existencia del archivo y lo borra
+  @Patch(':id/fileVerify')
+  async patchFileVerify(
+    @Param('id') id: string,
+    @Body() createSmartphoneDto: CreateSmartphoneDto,
+  ) {
+    console.log('datos de afuera', createSmartphoneDto.picture);
+
     const removeFile = (msg) =>
       //* consulta a la BD de url de la imagen y ponerlo en el ID
       new Promise((resolve, reject) => {
-        if (fs.existsSync(`./public/img/${id}.mp3`)) {
-          resolve(fs.unlinkSync(`./public/img/${id}.mp3`));
+        const { picture }: any = createSmartphoneDto;
+
+        console.log(picture);
+        const arrPicture = picture.split('/');
+        const arrPicture1 = arrPicture.at(-2);
+        const arrPicture2 = arrPicture.at(-1);
+
+        if (fs.existsSync(`./public/img/${arrPicture1}/${arrPicture2}`)) {
+          fs.unlinkSync(`./public/img/${arrPicture1}/${arrPicture2}`);
           console.log(msg);
+        } else {
+          reject('no hay elemento');
         }
-        reject('no hay elemento');
       });
 
     await removeFile('se elimino').catch((err) => console.log(err));
+
     return {
-      data: file.originalname,
+      statusCode: 200,
+      msg: 'procesando..',
     };
   }
 
@@ -153,10 +212,21 @@ export class SmartphoneController {
     return this.smartphoneService.remove(+id);
   }
   @Delete(':id/file')
-  removeFile(@Param('id') id: string) {
-    if (fs.existsSync(`./public/img/${id}.mp3`)) {
-      fs.unlinkSync(`./public/img/${id}.mp3`);
-      console.log('envio');
+  removeFile(
+    @Param('id') id1: string,
+    @Body() createSmartphoneDto: CreateSmartphoneDto,
+  ) {
+    const { picture }: any = createSmartphoneDto;
+
+    console.log(picture);
+
+    const arrPicture = picture.split('/');
+    const arrPicture1 = arrPicture.at(-2);
+    const arrPicture2 = arrPicture.at(-1);
+
+    if (fs.existsSync(`./public/img/${arrPicture1}/${arrPicture2}`)) {
+      fs.unlinkSync(`./public/img/${arrPicture1}/${arrPicture2}`);
+      console.log('se elimino');
     } else {
       console.log('no se elimino');
     }

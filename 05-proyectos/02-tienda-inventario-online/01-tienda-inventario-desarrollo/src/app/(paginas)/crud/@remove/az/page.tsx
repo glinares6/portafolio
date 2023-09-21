@@ -14,7 +14,8 @@ export default function Page() {
 
 
     const [delId, setDelId] = useState<TypeDel>({
-        id: `${idSearch}`
+        id: `${idSearch}`,
+
     })
 
     const router = useRouter()
@@ -63,15 +64,47 @@ export default function Page() {
     // }, [searchDelete])
 
 
-    const handleDeleteSmart = (e: { preventDefault: any; }) => {
+    const handleDeleteSmart = async (e: { preventDefault: any; }) => {
 
         e.preventDefault();
         if (delId.id) {
 
+            const getDatSnart = await fetch(`http://localhost:3000/smartphone/${delId.id}`)
+
+            const resSmart = await getDatSnart.json();
+
+            const pathPicture = resSmart[0].picture
 
 
+            const payload = {
+                id: delId.id,
+                picture: pathPicture
+            }
 
-            fetch(`http://localhost:3000/smartphone/${delId.id}`, {
+
+            await fetch(`http://localhost:3000/smartphone/${delId.id}/file`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+                .then(res => {
+                    if (res.ok) {
+                        console.log('La url es valida - DELETE');
+                        setDelId({ id: '' })
+                    } else {
+                        console.log('la url fallo - DELETE ');
+
+                    }
+                }).catch(error => {
+                    console.log('error al conectarse al servidor - DELETE', error);
+
+                });
+
+
+            //*codigo base fetch delete
+            await fetch(`http://localhost:3000/smartphone/${delId.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -103,6 +136,9 @@ export default function Page() {
 
 
     }
+
+
+
 
 
     return (

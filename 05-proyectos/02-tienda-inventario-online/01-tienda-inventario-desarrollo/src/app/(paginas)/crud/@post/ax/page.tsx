@@ -128,54 +128,126 @@ const Page: React.FC<Props> = () => {
         try {
 
 
-
-            await fetch('http://localhost:3000/smartphone/file', {
+            const dataPictureServer = await fetch('http://localhost:3000/smartphone/file', {
                 method: 'POST',
                 // headers: {
                 //     // 'Content-Type': 'multipart/form-data;'
                 // },
                 body: payload,
 
-            }).then(async response => {
+            })
+
+            const resDataServer = await dataPictureServer.json()
+
+            //*  respnse.ok solo  verificar si llegan los datos al server 
+            // if (response.ok) {
+            //     console.log('Se envio el archivo - POST');
+
+            // } else {
+            //     console.log('No se envio el archivo - POST');
+
+            // }
+
+
+            // console.log("datos del servidro1", resDataServer);
+
+            //* respuesta data
+            // .then(data => {
+            //     console.log("envio del backend", data);
+
+            //     console.log('Se hizo la descarga - POST');
+            // }).catch(error => {
+            //     console.log('error al descargar el archivo - POST', error);
+            // })
+
+
+
+            //    formData.file.name, //nombre del archivo
+            const payloadFile = {
+                picture: 'http://localhost:3000/public/img/03-mix/' + resDataServer.randPicture,
+                title: formData.title,
+                from: formData.from,
+                offer1: formData.offer1,
+                offer2: formData.offer2,
+                current: formData.current,
+            }
+
+            await fetch('http://localhost:3000/smartphone', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payloadFile)
+            }).then(response => {
                 if (response.ok) {
-                    console.log('Se envio el archivo - POST');
+                    console.log('la URL tiene el acceso - POST');
 
-
-                    await fetch('http://localhost:3000/smartphone', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(formData)
-                    }).then(response => {
-                        if (response.ok) {
-                            console.log('la URL tiene el acceso - POST');
-
-                            setFormData({
-                                picture: '',
-                                title: '',
-                                from: '',
-                                offer1: '0',
-                                offer2: '',
-                                current: '0',
-                                file: ''
-                            })
-
-                        } else {
-                            console.log('No se puede conectar a la URL - POST');
-
-                        }
-                    }).catch(error => {
-                        console.log('fallo la conexion con el servidor - POST', error);
+                    setFormData({
+                        picture: '',
+                        title: '',
+                        from: '',
+                        offer1: '0',
+                        offer2: '',
+                        current: '0',
+                        file: ''
                     })
 
                 } else {
-                    console.log('No se envio el archivo - POST');
+                    console.log('No se puede conectar a la URL - POST');
 
                 }
             }).catch(error => {
                 console.log('fallo la conexion con el servidor - POST', error);
             })
+
+
+            // fetch('http://localhost:3000/smartphone/2/res', {
+            //     method: 'POST'
+            // }).then((res) => res.json()).then(data => console.log('servidor obj ', data)
+            // )
+
+
+            //* METODO DESCARGA AL CLIENTE
+            // fetch('http://localhost:3000/smartphone/file', {
+            //     method: 'POST',
+            //     // headers: {
+            //     //     // 'Content-Type': 'multipart/form-data;'
+            //     // },
+            //     body: payload,
+
+            // }).then(response => {
+            //     if (response.ok) {
+            //         console.log('Se envio el archivo - POST');
+
+            //         return response.blob()
+            //     } else {
+            //         console.log('No se envio el archivo - POST');
+
+            //     }
+            // }).then((blob) => {
+            //     if (blob) {
+
+            //         console.log(blob);
+            //         // Crea una URL local para el Blob
+            //         const url = window.URL.createObjectURL(blob);
+
+            //         // Crea un enlace en el DOM y simula un clic para descargar el archivo
+            //         const a = document.createElement('a');
+            //         a.href = url;
+            //         a.download = `${formData.file.name}`; // Cambia el nombre del archivo según lo que envió el servidor
+            //         a.click();
+
+            //         // Limpia la URL creada
+            //         window.URL.revokeObjectURL(url);
+
+            //     } else {
+            //         console.log('demora al revibir el archivo');
+
+            //     }
+
+            // }).catch(error => {
+            //     console.log('error al descargar el archivo - POST', error);
+            // })
 
 
 
@@ -349,12 +421,12 @@ const Page: React.FC<Props> = () => {
         <>
             <div className="flex  justify-center text-2xl">Insertar datos a la tabla smartphone </div>
             <form onSubmit={handleSubmit} className="flex flex-col w-full    items-center gap-2 " encType="multipart/form-data" >
-                <div className="flex w-2/4 items-center justify-between" >
+                {/* <div className="flex w-2/4 items-center justify-between" >
                     <label htmlFor="picture">Picture:</label>
                     <input className="w-[88%] border-gray-500 border-2 border-dashed  h-[40px]" type="text" name="picture" value={formData.picture} id="picture" placeholder="picture" required autoComplete="off" onChange={(e) =>
                         setFormData({ ...formData, picture: e.target.value })
                     } />
-                </div>
+                </div> */}
                 <div className="flex w-2/4 items-center justify-between">
                     <label htmlFor="title">Title:</label>
                     <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="title" value={formData.title} id="title" placeholder="title" required autoComplete="off" onChange={(e) =>

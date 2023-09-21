@@ -32,7 +32,7 @@ export default function Page() {
     useEffect(() => {
 
         fetch('http://localhost:3000/smartphone').then(response => response.json()).then(data => {
-            console.log(data);
+            // console.log(data);
             setSmart(data)
         })
 

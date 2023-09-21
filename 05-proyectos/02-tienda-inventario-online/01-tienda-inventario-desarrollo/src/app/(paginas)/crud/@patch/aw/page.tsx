@@ -1,6 +1,7 @@
 'use client'
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/navigation";
+import * as path from "path";
 import { useEffect, useState } from "react"
 
 type DatosType = {
@@ -11,9 +12,12 @@ type DatosType = {
     offer1: string;
     offer2: string;
     current: string;
+    file: any;
+    estado: boolean
 };
 
 export default function Page() {
+    const [newPage, setNewPage] = useState('')
     const [datos, setDatos] = useState<DatosType>(
         {
             id: '',
@@ -22,7 +26,9 @@ export default function Page() {
             from: '',
             offer1: '',
             offer2: '',
-            current: ''
+            current: '',
+            file: '',
+            estado: false,
 
         }
     );
@@ -39,16 +45,26 @@ export default function Page() {
             const res = await fetch(`http://localhost:3000/smartphone/${numId}`);
             const data = await res.json();
             // arrSmart.push(...data)
-            setDatos({ ...data[0], id: numId })
+            setDatos({ ...data[0], id: numId, estado: false })
 
             // setDatos2(true)
+
 
 
         }
 
         fetchData();
+
         // console.log("que daño te hace", arrSmart);
     }, [numId]);
+
+
+    // useEffect(() => {
+    //     if (!datos.file) return
+    //     datos.picture = `http://localhost:3000/public/img/03-mix/${datos.file.name}`
+    //     setDatos(datos)
+
+    // }, [datos])
 
 
 
@@ -126,35 +142,394 @@ export default function Page() {
     // }, [datos])
 
 
-    const handleSmart = (e: { preventDefault: () => void; }) => {
+
+    const handleSmart = async (e: {
+        target: any; preventDefault: () => void;
+    }) => {
 
         e.preventDefault()
         if (numId) {
 
+            console.log("datos a verrificar file", datos.estado);
 
-            fetch(`http://localhost:3000/smartphone/${numId}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(datos)
-            }).then(response => {
-                if (response.ok) {
-                    console.log('la URL tiene el acceso - PATCH');
+            console.log('mensaje por dentro', newPage);
 
-                } else {
-                    console.log('No se puede conectar a la URL - PATCH');
+            //* Al darle click a  descargar(input file) cambia su estado a true
+            if (datos.estado) {
+                // console.log('que valor tiene  picture luego de los cambios', datos.file.name);
+
+
+
+                //* me devuelve el randoFilename
+                const blobPayload1 = new FormData();
+                blobPayload1.append('file', datos.file)
+                // blobPayload1.append('picture', datos.picture)
+
+
+                const dataPictureServer1 = await fetch(`http://localhost:3000/smartphone/${numId}/filetest`, {
+                    method: 'PATCH',
+
+                    body: blobPayload1
+                })
+
+
+                const resPictureServer = await dataPictureServer1.json()
+
+                let payload1 = {
+                    id: datos.id,
+                    picture: `http://localhost:3000/public/img/03-mix/${resPictureServer.randonPicture}`,
+                    title: datos.title,
+                    from: datos.from,
+                    offer1: datos.offer1,
+                    offer2: datos.offer2,
+                    current: datos.current,
 
                 }
-            }).catch(error => {
-                console.log('fallo la conexion con el servidor -PATCH', error);
+
+
+                await fetch(`http://localhost:3000/smartphone/${numId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload1)
+                }).then(response => {
+                    if (response.ok) {
+                        console.log('la URL tiene el acceso desde adentro- PATCH');
+
+                    } else {
+                        console.log('No se puede conectar a la URL desde adentro - PATCH');
+
+                    }
+                }).catch(error => {
+                    console.log('fallo la conexion con el servidor desde adentro -PATCH', error);
+
+                }
+
+                )
+
+
+
+                // console.log('datos del backend update!!!  ', resPictureServer);
+
+
+                const res = await fetch(`http://localhost:3000/smartphone/${numId}`);
+                const data = await res.json();
+                // arrSmart.push(...data)
+                setDatos({ ...data[0], id: numId, estado: false })
+                setNewPage('inside')
+                console.log('data actualizada!!! ');
+
+
+
+                //* verifico si el archivo igual al que tengo almacenado
+
+                // if (datos.picture != `http://localhost:3000/public/img/03-mix/${datos.file.name}`) 
+
+
+                // console.log('el nombre de los archivos son diferentes ');
+                const payloadVerify = {
+                    picture: datos.picture
+                }
+
+
+
+                await fetch(`http://localhost:3000/smartphone/${numId}/fileVerify`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payloadVerify)
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Se elimino o actualizo verify - PATCH');
+
+                        } else {
+                            console.log('No hizo cambios verify - PATCH');
+
+                        }
+                    }).catch(error => {
+                        console.log('fallo la conexion con el servidor verify -PATCH', error);
+
+                    }
+
+                    )
+
+
+
+
+                //* console.log(' el nombre de los archivos son igules');
+
 
             }
 
-            )
+
+
+            if (newPage != 'ok') {
+                let payload = {
+                    id: datos.id,
+                    picture: datos.picture,
+                    title: datos.title,
+                    from: datos.from,
+                    offer1: datos.offer1,
+                    offer2: datos.offer2,
+                    current: datos.current,
+
+                }
+
+
+
+
+                await fetch(`http://localhost:3000/smartphone/${numId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                }).then(response => {
+                    if (response.ok) {
+                        console.log('la URL tiene el acceso - PATCH');
+
+                    } else {
+                        console.log('No se puede conectar a la URL - PATCH');
+
+                    }
+                }).catch(error => {
+                    console.log('fallo la conexion con el servidor -PATCH', error);
+
+                }
+
+                )
+
+            }
+
+
+
+
+
+            // datos.picture = `http://localhost:3000/public/img/03-mix/${datos.file.name}`
+            // setDatos(datos)
+            // console.log('datos recien enviados', datos.picture);
+
+
+
+
+
+
+            // const blobPayload = new FormData();
+            // blobPayload.append('file', datos.file)
+            // blobPayload.append('picture', datos.picture)
+
+
+            // await fetch(`http://localhost:3000/smartphone/${numId}/filetest`, {
+            //     method: 'PATCH',
+
+            //     body: blobPayload
+            // }).then(response => {
+            //     if (response.ok) {
+            //         console.log('se realizo la subida o actualización del archivo - PATCH');
+
+            //     } else {
+            //         console.log('No se realizo accion de subida o descarga archivo - PATCH');
+
+            //     }
+            // }).catch(error => {
+            //     console.log('fallo la conexion con el servidor -PATCH', error);
+
+            // }
+
+            // )
+
+
+
 
         }
     }
+
+    // const handleSmart = async (e: {
+    //     target: any; preventDefault: () => void;
+    // }) => {
+
+    //     e.preventDefault()
+    //     if (numId) {
+
+    //         console.log("datos a verrificar file", datos.estado);
+
+    //         console.log('mensaje por dentro', newPage);
+
+    //         //* Al darle click a  descargar(input file) cambia su estado a true
+    //         if (datos.estado) {
+    //             // console.log('que valor tiene  picture luego de los cambios', datos.file.name);
+
+    //             let payload = {
+    //                 id: datos.id,
+    //                 picture: `http://localhost:3000/public/img/03-mix/${datos.file.name}`,
+    //                 title: datos.title,
+    //                 from: datos.from,
+    //                 offer1: datos.offer1,
+    //                 offer2: datos.offer2,
+    //                 current: datos.current,
+
+    //             }
+
+
+    //             await fetch(`http://localhost:3000/smartphone/${numId}`, {
+    //                 method: 'PATCH',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 },
+    //                 body: JSON.stringify(payload)
+    //             }).then(response => {
+    //                 if (response.ok) {
+    //                     console.log('la URL tiene el acceso desde adentro- PATCH');
+
+    //                 } else {
+    //                     console.log('No se puede conectar a la URL desde adentro - PATCH');
+
+    //                 }
+    //             }).catch(error => {
+    //                 console.log('fallo la conexion con el servidor desde adentro -PATCH', error);
+
+    //             }
+
+    //             )
+
+    //             const res = await fetch(`http://localhost:3000/smartphone/${numId}`);
+    //             const data = await res.json();
+    //             // arrSmart.push(...data)
+    //             setDatos({ ...data[0], id: numId, estado: false })
+    //             setNewPage('inside')
+    //             console.log('data actualizada!!! ');
+
+
+
+
+    //             //* en el caso del picture toma su valor original por que la condicion solo  actualiza el input  file 
+
+
+    //             if (datos.picture != `http://localhost:3000/public/img/03-mix/${datos.file.name}`) {
+
+
+    //                 console.log('el nombre de los archivos son diferentes ');
+    //                 const blobPayload = new FormData();
+    //                 blobPayload.append('file', datos.file)
+    //                 blobPayload.append('picture', datos.picture)
+
+
+    //                 await fetch(`http://localhost:3000/smartphone/${numId}/filetest`, {
+    //                     method: 'PATCH',
+
+    //                     body: blobPayload
+    //                 }).then(response => {
+    //                     if (response.ok) {
+    //                         console.log('se realizo la subida o actualización del archivo - PATCH');
+
+
+    //                     } else {
+    //                         console.log('No se realizo accion de subida o descarga archivo - PATCH');
+
+    //                     }
+    //                 }).catch(error => {
+    //                     console.log('fallo la conexion con el servidor -PATCH', error);
+
+    //                 }
+
+    //                 )
+
+    //             }
+
+    //             console.log(' el nombre de los archivos son igules');
+
+    //         }
+
+
+
+    //         if (newPage != 'ok') {
+    //             let payload = {
+    //                 id: datos.id,
+    //                 picture: datos.picture,
+    //                 title: datos.title,
+    //                 from: datos.from,
+    //                 offer1: datos.offer1,
+    //                 offer2: datos.offer2,
+    //                 current: datos.current,
+
+    //             }
+
+
+
+
+    //             await fetch(`http://localhost:3000/smartphone/${numId}`, {
+    //                 method: 'PATCH',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 },
+    //                 body: JSON.stringify(payload)
+    //             }).then(response => {
+    //                 if (response.ok) {
+    //                     console.log('la URL tiene el acceso - PATCH');
+
+    //                 } else {
+    //                     console.log('No se puede conectar a la URL - PATCH');
+
+    //                 }
+    //             }).catch(error => {
+    //                 console.log('fallo la conexion con el servidor -PATCH', error);
+
+    //             }
+
+    //             )
+
+    //         }
+
+
+
+
+
+    //         // datos.picture = `http://localhost:3000/public/img/03-mix/${datos.file.name}`
+    //         // setDatos(datos)
+    //         // console.log('datos recien enviados', datos.picture);
+
+
+
+
+
+
+    //         // const blobPayload = new FormData();
+    //         // blobPayload.append('file', datos.file)
+    //         // blobPayload.append('picture', datos.picture)
+
+
+    //         // await fetch(`http://localhost:3000/smartphone/${numId}/filetest`, {
+    //         //     method: 'PATCH',
+
+    //         //     body: blobPayload
+    //         // }).then(response => {
+    //         //     if (response.ok) {
+    //         //         console.log('se realizo la subida o actualización del archivo - PATCH');
+
+    //         //     } else {
+    //         //         console.log('No se realizo accion de subida o descarga archivo - PATCH');
+
+    //         //     }
+    //         // }).catch(error => {
+    //         //     console.log('fallo la conexion con el servidor -PATCH', error);
+
+    //         // }
+
+    //         // )
+
+
+
+
+    //     }
+    // }
+
+
+
+
+    //*nuevo dato
 
     // useEffect(() => {
 
@@ -186,6 +561,7 @@ export default function Page() {
 
 
 
+
     return (
         <>
             {/* {datos ? datos[0].picture : <h1>no hay nada</h1>} */}
@@ -200,8 +576,14 @@ export default function Page() {
                 </div>
                 <div className="flex w-2/4 items-center justify-between">
                     <label htmlFor="picture">Picture:</label>
-                    <input className="w-[88%] border-gray-500 border-2   h-[40px]" type="text" name="picture" id="picture" value={datos.picture} required autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2   h-[40px]" type="text" name="picture" id="picture" value={datos.picture} required autoComplete="off" onChange={(e) => {
+
                         setDatos({ ...datos, picture: e.target.value })
+
+                    }
+
+                        // `http://localhost:3000/public/img/03-mix/${datos.file.name}`
+
                     } />
                 </div>
                 <div className="flex w-2/4 items-center justify-between">
@@ -211,7 +593,18 @@ export default function Page() {
                     } />
                 </div>
                 <div className="flex w-2/4 items-center justify-end">
-                    <input className="w-[88%] " type="file" name="fileSmartphone" id="fileSmartphone" />
+                    <input className="w-[88%] " type="file" name="fileSmartphone" id="fileSmartphone" onChange={(e) => {
+
+                        if (!e.target.files) return
+                        setDatos({ ...datos, file: e.target.files[0], estado: true })
+
+                        console.log('dato actual', e.target.files[0].name);
+
+
+                        setNewPage('ok')
+
+                    }
+                    } />
 
                 </div>
                 <div className="flex w-2/4 items-center justify-between">
