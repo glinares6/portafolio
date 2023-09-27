@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react"
+import smartphoneFetch from "../../hooks/smartphone-fetch";
 
 type TypeDel = {
     id: string
@@ -9,6 +10,8 @@ type TypeDel = {
 }
 export default function Page() {
 
+
+    const { smartphoneGetOne, smartphoneDeleteFile, smartphoneDelete } = smartphoneFetch();
     const searchDelete = useSearchParams()
     const idSearch = searchDelete.get('id') || 108
 
@@ -69,9 +72,12 @@ export default function Page() {
         e.preventDefault();
         if (delId.id) {
 
-            const getDatSnart = await fetch(`http://localhost:3000/smartphone/${delId.id}`)
+            // const getDatSnart = await fetch(`http://localhost:3000/smartphone/${delId.id}`)
 
-            const resSmart = await getDatSnart.json();
+            // const resSmart = await getDatSnart.json();
+
+
+            const resSmart = await smartphoneGetOne(delId.id)
 
             const pathPicture = resSmart[0].picture
 
@@ -82,50 +88,55 @@ export default function Page() {
             }
 
 
-            await fetch(`http://localhost:3000/smartphone/${delId.id}/file`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-                .then(res => {
-                    if (res.ok) {
-                        console.log('La url es valida - DELETE');
-                        setDelId({ id: '' })
-                    } else {
-                        console.log('la url fallo - DELETE ');
+            // await fetch(`http://localhost:3000/smartphone/${delId.id}/file`, {
+            //     method: 'DELETE',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify(payload)
+            // })
+            //     .then(res => {
+            //         if (res.ok) {
+            //             console.log('La url es valida - DELETE');
 
-                    }
-                }).catch(error => {
-                    console.log('error al conectarse al servidor - DELETE', error);
+            //         } else {
+            //             console.log('la url fallo - DELETE ');
 
-                });
+            //         }
+            //     }).catch(error => {
+            //         console.log('error al conectarse al servidor - DELETE', error);
 
+            //     });
+
+
+            await smartphoneDeleteFile(delId.id, payload)
+
+            setDelId({ id: '' })
 
             //*codigo base fetch delete
-            await fetch(`http://localhost:3000/smartphone/${delId.id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(delId)
-            })
-                .then(res => {
-                    if (res.ok) {
-                        console.log('La url es valida - DELETE');
-                        setDelId({ id: '' })
-                    } else {
-                        console.log('la url fallo - DELETE ');
+            // await fetch(`http://localhost:3000/smartphone/${delId.id}`, {
+            //     method: 'DELETE',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify(delId)
+            // })
+            //     .then(res => {
+            //         if (res.ok) {
+            //             console.log('La url es valida - DELETE');
 
-                    }
-                }).catch(error => {
-                    console.log('error al conectarse al servidor - DELETE', error);
+            //         } else {
+            //             console.log('la url fallo - DELETE ');
 
-                });
+            //         }
+            //     }).catch(error => {
+            //         console.log('error al conectarse al servidor - DELETE', error);
+
+            //     });
 
 
-
+            await smartphoneDelete(delId.id, delId)
+            setDelId({ id: '' })
 
 
 

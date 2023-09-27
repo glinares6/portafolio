@@ -3,8 +3,14 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import ListSmartphoneRp from "../../components/list-smartphone-rp";
 import PaginacionRp from "../../components/paginacion-Rp";
+import smartphoneFetch from "../../hooks/smartphone-fetch";
+
+
 
 export default function Page() {
+
+
+    const { smartphoneGet } = smartphoneFetch();
 
 
     const [idx, setIdx] = useState(0)
@@ -31,12 +37,22 @@ export default function Page() {
 
     useEffect(() => {
 
-        fetch('http://localhost:3000/smartphone').then(response => response.json()).then(data => {
-            // console.log(data);
-            setSmart(data)
-        })
 
-    }, [search])
+        // // smartphoneGet
+        // fetch('http://localhost:3000/smartphone').then(response => response.json()).then(data => {
+        //     // console.log(data);
+
+        // })
+        // // setSmart(data)
+
+
+        (async () => {
+            setSmart(await smartphoneGet())
+        })()
+
+
+    }, [search, smartphoneGet])
+
 
 
 

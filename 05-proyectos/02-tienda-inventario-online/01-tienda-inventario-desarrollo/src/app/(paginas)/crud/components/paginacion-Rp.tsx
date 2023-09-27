@@ -4,6 +4,7 @@ import React, { useState } from "react"
 
 import { useCallback, useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import smartphoneFetch from "../hooks/smartphone-fetch";
 
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 const PaginacionRp: React.FC<Props> = () => {
 
 
+    const { smartphoneGet } = smartphoneFetch()
     const searchParams = useSearchParams()
     const router = useRouter();
     const pathname = usePathname()
@@ -46,10 +48,15 @@ const PaginacionRp: React.FC<Props> = () => {
 
     useEffect(() => {
 
-        fetch('http://localhost:3000/smartphone').then(response => response.json()).then(data => setSmart(data))
+        // fetch('http://localhost:3000/smartphone').then(response => response.json()).then(data => setSmart(data))
 
+        (async () => {
+            const data = await smartphoneGet()
 
-    }, [search])
+            setSmart(data)
+        })()
+
+    }, [search, smartphoneGet])
 
 
 

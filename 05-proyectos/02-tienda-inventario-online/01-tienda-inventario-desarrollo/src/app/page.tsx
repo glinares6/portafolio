@@ -8,6 +8,7 @@ import ListSmartphone from "./components/list-smartphone";
 import data from "./db/data.json"
 import Paginacion from "./components/paginacion";
 import Paginacion2 from "./components/paginacion2";
+import smartphoneApp from "./hooks/smartphone-App";
 
 
 
@@ -16,6 +17,7 @@ export default function Page() {
   // <div className="grid grid-cols-[250px,1fr] justify-center	border-purple-700 border-2 py-7  px-5 w-11/12">
 
 
+  const { smartphoneGet } = smartphoneApp()
 
   const [idx, setIdx] = useState(0)
   const [smart, setSmart]: any = useState([])
@@ -45,9 +47,16 @@ export default function Page() {
 
   useEffect(() => {
 
-    fetch('http://localhost:3000/smartphone').then(response => response.json()).then(data => setSmart(data))
+    (async () => {
+      // const smartphoneGet = await fetch('http://localhost:3000/smartphone')
+      // const dataSmartGet = await smartphoneGet.json()
 
-  }, [search])
+      const dataSmartGet = await smartphoneGet()
+
+      setSmart(dataSmartGet)
+    })()
+
+  }, [search, smartphoneGet])
 
 
   // console.log("valores", smart.map((item: any) => item.picture));
@@ -82,7 +91,7 @@ export default function Page() {
   const enumPaginas2 = Math.ceil(smart.length / itemGroup)
   const cadena2 = Array.from({ length: enumPaginas2 }, (_v, i) => i + 1)
 
-  console.log("cadena2", cadena2);
+  // console.log("cadena2", cadena2);
 
 
 
@@ -108,6 +117,7 @@ export default function Page() {
 
 
   }
+
 
 
 
@@ -140,7 +150,7 @@ export default function Page() {
               {
                 newPagination2.map((item: any, i: number) => (
 
-                  <ListSmartphone key={i} picture={item.picture} title={item.title} from={item.from} offer1={item.offer1} offer2={item.offer2} current={item.current} />
+                  <ListSmartphone key={i} id={item.id} picture={item.picture} title={item.title} from={item.from} offer1={item.offer1} offer2={item.offer2} current={item.current} />
 
                 ))
 

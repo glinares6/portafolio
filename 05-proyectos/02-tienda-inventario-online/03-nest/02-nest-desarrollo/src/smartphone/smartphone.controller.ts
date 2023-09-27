@@ -50,7 +50,7 @@ export class SmartphoneController {
           //   Date.now() + '-' + Math.round(Math.random() * 1e9);
           // const filename = file.fieldname + '-' + uniqueSuflix + extname;
 
-          const filename = uniqueSuffix + file.originalname + extname;
+          const filename = uniqueSuffix + '-' + file.originalname + extname;
           cb(null, filename);
         },
       }),
@@ -85,7 +85,7 @@ export class SmartphoneController {
       nacionalidad: 'peruano',
       edad: 30,
     };
-    response.status(HttpStatus.OK).json(pay);
+    response.status(HttpStatus.CREATED).json(pay);
   }
 
   @Get()
@@ -155,7 +155,7 @@ export class SmartphoneController {
             Date.now() + '-' + Math.round(Math.random() * 1e9);
           // const filename = file.fieldname + '-' + uniqueSuflix + extname;
 
-          const filename = uniqueSuflix + file.originalname + extname;
+          const filename = uniqueSuflix + '-' + file.originalname + extname;
           cb(null, filename);
         },
       }),

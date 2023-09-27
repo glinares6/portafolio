@@ -3,6 +3,7 @@ import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/navigation";
 import * as path from "path";
 import { useEffect, useState } from "react"
+import smartphoneFetch from "../../hooks/smartphone-fetch";
 
 type DatosType = {
     id: string,
@@ -17,6 +18,8 @@ type DatosType = {
 };
 
 export default function Page() {
+
+    const { smartphoneGetOne, smartphoneUpdateFile, smartphoneUpdate, smartphoneUpdateVerify } = smartphoneFetch()
     const [newPage, setNewPage] = useState('')
     const [datos, setDatos] = useState<DatosType>(
         {
@@ -42,8 +45,10 @@ export default function Page() {
     // let arrSmart: any = []
     useEffect(() => {
         async function fetchData() {
-            const res = await fetch(`http://localhost:3000/smartphone/${numId}`);
-            const data = await res.json();
+            // const res = await fetch(`http://localhost:3000/smartphone/${numId}`);
+            // const data = await res.json();
+
+            const data = await smartphoneGetOne(numId)
             // arrSmart.push(...data)
             setDatos({ ...data[0], id: numId, estado: false })
 
@@ -56,7 +61,8 @@ export default function Page() {
         fetchData();
 
         // console.log("que daño te hace", arrSmart);
-    }, [numId]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [updateIdSmart]);
 
 
     // useEffect(() => {
@@ -166,14 +172,19 @@ export default function Page() {
                 // blobPayload1.append('picture', datos.picture)
 
 
-                const dataPictureServer1 = await fetch(`http://localhost:3000/smartphone/${numId}/filetest`, {
-                    method: 'PATCH',
+                // const dataPictureServer1 = await fetch(`http://localhost:3000/smartphone/${numId}/filetest`, {
+                //     method: 'PATCH',
 
-                    body: blobPayload1
-                })
+                //     body: blobPayload1
+                // })
 
 
-                const resPictureServer = await dataPictureServer1.json()
+                // const resPictureServer = await dataPictureServer1.json()
+
+
+                const resPictureServer = await smartphoneUpdateFile(numId, blobPayload1)
+
+
 
                 let payload1 = {
                     id: datos.id,
@@ -187,34 +198,38 @@ export default function Page() {
                 }
 
 
-                await fetch(`http://localhost:3000/smartphone/${numId}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload1)
-                }).then(response => {
-                    if (response.ok) {
-                        console.log('la URL tiene el acceso desde adentro- PATCH');
+                // await fetch(`http://localhost:3000/smartphone/${numId}`, {
+                //     method: 'PATCH',
+                //     headers: {
+                //         'Content-Type': 'application/json'
+                //     },
+                //     body: JSON.stringify(payload1)
+                // }).then(response => {
+                //     if (response.ok) {
+                //         console.log('la URL tiene el acceso desde adentro- PATCH');
 
-                    } else {
-                        console.log('No se puede conectar a la URL desde adentro - PATCH');
+                //     } else {
+                //         console.log('No se puede conectar a la URL desde adentro - PATCH');
 
-                    }
-                }).catch(error => {
-                    console.log('fallo la conexion con el servidor desde adentro -PATCH', error);
+                //     }
+                // }).catch(error => {
+                //     console.log('fallo la conexion con el servidor desde adentro -PATCH', error);
 
-                }
+                // }
 
-                )
+                // )
 
 
+                await smartphoneUpdate(numId, payload1)
 
                 // console.log('datos del backend update!!!  ', resPictureServer);
 
 
-                const res = await fetch(`http://localhost:3000/smartphone/${numId}`);
-                const data = await res.json();
+                // const res = await fetch(`http://localhost:3000/smartphone/${numId}`);
+                // const data = await res.json();
+
+
+                const data = await smartphoneGetOne(numId)
                 // arrSmart.push(...data)
                 setDatos({ ...data[0], id: numId, estado: false })
                 setNewPage('inside')
@@ -234,27 +249,30 @@ export default function Page() {
 
 
 
-                await fetch(`http://localhost:3000/smartphone/${numId}/fileVerify`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payloadVerify)
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            console.log('Se elimino o actualizo verify - PATCH');
+                // await fetch(`http://localhost:3000/smartphone/${numId}/fileVerify`, {
+                //     method: 'PATCH',
+                //     headers: {
+                //         'Content-Type': 'application/json'
+                //     },
+                //     body: JSON.stringify(payloadVerify)
+                // })
+                //     .then(response => {
+                //         if (response.ok) {
+                //             console.log('Se elimino o actualizo verify - PATCH');
 
-                        } else {
-                            console.log('No hizo cambios verify - PATCH');
+                //         } else {
+                //             console.log('No hizo cambios verify - PATCH');
 
-                        }
-                    }).catch(error => {
-                        console.log('fallo la conexion con el servidor verify -PATCH', error);
+                //         }
+                //     }).catch(error => {
+                //         console.log('fallo la conexion con el servidor verify -PATCH', error);
 
-                    }
+                //     }
 
-                    )
+                //     )
+
+
+                await smartphoneUpdateVerify(numId, payloadVerify)
 
 
 
@@ -281,26 +299,28 @@ export default function Page() {
 
 
 
-                await fetch(`http://localhost:3000/smartphone/${numId}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                }).then(response => {
-                    if (response.ok) {
-                        console.log('la URL tiene el acceso - PATCH');
+                // await fetch(`http://localhost:3000/smartphone/${numId}`, {
+                //     method: 'PATCH',
+                //     headers: {
+                //         'Content-Type': 'application/json'
+                //     },
+                //     body: JSON.stringify(payload)
+                // }).then(response => {
+                //     if (response.ok) {
+                //         console.log('la URL tiene el acceso - PATCH');
 
-                    } else {
-                        console.log('No se puede conectar a la URL - PATCH');
+                //     } else {
+                //         console.log('No se puede conectar a la URL - PATCH');
 
-                    }
-                }).catch(error => {
-                    console.log('fallo la conexion con el servidor -PATCH', error);
+                //     }
+                // }).catch(error => {
+                //     console.log('fallo la conexion con el servidor -PATCH', error);
 
-                }
+                // }
 
-                )
+                // )
+
+                await smartphoneUpdate(numId, payload)
 
             }
 

@@ -2,9 +2,10 @@ import React, { useEffect } from "react"
 import { useRef } from 'react';
 
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 interface Props {
+    id: number
     picture: string
     title: string
     from: string
@@ -17,10 +18,10 @@ interface Props {
 
 
 
-const ListSmartphone: React.FC<Props> = ({ picture, title, from, offer1, offer2, current }) => {
+const ListSmartphone: React.FC<Props> = ({ id, picture, title, from, offer1, offer2, current }) => {
 
 
-
+    const search = useSearchParams()
     const parseData = useRef<HTMLParagraphElement | null>(null);
 
 
@@ -38,18 +39,27 @@ const ListSmartphone: React.FC<Props> = ({ picture, title, from, offer1, offer2,
         }
     })
 
-
     const router = useRouter();
+
+    const handleId = (name: string, id: string) => {
+        const params = new URLSearchParams(search.toString())
+
+        params.set(name, id)
+        router.push('/perfil' + '?' + params.toString())
+    }
+
     return (
         <div className="grid grid-cols-1 grid-rows-[1fr_200px_50px] border-purple-700 border-2">
             <div className="flex justify-center pt-3 ">
-                <Image
+                {(picture.includes('.webp') || picture.includes('.jpeg') || picture.includes('.png')) || picture.includes('.jpg') ||
+                    picture.includes('.svg') ? <Image
                     className="w-auto h-auto px-9 "
                     src={picture}
                     width="250"
                     height="300"
                     alt="Picture of the author"
-                />
+                /> : ''}
+                {(picture.includes('.mp4') || picture.includes('.mp3')) ? <video src={picture} controls>{title}</video> : ''}
             </div>
             <div className="px-2 py-2  ">
 
@@ -67,8 +77,8 @@ const ListSmartphone: React.FC<Props> = ({ picture, title, from, offer1, offer2,
             <div className="w-full flex justify-center items-start" >
                 <input
                     type="button"
-                    onClick={() => router.push("/perfil")}
-                    className="w-4/5 font-bold text-white h-10 bg-red-600 rounded-3xl "
+                    onClick={() => handleId('id', `${id}`)}
+                    className="w-4/5 font-bold text-white h-10 bg-red-600 rounded-3xl cursor-pointer "
                     value="AGREGAR"
                 />
             </div>

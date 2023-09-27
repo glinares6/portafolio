@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import smartphoneFetch from "../../hooks/smartphone-fetch";
 
 // import { useRouter } from "next/navigation"
 
@@ -25,6 +26,8 @@ const Page: React.FC<Props> = () => {
 
     const router = useRouter()
     // const searchSmart = useSearchParams()
+
+    const { smartphonePostFile, smartphonePost } = smartphoneFetch();
     const [formData, setFormData] = useState<typeSmart>({
         picture: '',
         title: '',
@@ -128,16 +131,21 @@ const Page: React.FC<Props> = () => {
         try {
 
 
-            const dataPictureServer = await fetch('http://localhost:3000/smartphone/file', {
-                method: 'POST',
-                // headers: {
-                //     // 'Content-Type': 'multipart/form-data;'
-                // },
-                body: payload,
 
-            })
 
-            const resDataServer = await dataPictureServer.json()
+            // const dataPictureServer = await fetch('http://localhost:3000/smartphone/file', {
+            //     method: 'POST',
+            //     // headers: {
+            //     //     // 'Content-Type': 'multipart/form-data;'
+            //     // },
+            //     body: payload,
+
+            // })
+
+            // const resDataServer = await dataPictureServer.json()
+
+
+            const resDataServer = await smartphonePostFile(payload);
 
             //*  respnse.ok solo  verificar si llegan los datos al server 
             // if (response.ok) {
@@ -172,34 +180,41 @@ const Page: React.FC<Props> = () => {
                 current: formData.current,
             }
 
-            await fetch('http://localhost:3000/smartphone', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payloadFile)
-            }).then(response => {
-                if (response.ok) {
-                    console.log('la URL tiene el acceso - POST');
 
-                    setFormData({
-                        picture: '',
-                        title: '',
-                        from: '',
-                        offer1: '0',
-                        offer2: '',
-                        current: '0',
-                        file: ''
-                    })
 
-                } else {
-                    console.log('No se puede conectar a la URL - POST');
+            // await fetch('http://localhost:3000/smartphone', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify(payloadFile)
+            // }).then(response => {
+            //     if (response.ok) {
+            //         console.log('la URL tiene el acceso - POST');
 
-                }
-            }).catch(error => {
-                console.log('fallo la conexion con el servidor - POST', error);
+
+
+            //     } else {
+            //         console.log('No se puede conectar a la URL - POST');
+
+            //     }
+            // }).catch(error => {
+            //     console.log('fallo la conexion con el servidor - POST', error);
+            // })
+
+
+
+            await smartphonePost(payloadFile)
+
+            setFormData({
+                picture: '',
+                title: '',
+                from: '',
+                offer1: '0',
+                offer2: '',
+                current: '0',
+                file: ''
             })
-
 
             // fetch('http://localhost:3000/smartphone/2/res', {
             //     method: 'POST'
@@ -372,7 +387,7 @@ const Page: React.FC<Props> = () => {
 
 
     // }
-    const handleFile = () => {
+    const handleFile = async () => {
         console.log("test dato", formData.file);
         console.log("test dato picture", formData.picture);
         const payload = new FormData();
@@ -381,34 +396,37 @@ const Page: React.FC<Props> = () => {
 
         try {
 
-            fetch('http://localhost:3000/smartphone/file', {
-                method: 'POST',
-                // headers: {
-                //     // 'Content-Type': 'multipart/form-data;'
-                // },
-                body: payload,
+            // fetch('http://localhost:3000/smartphone/file', {
+            //     method: 'POST',
+            //     // headers: {
+            //     //     // 'Content-Type': 'multipart/form-data;'
+            //     // },
+            //     body: payload,
 
-            }).then(response => {
-                if (response.ok) {
-                    console.log('Se envio el archivo - POST');
-                    setFormData({
-                        picture: '',
-                        title: '',
-                        from: '',
-                        offer1: '0',
-                        offer2: '',
-                        current: '0',
-                        file: ''
-                    })
+            // }).then(response => {
+            //     if (response.ok) {
+            //         console.log('Se envio el archivo - POST');
 
 
+            //     } else {
+            //         console.log('No se envio el archivo - POST');
 
-                } else {
-                    console.log('No se envio el archivo - POST');
+            //     }
+            // }).catch(error => {
+            //     console.log('fallo la conexion con el servidor - POST', error);
+            // })
 
-                }
-            }).catch(error => {
-                console.log('fallo la conexion con el servidor - POST', error);
+
+            await smartphonePostFile(payload)
+
+            setFormData({
+                picture: '',
+                title: '',
+                from: '',
+                offer1: '0',
+                offer2: '',
+                current: '0',
+                file: ''
             })
 
         } catch (error) {
@@ -434,7 +452,7 @@ const Page: React.FC<Props> = () => {
                     } />
                 </div>
                 <div className="flex w-2/4 items-center justify-end">
-                    <input className="w-[88%] " type="file" name="fileSmartphone" id="fileSmartphone" onChange={(e) => {
+                    <input className="w-[88%] " type="file" name="fileSmartphone" id="fileSmartphone" required onChange={(e) => {
                         if (!e.target.files) return;
                         setFormData({ ...formData, file: e.target.files[0] })
                     }

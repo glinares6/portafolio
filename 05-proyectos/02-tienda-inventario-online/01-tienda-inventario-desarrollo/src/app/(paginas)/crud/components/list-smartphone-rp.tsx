@@ -54,7 +54,9 @@ const ListSmartphoneRp: React.FC<Props> = ({ id, picture, title, from, offer1, o
     return (
         <div className="grid grid-cols-1 grid-rows-[1fr_200px_50px] border-purple-700 border-2">
             <div className="flex justify-center pt-3 ">
-                {(picture.includes('.webp') || picture.includes('.jpeg') || picture.includes('.png')) ? <Image
+                {(picture.includes('.webp') || picture.includes('.jpeg') || picture.includes('.png')) ||
+                    picture.includes('.jpg') ||
+                    picture.includes('.svg') ? <Image
                     className="w-auto h-auto px-9 "
                     src={picture}
                     width="250"

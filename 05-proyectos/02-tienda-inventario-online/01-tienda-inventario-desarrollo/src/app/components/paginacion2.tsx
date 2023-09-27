@@ -4,6 +4,7 @@ import data from "../db/data.json"
 
 import { useCallback, useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import smartphoneApp from "../hooks/smartphone-App";
 
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 const Paginacion2: React.FC<Props> = () => {
 
 
+    const { smartphoneGet } = smartphoneApp()
     const searchParams = useSearchParams()
     const router = useRouter();
     const pathname = usePathname()
@@ -46,9 +48,17 @@ const Paginacion2: React.FC<Props> = () => {
 
     useEffect(() => {
 
-        fetch('http://localhost:3000/smartphone').then(response => response.json()).then(data => setSmart(data))
 
-    }, [search])
+
+        // fetch('http://localhost:3000/smartphone').then(response => response.json()).then(data => setSmart(data))
+
+        (async () => {
+            const data = await smartphoneGet()
+
+            setSmart(data)
+        })()
+
+    }, [search, smartphoneGet])
 
 
     const createQueryString = useCallback(
@@ -88,7 +98,7 @@ const Paginacion2: React.FC<Props> = () => {
         return Array.from({ length: pageRange * 2 + 1 }, (_, index) => search - pageRange + index);
     };
 
-    console.log("todal actuales", getPageNumbers());
+    // console.log("todal actuales", getPageNumbers());
 
 
 

@@ -1,7 +1,11 @@
 'use client'
 
 
+import smartphoneApp from "@/app/hooks/smartphone-App";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+
 import { useEffect } from 'react';
 import { useRef } from 'react';
 
@@ -20,9 +24,30 @@ import { useState } from 'react';
 
 const Page: React.FC = () => {
   const dynamicParagRef = useRef<HTMLParagraphElement | null>(null);
+  const titleSmartRef = useRef<HTMLParagraphElement | null>(null);
+
+  const params = useSearchParams()
+  const router = useRouter()
+
+
+  const { smartphoneGetOne } = smartphoneApp()
+  const [dataGet, setDataGet]: any = useState({})
+  const getIdSmart = params.get('id')
 
 
   useEffect(() => {
+
+
+    (async () => {
+
+      const smartGetOneRes = await smartphoneGetOne(getIdSmart)
+
+      const newData = smartGetOneRes[0].title.replace('<br/>', '')
+      smartGetOneRes[0].title = newData
+
+
+      setDataGet(...smartGetOneRes)
+    })()
 
 
     if (dynamicParagRef.current) {
@@ -33,6 +58,9 @@ const Page: React.FC = () => {
       const newElement = ` continuara Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, quibusdam veniam consequatur, quo nesciunt quasi quas  <br/> corrupti architecto consequuntur consectetur neque veritatis magnam eligendi ducimus excepturi sunt sed dolorem alias.
        laceat illum?`;
       idValue.innerHTML = idValue.innerHTML.replace(secondLine, newElement);
+
+
+
 
 
       // idValue.innerHTML += newElement;
@@ -55,82 +83,91 @@ const Page: React.FC = () => {
     //   // adjustSecondLineSize();
 
     //   window.addEventListener("resize", adjustSecondLineSize);
-  }, []);
-
-  const itemsPerPage = 10;
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const data = Array.from({ length: 1200 }, (_, index) => index + 1); // Datos simulados.
+  }, [getIdSmart, smartphoneGetOne]);
 
 
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-  const pageRange = 3; // Cantidad de páginas a mostrar alrededor de la página actual.
 
-  const getPageNumbers = () => {
-    if (currentPage <= pageRange + 1) {
-      return Array.from({ length: Math.min(pageRange * 2 + 1, totalPages) }, (_, index) => index + 1);
-    }
-    if (currentPage >= totalPages - pageRange) {
-      return Array.from({ length: pageRange * 2 + 1 }, (_, index) => totalPages - pageRange * 2 + index);
-    }
-    return Array.from({ length: pageRange * 2 + 1 }, (_, index) => currentPage - pageRange + index);
-  };
 
-  const renderPage = (page: number) => {
-    const startIndex = (page - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const pageData = data.slice(startIndex, endIndex);
+  //* paginación legacy
 
-    return (
-      <div>
-        {pageData.map(item => (
-          <div key={item}>Item {item}</div>
-        ))}
-      </div>
-    );
-  };
+  // const itemsPerPage = 10;
+  // const [currentPage, setCurrentPage] = useState(1);
 
-  const renderPagination = () => (
-    <div>
+  // const data = Array.from({ length: 1200 }, (_, index) => index + 1); // Datos simulados.
 
-      {currentPage > 1 && (
-        <button onClick={() => setCurrentPage(currentPage - 1)}>&lt;</button>
-      )}
-      {currentPage > pageRange + 1 && (
-        <button onClick={() => setCurrentPage(1)}>1</button>
-      )}
-      {currentPage > pageRange + 2 && (
-        <span>...</span>
-      )}
 
-      {getPageNumbers().map(page => (
-        <button
-          key={page}
-          onClick={() => setCurrentPage(page)}
-          style={{
-            margin: '0px 3px',
-            padding: '0px 5px',
-            fontWeight: currentPage === page ? 'bold' : 'normal',
-            backgroundColor: currentPage === page ? "black" : "transparent",
-            color: currentPage === page ? "white" : "black"
-          }}
-        >
-          {page}
-        </button>
-      ))}
-      {currentPage < totalPages - pageRange && (
-        <span>...</span>
-      )}
 
-      {currentPage < totalPages - pageRange && (
-        <button onClick={() => setCurrentPage(totalPages)}>{totalPages}</button>
-      )}
-      {currentPage < totalPages && (
-        <button onClick={() => setCurrentPage(currentPage + 1)}>&gt;</button>
-      )}
-    </div>
-  );
+  // const totalPages = Math.ceil(data.length / itemsPerPage);
+  // const pageRange = 3; // Cantidad de páginas a mostrar alrededor de la página actual.
+
+  // const getPageNumbers = () => {
+  //   if (currentPage <= pageRange + 1) {
+  //     return Array.from({ length: Math.min(pageRange * 2 + 1, totalPages) }, (_, index) => index + 1);
+  //   }
+  //   if (currentPage >= totalPages - pageRange) {
+  //     return Array.from({ length: pageRange * 2 + 1 }, (_, index) => totalPages - pageRange * 2 + index);
+  //   }
+  //   return Array.from({ length: pageRange * 2 + 1 }, (_, index) => currentPage - pageRange + index);
+  // };
+
+  // const renderPage = (page: number) => {
+  //   const startIndex = (page - 1) * itemsPerPage;
+  //   const endIndex = startIndex + itemsPerPage;
+  //   const pageData = data.slice(startIndex, endIndex);
+
+  //   return (
+  //     <div>
+  //       {pageData.map(item => (
+  //         <div key={item}>Item {item}</div>
+  //       ))}
+  //     </div>
+  //   );
+  // };
+
+  // const renderPagination = () => (
+  //   <div>
+
+  //     {currentPage > 1 && (
+  //       <button onClick={() => setCurrentPage(currentPage - 1)}>&lt;</button>
+  //     )}
+  //     {currentPage > pageRange + 1 && (
+  //       <button onClick={() => setCurrentPage(1)}>1</button>
+  //     )}
+  //     {currentPage > pageRange + 2 && (
+  //       <span>...</span>
+  //     )}
+
+  //     {getPageNumbers().map(page => (
+  //       <button
+  //         key={page}
+  //         onClick={() => setCurrentPage(page)}
+  //         style={{
+  //           margin: '0px 3px',
+  //           padding: '0px 5px',
+  //           fontWeight: currentPage === page ? 'bold' : 'normal',
+  //           backgroundColor: currentPage === page ? "black" : "transparent",
+  //           color: currentPage === page ? "white" : "black"
+  //         }}
+  //       >
+  //         {page}
+  //       </button>
+  //     ))}
+  //     {currentPage < totalPages - pageRange && (
+  //       <span>...</span>
+  //     )}
+
+  //     {currentPage < totalPages - pageRange && (
+  //       <button onClick={() => setCurrentPage(totalPages)}>{totalPages}</button>
+  //     )}
+  //     {currentPage < totalPages && (
+  //       <button onClick={() => setCurrentPage(currentPage + 1)}>&gt;</button>
+  //     )}
+  //   </div>
+  // );
+
+
+
   return (
     <>
       <div className=" p-4 w-full border-gray-500 border-2">
@@ -139,12 +176,19 @@ const Page: React.FC = () => {
 
 
 
-
-      <div className="px-5">
+      {/* paginación legacy */}
+      {/* <div className="px-5">
         <h1>Paginación</h1>
         {renderPage(currentPage)}
         {renderPagination()}
-      </div>
+      </div> */}
+
+      <br />
+      {dataGet && <div ref={titleSmartRef} >titulo : {dataGet.title}</div>}
+      {dataGet && <div >offer1 : {dataGet.offer1}</div>}
+      {dataGet && <div >offer2 : {dataGet.offer2}</div>}
+      {dataGet && <div >current : {dataGet.current}</div>}
+      <button onClick={() => router.back()}>volver</button>
     </>
   );
 };
