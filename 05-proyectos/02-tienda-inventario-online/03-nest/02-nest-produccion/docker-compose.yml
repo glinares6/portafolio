@@ -1,0 +1,19 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: mi_postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: LZ6WrOdDbd8WAL9HtyXe6PBsUc0R7v0m
+      POSTGRES_DB: store_online_91sz
+      POSTGRES_HOST: dpg-ckat5aesmu8c738k4nq0-a
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  postgres_data:
+
