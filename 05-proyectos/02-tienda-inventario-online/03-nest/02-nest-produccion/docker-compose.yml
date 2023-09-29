@@ -1,8 +1,8 @@
 version: '3'
 services:
-  postgres:
+  postgresbuild:
     image: postgres:latest
-    container_name: mi_postgres
+    container_name: mi_postgres_build
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: LZ6WrOdDbd8WAL9HtyXe6PBsUc0R7v0m
