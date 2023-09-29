@@ -20,8 +20,8 @@ type DatosType = {
 export default function Page() {
 
     // const server = 'https://p9jbwwh0-5000.brs.devtunnels.ms'
-    const server = 'http://localhost:3000'
-    const { smartphoneGetOne, smartphoneUpdateFile, smartphoneUpdate, smartphoneUpdateVerify } = smartphoneFetch()
+    // const server = 'https://nest-online-build.onrender.com'
+    const { smartphoneGetOne, smartphoneUpdateFile, smartphoneUpdate, smartphoneUpdateVerify, server } = smartphoneFetch()
     const [newPage, setNewPage] = useState('')
     const [datos, setDatos] = useState<DatosType>(
         {

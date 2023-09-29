@@ -78,3 +78,8 @@ mockup
 
     comveritr cadena a html 
         https://www.delftstack.com/es/howto/javascript/javascript-string-to-html/
+
+
+    
+    contexts with nextjs
+        https://vercel.com/guides/react-context-state-management-nextjs

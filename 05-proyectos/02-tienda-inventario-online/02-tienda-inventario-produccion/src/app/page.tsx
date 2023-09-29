@@ -95,10 +95,6 @@ export default function Page() {
 
 
 
-
-
-
-
   const createQueryString = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString())
@@ -264,6 +260,7 @@ export default function Page() {
 
 
       </main>
+
 
     </>
   );

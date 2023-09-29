@@ -1,7 +1,12 @@
+
+'use client'
 import Link from "next/link";
 import Reto from "./reto";
 
+
 export default function Page() {
+
+
   return (
     <>
       <Reto />

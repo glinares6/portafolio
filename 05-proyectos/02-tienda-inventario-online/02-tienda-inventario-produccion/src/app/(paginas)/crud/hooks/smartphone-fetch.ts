@@ -1,44 +1,35 @@
 export default function smartphoneFetch() {
+  const server = process.env.SERVER || "https://nest-online-build.onrender.com";
   const smartphoneGet = async () => {
-    const dataSmart = await fetch(
-      "https://p9jbwwh0-3000.brs.devtunnels.ms/smartphone"
-    );
+    const dataSmart = await fetch(`${server}/smartphone`);
 
     return dataSmart.json();
   };
 
   const smartphoneGetOne = async (numId: any) => {
-    const res = await fetch(
-      `https://p9jbwwh0-3000.brs.devtunnels.ms/smartphone/${numId}`
-    );
+    const res = await fetch(`${server}/smartphone/${numId}`);
     return res.json();
   };
   const smartphonePostFile = async (payload: any) => {
-    const dataPictureServer = await fetch(
-      "https://p9jbwwh0-3000.brs.devtunnels.ms/smartphone/file",
-      {
-        method: "POST",
-        // headers: {
-        //     // 'Content-Type': 'multipart/form-data;'
-        // },
-        body: payload,
-      }
-    );
+    const dataPictureServer = await fetch(`${server}/smartphone/file`, {
+      method: "POST",
+      // headers: {
+      //     // 'Content-Type': 'multipart/form-data;'
+      // },
+      body: payload,
+    });
 
     return dataPictureServer.json();
   };
 
   const smartphonePost = async (payloadFile: any) => {
-    const restulSmartphonePost = await fetch(
-      "https://p9jbwwh0-3000.brs.devtunnels.ms/smartphone",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payloadFile),
-      }
-    )
+    const restulSmartphonePost = await fetch(`${server}/smartphone`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payloadFile),
+    })
       .then((response) => {
         if (response.ok) {
           console.log("la URL tiene el acceso - POST");
@@ -55,7 +46,7 @@ export default function smartphoneFetch() {
 
   const smartphoneUpdateFile = async (numId: any, blobPayload: any) => {
     const dataPictureServer1 = await fetch(
-      `https://p9jbwwh0-3000.brs.devtunnels.ms/smartphone/${numId}/filetest`,
+      `${server}/smartphone/${numId}/filetest`,
       {
         method: "PATCH",
 
@@ -67,16 +58,13 @@ export default function smartphoneFetch() {
   };
 
   const smartphoneUpdate = async (numId: any, payload1: any) => {
-    const smartphoneUpdateGo = await fetch(
-      `https://p9jbwwh0-3000.brs.devtunnels.ms/smartphone/${numId}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload1),
-      }
-    )
+    const smartphoneUpdateGo = await fetch(`${server}/smartphone/${numId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload1),
+    })
       .then((response) => {
         if (response.ok) {
           console.log("la URL tiene el acceso desde adentro- PATCH");
@@ -95,7 +83,7 @@ export default function smartphoneFetch() {
 
   const smartphoneUpdateVerify = async (numId: any, payloadVerify: any) => {
     const smartphoneVerify = await fetch(
-      `https://p9jbwwh0-3000.brs.devtunnels.ms/smartphone/${numId}/fileVerify`,
+      `${server}/smartphone/${numId}/fileVerify`,
       {
         method: "PATCH",
         headers: {
@@ -118,16 +106,13 @@ export default function smartphoneFetch() {
   };
 
   const smartphoneDeleteFile = async (delId: any, payload: any) => {
-    const smartphoneDel = await fetch(
-      `https://p9jbwwh0-3000.brs.devtunnels.ms/smartphone/${delId}/file`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      }
-    )
+    const smartphoneDel = await fetch(`${server}/smartphone/${delId}/file`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
       .then((res) => {
         if (res.ok) {
           console.log("La url es valida - DELETE");
@@ -143,16 +128,13 @@ export default function smartphoneFetch() {
   };
 
   const smartphoneDelete = async (id: any, payload: any) => {
-    const smartphoneDeleteGo = await fetch(
-      `https://p9jbwwh0-3000.brs.devtunnels.ms/smartphone/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      }
-    )
+    const smartphoneDeleteGo = await fetch(`${server}/smartphone/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
       .then((res) => {
         if (res.ok) {
           console.log("La url es valida - DELETE");
@@ -176,5 +158,6 @@ export default function smartphoneFetch() {
     smartphoneUpdateVerify,
     smartphoneDeleteFile,
     smartphoneDelete,
+    server,
   };
 }

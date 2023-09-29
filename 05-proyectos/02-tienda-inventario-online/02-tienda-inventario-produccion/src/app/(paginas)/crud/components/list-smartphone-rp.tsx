@@ -53,12 +53,12 @@ const ListSmartphoneRp: React.FC<Props> = ({ id, picture, title, from, offer1, o
 
 
     // console.log('picture de este elemento', picture);
-    const pictureConvert = picture.split('/')
-    const picture1 = pictureConvert.at(-2)
-    const picture2 = pictureConvert.at(-1)
+    // const pictureConvert = picture.split('/')
+    // const picture1 = pictureConvert.at(-2)
+    // const picture2 = pictureConvert.at(-1)
 
-    //* ruta del tunnel localhost:5000
-    const newPicture = `https://p9jbwwh0-3000.brs.devtunnels.ms/public/img/${picture1}/${picture2}`
+    // //* ruta del tunnel localhost:5000
+    // const newPicture = `https://nest-online-build.onrender.com/public/img/${picture1}/${picture2}`
 
 
     return (
@@ -73,7 +73,7 @@ const ListSmartphoneRp: React.FC<Props> = ({ id, picture, title, from, offer1, o
                     height="300"
                     alt="Picture of the author"
                 /> : ''}
-                {(picture.includes('.mp4') || picture.includes('.mp3')) ? <video src={newPicture} controls>{title}</video> : ''}
+                {(picture.includes('.mp4') || picture.includes('.mp3')) ? <video src={picture} controls>{title}</video> : ''}
                 {/* {(picture.includes('.mp4') || picture.includes('.mp3')) ? <ReactPlayer url={newPicture} controls={true}>{title}</ReactPlayer> : ''} */}
             </div>
             <div className="px-2 py-2  ">

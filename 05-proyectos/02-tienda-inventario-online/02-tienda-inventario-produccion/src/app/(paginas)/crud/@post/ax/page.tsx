@@ -27,8 +27,8 @@ const Page: React.FC<Props> = () => {
     const router = useRouter()
     // const searchSmart = useSearchParams()
     // const server = 'https://p9jbwwh0-3000.brs.devtunnels.ms'
-    const server = 'http://localhost:3000'
-    const { smartphonePostFile, smartphonePost } = smartphoneFetch();
+    // const server = 'https://nest-online-build.onrender.com'
+    const { smartphonePostFile, smartphonePost, server } = smartphoneFetch();
     const [formData, setFormData] = useState<typeSmart>({
         picture: '',
         title: '',

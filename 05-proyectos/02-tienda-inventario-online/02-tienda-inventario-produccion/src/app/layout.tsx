@@ -1,7 +1,12 @@
+
 import "./globals.css";
 import { Inter } from "next/font/google";
 
 import Link from "next/link";
+
+
+
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,9 +22,18 @@ export default function RootLayout({
 
 
 }) {
-  return (
+
+
+  // const urlPrimeraOpcion = "http://localhost:3000";
+  // const urlSegundaOpcion = "https://nest-online-build.onrender.com";
+
+
+  return (<>
+
+
     <html lang="en">
       <body className={inter.className}>
+
         <div className=" flex justify-end items-center gap-5 relative bg-blue-800	pr-5 w-full h-16  ">
           <h1 className="text-white font-bold">
             Todo lo que te puedes imaginar
@@ -41,5 +55,6 @@ export default function RootLayout({
         {children}
       </body>
     </html>
+  </>
   );
 }

@@ -32,7 +32,7 @@ const Page: React.FC = () => {
 
   const { smartphoneGetOne } = smartphoneApp()
   const [dataGet, setDataGet]: any = useState({})
-  const getIdSmart = params.get('id')
+  const getIdSmart = params.get('id') || 1
 
 
   useEffect(() => {
