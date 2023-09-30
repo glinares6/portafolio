@@ -15,7 +15,6 @@ export class AppController {
       response.json().then((data) => console.log(data)),
     );
   }
-
   @Get()
   getHello(): string {
     return this.appService.getHello();
