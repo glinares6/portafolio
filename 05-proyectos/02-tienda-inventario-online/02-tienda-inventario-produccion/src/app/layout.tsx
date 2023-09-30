@@ -36,7 +36,7 @@ export default function RootLayout({
 
         <div className=" flex justify-end items-center gap-5 relative bg-blue-800	pr-5 w-full h-16  ">
           <h1 className="text-white font-bold">
-            Todo lo que te puedes imaginar
+            Edición menu
           </h1>
           <Link className="text-white font-bold" href="/perfil">
             perfil

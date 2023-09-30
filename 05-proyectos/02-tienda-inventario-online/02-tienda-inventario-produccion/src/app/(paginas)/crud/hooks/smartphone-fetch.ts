@@ -1,5 +1,5 @@
 export default function smartphoneFetch() {
-  const server = process.env.SERVER || "http://localhost:3000";
+  const server = "https://nest-online-build.onrender.com";
   const smartphoneGet = async () => {
     const dataSmart = await fetch(`${server}/smartphone`);
 

@@ -11,9 +11,9 @@ import Paginacion2 from "./components/paginacion2";
 import smartphoneApp from "./hooks/smartphone-App";
 
 
-import cron from "node-cron";
+// import cron from "node-cron";
 
-import axios from "axios";
+// import axios from "axios";
 
 
 export default function Page() {
@@ -35,15 +35,15 @@ export default function Page() {
   const currentSelected = idx
 
 
-  cron.schedule('*/6 * * * *', () => {
-    axios.get(`${server}/ping`)
-      .then(response => {
-        console.log('Ping exitoso a Render:', response.status);
-      })
-      .catch(error => {
-        console.error('Error en el ping a Render:', error.message);
-      });
-  });
+  // cron.schedule('*/6 * * * *', () => {
+  //   axios.get(`${server}/ping`)
+  //     .then(response => {
+  //       console.log('Ping exitoso a Render:', response.status);
+  //     })
+  //     .catch(error => {
+  //       console.error('Error en el ping a Render:', error.message);
+  //     });
+  // });
 
 
 
