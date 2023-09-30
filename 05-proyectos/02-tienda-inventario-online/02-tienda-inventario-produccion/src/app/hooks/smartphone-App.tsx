@@ -2,7 +2,7 @@
 
 export default function smartphoneApp() {
 
-    const server = 'https://nest-online-build.onrender.com'
+    const server = process.env.SERVER || 'http://localhost:3000'
 
     const smartphoneGet = async () => {
 
@@ -18,6 +18,7 @@ export default function smartphoneApp() {
 
     return {
         smartphoneGet,
-        smartphoneGetOne
+        smartphoneGetOne,
+        server
     }
 }

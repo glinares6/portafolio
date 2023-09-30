@@ -5,7 +5,7 @@ export class AppService {
   getHello(): string {
     return 'Pagina de aterrizaje proyecto nextjs / nestjs';
   }
-  getPing(): string {
-    return 'reconexion al servidor nestjs';
+  getPing(res) {
+    return res.status(200).json({ message: 'Ping exitoso desde NestJS' });
   }
 }

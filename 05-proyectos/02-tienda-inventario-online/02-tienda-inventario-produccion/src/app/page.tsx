@@ -11,13 +11,16 @@ import Paginacion2 from "./components/paginacion2";
 import smartphoneApp from "./hooks/smartphone-App";
 
 
+import cron from "node-cron";
+
+import axios from "axios";
 
 
 export default function Page() {
   // <div className="grid grid-cols-[250px,1fr] justify-center	border-purple-700 border-2 py-7  px-5 w-11/12">
 
 
-  const { smartphoneGet } = smartphoneApp()
+  const { smartphoneGet, server } = smartphoneApp()
 
   const [idx, setIdx] = useState(0)
   const [smart, setSmart]: any = useState([])
@@ -30,6 +33,18 @@ export default function Page() {
 
   const itemGroup = 12
   const currentSelected = idx
+
+
+  cron.schedule('*/6 * * * *', () => {
+    axios.get(`${server}/ping`)
+      .then(response => {
+        console.log('Ping exitoso a Render:', response.status);
+      })
+      .catch(error => {
+        console.error('Error en el ping a Render:', error.message);
+      });
+  });
+
 
 
   useEffect(() => {
