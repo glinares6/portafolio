@@ -8,7 +8,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
   // private readonly logger = new Logger(AppController.name);
 
-  @Cron('60 * * * * *')
+  @Cron('30 * * * * *')
   handleCron() {
     // this.logger.debug('Called when the current second is 2');
     fetch('https://nest-online-build.onrender.com/ping').then((response) =>
