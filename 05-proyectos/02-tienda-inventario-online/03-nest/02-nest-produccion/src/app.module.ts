@@ -7,6 +7,7 @@ import { DataSource } from 'typeorm';
 import { Smartphone } from './smartphone/entities/smartphone.entity';
 import { ServeStaticModule } from '@nestjs/serve-static/dist/serve-static.module';
 import { join } from 'path';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { join } from 'path';
       entities: [Smartphone],
       synchronize: true,
     }),
+    ScheduleModule.forRoot(),
     SmartphoneModule,
   ],
   controllers: [AppController],
