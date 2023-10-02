@@ -5,9 +5,9 @@ services:
     container_name: mi_postgres_build
     environment:
       POSTGRES_USER: root
-      POSTGRES_PASSWORD: LZ6WrOdDbd8WAL9HtyXe6PBsUc0R7v0m
-      POSTGRES_DB: store_online_91sz
-      POSTGRES_HOST: dpg-ckat5aesmu8c738k4nq0-a
+      POSTGRES_PASSWORD: ElV0K4fbOCQLLWsYiVdLVGy0gbpeSSk5
+      POSTGRES_DB: store_4ry8
+      POSTGRES_HOST: dpg-ckdhpdsgonuc738336c0-a
     ports:
       - "5432:5432"
     volumes:
