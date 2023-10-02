@@ -6,12 +6,14 @@ import { Cron } from '@nestjs/schedule';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
+
   // private readonly logger = new Logger(AppController.name);
+  private readonly server = process.env.SERVER_NAME;
 
   @Cron('30 * * * * *')
   handleCron() {
     // this.logger.debug('Called when the current second is 2');
-    fetch('https://nest-online-build.onrender.com/ping').then((response) =>
+    fetch(`${this.server}/ping`).then((response) =>
       response.json().then((data) => console.log(data)),
     );
   }
