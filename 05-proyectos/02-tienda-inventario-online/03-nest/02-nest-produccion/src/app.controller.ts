@@ -8,7 +8,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   // private readonly logger = new Logger(AppController.name);
-  private readonly server = process.env.SERVER_NAME;
+  private readonly server = process.env.SERVER_NAME || 'http://localhost:3000';
 
   @Cron('30 * * * * *')
   handleCron() {
