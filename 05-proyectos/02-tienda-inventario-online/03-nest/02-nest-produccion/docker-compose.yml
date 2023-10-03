@@ -1,0 +1,19 @@
+version: '3'
+services:
+  postgresbuild:
+    image: postgres:latest
+    container_name: mi_postgres_build
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: storeonline
+      POSTGRES_HOST: localhost
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  postgres_data:
+
