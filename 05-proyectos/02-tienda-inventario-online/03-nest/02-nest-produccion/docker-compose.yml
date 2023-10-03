@@ -1,6 +1,6 @@
 version: '3'
 services:
-  postgresbuild:
+  postgres:
     image: postgres:latest
     container_name: mi_postgres_build
     environment:
