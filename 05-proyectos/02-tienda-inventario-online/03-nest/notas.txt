@@ -78,8 +78,44 @@ iniciar proyecto
         DW
             https://desarrolloweb.com/articulos/relacion-uno-a-muchos-typeorm-nest
 
+
+    
+    props en next typescript
+        https://cinthialandia.com/es/blog/props/
+    
+    rutas paralelas
+        https://hackernoon.com/es/nextjs-13-parallel-routes-a-comprehensive-guide
+
+        import { getUser } from '@/lib/auth'
+ 
+                export default function Layout({
+                dashboard,
+                login,
+                }: {
+                dashboard: React.ReactNode
+                login: React.ReactNode
+                }) {
+                const isLoggedIn = getUser()
+                return isLoggedIn ? dashboard : login
+                }
+
+        multicondicional rutas paralelas
+            https://github.com/vercel/next.js/issues/50599
+
+    comveritr cadena a html 
+        https://www.delftstack.com/es/howto/javascript/javascript-string-to-html/
+
+
+    
+    contexts with nextjs
+        https://vercel.com/guides/react-context-state-management-nextjs
+
+
+
     CORS
         https://github.com/expressjs/cors#configuration-options
+
+        https://stackoverflow.com/questions/50949231/nestjs-enable-cors-in-production
 
             CORS Asynchronously
                 https://github.com/expressjs/cors#configuring-cors-asynchronously  
@@ -95,11 +131,19 @@ iniciar proyecto
         CLIENT
             https://bommidinaveen.medium.com/nestjs-file-upload-2d5c36d34dff
 
+        caracteres especiales file - multer
+            https://github.com/expressjs/multer/issues/836
+
+        
         async await
-            update 
+            node - update 
                 https://kamilmysliwiec.com/typescript-2-1-introduction-async-await
 
                 https://github.com/nestjs/nest/issues/2136
+
+                
+            useEfecct - nextjs
+                    https://ultimatecourses.com/blog/using-async-await-inside-react-use-effect-hook
 
 
     CRON

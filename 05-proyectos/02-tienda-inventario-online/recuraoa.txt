@@ -53,33 +53,3 @@ mockup
         https://www.infotec.com.pe/18-venta-impresoras?resultsPerPage=12&page=2
     
 
-
-    props en next typescript
-        https://cinthialandia.com/es/blog/props/
-    
-    rutas paralelas
-        https://hackernoon.com/es/nextjs-13-parallel-routes-a-comprehensive-guide
-
-        import { getUser } from '@/lib/auth'
- 
-                export default function Layout({
-                dashboard,
-                login,
-                }: {
-                dashboard: React.ReactNode
-                login: React.ReactNode
-                }) {
-                const isLoggedIn = getUser()
-                return isLoggedIn ? dashboard : login
-                }
-
-        multicondicional rutas paralelas
-            https://github.com/vercel/next.js/issues/50599
-
-    comveritr cadena a html 
-        https://www.delftstack.com/es/howto/javascript/javascript-string-to-html/
-
-
-    
-    contexts with nextjs
-        https://vercel.com/guides/react-context-state-management-nextjs
