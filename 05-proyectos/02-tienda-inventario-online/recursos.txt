@@ -53,3 +53,10 @@ mockup
         https://www.infotec.com.pe/18-venta-impresoras?resultsPerPage=12&page=2
     
 
+
+    DOCKER
+        docker build -t glinarese/nest-api:v1.40 .
+        sudo docker login
+        docker image
+        docker  ps
+        sudo docker push glinarese/nest-api:v1.40

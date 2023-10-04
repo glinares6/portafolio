@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "nest-online-build.onrender.com",
+        hostname: "nest-image-dev.onrender.com",
         // port: "3000",
         pathname: "/public/img/**",
       },
