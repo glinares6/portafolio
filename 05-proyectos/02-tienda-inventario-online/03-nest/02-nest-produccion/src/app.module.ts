@@ -17,14 +17,14 @@ import { ScheduleModule } from '@nestjs/schedule';
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.POSTGRES_HOST || 'localhost',
-      port: parseInt(process.env.POSTGRES_PORT || '5432'),
-      username: process.env.POSTGRES_USER || 'root',
-      password: process.env.POSTGRES_PASSWORD || 'postgres',
-      database: process.env.POSTGRES_DB || 'storeonline',
-      // url:
-      //   process.env.POSTGRES_URL ||
-      //   'postgres://root:postgres@localhost:5432/storeonline',
+      // host: process.env.POSTGRES_HOST || 'localhost',
+      // port: parseInt(process.env.POSTGRES_PORT || '5432'),
+      // username: process.env.POSTGRES_USER || 'root',
+      // password: process.env.POSTGRES_PASSWORD || 'postgres',
+      // database: process.env.POSTGRES_DB || 'storeonline',
+      url:
+        process.env.POSTGRES_URL ||
+        'postgres://root:postgres@localhost:5432/storeonline',
       entities: [Smartphone],
       synchronize: true,
     }),
