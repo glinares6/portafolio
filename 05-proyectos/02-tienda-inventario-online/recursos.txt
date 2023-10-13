@@ -54,9 +54,4 @@ mockup
     
 
 
-    DOCKER
-        docker build -t glinarese/nest-api:v1.40 .
-        sudo docker login
-        docker image
-        docker  ps
-        sudo docker push glinarese/nest-api:v1.40
+   

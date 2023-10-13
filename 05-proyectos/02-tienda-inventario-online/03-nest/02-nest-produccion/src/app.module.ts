@@ -19,12 +19,12 @@ import { ScheduleModule } from '@nestjs/schedule';
       type: 'postgres',
       // host: process.env.POSTGRES_HOST || 'localhost',
       // port: parseInt(process.env.POSTGRES_PORT || '5432'),
-      // username: process.env.POSTGRES_USER || 'root',
-      // password: process.env.POSTGRES_PASSWORD || 'postgres',
-      // database: process.env.POSTGRES_DB || 'storeonline',
+      // username: process.env.POSTGRES_USER || 'devgtp',
+      // password: process.env.POSTGRES_PASSWORD || 'family',
+      // database: process.env.POSTGRES_DB || 'nestbuild',
       url:
         process.env.POSTGRES_URL ||
-        'postgres://root:postgres@localhost:5432/storeonline',
+        'postgres://devgtp:family@localhost:5432/nestbuild',
       entities: [Smartphone],
       synchronize: true,
     }),

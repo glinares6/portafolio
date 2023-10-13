@@ -150,8 +150,29 @@ iniciar proyecto
        https://docs.nestjs.com/techniques/task-scheduling 
 
     DOCKER
-        IMAGE POSTGRES
+        IMAGE POSTGRES - .yml
             docker compose up -d postgres
+
+     DOCKER
+        verificar docker    
+            sudo  docker build -f ./Dockerfile -t  nestpre .
+            sudo docker run -p 3000:3000 nestpre
+
+        usando la misma red anfitriona
+            sudo docker run --network="host" -p 3000:3000   nestfase
+
+        run directo
+            docker build -t glinarese/nest-api:v1.40 .
+
+        docker hub
+            sudo docker login
+            docker image
+            docker  ps
+            sudo docker push glinarese/nest-api:v1.40
+    
+
+    
+
 
     
 iniciamos el proyecto 
