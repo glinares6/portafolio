@@ -2,7 +2,7 @@
 
 export default function smartphoneApp() {
 
-    const server = "https://helped-hermit-jointly.ngrok-free.app";
+    const server = process.env.NEXT_PUBLIC_SERVER || "http://localhost:3000";
 
     const smartphoneGet = async () => {
 

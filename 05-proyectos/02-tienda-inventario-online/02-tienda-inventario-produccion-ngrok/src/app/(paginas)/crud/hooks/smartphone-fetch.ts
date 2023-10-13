@@ -1,5 +1,5 @@
 export default function smartphoneFetch() {
-  const server = "https://helped-hermit-jointly.ngrok-free.app";
+  const server = process.env.NEXT_PUBLIC_SERVER || "http://localhost:3000";
   const smartphoneGet = async () => {
     const dataSmart = await fetch(`${server}/smartphone`, {
       headers: {
