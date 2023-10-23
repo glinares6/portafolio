@@ -35,9 +35,7 @@ export default function RootLayout({
       <body className={inter.className}>
 
         <div className=" flex justify-end items-center gap-5 relative bg-blue-800	pr-5 w-full h-16  ">
-          <h1 className="text-white font-bold">
-            Edición menu
-          </h1>
+
           <Link className="text-white font-bold" href="/perfil">
             perfil
           </Link>

@@ -590,15 +590,15 @@ export default function Page() {
             <div className="flex  justify-center text-2xl">Actualizar los datos de la tabla smartphone </div>
             <form onSubmit={handleSmart}
                 className="flex flex-col w-full    items-center gap-2 " >
-                <div className="flex w-2/4 items-center justify-between">
+                <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
                     <label htmlFor="id">Id:</label>
-                    <input className="w-[88%] border-gray-500 border-2 border-dashed  h-[40px]" type="text" name="id" id="id" value={datos.id} required autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 border-dashed  h-[40px] max-sm:w-[80%]" type="text" name="id" id="id" value={datos.id} required autoComplete="off" onChange={(e) =>
                         setDatos({ ...datos, id: e.target.value })
                     } />
                 </div>
-                <div className="flex w-2/4 items-center justify-between">
+                <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
                     <label htmlFor="picture">Picture:</label>
-                    <input className="w-[88%] border-gray-500 border-2   h-[40px]" type="text" name="picture" id="picture" value={datos.picture} required autoComplete="off" onChange={(e) => {
+                    <input className="w-[88%] border-gray-500 border-2   h-[40px] max-sm:w-[80%]" type="text" name="picture" id="picture" value={datos.picture} required autoComplete="off" onChange={(e) => {
 
                         setDatos({ ...datos, picture: e.target.value })
 
@@ -608,14 +608,14 @@ export default function Page() {
 
                     } />
                 </div>
-                <div className="flex w-2/4 items-center justify-between">
+                <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
                     <label htmlFor="title">Title:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="title" id="title" value={datos.title} required autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[80%]" type="text" name="title" id="title" value={datos.title} required autoComplete="off" onChange={(e) =>
                         setDatos({ ...datos, title: e.target.value })
                     } />
                 </div>
-                <div className="flex w-2/4 items-center justify-end">
-                    <input className="w-[88%] " type="file" name="fileSmartphone" id="fileSmartphone" onChange={(e) => {
+                <div className="flex w-2/4 items-center justify-end max-sm:w-[90%]">
+                    <input className="w-[88%] max-sm:w-[80%] " type="file" name="fileSmartphone" id="fileSmartphone" onChange={(e) => {
 
                         if (!e.target.files) return
                         setDatos({ ...datos, file: e.target.files[0], estado: true })
@@ -629,39 +629,39 @@ export default function Page() {
                     } />
 
                 </div>
-                <div className="flex w-2/4 items-center justify-between">
+                <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
                     <label htmlFor="from">from:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="from" id="from" value={datos.from} required autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[80%]" type="text" name="from" id="from" value={datos.from} required autoComplete="off" onChange={(e) =>
                         setDatos({ ...datos, from: e.target.value })
                     } />
                 </div>
 
-                <div className="flex w-2/4 items-center justify-between">
+                <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
                     <label htmlFor="offer1">Offer1:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="offer1" id="offer1" value={datos.offer1} required autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[80%]" type="text" name="offer1" id="offer1" value={datos.offer1} required autoComplete="off" onChange={(e) =>
                         setDatos({ ...datos, offer1: e.target.value })
                     } />
                 </div>
-                <div className="flex w-2/4 items-center justify-between">
+                <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
                     <label htmlFor="offer2">Offer2:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="offer2" id="offer2" value={datos.offer2} required autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[80%]" type="text" name="offer2" id="offer2" value={datos.offer2} required autoComplete="off" onChange={(e) =>
                         setDatos({ ...datos, offer2: e.target.value })
                     } />
                 </div>
 
-                <div className="flex w-2/4 items-center justify-between">
+                <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
                     <label htmlFor="current">Current:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="current" id="current" value={datos.current} required autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[80%]" type="text" name="current" id="current" value={datos.current} required autoComplete="off" onChange={(e) =>
                         setDatos({ ...datos, current: e.target.value })
                     } />
                 </div>
 
-                <div className="flex  gap-2 ">
-                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
-                        <input type="submit" className=" w-full text-white bg-red-500 cursor-pointer" value="Enviar" />
+                <div className="flex  gap-2 w-1/3 max-sm:w-[90%] ">
+                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px] max-sm:w-[80%] ">
+                        <input type="submit" className=" w-full text-white bg-red-500 cursor-pointer " value="Enviar" />
                     </div>
-                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
-                        <input type="button" className=" w-full text-white bg-red-500 cursor-pointer" onClick={() => router.back()} value="Volver" />
+                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px] max-sm:w-[80%]">
+                        <input type="button" className=" w-full text-white bg-red-500 cursor-pointer " onClick={() => router.back()} value="Volver" />
                     </div>
                 </div>
             </form>

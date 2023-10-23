@@ -12,7 +12,17 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      animation: {
+        animateBajar: "wiggle 0.4s linear ",
+      },
+      keyframes: {
+        wiggle: {
+          "0%": { height: "0%" },
+          "100%": { height: "85%" },
+        },
+      },
     },
   },
+
   plugins: [],
 };

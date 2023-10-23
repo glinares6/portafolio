@@ -20,7 +20,7 @@ export default function Layout({ children, get, post, patch, remove, folder1, fo
     const router = useRouter()
 
     const path = usePathname()
-
+    const [display, setDisplay]: any = useState(true)
 
     useEffect(() => {
         path.split('/')[0]
@@ -31,32 +31,86 @@ export default function Layout({ children, get, post, patch, remove, folder1, fo
     }, [path])
 
 
+    const handleSection = () => {
+
+        if (display) {
+            setDisplay(false)
+        } else {
+            setDisplay(true)
+
+        }
+    }
 
     // const loginSegments = useSelectedLayoutSegment('analytics')
     return (
         <>
             {/* <button className="border-blue-500 border-2" >Cambio</button> */}
             <br />
-            <div className=' flex  flex-row justify-around  text-center border-blue-500 border-2  '>
-                <Link rel="preload" className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/at'} >get</Link>
-                {/* <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' onClick={() => router.push('/crud/at')}>
-                    get
-                </button> */}
-                <br />
-                <Link rel="preload" className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/ax'} >post</Link>
-                {/* <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' onClick={() => router.push('/crud/ax')}>
-                    post
-                </button> */}
-                <br />
-                <Link rel="preload" className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/aw'} >patch</Link>
-                {/* <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' onClick={() => router.push('/crud/aw')}>
-                    patch
-                </button> */}
-                <br />
-                <Link rel="preload" className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' href={'/crud/az'} >delete </Link>
-                {/* <button className='border-red-500 border-2 cursor-pointer w-[10%] py-2 ' onClick={() => router.push('/crud/az')}>
-                    delete
-                </button> */}
+            <div className=' relative flex   flex-row justify-around  text-center border-blue-500 border-2 max-sm:flex-col max-sm:items-center  '>
+                <button onClick={handleSection} className="pr-3 py-3 hidden cursor-pointer  max-sm:block max-sm:w-full max-sm:flex max-sm:justify-end max-sm:transition max-sm:duration-300 max-sm:ease-linear  ">
+
+                    {display ?
+
+                        <svg
+                            x-show="open"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+
+                        :
+
+                        <svg
+                            x-show="!open"
+                            className="w-6 h-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M4 6h16M4 12h16M4 18h16"
+                            />
+                        </svg>
+
+
+                    }
+                </button>
+
+                <div className={`w-full max-sm:w-1/2 max-sm:flex-col ${display ? '  max-sm:ransition-transform max-sm:duration-300  max-sm:linear  max-sm:h-[220px] max-sm:overflow-hidden  ' : '   max-sm:ransition-transform max-sm:duration-300 max-sm:linear max-sm:h-[0px] max-sm:overflow-hidden	'}`}>
+
+                    {/* <Link rel="preload" className='border-red-500 border-2  w-1/2 cursor-pointer  py-2 ' href={'/crud/at'} >get</Link> */}
+                    <button className='border-red-500 border-2 cursor-pointer w-[25%] py-2 max-sm:w-full max-sm:mb-1' onClick={() => router.push('/crud/at')}>
+                        get
+                    </button>
+
+                    {/* <Link rel="preload" className='border-red-500 border-2 w-1/2 cursor-pointer  py-2 ' href={'/crud/ax'} >post</Link> */}
+                    <button className='border-red-500 border-2 cursor-pointer w-[25%] py-2 max-sm:w-full max-sm:mb-1' onClick={() => router.push('/crud/ax')}>
+                        post
+                    </button>
+
+                    {/* <Link rel="preload" className='border-red-500 border-2  w-1/2 h-full cursor-pointer  py-2 ' href={'/crud/aw'} >patch</Link> */}
+                    <button className='border-red-500 border-2 cursor-pointer w-[25%] py-2 max-sm:w-full max-sm:mb-1' onClick={() => router.push('/crud/aw')}>
+                        patch
+                    </button>
+
+                    {/* <Link rel="preload" className='border-red-500 border-2  w-1/2 cursor-pointer  py-2 ' href={'/crud/az'} >delete </Link> */}
+                    <button className='border-red-500 border-2 cursor-pointer w-[25%] py-2 max-sm:w-full max-sm:mb-1' onClick={() => router.push('/crud/az')}>
+                        delete
+                    </button>
+
+                </div>
             </div>
             {/* <Link href="/crud/at">analytics</Link>
             <br />

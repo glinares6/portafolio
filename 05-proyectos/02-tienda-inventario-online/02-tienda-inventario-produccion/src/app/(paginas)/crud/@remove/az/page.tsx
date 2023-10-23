@@ -157,17 +157,17 @@ export default function Page() {
             <div className="flex  justify-center text-2xl">Eliminar los datos de la tabla smartphone </div>
             <form onSubmit={handleDeleteSmart}
                 className="flex flex-col w-full    items-center gap-2 " >
-                <div className="flex w-2/4 items-center justify-between">
+                <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
                     <label htmlFor="id">Id:</label>
-                    <input className="w-[88%] border-gray-500 border-2 border-dashed  h-[40px]" type="text" name="id" value={delId.id} id="id" placeholder="Id" required autoComplete="off" onChange={(e) => setDelId({ ...delId, id: e.target.value })} />
+                    <input className="w-[88%] border-gray-500 border-2 border-dashed  h-[40px] max-sm:w-[80%]" type="text" name="id" value={delId.id} id="id" placeholder="Id" required autoComplete="off" onChange={(e) => setDelId({ ...delId, id: e.target.value })} />
                 </div>
 
 
-                <div className="flex  gap-2 ">
-                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
+                <div className="flex  gap-2 w-1/3 max-sm:w-[90%]">
+                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px] max-sm:w-[80%]">
                         <input type="submit" className=" w-full text-white bg-red-500 cursor-pointer" value="Enviar" />
                     </div>
-                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
+                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px] max-sm:w-[80%]">
                         <input type="button" className=" w-full text-white bg-red-500 cursor-pointer" onClick={() => router.back()} value="Volver" />
                     </div>
                 </div>

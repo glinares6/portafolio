@@ -438,7 +438,7 @@ const Page: React.FC<Props> = () => {
     }
     return (
         <>
-            <div className="flex  justify-center text-2xl">Insertar datos a la tabla smartphone </div>
+            <div className="flex  justify-center text-2xl max-sm:text-center">Insertar datos a la tabla smartphone </div>
             <form onSubmit={handleSubmit} className="flex flex-col w-full    items-center gap-2 " encType="multipart/form-data" >
                 {/* <div className="flex w-2/4 items-center justify-between" >
                     <label htmlFor="picture">Picture:</label>
@@ -446,57 +446,57 @@ const Page: React.FC<Props> = () => {
                         setFormData({ ...formData, picture: e.target.value })
                     } />
                 </div> */}
-                <div className="flex w-2/4 items-center justify-between">
+                <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
                     <label htmlFor="title">Title:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="title" value={formData.title} id="title" placeholder="title" required autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[80%]" type="text" name="title" value={formData.title} id="title" placeholder="title" required autoComplete="off" onChange={(e) =>
                         setFormData({ ...formData, title: e.target.value })
                     } />
                 </div>
-                <div className="flex w-2/4 items-center justify-end">
-                    <input className="w-[88%] " type="file" name="fileSmartphone" id="fileSmartphone" required onChange={(e) => {
+                <div className="flex w-2/4 items-center justify-end max-sm:w-[90%]">
+                    <input className="w-[88%] max-sm:w-[80%] " type="file" name="fileSmartphone" id="fileSmartphone" required onChange={(e) => {
                         if (!e.target.files) return;
                         setFormData({ ...formData, file: e.target.files[0] })
                     }
                     } />
 
                 </div>
-                <div className="flex w-2/4 items-center justify-between">
+                <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
                     <label htmlFor="from">from:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="from" id="from" value={formData.from} placeholder="from" required autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[80%]" type="text" name="from" id="from" value={formData.from} placeholder="from" required autoComplete="off" onChange={(e) =>
                         setFormData({ ...formData, from: e.target.value })
                     } />
                 </div>
 
-                <div className="flex w-2/4 items-center justify-between">
+                <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
                     <label htmlFor="offer1">Offer1:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="offer1" id="offer1" placeholder="offer1" value={formData.offer1} required autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[80%]" type="text" name="offer1" id="offer1" placeholder="offer1" value={formData.offer1} required autoComplete="off" onChange={(e) =>
                         setFormData({ ...formData, offer1: e.target.value })
                     } />
                 </div>
-                <div className="flex w-2/4 items-center justify-between">
+                <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
                     <label htmlFor="offer2">Offer2:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="offer2" id="offer2" value={formData.offer2} placeholder="offer2" required autoComplete="off" onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[80%]" type="text" name="offer2" id="offer2" value={formData.offer2} placeholder="offer2" required autoComplete="off" onChange={(e) =>
                         setFormData({ ...formData, offer2: e.target.value })
                     } />
                 </div>
 
-                <div className="flex w-2/4 items-center justify-between">
+                <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
                     <label htmlFor="current">Current:</label>
-                    <input className="w-[88%] border-gray-500 border-2 h-[40px]" type="text" name="current" id="current" placeholder="current" value={formData.current} autoComplete="off" required onChange={(e) =>
+                    <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[80%]" type="text" name="current" id="current" placeholder="current" value={formData.current} autoComplete="off" required onChange={(e) =>
                         setFormData({ ...formData, current: e.target.value })
                     } />
                 </div>
 
-                <div className="flex w-1/3  gap-2 border-gray-500 border-2">
+                <div className="flex w-1/3  gap-2 border-gray-500 border-2 max-sm:w-[90%]">
                     <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
                         <input type="submit" className=" w-full text-white bg-red-500 cursor-pointer" value="Enviar" />
                     </div>
                     <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
                         <input type="button" className=" w-full text-white bg-red-500 cursor-pointer" onClick={() => router.back()} value="Volver" />
                     </div>
-                    <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
+                    {/* <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
                         <input type="button" className=" w-full text-white bg-red-500 cursor-pointer" onClick={handleFile} value="FIle" />
-                    </div>
+                    </div> */}
                 </div>
             </form>
         </>
