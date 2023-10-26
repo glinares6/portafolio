@@ -23,7 +23,7 @@ export class SmartphoneService {
     });
   }
   findPagination(id: number) {
-    const skipElement = id * 12;
+    const skipElement = (id - 1) * 12;
     return this.smartphoneRepository.find({
       take: 12,
       order: {

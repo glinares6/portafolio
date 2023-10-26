@@ -165,7 +165,7 @@ iniciar proyecto
             sudo docker run --network="host" -p 3000:3000   nestfase
 
         run directo
-            docker build -t glinarese/nest-api:v1.40 .
+          sudo   docker build -t glinarese/nest-api:v1.40 .
 
         docker hub
             sudo docker login

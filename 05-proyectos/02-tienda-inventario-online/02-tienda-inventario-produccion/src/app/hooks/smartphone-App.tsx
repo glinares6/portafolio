@@ -11,7 +11,7 @@ export default function smartphoneApp() {
 
     }
     const smartphoneGetPagination = async (getIdSmart: any) => {
-        const smartGetPagination = await fetch(`${server}/smartphone/${getIdSmart}/pagination`)
+        const smartGetPagination = await fetch(`${server}/smartphone/${getIdSmart + 1}/pagination`)
 
         return smartGetPagination.json()
     }

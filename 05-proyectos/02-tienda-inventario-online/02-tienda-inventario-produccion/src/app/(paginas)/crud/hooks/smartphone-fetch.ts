@@ -7,7 +7,7 @@ export default function smartphoneFetch() {
   };
 
   const smartphoneGetPagination = async (numId: any) => {
-    const res = await fetch(`${server}/smartphone/${numId}/pagination`);
+    const res = await fetch(`${server}/smartphone/${numId + 1}/pagination`);
     return res.json();
   };
   const smartphoneGetOne = async (numId: any) => {
