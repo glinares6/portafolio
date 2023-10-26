@@ -92,6 +92,10 @@ export class SmartphoneController {
   findAll() {
     return this.smartphoneService.findAll();
   }
+  @Get(':id/pagination')
+  findPagination(@Param('id') id: string) {
+    return this.smartphoneService.findPagination(+id);
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {

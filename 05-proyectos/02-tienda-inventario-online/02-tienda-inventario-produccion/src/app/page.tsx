@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 
@@ -9,6 +9,8 @@ import data from "./db/data.json"
 import Paginacion from "./components/paginacion";
 import Paginacion2 from "./components/paginacion2";
 import smartphoneApp from "./hooks/smartphone-App";
+import { UseContext } from "./contexts/authContext";
+
 
 
 // import cron from "node-cron";
@@ -17,14 +19,18 @@ import smartphoneApp from "./hooks/smartphone-App";
 
 
 export default function Page() {
+
+
   // <div className="grid grid-cols-[250px,1fr] justify-center	border-purple-700 border-2 py-7  px-5 w-11/12">
 
 
-  const { smartphoneGet, server } = smartphoneApp()
+  const { smartphoneGet, server, smartphoneGetPagination } = smartphoneApp()
 
   const [idx, setIdx] = useState(0)
   const [smart, setSmart]: any = useState([])
+  const [smartPagination, setSmartPagination]: any = useState([])
   const [display, setDisplay]: any = useState(false)
+  const raiz: any = useContext(UseContext);
 
   const router = useRouter();
   const searchParams = useSearchParams()
@@ -34,6 +40,7 @@ export default function Page() {
 
   const itemGroup = 12
   const currentSelected = idx
+
 
 
 
@@ -54,7 +61,6 @@ export default function Page() {
     if (search) {
       setIdx(search - 1)
 
-
     }
 
 
@@ -62,18 +68,37 @@ export default function Page() {
   }, [search])
 
 
+  // useEffect(() => {
+
+  //   (async () => {
+  //     // const smartphoneGet = await fetch('http://localhost:3000/smartphone')
+  //     // const dataSmartGet = await smartphoneGet.json()
+
+  //     const dataSmartGet = await smartphoneGet()
+
+
+  //     setSmart(dataSmartGet)
+
+
+
+  //   })()
+
+  // }, [search, smartphoneGet])
+
+
   useEffect(() => {
 
     (async () => {
-      // const smartphoneGet = await fetch('http://localhost:3000/smartphone')
-      // const dataSmartGet = await smartphoneGet.json()
 
-      const dataSmartGet = await smartphoneGet()
+      const dataSmartGetPagination = await smartphoneGetPagination(idx)
 
-      setSmart(dataSmartGet)
+
+      setSmartPagination(dataSmartGetPagination)
+
+
     })()
 
-  }, [search, smartphoneGet])
+  }, [idx, smartphoneGetPagination])
 
 
   // console.log("valores", smart.map((item: any) => item.picture));
@@ -92,6 +117,7 @@ export default function Page() {
     return totalGroup === currentSelected
 
   })
+
 
 
 
@@ -132,6 +158,7 @@ export default function Page() {
   }
 
 
+
   const handleSection = () => {
 
     if (display) {
@@ -141,6 +168,8 @@ export default function Page() {
 
     }
   }
+
+
   return (
     <>
       <main>
@@ -197,7 +226,8 @@ export default function Page() {
 
               <div className={display ? ' block max-sm:ransition-transform max-sm:duration-300  max-sm:linear  max-sm:h-[400px] overflow-hidden  ' : '  block max-sm:ransition-transform max-sm:duration-300 max-sm:linear max-sm:h-[0px] overflow-hidden	'}>
                 <ul className={`flex flex-col items-center justify-center w-full`}>
-                  <li className="py-3 w-11/12  "><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem excepturi blanditiis, aperiam quibusdam, esse expedita en ab nosbis vel numquam laborum quam assumenda. Itaque adipisci veniam, vitae similique possimus sed.</a></li>
+                  <li className="py-3 w-11/12  "><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem excepturi blanditiis, aperiam quibusdam, esse expedita en ab nosbis vel numquam laborum quam assumenda. Itaque adipisci veniam, vitae similique possimus sed.</a>
+                    {raiz.authState ? <h1>valor true 1</h1> : <h1>valor false 2</h1>} </li>
                   <li className="py-3 "><a href="#">Smartphone</a></li>
                   <li className="py-3 "><a href="#">Tv</a></li>
                   <li className="py-3 "><a href="#">Computo</a></li>
@@ -220,7 +250,7 @@ export default function Page() {
 
                 } */}
               {
-                newPagination2.map((item: any, i: number) => (
+                smartPagination.map((item: any, i: number) => (
 
                   <ListSmartphone key={i} id={item.id} picture={item.picture} title={item.title} from={item.from} offer1={item.offer1} offer2={item.offer2} current={item.current} />
 
@@ -254,7 +284,7 @@ export default function Page() {
 
 
                 } */}
-              {
+              {/* {
                 cadena2.map((item, i) => (
 
                   <button key={i} onClick={() => handlePaginacion("page", `${item}`)}
@@ -264,7 +294,7 @@ export default function Page() {
                 ))
 
 
-              }
+              } */}
 
 
 

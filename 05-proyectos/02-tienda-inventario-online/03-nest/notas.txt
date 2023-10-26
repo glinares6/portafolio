@@ -75,6 +75,9 @@ iniciar proyecto
             relations 
                 https://typeorm.io/many-to-one-one-to-many-relations
 
+            consultas sql
+                https://desarrolloweb.com/articulos/metodo-find-repositorios-typeorm
+
         DW
             https://desarrolloweb.com/articulos/relacion-uno-a-muchos-typeorm-nest
 

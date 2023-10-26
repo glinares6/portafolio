@@ -21,7 +21,7 @@ const Paginacion2: React.FC<Props> = () => {
 
     const [idx, setIdx] = useState(0)
     const [smart, setSmart]: any = useState([])
-    const search: any = searchParams.get('page')
+    const search: any = searchParams.get('page') || 1
 
 
     const itemsPerPage = 12;

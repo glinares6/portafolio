@@ -10,6 +10,11 @@ export default function smartphoneApp() {
         return smartphoneGet.json()
 
     }
+    const smartphoneGetPagination = async (getIdSmart: any) => {
+        const smartGetPagination = await fetch(`${server}/smartphone/${getIdSmart}/pagination`)
+
+        return smartGetPagination.json()
+    }
     const smartphoneGetOne = async (getIdSmart: any) => {
         const smartGetOne = await fetch(`${server}/smartphone/${getIdSmart}`)
 
@@ -18,6 +23,7 @@ export default function smartphoneApp() {
 
     return {
         smartphoneGet,
+        smartphoneGetPagination,
         smartphoneGetOne,
         server
     }

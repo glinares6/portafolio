@@ -1,4 +1,27 @@
+'use client'
+import { UseContext } from "@/app/contexts/authContext";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
+
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const raiz: any = useContext(UseContext);
+
+  const setLogAuth = raiz.setAuthState
+
+  const router = useRouter()
+
+  const handleLogin = () => {
+    setLogAuth(true)
+    router.push('/crud/at')
+
+  }
+
+  const handleLogout = () => {
+    setLogAuth(false)
+    router.push('/?')
+
+
+  }
   return (
     <>
       {children}
@@ -8,6 +31,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         expedita sunt modi sed quo. Tempora, doloribus labore nam et quasi
         eaque.
       </h1>
+      <h2>{raiz.testState}</h2>
+      <button onClick={handleLogin}>login</button>
+      <br />
+      <button onClick={handleLogout}>logout</button>
     </>
   );
 }

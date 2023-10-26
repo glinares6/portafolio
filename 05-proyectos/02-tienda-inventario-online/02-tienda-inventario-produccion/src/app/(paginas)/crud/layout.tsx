@@ -1,8 +1,10 @@
 'use client'
+import { UseContext } from "@/app/contexts/authContext"
+import { log } from "console"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { redirect, usePathname } from "next/navigation"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useLayoutEffect, useState } from "react"
 
 
 export default function Layout({ children, get, post, patch, remove, folder1, folder2 }: {
@@ -22,14 +24,39 @@ export default function Layout({ children, get, post, patch, remove, folder1, fo
     const path = usePathname()
     const [display, setDisplay]: any = useState(true)
 
+    const raiz: any = useContext(UseContext);
+
     useEffect(() => {
         path.split('/')[0]
-
-
-
-
     }, [path])
+    const isAuth = raiz.authState;
+    useLayoutEffect(() => {
 
+        if (!isAuth) {
+            console.log('crud es false 1');
+
+            return redirect("/")
+        }
+    }, [isAuth])
+
+    if (!isAuth) {
+        return null;
+    }
+
+    if (isAuth) {
+        console.log('crud es true 2');
+
+    }
+
+    // const isAuth = false;
+
+
+    // if (!isAuth) {
+    //     return redirect("/");
+    // }
+    // if (!isAuth) {
+    //     return null;
+    // }
 
     const handleSection = () => {
 
@@ -91,7 +118,7 @@ export default function Layout({ children, get, post, patch, remove, folder1, fo
                 <div className={`w-full max-sm:w-1/2 max-sm:flex-col ${display ? '  max-sm:ransition-transform max-sm:duration-300  max-sm:linear  max-sm:h-[220px] max-sm:overflow-hidden  ' : '   max-sm:ransition-transform max-sm:duration-300 max-sm:linear max-sm:h-[0px] max-sm:overflow-hidden	'}`}>
 
                     {/* <Link rel="preload" className='border-red-500 border-2  w-1/2 cursor-pointer  py-2 ' href={'/crud/at'} >get</Link> */}
-                    <button className='border-red-500 border-2 cursor-pointer w-[25%] py-2 max-sm:w-full max-sm:mb-1' onClick={() => router.push('/crud/at')}>
+                    <button className='border-red-500 border-2 cursor-pointer w-[25%] py-2 max-sm:w-full max-sm:mb-1' onClick={() => router.push('/crud/at?page=1')}>
                         get
                     </button>
 

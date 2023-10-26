@@ -6,6 +6,10 @@ export default function smartphoneFetch() {
     return dataSmart.json();
   };
 
+  const smartphoneGetPagination = async (numId: any) => {
+    const res = await fetch(`${server}/smartphone/${numId}/pagination`);
+    return res.json();
+  };
   const smartphoneGetOne = async (numId: any) => {
     const res = await fetch(`${server}/smartphone/${numId}`);
     return res.json();
@@ -150,6 +154,7 @@ export default function smartphoneFetch() {
   };
   return {
     smartphoneGet,
+    smartphoneGetPagination,
     smartphoneGetOne,
     smartphonePostFile,
     smartphonePost,

@@ -10,11 +10,12 @@ import smartphoneFetch from "../../hooks/smartphone-fetch";
 export default function Page() {
 
 
-    const { smartphoneGet } = smartphoneFetch();
+    const { smartphoneGet, smartphoneGetPagination } = smartphoneFetch();
 
 
     const [idx, setIdx] = useState(0)
     const [smart, setSmart]: any = useState([])
+    const [smartPagination, setSmartPagination]: any = useState([])
     const [display, setDisplay]: any = useState(false)
 
     const router = useRouter();
@@ -36,23 +37,35 @@ export default function Page() {
 
     }, [search])
 
+    // useEffect(() => {
+
+
+    //     // // smartphoneGet
+    //     // fetch('http://localhost:3000/smartphone').then(response => response.json()).then(data => {
+    //     //     // console.log(data);
+
+    //     // })
+    //     // // setSmart(data)
+
+
+    //     (async () => {
+    //         setSmart(await smartphoneGet())
+
+    //     })()
+
+
+    // }, [ search, smartphoneGet])
+
+
+
     useEffect(() => {
 
-
-        // // smartphoneGet
-        // fetch('http://localhost:3000/smartphone').then(response => response.json()).then(data => {
-        //     // console.log(data);
-
-        // })
-        // // setSmart(data)
-
-
         (async () => {
-            setSmart(await smartphoneGet())
+            setSmartPagination(await smartphoneGetPagination(idx))
         })()
 
 
-    }, [search, smartphoneGet])
+    }, [idx, smartphoneGetPagination])
 
 
 
@@ -168,7 +181,7 @@ export default function Page() {
                         <div className="grid grid-cols-3  grid-rows-[repeat(3,1fr)]  w-full h-full max-sm:grid-cols-2	">
 
                             {
-                                newPagination2.map((item: any, i: number) => (
+                                smartPagination.map((item: any, i: number) => (
 
                                     <ListSmartphoneRp key={i} id={item.id} picture={item.picture} title={item.title} from={item.from} offer1={item.offer1} offer2={item.offer2} current={item.current} />
 
@@ -185,7 +198,7 @@ export default function Page() {
                     <div className="flex  items-center justify-end my-3 col-span-2  w-11/12">
                         <h1 className="flex justify-center  text-lg mr-3">Estás en la pagina</h1>
 
-                        <div className="flex gap-x-2  flex justify-end items-center text-sm underline border-green-500 border-2 ">
+                        {/* <div className="flex gap-x-2  flex justify-end items-center text-sm underline border-green-500 border-2 ">
 
 
 
@@ -201,7 +214,7 @@ export default function Page() {
 
 
                             }
-                        </div>
+                        </div> */}
                     </div>
 
 

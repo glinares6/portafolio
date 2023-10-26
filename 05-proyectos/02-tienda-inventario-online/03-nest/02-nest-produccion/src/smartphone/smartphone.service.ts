@@ -16,7 +16,21 @@ export class SmartphoneService {
   }
 
   findAll() {
-    return this.smartphoneRepository.find();
+    return this.smartphoneRepository.find({
+      order: {
+        id: 'DESC',
+      },
+    });
+  }
+  findPagination(id: number) {
+    const skipElement = id * 12;
+    return this.smartphoneRepository.find({
+      take: 12,
+      order: {
+        id: 'DESC',
+      },
+      skip: skipElement,
+    });
   }
 
   findOne(id: number) {
