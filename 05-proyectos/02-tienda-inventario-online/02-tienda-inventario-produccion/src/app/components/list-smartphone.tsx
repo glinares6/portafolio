@@ -68,7 +68,7 @@ const ListSmartphone: React.FC<Props> = ({ id, picture, title, from, offer1, off
     return (
         <>
             <div className="grid grid-cols-1 grid-rows-[1fr_200px_50px] border-purple-700 border-2">
-                {modalImg && <div className=" absolute z-30  flex left-0 justify-end w-[80%] max-sm:w-[90%]  cursor-pointer" onClick={handleResizeImg}> <svg
+                {modalImg && <div className=" absolute z-30  flex left-0 justify-end w-[75%] max-sm:w-[90%]  cursor-pointer" onClick={handleResizeImg}> <svg
                     x-show="open"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
