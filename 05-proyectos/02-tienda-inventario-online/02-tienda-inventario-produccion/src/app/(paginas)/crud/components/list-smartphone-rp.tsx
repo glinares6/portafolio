@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useRef } from 'react';
 import ReactPlayer from 'react-player';
 
@@ -24,6 +24,8 @@ const ListSmartphoneRp: React.FC<Props> = ({ id, picture, title, from, offer1, o
 
 
     const parseData = useRef<HTMLParagraphElement | null>(null);
+
+    const [modalImg, setModalImg] = useState(false)
 
 
     useEffect(() => {
@@ -61,12 +63,44 @@ const ListSmartphoneRp: React.FC<Props> = ({ id, picture, title, from, offer1, o
     // const newPicture = `https://nest-online-build.onrender.com/public/img/${picture1}/${picture2}`
 
 
+    const handleResizeImg = () => {
+        if (modalImg) {
+            setModalImg(false)
+        } else {
+            setModalImg(true)
+        }
+    }
     return (
         <div className="grid grid-cols-1 grid-rows-[1fr_200px_50px] border-purple-700 border-2">
-            <div className="flex justify-center pt-3 ">
+            {modalImg && <div className=" absolute z-30  flex left-0 justify-end w-[80%] max-sm:w-[90%]  cursor-pointer" onClick={handleResizeImg}> <svg
+                x-show="open"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6"
+            >
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                />
+            </svg></div>}
+            {modalImg && <div className=" absolute z-20  flex left-0 justify-center w-full h-full   cursor-pointer" > {(picture.includes('.webp') || picture.includes('.jpeg') || picture.includes('.png')) || picture.includes('.jpg') ||
+                picture.includes('.svg') ? <Image
+                onClick={handleResizeImg}
+                width="0"
+                height="0"
+                sizes="100vw"
+                className="w-[60%] h-[85%] max-sm:w-[90%] max-sm:h-[73%]"
+                src={picture}
+                alt="Picture of the author" /> : ''}</div>}
+            <div className="flex justify-center pt-3 cursor-pointer ">
                 {(picture.includes('.webp') || picture.includes('.jpeg') || picture.includes('.png')) ||
                     picture.includes('.jpg') ||
                     picture.includes('.svg') ? <Image
+                    onClick={handleResizeImg}
                     className="w-auto h-auto px-9 "
                     src={picture}
                     width="250"

@@ -54,4 +54,21 @@ mockup
     
 
 
+------------------------------------------------------
+ADICIONAR A LAS NOTAS DEL PROYECTO
+
+transform tailwindcss   
+    https://tw-elements.com/docs/standard/navigation/sidenav/
+
+rutas protegidas
+    https://www.freecodecamp.org/news/secure-routes-in-next-js/
+    https://dev.to/seven/how-to-implement-protected-routes-in-nextjs-1m50
+    https://medium.com/@zachshallbetter/protecting-routes-in-next-js-with-app-router-53c3409c0655#:~:text=Another%20way%20to%20protect%20routes,needed%20before%20rendering%20a%20page.
+    
+
+image whit next response
+    https://stackoverflow.com/questions/74795804/next-js-responsive-image-with-custom-size
+
+
+
    

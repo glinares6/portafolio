@@ -22,7 +22,7 @@ export default function Layout({ children, get, post, patch, remove, folder1, fo
     const router = useRouter()
 
     const path = usePathname()
-    const [display, setDisplay]: any = useState(true)
+    const [display, setDisplay]: any = useState(false)
 
     const raiz: any = useContext(UseContext);
 
@@ -33,7 +33,7 @@ export default function Layout({ children, get, post, patch, remove, folder1, fo
     useLayoutEffect(() => {
 
         if (!isAuth) {
-            console.log('crud es false 1');
+            // console.log('crud es false 1');
 
             return redirect("/")
         }
@@ -43,10 +43,10 @@ export default function Layout({ children, get, post, patch, remove, folder1, fo
         return null;
     }
 
-    if (isAuth) {
-        console.log('crud es true 2');
+    // if (isAuth) {
+    //     console.log('crud es true 2');
 
-    }
+    // }
 
     // const isAuth = false;
 
