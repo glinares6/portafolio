@@ -23,7 +23,7 @@ export default function Page() {
 
   const [resText, setResText] = useState('')
 
-  const { server } = perfilApp()
+  const { perfilPostUser } = perfilApp()
 
   const [dataPerfil, setDataPerfil] = useState<perfilUser>({
     firstName: '',
@@ -130,29 +130,28 @@ export default function Page() {
 
 
       //!paso electo
-      await fetch(`http://localhost:3000/perfil/${userAuth.id}/user`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payloadPerfil)
-      }).then(response => {
-        if (response.ok) {
-          userAuth
-          console.log('la URL tiene el acceso - POST');
+      // await fetch(`${server}/perfil/${userAuth.id}/user`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify(payloadPerfil)
+      // }).then(response => {
+      //   if (response.ok) {
+      //     console.log('la URL tiene el acceso - POST');
 
 
 
-        } else {
-          console.log('No se puede conectar a la URL - POST');
+      //   } else {
+      //     console.log('No se puede conectar a la URL - POST');
 
-        }
-      }).catch(error => {
-        console.log('fallo la conexion con el servidor - POST', error);
-      })
+      //   }
+      // }).catch(error => {
+      //   console.log('fallo la conexion con el servidor - POST', error);
+      // })
 
 
-
+      await perfilPostUser(userAuth.id, payloadPerfil)
       // console.log('newDataPerfil', dataPerfil);
 
       //!paso 3
@@ -160,17 +159,16 @@ export default function Page() {
 
 
       //!limpiador
-      // setDataPerfil({
-      //   firstName: '',
-      //   surName: '',
-      //   lastName: '',
-      //   email: '',
-      //   gender: '',
-      //   address: '',
-      //   phone: '',
-      //   photo: '',
-      //   user: 0
-      // })
+      setDataPerfil({
+        firstName: '',
+        surName: '',
+        lastName: '',
+        email: '',
+        gender: '',
+        address: '',
+        phone: '',
+        photo: '',
+      })
 
       // fetch('http://localhost:3000/smartphone/2/res', {
       //     method: 'POST'

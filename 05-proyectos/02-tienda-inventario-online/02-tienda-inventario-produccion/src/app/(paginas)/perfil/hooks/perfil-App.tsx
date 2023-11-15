@@ -4,27 +4,34 @@ export default function perfilApp() {
 
     const server = process.env.NEXT_PUBLIC_SERVER || "http://localhost:3000";
 
-    const smartphoneGet = async () => {
 
-        const smartphoneGet = await fetch(`${server}/smartphone`)
-        return smartphoneGet.json()
+    const perfilPostUser = async (idUser: any, payloadPerfil: any) => {
+        const perfilPost = await fetch(`${server}/perfil/${idUser}/user`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payloadPerfil)
+        }).then(response => {
+            if (response.ok) {
+                console.log('la URL tiene el acceso - POST');
 
-    }
-    const smartphoneGetPagination = async (getIdSmart: any) => {
-        const smartGetPagination = await fetch(`${server}/smartphone/${getIdSmart + 1}/pagination`)
 
-        return smartGetPagination.json()
-    }
-    const smartphoneGetOne = async (getIdSmart: any) => {
-        const smartGetOne = await fetch(`${server}/smartphone/${getIdSmart}`)
 
-        return smartGetOne.json()
+            } else {
+                console.log('No se puede conectar a la URL - POST');
+
+            }
+        }).catch(error => {
+            console.log('fallo la conexion con el servidor - POST', error);
+        })
+
+
+        return perfilPost
     }
 
     return {
-        smartphoneGet,
-        smartphoneGetPagination,
-        smartphoneGetOne,
-        server
+        server,
+        perfilPostUser
     }
 }
