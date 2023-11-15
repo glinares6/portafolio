@@ -1,382 +1,324 @@
+
 'use client'
-
-
-import smartphoneApp from "@/app/hooks/smartphone-App";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-
-import { useEffect } from 'react';
-import { useRef } from 'react';
-
-import { useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
+import { UseContext } from "@/app/contexts/authContext";
+import { redirect, useRouter } from "next/navigation";
+import perfilApp from "./hooks/perfil-App";
 
 
-// export default function Page() {
-//   return(
-//     <>
-//        <div>¡Bienvenido a mi perfil!</div>
-//        <Link href="/">volver</Link>
-//        </>
-//    );
-//   }
+type perfilUser = {
+  firstName: string,
+  surName: string,
+  lastName: string,
+  email: string,
+  gender: string,
+  address: string,
+  phone: string,
+  photo: any,
+}
 
+export default function Page() {
+  const { authState, userAuth }: any = useContext(UseContext);
 
-const Page: React.FC = () => {
-  const dynamicParagRef = useRef<HTMLParagraphElement | null>(null);
-  const titleSmartRef = useRef<HTMLParagraphElement | null>(null);
+  const [resText, setResText] = useState('')
 
-  const params = useSearchParams()
-  const router = useRouter()
+  const { server } = perfilApp()
 
+  const [dataPerfil, setDataPerfil] = useState<perfilUser>({
+    firstName: '',
+    surName: '',
+    lastName: '',
+    email: '',
+    gender: '',
+    address: '',
+    phone: '',
+    photo: '',
+  })
 
-  const { smartphoneGetOne } = smartphoneApp()
-  const [dataGet, setDataGet]: any = useState({})
-  const getIdSmart = params.get('id') || 1
+  const route = useRouter()
+
 
 
   useEffect(() => {
 
 
-    (async () => {
-
-      const smartGetOneRes = await smartphoneGetOne(getIdSmart)
-
-      const newData = smartGetOneRes[0].title.replace('<br/>', '')
-      smartGetOneRes[0].title = newData
-
-
-      setDataGet(...smartGetOneRes)
-    })()
-
-
-    if (dynamicParagRef.current) {
-      const idValue = dynamicParagRef.current;
-      const secondLine = idValue.innerHTML.split(".")[1];
-
-
-      const newElement = ` continuara Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, quibusdam veniam consequatur, quo nesciunt quasi quas  <br/> corrupti architecto consequuntur consectetur neque veritatis magnam eligendi ducimus excepturi sunt sed dolorem alias.
-       laceat illum?`;
-      idValue.innerHTML = idValue.innerHTML.replace(secondLine, newElement);
-
-
-
-
-
-      // idValue.innerHTML += newElement;
-
-
-    } else {
-      console.log('El elemento es nulo');
+    if (userAuth.username) {
+      const restext = userAuth.username.slice(0, 1, 'todo')
+      setResText(userAuth.username.replace(restext, restext.toUpperCase()));
     }
 
+    // console.log('local inicial', dataPerfil);
 
-
-
-    //   function adjustSecondLineSize() {
-    //   const fontSize = parseFloat(window.getComputedStyle(dynamicParagraph).getPropertyValue("width"));
-    //   const newSize = fontSize * 2; // Ajusta el tamaño como desees
-    //   idValue.innerHTML = idValue.innerHTML.replace(secondLine, `todo achorado`);
-    // }
-
-    //   // `<small className="bg-red-500">${secondLine}</small>
-    //   // adjustSecondLineSize();
-
-    //   window.addEventListener("resize", adjustSecondLineSize);
-  }, [getIdSmart, smartphoneGetOne]);
+  }, [dataPerfil, userAuth.username])
 
 
 
 
 
-  //* paginación legacy
-
-  // const itemsPerPage = 10;
-  // const [currentPage, setCurrentPage] = useState(1);
-
-  // const data = Array.from({ length: 1200 }, (_, index) => index + 1); // Datos simulados.
 
 
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault(); // Prevenir la recarga de la página
 
-  // const totalPages = Math.ceil(data.length / itemsPerPage);
-  // const pageRange = 3; // Cantidad de páginas a mostrar alrededor de la página actual.
+    console.log("test dato", dataPerfil.photo);
+    console.log("test dato firstname", dataPerfil.firstName);
 
-  // const getPageNumbers = () => {
-  //   if (currentPage <= pageRange + 1) {
-  //     return Array.from({ length: Math.min(pageRange * 2 + 1, totalPages) }, (_, index) => index + 1);
-  //   }
-  //   if (currentPage >= totalPages - pageRange) {
-  //     return Array.from({ length: pageRange * 2 + 1 }, (_, index) => totalPages - pageRange * 2 + index);
-  //   }
-  //   return Array.from({ length: pageRange * 2 + 1 }, (_, index) => currentPage - pageRange + index);
-  // };
+    console.log('local inicial evento submit', dataPerfil)
 
-  // const renderPage = (page: number) => {
-  //   const startIndex = (page - 1) * itemsPerPage;
-  //   const endIndex = startIndex + itemsPerPage;
-  //   const pageData = data.slice(startIndex, endIndex);
 
-  //   return (
-  //     <div>
-  //       {pageData.map(item => (
-  //         <div key={item}>Item {item}</div>
-  //       ))}
-  //     </div>
-  //   );
-  // };
+    //!paso 0
+    // const payload = new FormData();
+    // payload.append('file', dataPerfil.photo)
 
-  // const renderPagination = () => (
-  //   <div>
+    try {
 
-  //     {currentPage > 1 && (
-  //       <button onClick={() => setCurrentPage(currentPage - 1)}>&lt;</button>
-  //     )}
-  //     {currentPage > pageRange + 1 && (
-  //       <button onClick={() => setCurrentPage(1)}>1</button>
-  //     )}
-  //     {currentPage > pageRange + 2 && (
-  //       <span>...</span>
-  //     )}
 
-  //     {getPageNumbers().map(page => (
-  //       <button
-  //         key={page}
-  //         onClick={() => setCurrentPage(page)}
-  //         style={{
-  //           margin: '0px 3px',
-  //           padding: '0px 5px',
-  //           fontWeight: currentPage === page ? 'bold' : 'normal',
-  //           backgroundColor: currentPage === page ? "black" : "transparent",
-  //           color: currentPage === page ? "white" : "black"
-  //         }}
-  //       >
-  //         {page}
-  //       </button>
-  //     ))}
-  //     {currentPage < totalPages - pageRange && (
-  //       <span>...</span>
-  //     )}
 
-  //     {currentPage < totalPages - pageRange && (
-  //       <button onClick={() => setCurrentPage(totalPages)}>{totalPages}</button>
-  //     )}
-  //     {currentPage < totalPages && (
-  //       <button onClick={() => setCurrentPage(currentPage + 1)}>&gt;</button>
-  //     )}
-  //   </div>
-  // );
 
+      // const dataPictureServer = await fetch('http://localhost:3000/smartphone/file', {
+      //     method: 'POST',
+      //     // headers: {
+      //     //     // 'Content-Type': 'multipart/form-data;'
+      //     // },
+      //     body: payload,
+
+      // })
+
+      // const resDataServer = await dataPictureServer.json()
+
+
+      //!primero enviamos el archivo al servidor;
+      // const resDataServer = await smartphonePostFile(payload);
+
+      //*  respnse.ok solo  verificar si llegan los datos al server 
+      // if (response.ok) {
+      //     console.log('Se envio el archivo - POST');
+
+      // } else {
+      //     console.log('No se envio el archivo - POST');
+
+      // }
+
+
+      // console.log("datos del servidro1", resDataServer);
+
+      //* respuesta data
+      // .then(data => {
+      //     console.log("envio del backend", data);
+
+      //     console.log('Se hizo la descarga - POST');
+      // }).catch(error => {
+      //     console.log('error al descargar el archivo - POST', error);
+      // })
+
+
+
+      //    formData.file.name, //nombre del archivo
+
+      //!paso 2
+      const payloadPerfil = {
+        firstname: dataPerfil.firstName,
+        surname: dataPerfil.surName,
+        lastname: dataPerfil.lastName,
+        email: dataPerfil.email,
+        gender: dataPerfil.gender,
+        address: dataPerfil.address,
+        phone: dataPerfil.phone,
+        // photo: dataPerfil.photo
+      }
+
+
+      //!paso electo
+      await fetch(`http://localhost:3000/perfil/${userAuth.id}/user`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payloadPerfil)
+      }).then(response => {
+        if (response.ok) {
+          userAuth
+          console.log('la URL tiene el acceso - POST');
+
+
+
+        } else {
+          console.log('No se puede conectar a la URL - POST');
+
+        }
+      }).catch(error => {
+        console.log('fallo la conexion con el servidor - POST', error);
+      })
+
+
+
+      // console.log('newDataPerfil', dataPerfil);
+
+      //!paso 3
+      // await smartphonePost(payloadFile)
+
+
+      //!limpiador
+      // setDataPerfil({
+      //   firstName: '',
+      //   surName: '',
+      //   lastName: '',
+      //   email: '',
+      //   gender: '',
+      //   address: '',
+      //   phone: '',
+      //   photo: '',
+      //   user: 0
+      // })
+
+      // fetch('http://localhost:3000/smartphone/2/res', {
+      //     method: 'POST'
+      // }).then((res) => res.json()).then(data => console.log('servidor obj ', data)
+      // )
+
+
+      //* METODO DESCARGA AL CLIENTE
+      // fetch('http://localhost:3000/smartphone/file', {
+      //     method: 'POST',
+      //     // headers: {
+      //     //     // 'Content-Type': 'multipart/form-data;'
+      //     // },
+      //     body: payload,
+
+      // }).then(response => {
+      //     if (response.ok) {
+      //         console.log('Se envio el archivo - POST');
+
+      //         return response.blob()
+      //     } else {
+      //         console.log('No se envio el archivo - POST');
+
+      //     }
+      // }).then((blob) => {
+      //     if (blob) {
+
+      //         console.log(blob);
+      //         // Crea una URL local para el Blob
+      //         const url = window.URL.createObjectURL(blob);
+
+      //         // Crea un enlace en el DOM y simula un clic para descargar el archivo
+      //         const a = document.createElement('a');
+      //         a.href = url;
+      //         a.download = `${formData.file.name}`; // Cambia el nombre del archivo según lo que envió el servidor
+      //         a.click();
+
+      //         // Limpia la URL creada
+      //         window.URL.revokeObjectURL(url);
+
+      //     } else {
+      //         console.log('demora al revibir el archivo');
+
+      //     }
+
+      // }).catch(error => {
+      //     console.log('error al descargar el archivo - POST', error);
+      // })
+
+
+
+
+    } catch (error) {
+      console.error('Error al enviar el formulario:', error);
+    }
+  };
 
 
   return (
     <>
-      <div className=" p-4 w-full border-gray-500 border-2">
-        <p ref={dynamicParagRef} id="dynamicparag" className="w-full line-clamp-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit Lorem ipsum dolor sit.  Lorem ipsum dolor sit amet consectetur adipisicing  elit Fugiat praesentium delectus nam eaque quis animi at, totam v</p>
-      </div>
-
-
-
-      {/* paginación legacy */}
-      {/* <div className="px-5">
-        <h1>Paginación</h1>
-        {renderPage(currentPage)}
-        {renderPagination()}
-      </div> */}
-
+      <div>¡Bienvenido al perfil:  {resText || userAuth.username}</div>
       <br />
-      {dataGet && <div ref={titleSmartRef} >titulo : {dataGet.title}</div>}
-      {dataGet && <div >offer1 : {dataGet.offer1}</div>}
-      {dataGet && <div >offer2 : {dataGet.offer2}</div>}
-      {dataGet && <div >current : {dataGet.current}</div>}
-      <button onClick={() => router.back()}>volver</button>
+
+      <form onSubmit={handleSubmit} className="flex flex-col w-full    items-center gap-2 " encType="multipart/form-data" >
+        {/* <div className="flex w-2/4 items-center justify-between" >
+                    <label htmlFor="picture">Picture:</label>
+                    <input className="w-[88%] border-gray-500 border-2 border-dashed  h-[40px]" type="text" name="picture" value={formData.picture} id="picture" placeholder="picture" required autoComplete="off" onChange={(e) =>
+                        setFormData({ ...formData, picture: e.target.value })
+                    } />
+                </div> */}
+        <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
+          <label htmlFor="firstName">FirstName: </label>
+          <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[75%]" type="text" name="title" value={dataPerfil.firstName} id="firstName" placeholder="firstName" autoComplete="off" onChange={(e) =>
+            setDataPerfil({ ...dataPerfil, firstName: e.target.value })
+          } />
+        </div>
+
+        <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
+          <label htmlFor="surName">SurName:</label>
+          <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[75%]" type="text" name="surName" id="surName" value={dataPerfil.surName} placeholder="surName" autoComplete="off" onChange={(e) =>
+            setDataPerfil({ ...dataPerfil, surName: e.target.value })
+          } />
+        </div>
+
+        <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
+          <label htmlFor="lastName">LastName:</label>
+          <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[75%]" type="text" name="lastName" id="lastName" value={dataPerfil.lastName} placeholder="lastName" autoComplete="off" onChange={(e) =>
+            setDataPerfil({ ...dataPerfil, lastName: e.target.value })
+          } />
+        </div>
+        <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
+          <label htmlFor="email">Email:</label>
+          <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[75%]" type="email" name="email" id="email" value={dataPerfil.email} placeholder="email" autoComplete="off" onChange={(e) =>
+            setDataPerfil({ ...dataPerfil, email: e.target.value })
+          } />
+        </div>
+
+
+        <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
+          <label htmlFor="gender">Gender:</label>
+          <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[75%]" type="text" name="gender" id="gender" placeholder="gender" value={dataPerfil.gender} autoComplete="off" onChange={(e) =>
+            setDataPerfil({ ...dataPerfil, gender: e.target.value })
+          } />
+        </div>
+
+
+        <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
+          <label htmlFor="address">Address:</label>
+          <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[75%]" type="text" name="address" id="address" value={dataPerfil.address} placeholder="address" autoComplete="off" onChange={(e) =>
+            setDataPerfil({ ...dataPerfil, address: e.target.value })
+          } />
+        </div>
+
+        <div className="flex w-2/4 items-center justify-between max-sm:w-[90%]">
+          <label htmlFor="phone">Phone:</label>
+          <input className="w-[88%] border-gray-500 border-2 h-[40px] max-sm:w-[75%]" type="text" name="phone" id="phone" placeholder="phone" value={dataPerfil.phone} autoComplete="off" onChange={(e) =>
+            setDataPerfil({ ...dataPerfil, phone: e.target.value })
+          } />
+        </div>
+
+
+        <div className="flex w-2/4 items-center justify-end max-sm:w-[75%]">
+          <input className="w-[88%] max-sm:w-[80%] " type="file" name="filePhoto" id="filePhoto" onChange={(e) => {
+            if (!e.target.files) return;
+            setDataPerfil({ ...dataPerfil, photo: e.target.files[0] })
+          }
+          } />
+
+        </div>
+
+
+        <div className="flex w-1/3  gap-2 border-gray-500 border-2 max-sm:w-[90%]">
+          <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
+            <input type="submit" className=" w-full text-white bg-red-500  cursor-pointer" value="Enviar" />
+          </div>
+          <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
+            <input type="button" className=" w-full text-white bg-red-500 cursor-pointer" onClick={() => route.back()} value="Volver" />
+          </div>
+          {/* <div className="flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
+                        <input type="button" className=" w-full text-white bg-red-500 cursor-pointer" onClick={handleFile} value="FIle" />
+                    </div> */}
+        </div>
+      </form>
+      <br />
+      {authState ? <h1>datos true 1</h1> : <h1>datos false 2</h1>}
+      <button onClick={() => route.back()}>volver</button>
+
+
     </>
   );
-};
-
-export default Page;
-
-
-//*orimer borrador
-
-// import { useEffect, useRef, useState } from 'react';
-
-// const ParagraphComponent: React.FC = () => {
-//   const dynamicParagraphRef = useRef<HTMLParagraphElement>(null);
-//   const [secondLine, setSecondLine] = useState<string>('');
-
-//   useEffect(() => {
-//     const dynamicParagraph = dynamicParagraphRef.current;
-//     const initialContent = dynamicParagraph.innerHTML;
-//     const secondLineContent = initialContent.split("<br>")[1];
-
-//     setSecondLine(secondLineContent);
-
-//     function adjustSecondLineSize() {
-//       const fontSize = parseFloat(window.getComputedStyle(dynamicParagraph).getPropertyValue("font-size"));
-//       const newSize = fontSize * 0.7; // Ajusta el tamaño como desees
-//       setSecondLine(`<span style="font-size: ${newSize}px">${secondLineContent}</span>`);
-//     }
-
-//     adjustSecondLineSize();
-
-//     window.addEventListener("resize", adjustSecondLineSize);
-//   }, []);
-
-//   return (
-//     <div className="container mx-auto p-4 max-w-screen-md border border-gray-300">
-//       <p ref={dynamicParagraphRef} className="resize-text text-base max-w-full overflow-hidden overflow-ellipsis" dangerouslySetInnerHTML={{ __html: `Este es un ejemplo de un párrafo más largo que se mostrará en dos líneas ...<br />${secondLine}` }} />
-//     </div>
-//   );
-// };
-
-// export default ParagraphComponent;
-
-
-
-//*segundo borrador
-
-
-// 'use client'
-
-
-// import Link from "next/link";
-// import { useEffect } from 'react';
-// import { useRef } from 'react';
-
-// import { useState } from 'react';
-
-
-// export default function Page() {
-//   return(
-//     <>
-//        <div>¡Bienvenido a mi perfil!</div>
-//        <Link href="/">volver</Link>
-//        </>
-//    );
-//   }
-
-
-// const Page: React.FC = () => {
-//   const dynamicParagRef = useRef<HTMLParagraphElement | null>(null);
-
-
-//   useEffect(() => {
-
-
-//     if (dynamicParagRef.current) {
-//       const idValue = dynamicParagRef.current;
-//       const secondLine = idValue.innerHTML.split(".")[1];
-
-
-//       const newElement = ` continuara Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, quibusdam veniam consequatur, quo nesciunt quasi quas  <br/> corrupti architecto consequuntur consectetur neque veritatis magnam eligendi ducimus excepturi sunt sed dolorem alias.
-//        laceat illum?`;
-//       idValue.innerHTML = idValue.innerHTML.replace(secondLine, newElement);
-
-
-//       // idValue.innerHTML += newElement;
-
-
-//     } else {
-//       console.log('El elemento es nulo');
-//     }
-
-
-
-
-//     //   function adjustSecondLineSize() {
-//     //   const fontSize = parseFloat(window.getComputedStyle(dynamicParagraph).getPropertyValue("width"));
-//     //   const newSize = fontSize * 2; // Ajusta el tamaño como desees
-//     //   idValue.innerHTML = idValue.innerHTML.replace(secondLine, `todo achorado`);
-//     // }
-
-//     //   // `<small className="bg-red-500">${secondLine}</small>
-//     //   // adjustSecondLineSize();
-
-//     //   window.addEventListener("resize", adjustSecondLineSize);
-//   }, []);
-
-
-
-
-
-
-//   const itemsPerPage = 10;
-//   const [currentPage, setCurrentPage] = useState(1);
-
-//   const data = Array.from({ length: 299 }, (_, index) => index + 1); // Datos simulados.
-
-//   const totalPages = Math.ceil(data.length / itemsPerPage);
-//   const pageRange = 3; // Cantidad de páginas a mostrar alrededor de la página actual.
-
-//   const getPageNumbers = () => {
-//     let startPage = Math.max(currentPage - pageRange, 1);
-//     let endPage = Math.min(currentPage + pageRange, totalPages);
-
-//     // Asegurarse de que haya suficientes páginas antes y después de la página actual.
-//     if (currentPage - startPage < pageRange) {
-//       endPage = startPage + pageRange * 2;
-//     }
-//     if (endPage - currentPage < pageRange) {
-//       startPage = endPage - pageRange * 2;
-//     }
-
-//     return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
-//   };
-
-//   const renderPage = (page: number) => {
-//     const startIndex = (page - 1) * itemsPerPage;
-//     const endIndex = startIndex + itemsPerPage;
-//     const pageData = data.slice(startIndex, endIndex);
-
-//     return (
-//       <div>
-//         {pageData.map(item => (
-//           <div key={item}>Item {item}</div>
-//         ))}
-//       </div>
-//     );
-//   };
-
-//   const renderPagination = () => (
-//     <div>
-//       {currentPage > pageRange + 1 && (
-//         <button onClick={() => setCurrentPage(1)}>Inicio</button>
-//       )}
-//       {getPageNumbers().map(page => (
-//         <button
-//           key={page}
-//           onClick={() => setCurrentPage(page)}
-//           style={{ margin: '5px' }}
-//         >
-//           {page}
-//         </button>
-//       ))}
-//       {currentPage < totalPages - pageRange && (
-//         <button onClick={() => setCurrentPage(totalPages)}>Fin</button>
-//       )}
-//     </div>
-//   );
-
-
-
-//   return (
-//     <>
-//       <div className=" p-4 w-full border-gray-500 border-2">
-//         <p ref={dynamicParagRef} id="dynamicparag" className="w-full line-clamp-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit Lorem ipsum dolor sit.  Lorem ipsum dolor sit amet consectetur adipisicing  elit Fugiat praesentium delectus nam eaque quis animi at, totam v</p>
-//       </div>
-
-
-
-
-//       <div>
-//         <h1>Paginación</h1>
-//         {renderPage(currentPage)}
-//         {renderPagination()}
-//       </div>
-
-
-//     </>
-//   );
-// };
-
-// export default Page;
+}

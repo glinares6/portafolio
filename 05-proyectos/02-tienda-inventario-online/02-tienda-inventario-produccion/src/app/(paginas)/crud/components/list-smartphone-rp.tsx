@@ -46,7 +46,8 @@ const ListSmartphoneRp: React.FC<Props> = ({ id, picture, title, from, offer1, o
     const searchIdSmart = useSearchParams()
     const router = useRouter();
 
-    const handleUd = (dt: string, id: string) => {
+    const handleUd = (dt: string, id: string, e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+        e.preventDefault();
         const params = new URLSearchParams(searchIdSmart.toString())
 
         params.set('id', id)
@@ -126,7 +127,7 @@ const ListSmartphoneRp: React.FC<Props> = ({ id, picture, title, from, offer1, o
             <div className="w-full flex justify-center items-start" >
                 <input
                     type="button"
-                    onClick={() => handleUd('aw', `${id}`)}
+                    onClick={(e) => handleUd('aw', `${id}`, e)}
                     className="w-4/5 font-bold text-white h-10 bg-red-600 rounded-3xl cursor-pointer"
                     value="ACTUALIZAR"
                 />
@@ -134,7 +135,7 @@ const ListSmartphoneRp: React.FC<Props> = ({ id, picture, title, from, offer1, o
             <div className="w-full flex justify-center items-start pb-2" >
                 <input
                     type="button"
-                    onClick={() => handleUd('az', `${id}`)}
+                    onClick={(e) => handleUd('az', `${id}`, e)}
                     className="w-4/5 font-bold text-white h-10 bg-red-600 rounded-3xl cursor-pointer"
                     value="ELIMINAR"
                 />

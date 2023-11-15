@@ -8,6 +8,10 @@ import { Smartphone } from './smartphone/entities/smartphone.entity';
 import { ServeStaticModule } from '@nestjs/serve-static/dist/serve-static.module';
 import { join } from 'path';
 import { ScheduleModule } from '@nestjs/schedule';
+import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
+import { PerfilModule } from './perfil/perfil.module';
+import { Perfil } from './perfil/entities/perfil.entity';
 
 @Module({
   imports: [
@@ -25,11 +29,13 @@ import { ScheduleModule } from '@nestjs/schedule';
       url:
         process.env.POSTGRES_URL ||
         'postgres://devgtp:family@localhost:5432/nestbuild',
-      entities: [Smartphone],
+      entities: [Smartphone, User, Perfil],
       synchronize: true,
     }),
     ScheduleModule.forRoot(),
     SmartphoneModule,
+    UsersModule,
+    PerfilModule,
   ],
   controllers: [AppController],
   providers: [AppService],

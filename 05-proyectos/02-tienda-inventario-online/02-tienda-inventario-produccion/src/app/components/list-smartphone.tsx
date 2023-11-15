@@ -43,11 +43,12 @@ const ListSmartphone: React.FC<Props> = ({ id, picture, title, from, offer1, off
 
     const router = useRouter();
 
-    const handleId = (name: string, id: string) => {
+    const handleId = (name: string, id: string, e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+        e.preventDefault()
         const params = new URLSearchParams(search.toString())
 
         params.set(name, id)
-        router.push('/perfil' + '?' + params.toString())
+        router.push('/detalles' + '?' + params.toString())
     }
 
     // const pictureConvert = picture.split('/')
@@ -117,7 +118,7 @@ const ListSmartphone: React.FC<Props> = ({ id, picture, title, from, offer1, off
                 </div><div className="w-full flex justify-center items-start">
                     <input
                         type="button"
-                        onClick={() => handleId('id', `${id}`)}
+                        onClick={(e) => handleId('id', `${id}`, e)}
                         className="w-4/5 font-bold text-white h-10 bg-red-600 rounded-3xl cursor-pointer "
                         value="AGREGAR" />
                 </div>

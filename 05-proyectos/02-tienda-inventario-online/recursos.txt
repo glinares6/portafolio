@@ -72,3 +72,12 @@ image whit next response
 
 
    
+zona horaria
+    https://www.postgresql.org/docs/9.6/datatype-datetime.html
+    https://github.com/typeorm/typeorm/issues/877
+
+
+
+
+modificar estados en react 
+    https://dartiles.dev/blog/como-funciona-el-hook-usestate-y-como-usarlos-con-arrays-y-objetos

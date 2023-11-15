@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import ListSmartphoneRp from "../../components/list-smartphone-rp";

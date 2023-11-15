@@ -1,11 +1,12 @@
 'use client'
 import { createContext, useState } from "react";
-import "./globals.css";
+import "./globals.css"; import "./globals.css";
 // import { Inter } from "next/font/google";
 
 import Link from "next/link";
 
 import { UseContext } from "./contexts/authContext";
+import { useRouter } from "next/navigation";
 
 
 
@@ -34,12 +35,17 @@ export default function RootLayout({
   // const urlSegundaOpcion = "https://nest-online-build.onrender.com";
 
   const [authState, setAuthState] = useState(false)
+  const [perfilAuth, setPerfilAuth] = useState(false)
+
+  const [userAuth, setUserAuth] = useState({})
+
   const [testState, setTestState] = useState('desde el inicio')
 
 
+  const route = useRouter()
 
   return (<>
-    <Provider value={{ authState, setAuthState, testState }}>
+    <Provider value={{ authState, setAuthState, testState, perfilAuth, setPerfilAuth, userAuth, setUserAuth }}>
 
       <html lang="en">
         {/* <body className={inter.className}> */}
@@ -50,17 +56,32 @@ export default function RootLayout({
             {/* <Link className="text-white font-bold" href="/perfil">
             perfil
           </Link> */}
-            <Link className="text-white font-bold" href="/contactos">
+            <div className="text-white font-bold"> <Link rel="preload" href="/contactos">
               contactos
-            </Link>
-            <Link className="text-white font-bold" href="/productos">
-              productos
-            </Link>
-            {authState && <Link className="text-white font-bold" href="/crud">
-              crud
-            </Link>
+            </Link></div>
 
+            {/* <button className="text-white font-bold" onClick={() => route.push('/contactos')}>contactos</button> */}
+            <div className="text-white font-bold"> <Link rel="preload" href="/productos">
+              productos
+            </Link></div>
+            {/* <button className="text-white font-bold" onClick={() => route.push('/productos')}>productos</button> */}
+            {!authState && <div className="text-white font-bold" ><Link rel="preload" href="/login">
+              login
+            </Link></div>
             }
+            {/* {!authState && <button className="text-white font-bold" onClick={() => route.push('/login')}>login</button>
+            } */}
+            {authState && <div className="text-white font-bold"><Link rel="preload" href="/crud">
+              crud
+            </Link></div>
+            }
+            {perfilAuth && <div className="text-white font-bold"><Link rel="preload" href="/perfil">
+              perfil
+            </Link></div>
+            }
+
+            {/* {authState && <button className="text-white font-bold" onClick={() => route.push('/crud')}>crud</button>
+            } */}
           </div>
 
 
