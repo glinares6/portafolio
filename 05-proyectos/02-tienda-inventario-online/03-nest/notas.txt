@@ -13,6 +13,8 @@ iniciar proyecto
 
         create CRUD fast
             nest g resource [name]
+
+            nest g module [name]
             nest g controller [name]
             nest g service [name]
 
@@ -176,7 +178,8 @@ iniciar proyecto
 
     
 
-
+    JWT
+         npm install --save @nestjs/jwt
     
 iniciamos el proyecto 
     cd newProyect 

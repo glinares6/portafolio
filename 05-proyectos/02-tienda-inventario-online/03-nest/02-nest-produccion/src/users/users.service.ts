@@ -18,6 +18,15 @@ export class UsersService {
 
   findAll() {
     return this.userRepository.find({
+      select: [
+        'id',
+        'username',
+        'userpass',
+        'role',
+        'state',
+        'createAt',
+        'updatedAt',
+      ],
       relations: {
         perfil: true,
       },
@@ -28,9 +37,59 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    // return this.userRepository.find({ where: { id: id } });
-    return this.userRepository.findOneBy({ id });
+    return this.userRepository.find({
+      where: { id: id },
+      select: [
+        'id',
+        'username',
+        'userpass',
+        'role',
+        'state',
+        'createAt',
+        'updatedAt',
+      ],
+      relations: {
+        perfil: true,
+      },
+    });
+    // return this.userRepository.findOneBy({ id });
   }
+
+  getEncrypt() {
+    return this.userRepository.find({
+      select: ['id', 'username', 'encrypt', 'role', 'state'],
+      relations: {
+        perfil: true,
+      },
+      order: {
+        id: 'DESC',
+      },
+    });
+    // return this.userRepository.findOneBy({ id });
+  }
+  encryptOne(id: number) {
+    return this.userRepository.find({
+      where: { id: id },
+      select: ['id', 'username', 'encrypt', 'role', 'state'],
+      relations: {
+        perfil: true,
+      },
+    });
+    // return this.userRepository.findOneBy({ id });
+  }
+
+  // auth(id: number) {
+  //   const resAuth: any = this.userRepository.find({
+  //     where: { id: id },
+  //     select: ['id', 'username', 'userpass'],
+  //     relations: {
+  //       perfil: false,
+  //     },
+  //   });
+
+  //   return resAuth;
+  //   // return this.userRepository.findOneBy({ id });
+  // }
 
   update(id: number, updateUserDto: UpdateUserDto) {
     // return `This action updates a #${id} user`;

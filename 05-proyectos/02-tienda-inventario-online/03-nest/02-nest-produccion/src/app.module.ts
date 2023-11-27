@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SmartphoneModule } from './smartphone/smartphone.module';
@@ -12,6 +17,9 @@ import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { PerfilModule } from './perfil/perfil.module';
 import { Perfil } from './perfil/entities/perfil.entity';
+import { AuthModule } from './auth/auth.module';
+import { Auth } from './auth/entities/auth.entity';
+import { LoggerMiddleware } from './common/midleware/logger.midleware';
 
 @Module({
   imports: [
@@ -29,17 +37,23 @@ import { Perfil } from './perfil/entities/perfil.entity';
       url:
         process.env.POSTGRES_URL ||
         'postgres://devgtp:family@localhost:5432/nestbuild',
-      entities: [Smartphone, User, Perfil],
+      entities: [Smartphone, User, Perfil, Auth],
       synchronize: true,
     }),
     ScheduleModule.forRoot(),
     SmartphoneModule,
     UsersModule,
     PerfilModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
+export class AppModule implements NestModule {
   constructor(private dataSource: DataSource) {}
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes({ path: 'auth/login/all/*/*', method: RequestMethod.GET });
+  }
 }

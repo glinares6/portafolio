@@ -4,6 +4,7 @@ export class CreateUserDto {
   userpass: string;
   role: string;
   state: number;
+  encrypt: any;
   createdAt: Date;
   updatedAt: Date;
 }

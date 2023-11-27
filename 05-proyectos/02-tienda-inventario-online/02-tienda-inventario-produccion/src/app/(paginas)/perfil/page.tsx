@@ -21,9 +21,17 @@ type perfilUser = {
 export default function Page() {
   const { authState, userAuth }: any = useContext(UseContext);
 
+
+  // const { firstname, surname, lastname, email, address, gender, phone } = userAuth.perfil
+
+
+  const resPerfilAuth = userAuth.perfil
+
   const [resText, setResText] = useState('')
 
-  const { perfilPostUser } = perfilApp()
+  const [reqPerfil, setReqPerfil]: any = useState()
+
+  const { server, perfilPostUser } = perfilApp()
 
   const [dataPerfil, setDataPerfil] = useState<perfilUser>({
     firstName: '',
@@ -40,6 +48,8 @@ export default function Page() {
 
 
 
+
+
   useEffect(() => {
 
 
@@ -48,11 +58,66 @@ export default function Page() {
       setResText(userAuth.username.replace(restext, restext.toUpperCase()));
     }
 
-    // console.log('local inicial', dataPerfil);
-
-  }, [dataPerfil, userAuth.username])
+    async function getPerfilUser() {
 
 
+
+      const getUserPerfil = await fetch(`${server}/users/${userAuth.id}`)
+
+      const res = await getUserPerfil.json()
+
+
+      setReqPerfil(res[0].perfil)
+      console.log('user respuesta ', res[0].perfil);
+
+      if (res[0].perfil) {
+
+        setDataPerfil({
+          firstName: res[0].perfil.firstname || '',
+          surName: res[0].perfil.surname || '',
+          lastName: res[0].perfil.lastname || '',
+          email: res[0].perfil.email || '',
+          gender: res[0].perfil.gender || '',
+          address: res[0].perfil.address || '',
+          phone: res[0].perfil.phone || '',
+          photo: '',
+        })
+
+
+
+      }
+
+
+
+
+    }
+
+
+    getPerfilUser()
+
+    // console.log('local inicial', da (async () => {taPerfil);
+
+    console.log('user hoy', userAuth);
+
+
+  }, [server, userAuth, userAuth.username])
+
+
+  useEffect(() => {
+
+    (async () => {
+      if (dataPerfil) {
+        const getUserPerfilSubmit = await fetch(`${server}/users/${userAuth.id}`)
+
+        const resSubmit = await getUserPerfilSubmit.json()
+
+
+        setReqPerfil(resSubmit[0].perfil)
+
+      }
+    })()
+
+  }, [dataPerfil, server, userAuth.id])
 
 
 
@@ -64,7 +129,7 @@ export default function Page() {
     console.log("test dato", dataPerfil.photo);
     console.log("test dato firstname", dataPerfil.firstName);
 
-    console.log('local inicial evento submit', dataPerfil)
+    // console.log('local inicial evento submit', dataPerfil)
 
 
     //!paso 0
@@ -116,6 +181,14 @@ export default function Page() {
 
       //    formData.file.name, //nombre del archivo
 
+
+      // const getUserPerfilSubmit = await fetch(`${server}/users/${userAuth.id}`)
+
+      // const resSubmit = await getUserPerfilSubmit.json()
+
+
+      // setReqPerfil(resSubmit[0].perfil)
+
       //!paso 2
       const payloadPerfil = {
         firstname: dataPerfil.firstName,
@@ -151,24 +224,78 @@ export default function Page() {
       // })
 
 
-      await perfilPostUser(userAuth.id, payloadPerfil)
+      if (reqPerfil) {
+        console.log('se actualiza el perfil');
+
+
+        await fetch(`${server}/perfil/${reqPerfil.id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payloadPerfil)
+        }).then(response => {
+          if (response.ok) {
+            console.log('la URL tiene el acceso - UPDATE');
+
+
+
+          } else {
+            console.log('No se puede conectar a la URL - UPDATE');
+
+          }
+        }).catch(error => {
+          console.log('fallo la conexion con el servidor - UPDATE', error);
+        })
+
+        // console.log('user-auth-update', userAuth);
+
+
+        //*update perfilOneToOne
+        // const getUserPerfil = await fetch(`${server}/perfil/${resPerfilAuth.id}`)
+
+        // const res = await getUserPerfil.json()
+
+        // const resPerfilGet = {
+        //   firstName: res[0].firstname,
+        //   surName: res[0].surname,
+        //   lastName: res[0].lastname,
+        //   email: res[0].email,
+        //   gender: res[0].gender,
+        //   address: res[0].address,
+        //   phone: res[0].phone,
+        //   photo: '',
+        // }
+        // setDataPerfil(resPerfilGet)
+
+        // userAuth.perfil = dataPerfil
+        // setUserAuth(userAuth)
+
+      } else {
+        console.log('se crea el perfil');
+        await perfilPostUser(userAuth.id, payloadPerfil)
+      }
+
+      //todo eso si va resPerfilAuth
       // console.log('newDataPerfil', dataPerfil);
 
-      //!paso 3
+
+
       // await smartphonePost(payloadFile)
-
-
       //!limpiador
-      setDataPerfil({
-        firstName: '',
-        surName: '',
-        lastName: '',
-        email: '',
-        gender: '',
-        address: '',
-        phone: '',
-        photo: '',
-      })
+      // setDataPerfil({
+      //   firstName: '',
+      //   surName: '',
+      //   lastName: '',
+      //   email: '',
+      //   gender: '',
+      //   address: '',
+      //   phone: '',
+      //   photo: '',
+      // })
+
+
+
 
       // fetch('http://localhost:3000/smartphone/2/res', {
       //     method: 'POST'

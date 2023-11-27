@@ -26,6 +26,9 @@ export class User {
   @Column({ default: 1 })
   state: number;
 
+  @Column({ default: '' })
+  encrypt: string;
+
   @CreateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP AT TIME ZONE America/Lima',

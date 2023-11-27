@@ -9,6 +9,8 @@ export default function Page() {
 
     const [inpUser, setInpUser]: any = useState('')
     const [inpPass, setInpPass]: any = useState('')
+
+    const [fieldNull, setFieldNull] = useState(false)
     const [postAuth, setPostAuth] = useState(false)
     const [httpError, setHttpError] = useState(false)
 
@@ -27,17 +29,6 @@ export default function Page() {
         console.log('boton enviar user', inpUser);
         console.log('boton enviar password', inpPass);
 
-        const payload = {
-            username: inpUser,
-            userpass: inpPass,
-        }
-
-        const userPostRes = await userPostAuth(payload)
-
-        console.log('postBack', userPostRes);
-
-
-
 
         // resUserGet = usersRes.find((items: any) => (
         //     // console.log(`valor ${i} usuario ${items.username} y  ${items.userpass}`);
@@ -47,23 +38,53 @@ export default function Page() {
         // console.log(" datos back", resUserGet);
 
 
+        if (inpUser.trim() == '' || inpPass.trim() == '') {
+
+            console.log('campos vacio(s)');
+
+            setFieldNull(true)
+
+
+        } else {
+
+
+            const payload = {
+                username: inpUser.trim(),
+                userpass: inpPass.trim(),
+            }
+
+            const userPostRes = await userPostAuth(payload)
+
+            console.log('postBack', userPostRes);
+
+
+            if (!authState) {
+
+
+                if (userPostRes.statusCode === 500 || 400) {
+                    setPostAuth(false)
+                    setHttpError(true)
+
+                }
+
+                if (!userPostRes.statusCode) {
+                    setPostAuth(true)
+                    setHttpError(false)
+                    route.push('/login')
+
+                }
+
+
+
+            }
+        }
+
+
 
         console.log(authState);
 
 
-        if (!authState) {
-            if (userPostRes.username && userPostRes.userpass) {
-                setPostAuth(true)
-                route.push('/login')
 
-            }
-
-            if (userPostRes.statusCode === 500) {
-                setPostAuth(false)
-                setHttpError(true)
-
-            }
-        }
 
 
         // setAuthState(true)
@@ -94,6 +115,7 @@ export default function Page() {
                                 setInpUser(e.target.value)
                                 setPostAuth(false)
                                 setHttpError(false)
+                                setFieldNull(false)
                             }} required autoComplete="off" />
                         </div>
                         <div className="flex flex-col   h-[25%] min-h-[60px]   border-green-500 border-2">
@@ -102,6 +124,7 @@ export default function Page() {
                                 setInpPass(e.target.value)
                                 setPostAuth(false)
                                 setHttpError(false)
+                                setFieldNull(false)
                             }} required autoComplete="off" />
                         </div>
 
@@ -112,7 +135,12 @@ export default function Page() {
                         }
                         {httpError &&
                             <div className="bg-red-500 text-white flex flex-col justify-center items-center   h-[10%] min-h-[45px]   border-green-500 border-2">
-                                <p>Usuario existente</p>
+                                <p>Usuario existe / no connect</p>
+                            </div>
+                        }
+                        {fieldNull &&
+                            <div className="bg-yellow-400 text-black flex flex-col justify-center items-center   h-[10%] min-h-[45px]   border-green-500 border-2">
+                                <p>Campo vacio(s)</p>
                             </div>
                         }
                     </div>
