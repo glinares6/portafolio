@@ -39,12 +39,12 @@ export default function userApp() {
   };
 
   const authdecryptOneJwt = async (id: number, token: string) => {
-    const userGetEncrypt = await fetch(
-      `${server}/auth/login/all/${id}/${token}`,
-      {
-        method: "GET",
-      }
-    );
+    const userGetEncrypt = await fetch(`${server}/auth/login/all/${id}`, {
+      method: "GET",
+      headers: new Headers({
+        Authorization: `${token}`,
+      }),
+    });
 
     // const ary: any = await userGetEncrypt.json();
     // console.log(ary);
@@ -55,12 +55,45 @@ export default function userApp() {
     // // console.log("data del hook", userPostEncrypt);
   };
 
+  const authPostSession = async (id: number, payload: any) => {
+    const authSession = await fetch(`${server}/sesion/login/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(payload),
+    });
+
+    return authSession.json();
+  };
+
+  const authGetSession = async (session: any) => {
+    const userGetEncrypt = await fetch(`${server}/sesion/${session}/tools`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    return userGetEncrypt.json();
+  };
+  const authGetSessionServer = async (session: any) => {
+    const userGetEncrypt = await fetch(`${server}/sesion/${session}/delete`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    return userGetEncrypt.json();
+  };
+
   return {
     userGetAuth,
     userGetEncrypt,
     userEncryptOneAuth,
     authPostToken,
     authdecryptOneJwt,
+    authPostSession,
+    authGetSession,
+    authGetSessionServer,
     server,
   };
 }

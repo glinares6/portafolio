@@ -8,11 +8,18 @@ export class LoggerMiddleware implements NestMiddleware {
   constructor(private jwtService: JwtService) {}
   async use(req: Request, res: Response, next: NextFunction) {
     const id = req.params['0'];
-    const token = req.params['1'];
+    // const token = req.params['1'];
 
-    if (token) {
+    console.log('parametro', id);
+
+    console.log('token header middleware', req.headers.authorization);
+
+    const authorization = req.headers.authorization;
+
+    if (authorization) {
+      // console.log('token del param', token);
       try {
-        const decoded: any = await this.jwtService.verifyAsync(token, {
+        const decoded: any = await this.jwtService.verifyAsync(authorization, {
           secret: jwtConstants.secret, // Ajusta esto según tus necesidades
         });
 

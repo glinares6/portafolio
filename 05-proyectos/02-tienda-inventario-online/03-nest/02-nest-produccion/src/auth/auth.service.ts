@@ -12,6 +12,8 @@ import { Repository } from 'typeorm';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from './constansts';
+
+// import { v4 as uuidv4 } from 'uuid';
 // import { jwtConstants } from './constansts';
 
 @Injectable()
@@ -37,6 +39,7 @@ export class AuthService {
     createAuthDto.user = await this.usersService.findOne(169);
     createAuthDto.token = await this.jwtService.signAsync(payload);
 
+    // session.visit;
     // const tokenKey = await this.jwtService.signAsync(payload, {
     //   secret: jwtConstants.secret,
     // });
@@ -51,10 +54,12 @@ export class AuthService {
     //   }),
     // );
 
+    //* corregir
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...result } = createAuthDto;
-    // return this.authRepository.save(result);
+    // this.authRepository.save(result);
     return result;
+    // return await this.jwtService.signAsync(payload);
   }
 
   findAll() {

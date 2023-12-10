@@ -2,6 +2,7 @@
 import { UseContext } from "@/app/contexts/authContext";
 import { redirect, useRouter } from "next/navigation";
 import { useContext, useLayoutEffect } from "react";
+import perfilApp from "./hooks/perfil-App";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const {
@@ -12,6 +13,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     userAuth,
     setUserAuth,
   }: any = useContext(UseContext);
+
+  const { authGetSessionDelete } = perfilApp();
 
   // const setLogAuth = raiz.setAuthState
 
@@ -31,14 +34,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return null;
   }
 
-  const handleLogout = (e: { preventDefault: () => void }) => {
+  const handleLogout = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setAuthState(false);
     setPerfilAuth(false);
-    setUserAuth({});
-    router.push("/");
+
+    const getSessionAuth = sessionStorage.getItem("session");
+    await authGetSessionDelete(getSessionAuth);
 
     localStorage.removeItem("token");
+    sessionStorage.removeItem("session");
+    setUserAuth({});
+    router.push("/");
   };
   return (
     <>

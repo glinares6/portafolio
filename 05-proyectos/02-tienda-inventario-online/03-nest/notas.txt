@@ -186,7 +186,15 @@ iniciamos el proyecto
     npm run start
 
 
+    SESSION
+        npm i express-session
+        npm i -D @types/express-session
 
+        https://medium.com/@alysachan830/cookie-and-session-ii-how-session-works-in-express-session-7e08d102deb8
+
+        https://github.com/expressjs/session
+
+        https://medium.com/@shkim04/how-to-use-session-in-next-js-3b7987fb42b4
 
 
 tomar en cuenta 

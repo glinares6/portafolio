@@ -16,6 +16,9 @@ export default function Page() {
     userGetEncrypt,
     authPostToken,
     authdecryptOneJwt,
+    authPostSession,
+    authGetSession,
+    authGetSessionServer,
   } = userApp();
   const [httpResError, setHttpResError] = useState(false);
   const [tokenPass, setTokenPass] = useState(false);
@@ -101,6 +104,7 @@ export default function Page() {
     // }
 
     const resTokenJwt = localStorage.getItem("token");
+    const resSessionReq = sessionStorage.getItem("session");
 
     if (!resUserGet) {
       console.log("usuario no esta en la bd");
@@ -141,6 +145,31 @@ export default function Page() {
 
         // localStorage.setItem("token", resToken.token);
 
+        //todo sesion actual
+        // if (resSessionReq) {
+        //   console.log("la session existe");
+
+        //   const resSesionGet = await authGetSession(resSessionReq);
+
+        //   console.log("dataResSessionGet", resSesionGet);
+        //   // sessionStorage.setItem("session", resSessionPost.session);
+        // } else {
+        //   console.log("la sesion no existe");
+
+        //   const pldSession = {
+        //     password: inpPass,
+        //   };
+
+        //   const resSessionPost = await authPostSession(
+        //     resUserGetEncrypt.id,
+        //     pldSession
+        //   );
+
+        //   console.log("session-back", resSessionPost);
+
+        //   sessionStorage.setItem("session", resSessionPost.session);
+        // }
+
         if (resTokenJwt) {
           console.log("token", resTokenJwt);
 
@@ -154,6 +183,10 @@ export default function Page() {
           if (authState) {
             if (resBackEncrypt.message === "Token has expired catch") {
               localStorage.removeItem("token");
+              // sessionStorage.removeItem("session");
+              const resSesionLog = await authGetSessionServer(resSessionReq);
+
+              console.log("resSesionLog", resSesionLog);
 
               setAuthState(false);
               setPerfilAuth(false);
@@ -166,7 +199,11 @@ export default function Page() {
             //todo no aurizado
             if (resBackEncrypt.message === "Token no autorizado middleware") {
               localStorage.removeItem("token");
-              console.log("del filo fondo");
+              // sessionStorage.removeItem("session");
+              const resSesionLog = await authGetSessionServer(resSessionReq);
+
+              console.log("resSesionLog", resSesionLog);
+
               setAuthState(false);
               setTextError("Vuelva autenticar ");
               setTokenExp(true);
@@ -221,6 +258,25 @@ export default function Page() {
 
           console.log(authState);
         } else {
+          // sessionStorage.removeItem("session");
+          // const resSessionAuth: any = sessionStorage.getItem("session");
+          // if (!resSessionReq) {
+          //   console.log("generando la sesion");
+
+          //   const pldSession = {
+          //     password: inpPass,
+          //   };
+
+          //   const resSessionPost = await authPostSession(
+          //     resUserGetEncrypt.id,
+          //     pldSession
+          //   );
+
+          //   console.log("session-back", resSessionPost);
+
+          //   sessionStorage.setItem("session", resSessionPost.session);
+          // }
+
           const pld = {
             password: inpPass,
           };
@@ -233,6 +289,8 @@ export default function Page() {
           );
 
           localStorage.setItem("token", resTokenPost.token);
+
+          authPostSession;
 
           setUserAuth({
             id: resBackEncryptPass[0].id,
@@ -249,6 +307,64 @@ export default function Page() {
             setPerfilAuth(true);
             route.push("/crud/at");
           }, 2000);
+        }
+
+        //*REPARAR
+        if (resSessionReq) {
+          console.log("la session existe");
+
+          const resSesionGet = await authGetSession(resSessionReq);
+          if (resSesionGet.msg === "no tiene sesion - server down") {
+            console.log("dataResSessionGet", resSesionGet);
+
+            sessionStorage.removeItem("session");
+            const resSessionAuth: any = sessionStorage.getItem("session");
+            if (!resSessionAuth) {
+              console.log("generando la sesion");
+
+              const pldSession = {
+                password: inpPass,
+              };
+
+              const resSessionPost = await authPostSession(
+                resUserGetEncrypt.id,
+                pldSession
+              );
+
+              console.log("session-back", resSessionPost);
+
+              sessionStorage.setItem("session", resSessionPost.session);
+            }
+          }
+
+          if (resSesionGet.msg === "sesion no valida") {
+            console.log("dataResSessionGet", resSesionGet);
+          }
+
+          if (Array.isArray(resSesionGet)) {
+            console.log("dataResSessionGet", resSesionGet);
+          }
+
+          // sessionStorage.setItem("session", resSessionPost.session);
+        } else {
+          // sessionStorage.removeItem("session");
+          // const resSessionAuth: any = sessionStorage.getItem("session");
+          // if (!resSessionReq) {
+          console.log("generando la sesion");
+
+          const pldSession = {
+            password: inpPass,
+          };
+
+          const resSessionPost = await authPostSession(
+            resUserGetEncrypt.id,
+            pldSession
+          );
+
+          console.log("session-back", resSessionPost);
+
+          sessionStorage.setItem("session", resSessionPost.session);
+          // }
         }
 
         // setAuthState(true)

@@ -20,7 +20,10 @@ import { Perfil } from './perfil/entities/perfil.entity';
 import { AuthModule } from './auth/auth.module';
 import { Auth } from './auth/entities/auth.entity';
 import { LoggerMiddleware } from './common/midleware/logger.midleware';
+import { SesionModule } from './sesion/sesion.module';
+import { Sesion } from './sesion/entities/sesion.entity';
 
+import * as session from 'express-session';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -37,7 +40,7 @@ import { LoggerMiddleware } from './common/midleware/logger.midleware';
       url:
         process.env.POSTGRES_URL ||
         'postgres://devgtp:family@localhost:5432/nestbuild',
-      entities: [Smartphone, User, Perfil, Auth],
+      entities: [Smartphone, User, Perfil, Auth, Sesion],
       synchronize: true,
     }),
     ScheduleModule.forRoot(),
@@ -45,6 +48,7 @@ import { LoggerMiddleware } from './common/midleware/logger.midleware';
     UsersModule,
     PerfilModule,
     AuthModule,
+    SesionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -54,6 +58,7 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(LoggerMiddleware)
-      .forRoutes({ path: 'auth/login/all/*/*', method: RequestMethod.GET });
+      .forRoutes({ path: 'auth/login/all/*', method: RequestMethod.GET });
+    consumer.apply(session({ secret: 'keyboardcat' })).forRoutes('*');
   }
 }
