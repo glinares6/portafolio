@@ -14,6 +14,7 @@ import { Smartphone } from './entities/smartphone.entity';
     //   }),
     // }),
   ],
+  exports: [SmartphoneService],
   controllers: [SmartphoneController],
   providers: [SmartphoneService],
 })

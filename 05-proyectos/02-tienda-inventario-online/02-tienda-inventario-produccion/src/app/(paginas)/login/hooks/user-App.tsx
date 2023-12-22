@@ -76,7 +76,7 @@ export default function userApp() {
 
     return userGetEncrypt.json();
   };
-  const authGetSessionServer = async (session: any) => {
+  const authGetSessionServerDismiss = async (session: any) => {
     const userGetEncrypt = await fetch(`${server}/sesion/${session}/delete`, {
       method: "GET",
       credentials: "include",
@@ -93,7 +93,7 @@ export default function userApp() {
     authdecryptOneJwt,
     authPostSession,
     authGetSession,
-    authGetSessionServer,
+    authGetSessionServerDismiss,
     server,
   };
 }

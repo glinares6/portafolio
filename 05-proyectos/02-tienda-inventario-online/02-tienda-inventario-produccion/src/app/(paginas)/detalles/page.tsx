@@ -1,16 +1,15 @@
-'use client'
-
+"use client";
 
 import smartphoneApp from "@/app/hooks/smartphone-App";
+import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
-import { useEffect } from 'react';
-import { useRef } from 'react';
+import { useEffect } from "react";
+import { useRef } from "react";
 
-import { useState } from 'react';
-
+import { useState } from "react";
 
 // export default function Page() {
 //   return(
@@ -21,57 +20,47 @@ import { useState } from 'react';
 //    );
 //   }
 
-
 const Page: React.FC = () => {
   const dynamicParagRef = useRef<HTMLParagraphElement | null>(null);
   const titleSmartRef = useRef<HTMLParagraphElement | null>(null);
 
-  const params = useSearchParams()
-  const router = useRouter()
+  const params = useSearchParams();
+  const router = useRouter();
 
+  const { smartphoneGetOne } = smartphoneApp();
+  const [dataGet, setDataGet]: any = useState({});
 
-  const { smartphoneGetOne } = smartphoneApp()
-  const [dataGet, setDataGet]: any = useState({})
-  const getIdSmart = params.get('id') || 1
+  const [cargaImg, setCargaImg] = useState(false);
 
+  const [especificaciones, setEspecificaciones] = useState(true);
+  const [descripcion, setDescripcion] = useState(false);
+  const getIdSmart = params.get("id") || 1;
 
   useEffect(() => {
-
-
     (async () => {
+      const smartGetOneRes = await smartphoneGetOne(getIdSmart);
 
-      const smartGetOneRes = await smartphoneGetOne(getIdSmart)
+      const newData = smartGetOneRes[0].title.replace("<br/>", "");
+      smartGetOneRes[0].title = newData;
 
-      const newData = smartGetOneRes[0].title.replace('<br/>', '')
-      smartGetOneRes[0].title = newData
+      setDataGet(...smartGetOneRes);
 
+      setCargaImg(true);
+    })();
 
-      setDataGet(...smartGetOneRes)
-    })()
+    //*reemplazar datos
+    // if (dynamicParagRef.current) {
+    //   const idValue = dynamicParagRef.current;
+    //   const secondLine = idValue.innerHTML.split(".")[1];
 
+    //   const newElement = ` continuara Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, quibusdam veniam consequatur, quo nesciunt quasi quas  <br/> corrupti architecto consequuntur consectetur neque veritatis magnam eligendi ducimus excepturi sunt sed dolorem alias.
+    //    laceat illum?`;
+    //   idValue.innerHTML = idValue.innerHTML.replace(secondLine, newElement);
 
-    if (dynamicParagRef.current) {
-      const idValue = dynamicParagRef.current;
-      const secondLine = idValue.innerHTML.split(".")[1];
-
-
-      const newElement = ` continuara Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, quibusdam veniam consequatur, quo nesciunt quasi quas  <br/> corrupti architecto consequuntur consectetur neque veritatis magnam eligendi ducimus excepturi sunt sed dolorem alias.
-       laceat illum?`;
-      idValue.innerHTML = idValue.innerHTML.replace(secondLine, newElement);
-
-
-
-
-
-      // idValue.innerHTML += newElement;
-
-
-    } else {
-      console.log('El elemento es nulo');
-    }
-
-
-
+    //   // idValue.innerHTML += newElement;
+    // } else {
+    //   console.log("El elemento es nulo");
+    // }
 
     //   function adjustSecondLineSize() {
     //   const fontSize = parseFloat(window.getComputedStyle(dynamicParagraph).getPropertyValue("width"));
@@ -83,11 +72,9 @@ const Page: React.FC = () => {
     //   // adjustSecondLineSize();
 
     //   window.addEventListener("resize", adjustSecondLineSize);
-  }, [getIdSmart, smartphoneGetOne]);
-
-
-
-
+    // }, [getIdSmart, smartphoneGetOne]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getIdSmart]);
 
   //* paginación legacy
 
@@ -95,8 +82,6 @@ const Page: React.FC = () => {
   // const [currentPage, setCurrentPage] = useState(1);
 
   // const data = Array.from({ length: 1200 }, (_, index) => index + 1); // Datos simulados.
-
-
 
   // const totalPages = Math.ceil(data.length / itemsPerPage);
   // const pageRange = 3; // Cantidad de páginas a mostrar alrededor de la página actual.
@@ -166,15 +151,28 @@ const Page: React.FC = () => {
   //   </div>
   // );
 
-
+  useEffect(() => {
+    (async () => {
+      const smartGetOneRes = await smartphoneGetOne(getIdSmart);
+      console.log("que hay de nuevo ", smartGetOneRes[0]);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
-      <div className=" p-4 w-full border-gray-500 border-2">
-        <p ref={dynamicParagRef} id="dynamicparag" className="w-full line-clamp-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit Lorem ipsum dolor sit.  Lorem ipsum dolor sit amet consectetur adipisicing  elit Fugiat praesentium delectus nam eaque quis animi at, totam v</p>
-      </div>
-
-
+      {/*  {//*Reeemplazar datos} */}
+      {/* <div className=" p-4 w-full border-gray-500 border-2">
+        <p
+          ref={dynamicParagRef}
+          id="dynamicparag"
+          className="w-full line-clamp-2"
+        >
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit Lorem ipsum
+          dolor sit. Lorem ipsum dolor sit amet consectetur adipisicing elit
+          Fugiat praesentium delectus nam eaque quis animi at, totam v
+        </p>
+      </div> */}
 
       {/* paginación legacy */}
       {/* <div className="px-5">
@@ -182,19 +180,239 @@ const Page: React.FC = () => {
         {renderPage(currentPage)}
         {renderPagination()}
       </div> */}
+      {/* <br /> */}
 
-      <br />
-      {dataGet && <div ref={titleSmartRef} >titulo : {dataGet.title}</div>}
-      {dataGet && <div >offer1 : {dataGet.offer1}</div>}
-      {dataGet && <div >offer2 : {dataGet.offer2}</div>}
-      {dataGet && <div >current : {dataGet.current}</div>}
-      <button onClick={() => router.back()}>volver</button>
+      <div className="flex  my-3 mx-5 max-sm:flex-col">
+        <div className="flex flex-col justify-center w-[40%] border-red-500 border-2  max-sm:w-full">
+          <div className="flex justify-center  ">
+            {cargaImg && (
+              <Image
+                // onClick={handleResizeImg}
+                src={dataGet.picture}
+                width={250}
+                height={250}
+                alt="Picture of the author2"
+                priority
+              />
+            )}
+          </div>
+
+          {cargaImg && (
+            <div>
+              {" "}
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat,
+              nemo. Delectus, consectetur? Maiores, accusamus. Neque veniam
+              ratione quia ipsam voluptates ea assumenda omnis officiis. Aliquam
+              asperiores ipsam corrupti ab vitae.
+            </div>
+          )}
+        </div>
+
+        <div className="w-full border-red-500 border-2 pt-8">
+          {cargaImg && (
+            <div ref={titleSmartRef} className="text-1xl">
+              {dataGet.title}
+            </div>
+          )}
+          {cargaImg && (
+            <div className="flex max-sm:flex-col">
+              <div className="flex flex-col w-full ">
+                <div className="flex flex-col  w-full pt-6">
+                  {dataGet.offer1 != 0 && (
+                    <div className="flex border-red-500 border-2  ">
+                      {
+                        <div className="w-1/3 max-sm:w-1/2">
+                          Precio de lista:{" "}
+                        </div>
+                      }
+                      {
+                        <div className="w-2/3 max-sm:w-1/2">
+                          {" "}
+                          $/.{dataGet.offer1}
+                        </div>
+                      }
+                    </div>
+                  )}
+
+                  {dataGet.offer2 != 0 && (
+                    <div className="flex  border-red-500 border-2 ">
+                      <div className="w-1/3 max-sm:w-1/2">Precio Online: </div>
+                      <div className="w-2/3 max-sm:w-1/2">
+                        {" "}
+                        $/.{dataGet.offer2}
+                      </div>
+                    </div>
+                  )}
+
+                  {dataGet.current != 0 && (
+                    <div className="flex border-red-500 border-2  ">
+                      <div className="w-1/3 max-sm:w-1/2">Tarjeta:</div>
+                      <div className="w-2/3 max-sm:w-1/2">
+                        $/.{dataGet.current}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                {dataGet.detallesmartphone ? (
+                  <div className=" border-red-500 border-2 pt-6 ">
+                    <h2 className="text-1xl">Caracteristicas Destacadas</h2>
+                    {dataGet.detallesmartphone.pantalla != 0 && (
+                      <h3 className="text-lg">
+                        Pantalla : {dataGet.detallesmartphone.pantalla}
+                        {'"'}
+                      </h3>
+                    )}
+
+                    {dataGet.detallesmartphone.memoriaram != 0 && (
+                      <h3 className="text-lg">
+                        Memoria Ram : {dataGet.detallesmartphone.memoriaram} GB
+                      </h3>
+                    )}
+                    {dataGet.detallesmartphone.memoriainterna != 0 && (
+                      <h3 className="text-lg">
+                        Memoria Interna :{" "}
+                        {dataGet.detallesmartphone.memoriainterna} GB
+                      </h3>
+                    )}
+                  </div>
+                ) : (
+                  <p></p>
+                )}
+                <div className="flex w-full my-2  justify-center   cursor-pointer h-[40px]">
+                  <input
+                    className=" w-[20%] min-w-[100px] text-white bg-red-500 cursor-pointer max-sm:w-[30%]"
+                    type="submit"
+                    value="Pagar"
+                  />
+                </div>
+              </div>
+              <div className="w-full border-red-500 border-2 px-3 py-2">
+                <p>
+                  Vendido y despachado por :
+                  <br />
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab
+                  dignissimos cupiditate accusantium possimus aspernatur
+                  incidunt eveniet dolorum vitae alias consequatur quam, est
+                  ipsa numquam, obcaecati deserunt recusandae quasi dolores
+                  optio. Est, ipsam autem laboriosam ducimus, sint totam placeat
+                  dolorem quo delectus optio officia ut, sequi eaque sapiente
+                  necessitatibus velit. Ut magni ratione, nisi cum aut odit
+                  error ipsam id numquam?
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="flex  flex-col my-3 mx-5 border-blue-500 border-2">
+        <div className="w-full flex justify-center  ">
+          <h1 className="text-2xl w-[90%] flex justify-center border-orange-500 border-2 py-2">
+            Información Adicional
+          </h1>
+        </div>
+        <div className="w-full flex  justify-center  ">
+          <div
+            className={`w-[20%] flex justify-center  py-1  max-sm:w-full cursor-pointer ${
+              especificaciones ? "border-b-4 border-red-500" : "border-b-4"
+            } `}
+            onClick={() => {
+              setDescripcion(false);
+              setEspecificaciones(true);
+              console.log("especificaciones");
+            }}
+          >
+            <div className="text-lg ">Especificaciones</div>
+          </div>
+          <div
+            className={`w-[20%] flex justify-center   py-1 max-sm:w-full cursor-pointer ${
+              descripcion ? "border-b-4 border-red-500" : "border-b-4"
+            }  `}
+            onClick={() => {
+              setDescripcion(true);
+              setEspecificaciones(false);
+              console.log("descripcion");
+            }}
+          >
+            <div className="text-lg ">Descripción</div>
+          </div>
+        </div>
+        {dataGet.detallesmartphone && especificaciones && (
+          <div className="w-full flex flex-col justify-center  py-2 px-1 ">
+            <div className="flex w-full justify-center ">
+              <div className="w-[40%] flex justify-start   border-gray-300 border-b-2 max-sm:w-full py-1">
+                <h1 className="text-lg ">Largo</h1>
+              </div>
+
+              <div className="w-[40%] flex  justify-start   border-gray-300 border-b-2 max-sm:w-full py-1">
+                <h1 className="text-lg ">{dataGet.detallesmartphone.largo}</h1>
+              </div>
+            </div>
+            <div className="flex w-full justify-center ">
+              <div className="w-[40%] flex justify-start   border-gray-300 border-b-2 max-sm:w-full py-1">
+                <h1 className="text-lg ">Ancho</h1>
+              </div>
+
+              <div className="w-[40%] flex  justify-start   border-gray-300 border-b-2 max-sm:w-full py-1">
+                <h1 className="text-lg ">{dataGet.detallesmartphone.ancho}</h1>
+              </div>
+            </div>
+            <div className="flex w-full justify-center ">
+              <div className="w-[40%] flex justify-start   border-gray-300 border-b-2 max-sm:w-full py-1">
+                <h1 className="text-lg ">Garantia</h1>
+              </div>
+
+              <div className="w-[40%] flex  justify-start   border-gray-300 border-b-2 max-sm:w-full py-1">
+                <h1 className="text-lg ">
+                  {dataGet.detallesmartphone.garantia}
+                </h1>
+              </div>
+            </div>
+            <div className="flex w-full justify-center ">
+              <div className="w-[40%] flex justify-start   border-gray-300 border-b-2 max-sm:w-full py-1">
+                <h1 className="text-lg ">Modelo</h1>
+              </div>
+
+              <div className="w-[40%] flex  justify-start   border-gray-300 border-b-2 max-sm:w-full py-1">
+                <h1 className="text-lg ">{dataGet.detallesmartphone.modelo}</h1>
+              </div>
+            </div>
+            <div className="flex w-full justify-center ">
+              <div className="w-[40%] flex justify-start   border-gray-300 border-b-2 max-sm:w-full py-1">
+                <h1 className="text-lg ">Color</h1>
+              </div>
+
+              <div className="w-[40%] flex  justify-start   border-gray-300 border-b-2 max-sm:w-full py-1">
+                <h1 className="text-lg ">{dataGet.detallesmartphone.color}</h1>
+              </div>
+            </div>
+          </div>
+        )}
+        {dataGet.detallesmartphone && descripcion && (
+          <div className="w-full flex justify-center py-2 px-1 ">
+            <div className="w-[80%] flex flex-col justify-start  max-sm:w-full py-1">
+              <h1 className="text-lg ">
+                {dataGet.detallesmartphone.descripcion}
+              </h1>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="flex justify-center w-full my-2 px-5    cursor-pointer h-[40px]">
+        <div className="w-full  flex justify-start    ">
+          <button
+            className=" w-[12%] max-w-[100px]  text-white bg-red-500 cursor-pointer max-sm:w-[30%] max-sm:max-w-[100px]"
+            onClick={() => router.back()}
+          >
+            volver
+          </button>
+        </div>
+      </div>
     </>
   );
 };
 
 export default Page;
-
 
 //*orimer borrador
 
@@ -231,20 +449,16 @@ export default Page;
 
 // export default ParagraphComponent;
 
-
-
 //*segundo borrador
 
-
 // 'use client'
-
 
 // import Link from "next/link";
 // import { useEffect } from 'react';
 // import { useRef } from 'react';
 
 // import { useState } from 'react';
-
+// import Image from "next/image";
 
 // export default function Page() {
 //   return(
@@ -255,33 +469,24 @@ export default Page;
 //    );
 //   }
 
-
 // const Page: React.FC = () => {
 //   const dynamicParagRef = useRef<HTMLParagraphElement | null>(null);
 
-
 //   useEffect(() => {
-
 
 //     if (dynamicParagRef.current) {
 //       const idValue = dynamicParagRef.current;
 //       const secondLine = idValue.innerHTML.split(".")[1];
 
-
 //       const newElement = ` continuara Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, quibusdam veniam consequatur, quo nesciunt quasi quas  <br/> corrupti architecto consequuntur consectetur neque veritatis magnam eligendi ducimus excepturi sunt sed dolorem alias.
 //        laceat illum?`;
 //       idValue.innerHTML = idValue.innerHTML.replace(secondLine, newElement);
 
-
 //       // idValue.innerHTML += newElement;
-
 
 //     } else {
 //       console.log('El elemento es nulo');
 //     }
-
-
-
 
 //     //   function adjustSecondLineSize() {
 //     //   const fontSize = parseFloat(window.getComputedStyle(dynamicParagraph).getPropertyValue("width"));
@@ -294,11 +499,6 @@ export default Page;
 
 //     //   window.addEventListener("resize", adjustSecondLineSize);
 //   }, []);
-
-
-
-
-
 
 //   const itemsPerPage = 10;
 //   const [currentPage, setCurrentPage] = useState(1);
@@ -357,23 +557,17 @@ export default Page;
 //     </div>
 //   );
 
-
-
 //   return (
 //     <>
 //       <div className=" p-4 w-full border-gray-500 border-2">
 //         <p ref={dynamicParagRef} id="dynamicparag" className="w-full line-clamp-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit Lorem ipsum dolor sit.  Lorem ipsum dolor sit amet consectetur adipisicing  elit Fugiat praesentium delectus nam eaque quis animi at, totam v</p>
 //       </div>
 
-
-
-
 //       <div>
 //         <h1>Paginación</h1>
 //         {renderPage(currentPage)}
 //         {renderPagination()}
 //       </div>
-
 
 //     </>
 //   );

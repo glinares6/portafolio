@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Detallesmartphone } from 'src/detallesmartphone/entities/detallesmartphone.entity';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Smartphone {
@@ -14,12 +15,18 @@ export class Smartphone {
   @Column()
   from: string;
 
-  @Column({ default: 0 })
+  @Column('decimal', { default: 0 })
   offer1: number;
 
-  @Column()
+  @Column('decimal', { default: 0 })
   offer2: number;
 
-  @Column({ default: 0 })
+  @Column('decimal', { default: 0 })
   current: number;
+
+  @OneToOne(
+    () => Detallesmartphone,
+    (detallesmartphone) => detallesmartphone.smartphone,
+  )
+  detallesmartphone: Detallesmartphone;
 }

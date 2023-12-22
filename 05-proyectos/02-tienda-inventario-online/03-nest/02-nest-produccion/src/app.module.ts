@@ -22,8 +22,10 @@ import { Auth } from './auth/entities/auth.entity';
 import { LoggerMiddleware } from './common/midleware/logger.midleware';
 import { SesionModule } from './sesion/sesion.module';
 import { Sesion } from './sesion/entities/sesion.entity';
+import { DetallesmartphoneModule } from './detallesmartphone/detallesmartphone.module';
 
 import * as session from 'express-session';
+import { Detallesmartphone } from './detallesmartphone/entities/detallesmartphone.entity';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -40,7 +42,7 @@ import * as session from 'express-session';
       url:
         process.env.POSTGRES_URL ||
         'postgres://devgtp:family@localhost:5432/nestbuild',
-      entities: [Smartphone, User, Perfil, Auth, Sesion],
+      entities: [Smartphone, User, Perfil, Auth, Sesion, Detallesmartphone],
       synchronize: true,
     }),
     ScheduleModule.forRoot(),
@@ -49,6 +51,7 @@ import * as session from 'express-session';
     PerfilModule,
     AuthModule,
     SesionModule,
+    DetallesmartphoneModule,
   ],
   controllers: [AppController],
   providers: [AppService],

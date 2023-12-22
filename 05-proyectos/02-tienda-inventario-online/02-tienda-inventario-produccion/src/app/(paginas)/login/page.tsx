@@ -18,7 +18,7 @@ export default function Page() {
     authdecryptOneJwt,
     authPostSession,
     authGetSession,
-    authGetSessionServer,
+    authGetSessionServerDismiss,
   } = userApp();
   const [httpResError, setHttpResError] = useState(false);
   const [tokenPass, setTokenPass] = useState(false);
@@ -184,7 +184,9 @@ export default function Page() {
             if (resBackEncrypt.message === "Token has expired catch") {
               localStorage.removeItem("token");
               // sessionStorage.removeItem("session");
-              const resSesionLog = await authGetSessionServer(resSessionReq);
+              const resSesionLog = await authGetSessionServerDismiss(
+                resSessionReq
+              );
 
               console.log("resSesionLog", resSesionLog);
 
@@ -200,7 +202,9 @@ export default function Page() {
             if (resBackEncrypt.message === "Token no autorizado middleware") {
               localStorage.removeItem("token");
               // sessionStorage.removeItem("session");
-              const resSesionLog = await authGetSessionServer(resSessionReq);
+              const resSesionLog = await authGetSessionServerDismiss(
+                resSessionReq
+              );
 
               console.log("resSesionLog", resSesionLog);
 

@@ -20,6 +20,9 @@ export class SmartphoneService {
       order: {
         id: 'DESC',
       },
+      relations: {
+        detallesmartphone: true,
+      },
     });
   }
   findPagination(id: number) {
@@ -30,11 +33,19 @@ export class SmartphoneService {
         id: 'DESC',
       },
       skip: skipElement,
+      relations: {
+        detallesmartphone: true,
+      },
     });
   }
 
   findOne(id: number) {
-    return this.smartphoneRepository.find({ where: { id: id } });
+    return this.smartphoneRepository.find({
+      where: { id: id },
+      relations: {
+        detallesmartphone: true,
+      },
+    });
   }
 
   update(id: number, updateSmartphoneDto: UpdateSmartphoneDto) {
