@@ -1,12 +1,13 @@
 "use client";
 
+import { UseContext } from "@/app/contexts/authContext";
 import smartphoneApp from "@/app/hooks/smartphone-App";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useRef } from "react";
 
 import { useState } from "react";
@@ -20,6 +21,12 @@ import { useState } from "react";
 //    );
 //   }
 
+type postSessionCarrito = {
+  id: string;
+  total: string;
+  sessioncarrito: string;
+};
+
 const Page: React.FC = () => {
   const dynamicParagRef = useRef<HTMLParagraphElement | null>(null);
   const titleSmartRef = useRef<HTMLParagraphElement | null>(null);
@@ -27,13 +34,20 @@ const Page: React.FC = () => {
   const params = useSearchParams();
   const router = useRouter();
 
-  const { smartphoneGetOne } = smartphoneApp();
+  const { server, smartphoneGetOne } = smartphoneApp();
   const [dataGet, setDataGet]: any = useState({});
 
   const [cargaImg, setCargaImg] = useState(false);
 
   const [especificaciones, setEspecificaciones] = useState(true);
   const [descripcion, setDescripcion] = useState(false);
+
+  const [sessionExitsEstado, setSessionExitsEstado] = useState(true);
+
+  const [sesionGlobalVerify, setSesionGlobalVerify] = useState("");
+
+  const { userAuth }: any = useContext(UseContext);
+
   const getIdSmart = params.get("id") || 1;
 
   useEffect(() => {
@@ -43,7 +57,9 @@ const Page: React.FC = () => {
       const newData = smartGetOneRes[0].title.replace("<br/>", "");
       smartGetOneRes[0].title = newData;
 
-      setDataGet(...smartGetOneRes);
+      setDataGet(smartGetOneRes[0]);
+
+      setSesionGlobalVerify(`${localStorage.getItem("sessioncarrito")}`);
 
       setCargaImg(true);
     })();
@@ -156,8 +172,262 @@ const Page: React.FC = () => {
       const smartGetOneRes = await smartphoneGetOne(getIdSmart);
       console.log("que hay de nuevo ", smartGetOneRes[0]);
     })();
+    console.log(" la vida es mejor", userAuth);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleCarritoCompra = async () => {
+    const sesionCarritoCompra = localStorage.getItem("sessioncarrito");
+
+    if (!sesionCarritoCompra) {
+      const postCarritoCompra = await fetch(`${server}/carritocompra`, {
+        method: "POST",
+        credentials: "include",
+      });
+
+      const resCarritoCompra = await postCarritoCompra.json();
+      console.log("sessionCarritoCompraPost", resCarritoCompra);
+
+      localStorage.setItem("sessioncarrito", resCarritoCompra.sessioncarrito);
+
+      localStorage.setItem("localcarritobase", resCarritoCompra.sessioncarrito);
+      setSesionGlobalVerify(resCarritoCompra.sessioncarrito);
+      // newSessionGlobal = `${resCarritoCompra.sessioncarrito}`;
+      setSessionExitsEstado(true);
+
+      //* agrega al pedido
+
+      const getSessionCompra = localStorage.getItem("sessioncarrito");
+
+      const getCarritoCompra = await fetch(
+        `${server}/carritocompra/${getSessionCompra}/session`
+      );
+
+      const resGetCarritoCompra = await getCarritoCompra.json();
+      // console.log("datos des server session getOne", resGetCarritoCompra[0].id);
+
+      const resGetIdCarritoCompra = resGetCarritoCompra.id;
+
+      const payloadCarrito = {
+        cantidad: 1,
+      };
+
+      const postPedido = await fetch(
+        `${server}/pedidos/${resGetIdCarritoCompra}/${getIdSmart}/compra`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payloadCarrito),
+        }
+      );
+
+      const resPostPedido = await postPedido.json();
+
+      console.log("resPedidosYa", resPostPedido);
+      console.log("se crea y agrega");
+
+      //*actualizar total carritoCompra
+
+      const getNewCarritoCompra = await fetch(
+        `${server}/carritocompra/${getSessionCompra}/session`
+      );
+
+      const resGetNewCarritoCompra = await getNewCarritoCompra.json();
+      console.log("datos des server session getOne", resGetNewCarritoCompra);
+
+      const dataResCarritoTotal = resGetNewCarritoCompra.pedidos.map(
+        (item: { subtotal: any }) => {
+          return Number(item.subtotal);
+        }
+      );
+
+      let sumaListCarritoUpdate = dataResCarritoTotal.reduce(
+        (total: any, num: any) => total + num,
+        0
+      );
+
+      console.log("arr-carrito", dataResCarritoTotal);
+      console.log("arr-carrito suma", sumaListCarritoUpdate.toFixed(2));
+
+      const payloadCarritoCompraUpdate = {
+        total: sumaListCarritoUpdate.toFixed(2),
+      };
+
+      const updateTotalCarritoCompra = await fetch(
+        `${server}/carritocompra/${resGetNewCarritoCompra.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(payloadCarritoCompraUpdate),
+        }
+      );
+
+      const resUpdateCarritoCompra = await updateTotalCarritoCompra.json();
+
+      console.log("se actualizo el total carrito", resUpdateCarritoCompra);
+    } else {
+      console.log("log data", sessionExitsEstado);
+
+      if (!sessionExitsEstado) {
+        {
+          console.log("se manupulo el estado");
+
+          return localStorage.removeItem("sessioncarrito");
+        }
+      }
+
+      if (sessionExitsEstado) {
+        //*cuando existe la session cariito
+
+        const getSessionCompra = localStorage.getItem("sessioncarrito");
+
+        // newSessionGlobal = getSessionCompra;
+        // setSessionExits(`${getSessionCompra}`);
+
+        const getCarritoCompra = await fetch(
+          `${server}/carritocompra/${getSessionCompra}/session`
+        );
+
+        const resGetCarritoCompra = await getCarritoCompra.json();
+
+        // console.log("datos des server session getOne", resGetCarritoCompra[0].id);
+
+        //*condicion de la session
+
+        console.log(
+          "resultados de la solicitud semi-completa",
+          resGetCarritoCompra
+        );
+
+        if (resGetCarritoCompra.msg === "sesion no encontrada") {
+          console.log("recopilado", sesionGlobalVerify);
+
+          const getCarritoCompra = await fetch(
+            `${server}/carritocompra/${sesionGlobalVerify}/session`
+          );
+
+          const resGetCarritoCompra = await getCarritoCompra.json();
+
+          if (resGetCarritoCompra.pedidos) {
+            resGetCarritoCompra.pedidos.map((item: { id: any }) => {
+              (async () => {
+                //*eliminando los pedidos de la sesion
+                const resPedidosDel = await fetch(
+                  `${server}/pedidos/${item.id}`,
+                  {
+                    method: "DELETE",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  }
+                );
+
+                await resPedidosDel.json();
+              })();
+            });
+
+            //  //*eliminando el carrito compra
+
+            const resCarritoCompraDel = await fetch(
+              `${server}/carritocompra/${resGetCarritoCompra.id}`,
+              {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+            await resCarritoCompraDel.json();
+          }
+
+          setSessionExitsEstado(false);
+          localStorage.removeItem("sessioncarrito");
+          localStorage.removeItem("localcarritobase");
+          return console.log("eliminando la sesion ", sesionGlobalVerify);
+        }
+
+        // console.log("dato de pedidos", resGetCarritoCompra.pedidos.length);
+
+        //*verificar que me trae el servidor al enviar la sesion
+        const resGetIdCarritoCompra = resGetCarritoCompra.id;
+
+        const payloadCarrito = {
+          cantidad: 1,
+        };
+
+        const postPedido = await fetch(
+          `${server}/pedidos/${resGetIdCarritoCompra}/${getIdSmart}/compra`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payloadCarrito),
+          }
+        );
+
+        const resPostPedido = await postPedido.json();
+
+        console.log("se actualiza");
+        console.log("resPedidosYa", resPostPedido);
+
+        //*actualizar total carritoCompra - session-existe server
+
+        const getNewCarritoCompra = await fetch(
+          `${server}/carritocompra/${getSessionCompra}/session`
+        );
+
+        const resGetNewCarritoCompra = await getNewCarritoCompra.json();
+        console.log("datos des server session getOne", resGetNewCarritoCompra);
+
+        const dataResCarritoTotal = resGetNewCarritoCompra.pedidos.map(
+          (item: { subtotal: any }) => {
+            return Number(item.subtotal);
+          }
+        );
+
+        let sumaListCarrito = dataResCarritoTotal.reduce(
+          (total: any, num: any) => total + num,
+          0
+        );
+        console.log("arr-carrito - session exite", dataResCarritoTotal);
+        console.log(
+          "arr suma list-carrito - session exite",
+          sumaListCarrito.toFixed(2)
+        );
+
+        const payloadCarritoCompraUpdate = {
+          total: sumaListCarrito.toFixed(2),
+        };
+
+        const updateTotalCarritoCompra = await fetch(
+          `${server}/carritocompra/${resGetNewCarritoCompra.id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payloadCarritoCompraUpdate),
+          }
+        );
+
+        const resUpdateCarritoCompra = await updateTotalCarritoCompra.json();
+
+        console.log(
+          "se actualizo el total carrito - sesion exite",
+          resUpdateCarritoCompra
+        );
+
+        console.log("log data", sessionExitsEstado);
+      }
+    }
+  };
 
   return (
     <>
@@ -185,15 +455,28 @@ const Page: React.FC = () => {
       <div className="flex  my-3 mx-5 max-sm:flex-col">
         <div className="flex flex-col justify-center w-[40%] border-red-500 border-2  max-sm:w-full">
           <div className="flex justify-center  ">
-            {cargaImg && (
-              <Image
-                // onClick={handleResizeImg}
-                src={dataGet.picture}
-                width={250}
-                height={250}
-                alt="Picture of the author2"
-                priority
-              />
+            {cargaImg &&
+              (dataGet.picture.includes(".webp") ||
+                dataGet.picture.includes(".jpeg") ||
+                dataGet.picture.includes(".png") ||
+                dataGet.picture.includes(".jpg") ||
+                dataGet.picture.includes(".svg")) && (
+                <Image
+                  // onClick={handleResizeImg}
+                  src={dataGet.picture}
+                  width={280}
+                  height={280}
+                  alt="Picture of the author2"
+                />
+              )}
+
+            {(cargaImg && dataGet.picture.includes(".mp4")) ||
+            (cargaImg && dataGet.picture.includes(".mp3")) ? (
+              <video src={dataGet.picture} controls>
+                {dataGet.title}
+              </video>
+            ) : (
+              ""
             )}
           </div>
 
@@ -281,8 +564,9 @@ const Page: React.FC = () => {
                 <div className="flex w-full my-2  justify-center   cursor-pointer h-[40px]">
                   <input
                     className=" w-[20%] min-w-[100px] text-white bg-red-500 cursor-pointer max-sm:w-[30%]"
-                    type="submit"
-                    value="Pagar"
+                    onClick={handleCarritoCompra}
+                    type="button"
+                    value="Agregar"
                   />
                 </div>
               </div>

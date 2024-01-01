@@ -1,17 +1,21 @@
-
-'use client'
+"use client";
 import Link from "next/link";
 import Reto from "./reto";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UseContext } from "@/app/contexts/authContext";
 import { useRouter } from "next/navigation";
 
-
-
 export default function Page() {
-  const { authState }: any = useContext(UseContext);
+  const { authState, userAuth }: any = useContext(UseContext);
 
-  const route = useRouter()
+  const route = useRouter();
+
+  useEffect(() => {
+    console.log("la vida es asi", userAuth);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <Reto />

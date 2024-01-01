@@ -26,6 +26,11 @@ import { DetallesmartphoneModule } from './detallesmartphone/detallesmartphone.m
 
 import * as session from 'express-session';
 import { Detallesmartphone } from './detallesmartphone/entities/detallesmartphone.entity';
+import { CarritocompraModule } from './carritocompra/carritocompra.module';
+import { Carritocompra } from './carritocompra/entities/carritocompra.entity';
+import { PedidosModule } from './pedidos/pedidos.module';
+import { Pedido } from './pedidos/entities/pedido.entity';
+
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -42,7 +47,16 @@ import { Detallesmartphone } from './detallesmartphone/entities/detallesmartphon
       url:
         process.env.POSTGRES_URL ||
         'postgres://devgtp:family@localhost:5432/nestbuild',
-      entities: [Smartphone, User, Perfil, Auth, Sesion, Detallesmartphone],
+      entities: [
+        Smartphone,
+        User,
+        Perfil,
+        Auth,
+        Sesion,
+        Detallesmartphone,
+        Carritocompra,
+        Pedido,
+      ],
       synchronize: true,
     }),
     ScheduleModule.forRoot(),
@@ -52,6 +66,8 @@ import { Detallesmartphone } from './detallesmartphone/entities/detallesmartphon
     AuthModule,
     SesionModule,
     DetallesmartphoneModule,
+    CarritocompraModule,
+    PedidosModule,
   ],
   controllers: [AppController],
   providers: [AppService],

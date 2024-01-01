@@ -170,7 +170,7 @@ const ListSmartphone: React.FC<Props> = ({
             type="button"
             onClick={(e) => handleId("id", `${id}`, e)}
             className="w-4/5 font-bold text-white h-10 bg-red-600 rounded-3xl cursor-pointer "
-            value="AGREGAR"
+            value="VER DETALLE"
           />
         </div>
       </div>

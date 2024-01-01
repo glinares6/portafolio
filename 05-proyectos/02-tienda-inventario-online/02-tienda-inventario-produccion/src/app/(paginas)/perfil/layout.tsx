@@ -44,6 +44,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     localStorage.removeItem("token");
     sessionStorage.removeItem("session");
+
+    //*borra el contexto del usuario
     setUserAuth({});
     router.push("/");
   };
