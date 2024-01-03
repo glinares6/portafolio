@@ -31,8 +31,8 @@ export class CarritocompraController {
   }
 
   @Get(':id')
-  findOne(@Param('id') sesioncarrito: string) {
-    return this.carritocompraService.findOne(sesioncarrito);
+  findOne(@Param('id') id: string) {
+    return this.carritocompraService.findOne(+id);
   }
   @Get(':session/session')
   findOneSession(@Param('session') session: string) {

@@ -44,11 +44,9 @@ export class PedidosService {
 
   findAll() {
     return this.pedidoRepository.find({
+      relations: ['carritocompra'],
       order: {
         id: 'DESC',
-      },
-      relations: {
-        carritocompra: true,
       },
     });
   }

@@ -39,10 +39,10 @@ export class CarritocompraService {
     });
   }
 
-  findOne(id: string) {
+  findOne(id: number) {
     console.log('metodo getOne');
     return this.carritoCompraRepository.find({
-      where: { sessioncarrito: id },
+      where: { id: id },
       relations: {
         pedidos: true,
       },

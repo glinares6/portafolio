@@ -3,8 +3,10 @@ import { MouseEvent, useContext, useEffect, useState } from "react";
 import carritoApp from "./hooks/carrito-App";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import React from "react";
 
 type top = {
+  id: number;
   total: number;
 };
 export default function Page() {
@@ -14,12 +16,11 @@ export default function Page() {
 
   const [listaPedido, setListaPedido]: any = useState([]);
   const [lista, setLista] = useState<top>({
+    id: 0,
     total: 0,
   });
 
   const [cargaImg, setCargaImg] = useState(false);
-
-  const [cantidadNew, setCantidadNew] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -108,7 +109,12 @@ export default function Page() {
           setLista(resCarritoPedido);
           setListaPedido(resCarritoPedido.pedidos);
 
-          console.log("hay  local pedido");
+          console.log(
+            "hay  local pedido",
+            resCarritoPedido.pedidos.sort(
+              (a: { id: number }, b: { id: number }) => b.id - a.id
+            )
+          );
         } else {
           const localCarritoUp = localStorage.getItem("sessioncarrito");
           const localCarritoBase = localStorage.getItem("localcarritobase");
@@ -170,118 +176,349 @@ export default function Page() {
   const handleUpdateMenos = async (key: any) => {
     listaPedido[key].cantidad -= 1;
 
-    setListaPedido(listaPedido);
+    const payloadMenos = {
+      cantidad: listaPedido[key].cantidad,
+    };
 
-    const valorN = 1;
+    const resPedidosDel = await fetch(
+      `${server}/pedidos/${listaPedido[key].id}/${listaPedido[key].smartphone.id}/compra`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payloadMenos),
+      }
+    );
 
-    setCantidadNew((preValor) => preValor - valorN);
+    const resMasUpdate = await resPedidosDel.json();
+
+    console.log("update cantidad menos", resMasUpdate);
+
+    const localSessionCarritoReq = localStorage.getItem("sessioncarrito");
+
+    const getCarritoPedidoReq = await fetch(
+      `${server}/carritocompra/${localSessionCarritoReq}/session`
+    );
+
+    const resCarritoPedidoReq = await getCarritoPedidoReq.json();
+
+    // console.log("carrito req get", resCarritoPedidoReq);
+
+    setListaPedido(resCarritoPedidoReq.pedidos);
+
+    // console.log("menos", listaPedido[key].cantidad);
+
+    //*invocamos nuevamente a carrito para actualizar el total-carrito
+
+    const getObjetoPedidoNewMenos = resCarritoPedidoReq.pedidos
+      .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
+      .map((item: { id: any; subtotal: any }) => Number(item.subtotal));
+
+    console.log("traer los datos", getObjetoPedidoNewMenos);
+
+    const newTotalMenos = getObjetoPedidoNewMenos.reduce(
+      (total: any, numero: any) => total + numero
+    );
+
+    console.log("suma nueva total", newTotalMenos);
+
+    //* dato a agrear
+
+    const payloadCarritoTotal = {
+      total: newTotalMenos,
+    };
+
+    console.log("lista actual- button", lista);
+
+    const resCarritoUpdateReq = await fetch(
+      `${server}/carritocompra/${lista.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payloadCarritoTotal),
+      }
+    );
+
+    const resCarritoTotalUpdate = await resCarritoUpdateReq.json();
+
+    console.log("update total-carrito", resCarritoTotalUpdate);
+
+    //*mostramos los nuevos valores en lista  y pedidos
+
+    const resCarritoGet = await fetch(`${server}/carritocompra/${lista.id}`);
+
+    const resCarritoTotalGet = await resCarritoGet.json();
+
+    console.log("get carritoCompra - Origin Mas", resCarritoTotalGet[0]);
+
+    setLista(resCarritoTotalGet[0]);
+
+    // console.log("mas", listaPedido[key].cantidad);
   };
 
-  const handleUpdateMas = (key: any) => {
+  const handleUpdateMas = async (key: any) => {
     listaPedido[key].cantidad += 1;
 
-    setListaPedido(listaPedido);
+    // setCantidadNew((postValor) => postValor + listaPedido);
 
-    const valorM = 1;
+    const payloadMas = {
+      cantidad: listaPedido[key].cantidad,
+    };
 
-    setCantidadNew((postValor) => postValor + valorM);
+    const resPedidosUpdateReq = await fetch(
+      `${server}/pedidos/${listaPedido[key].id}/${listaPedido[key].smartphone.id}/compra`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payloadMas),
+      }
+    );
+
+    const resMasUpdate = await resPedidosUpdateReq.json();
+
+    console.log("update cantidad mas", resMasUpdate);
+
+    const localSessionCarritoReq = localStorage.getItem("sessioncarrito");
+
+    const getCarritoPedidoReq = await fetch(
+      `${server}/carritocompra/${localSessionCarritoReq}/session`
+    );
+
+    const resCarritoPedidoReq = await getCarritoPedidoReq.json();
+
+    // console.log("carrito req get", resCarritoPedidoReq);
+
+    setListaPedido(resCarritoPedidoReq.pedidos);
+
+    //*invocamos nuevamente a carrito para actualizar el total-carrito
+
+    const getObjetoPedidoNewMas = resCarritoPedidoReq.pedidos
+      .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
+      .map((item: { id: any; subtotal: any }) => Number(item.subtotal));
+
+    console.log("traer los datos", getObjetoPedidoNewMas);
+
+    const newTotalMas = getObjetoPedidoNewMas.reduce(
+      (total: any, numero: any) => total + numero
+    );
+
+    console.log("suma nueva total", newTotalMas);
+
+    //* dato a agrear
+
+    const payloadCarritoTotal = {
+      total: newTotalMas,
+    };
+
+    console.log("lista actual- button", lista);
+
+    const resCarritoUpdateReq = await fetch(
+      `${server}/carritocompra/${lista.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payloadCarritoTotal),
+      }
+    );
+
+    const resCarritoTotalUpdate = await resCarritoUpdateReq.json();
+
+    console.log("update total-carrito", resCarritoTotalUpdate);
+
+    //*mostramos los nuevos valores en lista  y pedidos
+
+    const resCarritoGet = await fetch(`${server}/carritocompra/${lista.id}`);
+
+    const resCarritoTotalGet = await resCarritoGet.json();
+
+    console.log("get carritoCompra - Origin Mas", resCarritoTotalGet[0]);
+
+    setLista(resCarritoTotalGet[0]);
+
+    // console.log("mas", listaPedido[key].cantidad);
   };
 
+  const handleClearPedido = async (key: any) => {
+    console.log("dato del fondo", key);
+
+    const resPedidosDeleteReq = await fetch(
+      `${server}/pedidos/${listaPedido[key].id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const resDeletePedido = await resPedidosDeleteReq.json();
+
+    console.log("delete pedido", resDeletePedido);
+
+    //*invocamos nuevamente a carrito
+
+    const localSessionCarritoReq = localStorage.getItem("sessioncarrito");
+
+    const getCarritoPedidoReq = await fetch(
+      `${server}/carritocompra/${localSessionCarritoReq}/session`
+    );
+
+    const resCarritoPedidoReq = await getCarritoPedidoReq.json();
+
+    const getObjetoPedidoNew = resCarritoPedidoReq.pedidos
+      .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
+      .map((item: { id: any; subtotal: any }) => Number(item.subtotal));
+
+    console.log("traer los datos", getObjetoPedidoNew);
+
+    const newSumaPedidos = getObjetoPedidoNew.reduce(
+      (total: any, numero: any) => total + numero
+    );
+
+    console.log("suma nueva", newSumaPedidos);
+
+    //* actualizamos el costo total de carrito
+
+    const payloadCarritoTotal = {
+      total: newSumaPedidos,
+    };
+
+    console.log("lista actual- button", lista);
+
+    const resCarritoUpdateReq = await fetch(
+      `${server}/carritocompra/${lista.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payloadCarritoTotal),
+      }
+    );
+
+    const resCarritoTotalUpdate = await resCarritoUpdateReq.json();
+
+    console.log("update total-carrito", resCarritoTotalUpdate);
+
+    //*mostramos los nuevos valores en lista  y pedidos
+
+    const resCarritoGet = await fetch(`${server}/carritocompra/${lista.id}`);
+
+    const resCarritoTotalGet = await resCarritoGet.json();
+
+    console.log("get carritoCompra - Origin", resCarritoTotalGet[0]);
+
+    setLista(resCarritoTotalGet[0]);
+    setListaPedido(resCarritoTotalGet[0].pedidos);
+  };
   return (
     <>
-      <div className="flex items-center w-full h-[50px] pl-3 border-red-500 border-2">
-        <h1 className="text-2xl">Lista de los pedidos </h1>
-      </div>
-
-      <div className="w-full flex justify-evenly">
-        <div className="w-[50%] grid grid-cols-[150px_1fr_90px_90px_120px] grid-rows-4  w-[55%]  border-red-500 border-2 pb-2">
-          <div className="col-span-1   py-2 border-red-500 border-2">
-            Producto
-          </div>
-          <div className="col-span-1   py-2 border-red-500 border-2">
-            Producto
-          </div>
-          <div className="flex justify-center col-span-1   py-2 border-red-500 border-2">
-            Percio
-          </div>
-          <div className="flex justify-center col-span-1  py-2 border-red-500 border-2">
-            Cantidad
-          </div>
-          <div className="flex justify-center col-span-1  py-2 border-red-500 border-2">
-            Total
+      {cargaImg && (
+        <>
+          <div className="flex items-center w-full h-[50px] pl-3 border-red-500 border-2">
+            <h1 className="text-2xl">Lista de los pedidos </h1>
           </div>
 
-          {cargaImg &&
-            listaPedido.map((item: any, key: any) => (
-              <>
-                {cargaImg &&
-                  (item.smartphone.picture.includes(".webp") ||
-                    item.smartphone.picture.includes(".jpeg") ||
-                    item.smartphone.picture.includes(".png") ||
-                    item.smartphone.picture.includes(".jpg") ||
-                    item.smartphone.picture.includes(".svg")) && (
-                    <div className="py-1 justify-center py-1">
-                      <Image
-                        src={item.smartphone.picture}
-                        width={50}
-                        height={50}
-                        alt="Picture of the author2"
-                      />
-                    </div>
-                  )}
-                {(cargaImg && item.smartphone.picture.includes(".mp4")) ||
-                (cargaImg && item.smartphone.picture.includes(".mp3")) ? (
-                  <div className="py-1 justify-center py-1">
-                    <video src={item.smartphone.picture} controls>
+          <div className="w-full flex justify-evenly">
+            <div className="w-[50%] grid grid-cols-[150px_1fr_90px_90px_120px]   w-[55%]  border-red-500 border-2 pb-2">
+              <div className="col-span-1   py-2 border-red-500 border-2">
+                Producto
+              </div>
+              <div className="col-span-1   py-2 border-red-500 border-2">
+                Producto
+              </div>
+              <div className="flex justify-center col-span-1   py-2 border-red-500 border-2">
+                Percio
+              </div>
+              <div className="flex justify-center col-span-1  py-2 border-red-500 border-2">
+                Cantidad
+              </div>
+              <div className="flex justify-center col-span-1  py-2 border-red-500 border-2">
+                Total
+              </div>
+
+              {listaPedido
+                .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
+                .map((item: any, key: any) => (
+                  <React.Fragment key={key}>
+                    {(item.smartphone.picture.includes(".webp") ||
+                      item.smartphone.picture.includes(".jpeg") ||
+                      item.smartphone.picture.includes(".png") ||
+                      item.smartphone.picture.includes(".jpg") ||
+                      item.smartphone.picture.includes(".svg")) && (
+                      <div className="py-1 justify-center py-1">
+                        <Image
+                          src={item.smartphone.picture}
+                          width={50}
+                          height={50}
+                          alt="Picture of the author2"
+                        />
+                      </div>
+                    )}
+                    {item.smartphone.picture.includes(".mp4") ||
+                    item.smartphone.picture.includes(".mp3") ? (
+                      <div className="py-1 justify-center py-1">
+                        <video src={item.smartphone.picture} controls>
+                          {item.smartphone.title}
+                        </video>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+
+                    <div className="py-1 justify-center py-1 border-red-500 border-2">
                       {item.smartphone.title}
-                    </video>
-                  </div>
-                ) : (
-                  ""
-                )}
-                <div className="py-1 justify-center py-1 border-red-500 border-2">
-                  {item.smartphone.title}
-                </div>
-                <div className="flex items-center pl-2 py-1 ">
-                  S/ {Number(item.smartphone.offer2).toFixed(2)}
-                </div>
-                <div className="flex justify-around items-center pl-2 py-1">
-                  <button
-                    onClick={() => handleUpdateMenos(key)}
-                    className="relative flex justify-center  items-center bg-gray-700 w-[25px] h-[25px]   text-white text-2xl  font-bold  rounded-full  pb-1 "
-                  >
-                    -
-                  </button>
-
-                  <div className="flex justify-center  w-1/3">
-                    {item.cantidad}
-                  </div>
-
-                  <button
-                    onClick={() => handleUpdateMas(key)}
-                    className="flex justify-center  items-center bg-gray-700 w-[25px] h-[25px]  text-white text-2xl font-bold  rounded-full"
-                  >
-                    +
-                  </button>
-                </div>
-                <div className="flex justify-around items-center pl-2 py-1">
-                  <div>S/{Number(item.subtotal).toFixed(2)}</div>
-                  <button className="flex justify-center cursor-pointer  w-[30px] ">
-                    <svg
-                      version="1.0"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="22"
-                      height="22"
-                      viewBox="0 0 1280.000000 1280.000000"
-                      preserveAspectRatio="xMidYMid meet"
-                    >
-                      <g
-                        transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
-                        fill="#EF4444"
-                        stroke="none"
+                    </div>
+                    <div className="flex items-center pl-2 py-1 ">
+                      S/ {Number(item.smartphone.offer2).toFixed(2)}
+                    </div>
+                    <div className="flex justify-around items-center pl-2 py-1">
+                      <button
+                        onClick={() => handleUpdateMenos(key)}
+                        className="relative flex justify-center  items-center bg-gray-700 w-[25px] h-[25px]   text-white text-2xl  font-bold  rounded-full  pb-1 "
                       >
-                        <path
-                          d="M6120 12774 c-674 -44 -1156 -133 -1717 -319 -614 -203 -1146 -474
+                        -
+                      </button>
+
+                      <div className="flex justify-center  w-1/3">
+                        {item.cantidad}
+                      </div>
+
+                      <button
+                        onClick={() => handleUpdateMas(key)}
+                        className="flex justify-center  items-center bg-gray-700 w-[25px] h-[25px]  text-white text-2xl font-bold  rounded-full"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <div className="flex justify-around items-center pl-2 py-1">
+                      <div>S/{Number(item.subtotal).toFixed(2)}</div>
+                      <button
+                        onClick={() => handleClearPedido(key)}
+                        className="flex justify-center cursor-pointer  w-[30px] "
+                      >
+                        <svg
+                          version="1.0"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="22"
+                          height="22"
+                          viewBox="0 0 1280.000000 1280.000000"
+                          preserveAspectRatio="xMidYMid meet"
+                        >
+                          <g
+                            transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
+                            fill="#EF4444"
+                            stroke="none"
+                          >
+                            <path
+                              d="M6120 12774 c-674 -44 -1156 -133 -1717 -319 -614 -203 -1146 -474
 -1717 -875 -102 -71 -396 -307 -507 -406 -36 -33 -108 -95 -159 -139 -187
 -162 -546 -577 -797 -924 -632 -871 -1039 -1932 -1152 -2996 -102 -959 -8
 -1859 284 -2740 204 -612 540 -1258 920 -1766 41 -56 81 -111 87 -123 39 -73
@@ -302,44 +539,46 @@ l-1342 1342 -113 -108 c-62 -60 -669 -664 -1349 -1343 -679 -678 -1242 -1233
 -1250 -1233 -16 0 -799 779 -799 795 0 6 603 613 1340 1350 737 737 1340 1344
 1340 1348 0 14 -143 159 -1437 1457 -684 685 -1243 1250 -1243 1255 0 13 782
 795 794 795 5 0 614 -603 1352 -1340z"
-                        />
-                      </g>
-                    </svg>
-                  </button>
-                </div>
-              </>
-            ))}
-        </div>
-        <div className="w-[30%] border-red-500 border-2">
-          <div className="w-full h-[20%] flex justify-center items-center border-red-500 border-2">
-            <h1> la hora de donde la sacaste</h1>
-          </div>
-
-          {cargaImg && (
-            <div className="w-full h-[40%] flex justify-end items-center  pr-3 border-red-500 border-2">
-              <h1> Total &nbsp; S/{lista.total}</h1>
+                            />
+                          </g>
+                        </svg>
+                      </button>
+                    </div>
+                  </React.Fragment>
+                ))}
             </div>
-          )}
+            <div className="w-[30%] border-red-500 border-2">
+              <div className="w-full h-[20%] flex justify-center items-center border-red-500 border-2">
+                <h1> la hora de donde la sacaste</h1>
+              </div>
 
-          <div className="w-full h-[40%] flex justify-center items-end py-3 border-red-500 border-2">
-            <input
-              type="button"
-              // onClick={(e) => handleId("id", `${id}`, e)}
-              className="w-3/5 font-bold text-white h-10 bg-red-600 rounded-3xl cursor-pointer "
-              value="CONTINUAR"
-            />
+              {cargaImg && (
+                <div className="w-full h-[40%] flex justify-end items-center  pr-3 border-red-500 border-2">
+                  <h1> Total &nbsp; S/{lista.total}</h1>
+                </div>
+              )}
+
+              <div className="w-full h-[40%] flex justify-center items-end py-3 border-red-500 border-2">
+                <input
+                  type="button"
+                  // onClick={(e) => handleId("id", `${id}`, e)}
+                  className="w-3/5 font-bold text-white h-10 bg-red-600 rounded-3xl cursor-pointer "
+                  value="CONTINUAR"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div className="w-full  flex justify-start  h-[40px]  my-3 ">
-        <button
-          className="flex justify-center items-center w-[12%] max-w-[100px]  text-white bg-red-500 cursor-pointer max-sm:w-[30%] max-sm:max-w-[100px]"
-          onClick={() => router.back()}
-        >
-          volver
-        </button>
-      </div>
+          <div className="w-full  flex justify-start  h-[40px]  my-3 ">
+            <button
+              className="flex justify-center items-center w-[12%] max-w-[100px]  text-white bg-red-500 cursor-pointer max-sm:w-[30%] max-sm:max-w-[100px]"
+              onClick={() => router.back()}
+            >
+              volver
+            </button>
+          </div>
+        </>
+      )}
     </>
   );
 }
