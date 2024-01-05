@@ -11,6 +11,7 @@ import { useContext, useEffect } from "react";
 import { useRef } from "react";
 
 import { useState } from "react";
+import carritoPedido from "./hooks/carrito-Pedido";
 
 // export default function Page() {
 //   return(
@@ -35,6 +36,16 @@ const Page: React.FC = () => {
   const router = useRouter();
 
   const { server, smartphoneGetOne } = smartphoneApp();
+
+  const {
+    postCarritoCompraReq,
+    getCarritoCompraReq,
+    updateCarritoCompraReq,
+    postPedidoReq,
+    deletePedidosList,
+    deleteCarritoCompraReq,
+  } = carritoPedido();
+
   const [dataGet, setDataGet]: any = useState({});
 
   const [cargaImg, setCargaImg] = useState(false);
@@ -180,12 +191,7 @@ const Page: React.FC = () => {
     const sesionCarritoCompra = localStorage.getItem("sessioncarrito");
 
     if (!sesionCarritoCompra) {
-      const postCarritoCompra = await fetch(`${server}/carritocompra`, {
-        method: "POST",
-        credentials: "include",
-      });
-
-      const resCarritoCompra = await postCarritoCompra.json();
+      const resCarritoCompra = await postCarritoCompraReq();
       console.log("sessionCarritoCompraPost", resCarritoCompra);
 
       localStorage.setItem("sessioncarrito", resCarritoCompra.sessioncarrito);
@@ -199,12 +205,11 @@ const Page: React.FC = () => {
 
       const getSessionCompra = localStorage.getItem("sessioncarrito");
 
-      const getCarritoCompra = await fetch(
-        `${server}/carritocompra/${getSessionCompra}/session`
-      );
-
-      const resGetCarritoCompra = await getCarritoCompra.json();
-      // console.log("datos des server session getOne", resGetCarritoCompra[0].id);
+      const resGetCarritoCompra = await getCarritoCompraReq(getSessionCompra);
+      // console.log(
+      //   "datos des server session getOne jueves 04",
+      //   resGetCarritoCompra.id
+      // );
 
       const resGetIdCarritoCompra = resGetCarritoCompra.id;
 
@@ -212,30 +217,21 @@ const Page: React.FC = () => {
         cantidad: 1,
       };
 
-      const postPedido = await fetch(
-        `${server}/pedidos/${resGetIdCarritoCompra}/${getIdSmart}/compra`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payloadCarrito),
-        }
+      const resPostPedido = await postPedidoReq(
+        resGetIdCarritoCompra,
+        getIdSmart,
+        payloadCarrito
       );
-
-      const resPostPedido = await postPedido.json();
 
       console.log("resPedidosYa", resPostPedido);
       console.log("se crea y agrega");
 
       //*actualizar total carritoCompra
 
-      const getNewCarritoCompra = await fetch(
-        `${server}/carritocompra/${getSessionCompra}/session`
+      const resGetNewCarritoCompra = await getCarritoCompraReq(
+        getSessionCompra
       );
-
-      const resGetNewCarritoCompra = await getNewCarritoCompra.json();
-      console.log("datos des server session getOne", resGetNewCarritoCompra);
+      console.log("datos desde server session getOne", resGetNewCarritoCompra);
 
       const dataResCarritoTotal = resGetNewCarritoCompra.pedidos.map(
         (item: { subtotal: any }) => {
@@ -255,29 +251,47 @@ const Page: React.FC = () => {
         total: sumaListCarritoUpdate.toFixed(2),
       };
 
-      const updateTotalCarritoCompra = await fetch(
-        `${server}/carritocompra/${resGetNewCarritoCompra.id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(payloadCarritoCompraUpdate),
-        }
+      const resUpdateCarritoCompra = await updateCarritoCompraReq(
+        resGetNewCarritoCompra.id,
+        payloadCarritoCompraUpdate
       );
-
-      const resUpdateCarritoCompra = await updateTotalCarritoCompra.json();
 
       console.log("se actualizo el total carrito", resUpdateCarritoCompra);
     } else {
       console.log("log data", sessionExitsEstado);
 
+      const sesionCarritoCompraBase = localStorage.getItem("localcarritobase");
+      const sesionCarritoCompra = localStorage.getItem("sessioncarrito");
+
+      const resCarritoBaseOut = await getCarritoCompraReq(
+        sesionCarritoCompraBase
+      );
+
+      if (resCarritoBaseOut.msg === "sesion no encontrada") {
+        const resPt = await getCarritoCompraReq(sesionCarritoCompra);
+
+        resPt.pedidos.map(async (item: { id: number }) => {
+          await deletePedidosList(item.id);
+        });
+
+        await deleteCarritoCompraReq(resPt.id);
+        console.log("se elimino la sesion carrito-out", sesionCarritoCompra);
+
+        localStorage.removeItem("sessioncarrito");
+        localStorage.removeItem("localcarritobase");
+        return console.log("SE ELIMINAN  LAS SESIONES OUT");
+      }
+      // console.log("dame el valor out", resCarritoBaseOut);
+      // console.log("dame el valor 1", sesionCarritoCompraBase);
+      // console.log("dame el valor 2", sesionCarritoCompra);
+
       if (!sessionExitsEstado) {
         {
           console.log("se manupulo el estado");
 
-          return localStorage.removeItem("sessioncarrito");
+          localStorage.removeItem("sessioncarrito");
+          localStorage.removeItem("localcarritobase");
+          return console.log("SE ELIMINAN  LAS SESIONES");
         }
       }
 
@@ -289,11 +303,7 @@ const Page: React.FC = () => {
         // newSessionGlobal = getSessionCompra;
         // setSessionExits(`${getSessionCompra}`);
 
-        const getCarritoCompra = await fetch(
-          `${server}/carritocompra/${getSessionCompra}/session`
-        );
-
-        const resGetCarritoCompra = await getCarritoCompra.json();
+        const resGetCarritoCompra = await getCarritoCompraReq(getSessionCompra);
 
         // console.log("datos des server session getOne", resGetCarritoCompra[0].id);
 
@@ -307,44 +317,34 @@ const Page: React.FC = () => {
         if (resGetCarritoCompra.msg === "sesion no encontrada") {
           console.log("recopilado", sesionGlobalVerify);
 
-          const getCarritoCompra = await fetch(
-            `${server}/carritocompra/${sesionGlobalVerify}/session`
+          const resGetCarritoCompra = await getCarritoCompraReq(
+            sesionGlobalVerify
           );
 
-          const resGetCarritoCompra = await getCarritoCompra.json();
-
           if (resGetCarritoCompra.pedidos) {
-            resGetCarritoCompra.pedidos.map((item: { id: any }) => {
-              (async () => {
-                //*eliminando los pedidos de la sesion
-                const resPedidosDel = await fetch(
-                  `${server}/pedidos/${item.id}`,
-                  {
-                    method: "DELETE",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                  }
-                );
+            resGetCarritoCompra.pedidos.map(async (item: { id: any }) => {
+              //*eliminando los pedidos de la sesion
 
-                await resPedidosDel.json();
-              })();
+              // const resPedidosDel = await fetch(
+              //   `${server}/pedidos/${item.id}`,
+              //   {
+              //     method: "DELETE",
+              //     headers: {
+              //       "Content-Type": "application/json",
+              //     },
+              //   }
+              // );
+
+              // await resPedidosDel.json();
+
+              await deletePedidosList(item.id);
+
+              console.log("se elimino la LISTA DE PEDIDOS");
             });
-
-            //  //*eliminando el carrito compra
-
-            const resCarritoCompraDel = await fetch(
-              `${server}/carritocompra/${resGetCarritoCompra.id}`,
-              {
-                method: "DELETE",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-
-            await resCarritoCompraDel.json();
           }
+          //  //*eliminando el carrito compra
+          // console.log("id de CARRITO DE COMPRAS", resGetCarritoCompra.id);
+          await deleteCarritoCompraReq(resGetCarritoCompra.id);
 
           setSessionExitsEstado(false);
           localStorage.removeItem("sessioncarrito");
@@ -361,29 +361,20 @@ const Page: React.FC = () => {
           cantidad: 1,
         };
 
-        const postPedido = await fetch(
-          `${server}/pedidos/${resGetIdCarritoCompra}/${getIdSmart}/compra`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payloadCarrito),
-          }
+        const resPostPedido = await postPedidoReq(
+          resGetIdCarritoCompra,
+          getIdSmart,
+          payloadCarrito
         );
 
-        const resPostPedido = await postPedido.json();
-
         console.log("se actualiza");
-        console.log("resPedidosYa", resPostPedido);
+        console.log("resPedidosYa +++", resPostPedido);
 
         //*actualizar total carritoCompra - session-existe server
 
-        const getNewCarritoCompra = await fetch(
-          `${server}/carritocompra/${getSessionCompra}/session`
+        const resGetNewCarritoCompra = await getCarritoCompraReq(
+          getSessionCompra
         );
-
-        const resGetNewCarritoCompra = await getNewCarritoCompra.json();
         console.log("datos des server session getOne", resGetNewCarritoCompra);
 
         const dataResCarritoTotal = resGetNewCarritoCompra.pedidos.map(
@@ -406,21 +397,13 @@ const Page: React.FC = () => {
           total: sumaListCarrito.toFixed(2),
         };
 
-        const updateTotalCarritoCompra = await fetch(
-          `${server}/carritocompra/${resGetNewCarritoCompra.id}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payloadCarritoCompraUpdate),
-          }
+        const resUpdateCarritoCompra = await updateCarritoCompraReq(
+          resGetNewCarritoCompra.id,
+          payloadCarritoCompraUpdate
         );
 
-        const resUpdateCarritoCompra = await updateTotalCarritoCompra.json();
-
         console.log(
-          "se actualizo el total carrito - sesion exite",
+          "se actualizo el total carrito - sesion existe",
           resUpdateCarritoCompra
         );
 

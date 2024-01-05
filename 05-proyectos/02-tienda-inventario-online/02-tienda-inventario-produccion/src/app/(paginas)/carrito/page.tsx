@@ -1,5 +1,5 @@
 "use client";
-import { MouseEvent, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import carritoApp from "./hooks/carrito-App";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -21,6 +21,8 @@ export default function Page() {
   });
 
   const [cargaImg, setCargaImg] = useState(false);
+
+  const [cestaEmpty, setCestaEmpty] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -82,7 +84,7 @@ export default function Page() {
 
             localStorage.removeItem("sessioncarrito");
             localStorage.removeItem("localcarritobase");
-
+            setCestaEmpty(true);
             return console.log(
               "eliminar localPedidos-existente - error en la peticion v2"
             );
@@ -159,6 +161,7 @@ export default function Page() {
               await resCarritoCompraDel.json();
               localStorage.removeItem("sessioncarrito");
               localStorage.removeItem("localcarritobase");
+              setCestaEmpty(true);
 
               return console.log(
                 "eliminar localPedidos-existente - error en la peticion v1"
@@ -167,6 +170,8 @@ export default function Page() {
           }
         }
       } else {
+        setCargaImg(false);
+        setCestaEmpty(true);
         return console.log("no hay lista-local-Pedido");
       }
     })();
@@ -174,6 +179,123 @@ export default function Page() {
   }, []);
 
   const handleUpdateMenos = async (key: any) => {
+    //*si se cambia  el localCarrito
+
+    const localSessionCarrito = localStorage.getItem("sessioncarrito");
+    const localCarritoBaseP = localStorage.getItem("localcarritobase");
+
+    if (localCarritoBaseP) {
+      const getCarritoPedidoP = await fetch(
+        `${server}/carritocompra/${localCarritoBaseP}/session`
+      );
+
+      const resCarritoPedidoP = await getCarritoPedidoP.json();
+
+      console.log("dato dado P", resCarritoPedidoP);
+
+      if (resCarritoPedidoP.msg === "sesion no encontrada") {
+        const getCarritoCompra = await fetch(
+          `${server}/carritocompra/${localSessionCarrito}/session`
+        );
+
+        const resGetCarritoCompraK = await getCarritoCompra.json();
+
+        console.log("seleccion de editores ", resGetCarritoCompraK);
+
+        if (resGetCarritoCompraK.pedidos) {
+          resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
+            //*eliminando los pedidos de la sesion
+            const resPedidosDel = await fetch(`${server}/pedidos/${item.id}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            await resPedidosDel.json();
+          });
+        }
+
+        //  //*eliminando el carrito compra
+        const resCarritoCompraDel = await fetch(
+          `${server}/carritocompra/${resGetCarritoCompraK.id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        await resCarritoCompraDel.json();
+
+        localStorage.removeItem("sessioncarrito");
+        localStorage.removeItem("localcarritobase");
+        setCargaImg(false);
+        setCestaEmpty(true);
+        return console.log(
+          "eliminar localPedidos-existente - error en la peticion v2 - v2"
+        );
+      }
+    }
+
+    if (localSessionCarrito) {
+      const getCarritoPedidoP = await fetch(
+        `${server}/carritocompra/${localSessionCarrito}/session`
+      );
+
+      const resCarritoPedidoP = await getCarritoPedidoP.json();
+
+      console.log("dato dado P", resCarritoPedidoP);
+
+      if (resCarritoPedidoP.msg === "sesion no encontrada") {
+        const getCarritoCompra = await fetch(
+          `${server}/carritocompra/${localCarritoBaseP}/session`
+        );
+
+        const resGetCarritoCompraK = await getCarritoCompra.json();
+
+        console.log("seleccion de editores ", resGetCarritoCompraK);
+
+        if (resGetCarritoCompraK.pedidos) {
+          resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
+            //*eliminando los pedidos de la sesion
+            const resPedidosDel = await fetch(`${server}/pedidos/${item.id}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            await resPedidosDel.json();
+          });
+        }
+
+        //  //*eliminando el carrito compra
+
+        const resCarritoCompraDel = await fetch(
+          `${server}/carritocompra/${resGetCarritoCompraK.id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        await resCarritoCompraDel.json();
+
+        localStorage.removeItem("sessioncarrito");
+        localStorage.removeItem("localcarritobase");
+        setCargaImg(false);
+        setCestaEmpty(true);
+        return console.log(
+          "eliminar localPedidos-existente - error en la peticion v2 - v2"
+        );
+      }
+    }
+
+    //*fin de la transmision
     listaPedido[key].cantidad -= 1;
 
     const payloadMenos = {
@@ -221,12 +343,12 @@ export default function Page() {
       (total: any, numero: any) => total + numero
     );
 
-    console.log("suma nueva total", newTotalMenos);
+    console.log("suma nueva total", newTotalMenos.toFixed(2));
 
     //* dato a agrear
 
     const payloadCarritoTotal = {
-      total: newTotalMenos,
+      total: newTotalMenos.toFixed(2),
     };
 
     console.log("lista actual- button", lista);
@@ -252,14 +374,131 @@ export default function Page() {
 
     const resCarritoTotalGet = await resCarritoGet.json();
 
-    console.log("get carritoCompra - Origin Mas", resCarritoTotalGet[0]);
+    console.log("get carritoCompra - Origin Mas", resCarritoTotalGet);
 
-    setLista(resCarritoTotalGet[0]);
+    setLista(resCarritoTotalGet);
 
     // console.log("mas", listaPedido[key].cantidad);
   };
 
   const handleUpdateMas = async (key: any) => {
+    //*si se cambia  el localCarrito
+
+    const localSessionCarrito = localStorage.getItem("sessioncarrito");
+    const localCarritoBaseP = localStorage.getItem("localcarritobase");
+
+    if (localCarritoBaseP) {
+      const getCarritoPedidoP = await fetch(
+        `${server}/carritocompra/${localCarritoBaseP}/session`
+      );
+
+      const resCarritoPedidoP = await getCarritoPedidoP.json();
+
+      console.log("dato dado P", resCarritoPedidoP);
+
+      if (resCarritoPedidoP.msg === "sesion no encontrada") {
+        const getCarritoCompra = await fetch(
+          `${server}/carritocompra/${localSessionCarrito}/session`
+        );
+
+        const resGetCarritoCompraK = await getCarritoCompra.json();
+
+        console.log("seleccion de editores ", resGetCarritoCompraK);
+
+        if (resGetCarritoCompraK.pedidos) {
+          resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
+            //*eliminando los pedidos de la sesion
+            const resPedidosDel = await fetch(`${server}/pedidos/${item.id}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            await resPedidosDel.json();
+          });
+        }
+        //  //*eliminando el carrito compra
+
+        const resCarritoCompraDel = await fetch(
+          `${server}/carritocompra/${resGetCarritoCompraK.id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        await resCarritoCompraDel.json();
+
+        localStorage.removeItem("sessioncarrito");
+        localStorage.removeItem("localcarritobase");
+        setCargaImg(false);
+        setCestaEmpty(true);
+        return console.log(
+          "eliminar localPedidos-existente - error en la peticion v2 - v2"
+        );
+      }
+    }
+
+    if (localSessionCarrito) {
+      const getCarritoPedidoP = await fetch(
+        `${server}/carritocompra/${localSessionCarrito}/session`
+      );
+
+      const resCarritoPedidoP = await getCarritoPedidoP.json();
+
+      console.log("dato dado P", resCarritoPedidoP);
+
+      if (resCarritoPedidoP.msg === "sesion no encontrada") {
+        const getCarritoCompra = await fetch(
+          `${server}/carritocompra/${localCarritoBaseP}/session`
+        );
+
+        const resGetCarritoCompraK = await getCarritoCompra.json();
+
+        console.log("seleccion de editores ", resGetCarritoCompraK);
+
+        if (resGetCarritoCompraK.pedidos) {
+          resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
+            //*eliminando los pedidos de la sesion
+            const resPedidosDel = await fetch(`${server}/pedidos/${item.id}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            await resPedidosDel.json();
+          });
+        }
+
+        //  //*eliminando el carrito compra
+
+        const resCarritoCompraDel = await fetch(
+          `${server}/carritocompra/${resGetCarritoCompraK.id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        await resCarritoCompraDel.json();
+
+        localStorage.removeItem("sessioncarrito");
+        localStorage.removeItem("localcarritobase");
+        setCargaImg(false);
+        setCestaEmpty(true);
+        return console.log(
+          "eliminar localPedidos-existente - error en la peticion v2 - v2"
+        );
+      }
+    }
+
+    //*fin de la transmision
     listaPedido[key].cantidad += 1;
 
     // setCantidadNew((postValor) => postValor + listaPedido);
@@ -307,12 +546,12 @@ export default function Page() {
       (total: any, numero: any) => total + numero
     );
 
-    console.log("suma nueva total", newTotalMas);
+    console.log("suma nueva total", newTotalMas.toFixed(2));
 
     //* dato a agrear
 
     const payloadCarritoTotal = {
-      total: newTotalMas,
+      total: newTotalMas.toFixed(2),
     };
 
     console.log("lista actual- button", lista);
@@ -338,14 +577,132 @@ export default function Page() {
 
     const resCarritoTotalGet = await resCarritoGet.json();
 
-    console.log("get carritoCompra - Origin Mas", resCarritoTotalGet[0]);
+    console.log("get carritoCompra - Origin Mas", resCarritoTotalGet);
 
-    setLista(resCarritoTotalGet[0]);
+    setLista(resCarritoTotalGet);
 
     // console.log("mas", listaPedido[key].cantidad);
   };
 
   const handleClearPedido = async (key: any) => {
+    //*si se cambia  el localCarrito
+
+    const localSessionCarrito = localStorage.getItem("sessioncarrito");
+    const localCarritoBaseP = localStorage.getItem("localcarritobase");
+
+    if (localCarritoBaseP) {
+      const getCarritoPedidoP = await fetch(
+        `${server}/carritocompra/${localCarritoBaseP}/session`
+      );
+
+      const resCarritoPedidoP = await getCarritoPedidoP.json();
+
+      console.log("dato dado P", resCarritoPedidoP);
+
+      if (resCarritoPedidoP.msg === "sesion no encontrada") {
+        const getCarritoCompra = await fetch(
+          `${server}/carritocompra/${localSessionCarrito}/session`
+        );
+
+        const resGetCarritoCompraK = await getCarritoCompra.json();
+
+        console.log("seleccion de editores ", resGetCarritoCompraK);
+
+        if (resGetCarritoCompraK.pedidos) {
+          resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
+            //*eliminando los pedidos de la sesion
+            const resPedidosDel = await fetch(`${server}/pedidos/${item.id}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            await resPedidosDel.json();
+          });
+        }
+
+        //  //*eliminando el carrito compra
+
+        const resCarritoCompraDel = await fetch(
+          `${server}/carritocompra/${resGetCarritoCompraK.id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        await resCarritoCompraDel.json();
+
+        localStorage.removeItem("sessioncarrito");
+        localStorage.removeItem("localcarritobase");
+        setCargaImg(false);
+        setCestaEmpty(true);
+        return console.log(
+          "eliminar localPedidos-existente - error en la peticion v2 - v2"
+        );
+      }
+    }
+
+    if (localSessionCarrito) {
+      const getCarritoPedidoP = await fetch(
+        `${server}/carritocompra/${localSessionCarrito}/session`
+      );
+
+      const resCarritoPedidoP = await getCarritoPedidoP.json();
+
+      console.log("dato dado P", resCarritoPedidoP);
+
+      if (resCarritoPedidoP.msg === "sesion no encontrada") {
+        const getCarritoCompra = await fetch(
+          `${server}/carritocompra/${localCarritoBaseP}/session`
+        );
+
+        const resGetCarritoCompraK = await getCarritoCompra.json();
+
+        console.log("seleccion de editores ", resGetCarritoCompraK);
+
+        if (resGetCarritoCompraK.pedidos) {
+          resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
+            //*eliminando los pedidos de la sesion
+            const resPedidosDel = await fetch(`${server}/pedidos/${item.id}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            await resPedidosDel.json();
+          });
+        }
+
+        //  //*eliminando el carrito compra
+        const resCarritoCompraDel = await fetch(
+          `${server}/carritocompra/${resGetCarritoCompraK.id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        await resCarritoCompraDel.json();
+
+        localStorage.removeItem("sessioncarrito");
+        localStorage.removeItem("localcarritobase");
+        setCargaImg(false);
+        setCestaEmpty(true);
+        return console.log(
+          "eliminar localPedidos-existente - error en la peticion v2 - v2"
+        );
+      }
+    }
+
+    //*fin de la transmision
+
     console.log("dato del fondo", key);
 
     const resPedidosDeleteReq = await fetch(
@@ -378,45 +735,89 @@ export default function Page() {
 
     console.log("traer los datos", getObjetoPedidoNew);
 
-    const newSumaPedidos = getObjetoPedidoNew.reduce(
-      (total: any, numero: any) => total + numero
-    );
+    //*verificar si hay elementos en lista
 
-    console.log("suma nueva", newSumaPedidos);
+    if (getObjetoPedidoNew.length > 0) {
+      const newSumaPedidos = getObjetoPedidoNew.reduce(
+        (total: any, numero: any) => total + numero
+      );
 
-    //* actualizamos el costo total de carrito
+      console.log("suma nueva", newSumaPedidos.toFixed(2));
 
-    const payloadCarritoTotal = {
-      total: newSumaPedidos,
-    };
+      //* actualizamos el costo total de carrito
 
-    console.log("lista actual- button", lista);
+      const payloadCarritoTotal = {
+        total: newSumaPedidos.toFixed(2),
+      };
 
-    const resCarritoUpdateReq = await fetch(
-      `${server}/carritocompra/${lista.id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payloadCarritoTotal),
+      console.log("lista actual- button", lista);
+
+      const resCarritoUpdateReq = await fetch(
+        `${server}/carritocompra/${lista.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payloadCarritoTotal),
+        }
+      );
+
+      const resCarritoTotalUpdate = await resCarritoUpdateReq.json();
+
+      console.log("update total-carrito", resCarritoTotalUpdate);
+
+      //*mostramos los nuevos valores en lista  y pedidos
+
+      const resCarritoGet = await fetch(`${server}/carritocompra/${lista.id}`);
+
+      const resCarritoTotalGet = await resCarritoGet.json();
+
+      console.log("get carritoCompra - Origin", resCarritoTotalGet);
+
+      setLista(resCarritoTotalGet);
+      setListaPedido(resCarritoTotalGet.pedidos);
+
+      console.log("longitud de la muestra", resCarritoTotalGet.pedidos.length);
+    }
+
+    if (getObjetoPedidoNew.length === 0) {
+      //*eliminar carrito de compra origin
+      const resCarritoDeleteReq = await fetch(
+        `${server}/carritocompra/${lista.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const resCarritoTotalDelete = await resCarritoDeleteReq.json();
+
+      console.log("delete-carrito-global", resCarritoTotalDelete);
+
+      //*mostrar carrito de compra final vacio
+      const resCarritoGet = await fetch(`${server}/carritocompra/${lista.id}`);
+
+      const resCarritoTotalGet = await resCarritoGet.json();
+
+      console.log("get carritoCompra - Origin", resCarritoTotalGet);
+
+      if (resCarritoTotalGet.msg === "carrito-compra  no encontrada") {
+        // setCestaEmpty(true);
+        setCargaImg(true);
+        setLista({
+          id: 0,
+          total: 0,
+        });
+        setListaPedido([]);
+        console.log("longitud de la muestra", 0);
       }
-    );
 
-    const resCarritoTotalUpdate = await resCarritoUpdateReq.json();
-
-    console.log("update total-carrito", resCarritoTotalUpdate);
-
-    //*mostramos los nuevos valores en lista  y pedidos
-
-    const resCarritoGet = await fetch(`${server}/carritocompra/${lista.id}`);
-
-    const resCarritoTotalGet = await resCarritoGet.json();
-
-    console.log("get carritoCompra - Origin", resCarritoTotalGet[0]);
-
-    setLista(resCarritoTotalGet[0]);
-    setListaPedido(resCarritoTotalGet[0].pedidos);
+      localStorage.removeItem("sessioncarrito");
+      localStorage.removeItem("localcarritobase");
+    }
   };
   return (
     <>
@@ -427,7 +828,7 @@ export default function Page() {
           </div>
 
           <div className="w-full flex justify-evenly">
-            <div className="w-[50%] grid grid-cols-[150px_1fr_90px_90px_120px]   w-[55%]  border-red-500 border-2 pb-2">
+            <div className="w-[50%] grid grid-cols-[150px_1fr_90px_90px_120px] grid-rows-[50px_repeat(3,1fr)]  w-[55%]  border-red-500 border-2 pb-2">
               <div className="col-span-1   py-2 border-red-500 border-2">
                 Producto
               </div>
@@ -444,81 +845,82 @@ export default function Page() {
                 Total
               </div>
 
-              {listaPedido
-                .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
-                .map((item: any, key: any) => (
-                  <React.Fragment key={key}>
-                    {(item.smartphone.picture.includes(".webp") ||
-                      item.smartphone.picture.includes(".jpeg") ||
-                      item.smartphone.picture.includes(".png") ||
-                      item.smartphone.picture.includes(".jpg") ||
-                      item.smartphone.picture.includes(".svg")) && (
-                      <div className="py-1 justify-center py-1">
-                        <Image
-                          src={item.smartphone.picture}
-                          width={50}
-                          height={50}
-                          alt="Picture of the author2"
-                        />
-                      </div>
-                    )}
-                    {item.smartphone.picture.includes(".mp4") ||
-                    item.smartphone.picture.includes(".mp3") ? (
-                      <div className="py-1 justify-center py-1">
-                        <video src={item.smartphone.picture} controls>
-                          {item.smartphone.title}
-                        </video>
-                      </div>
-                    ) : (
-                      ""
-                    )}
+              {cargaImg &&
+                listaPedido
+                  .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
+                  .map((item: any, key: any) => (
+                    <React.Fragment key={key}>
+                      {(item.smartphone.picture.includes(".webp") ||
+                        item.smartphone.picture.includes(".jpeg") ||
+                        item.smartphone.picture.includes(".png") ||
+                        item.smartphone.picture.includes(".jpg") ||
+                        item.smartphone.picture.includes(".svg")) && (
+                        <div className="py-1 justify-center py-1">
+                          <Image
+                            src={item.smartphone.picture}
+                            width={50}
+                            height={50}
+                            alt="Picture of the author2"
+                          />
+                        </div>
+                      )}
+                      {item.smartphone.picture.includes(".mp4") ||
+                      item.smartphone.picture.includes(".mp3") ? (
+                        <div className="py-1 justify-center py-1">
+                          <video src={item.smartphone.picture} controls>
+                            {item.smartphone.title}
+                          </video>
+                        </div>
+                      ) : (
+                        ""
+                      )}
 
-                    <div className="py-1 justify-center py-1 border-red-500 border-2">
-                      {item.smartphone.title}
-                    </div>
-                    <div className="flex items-center pl-2 py-1 ">
-                      S/ {Number(item.smartphone.offer2).toFixed(2)}
-                    </div>
-                    <div className="flex justify-around items-center pl-2 py-1">
-                      <button
-                        onClick={() => handleUpdateMenos(key)}
-                        className="relative flex justify-center  items-center bg-gray-700 w-[25px] h-[25px]   text-white text-2xl  font-bold  rounded-full  pb-1 "
-                      >
-                        -
-                      </button>
-
-                      <div className="flex justify-center  w-1/3">
-                        {item.cantidad}
+                      <div className="py-1 justify-center py-1 border-red-500 border-2">
+                        {item.smartphone.title}
                       </div>
-
-                      <button
-                        onClick={() => handleUpdateMas(key)}
-                        className="flex justify-center  items-center bg-gray-700 w-[25px] h-[25px]  text-white text-2xl font-bold  rounded-full"
-                      >
-                        +
-                      </button>
-                    </div>
-                    <div className="flex justify-around items-center pl-2 py-1">
-                      <div>S/{Number(item.subtotal).toFixed(2)}</div>
-                      <button
-                        onClick={() => handleClearPedido(key)}
-                        className="flex justify-center cursor-pointer  w-[30px] "
-                      >
-                        <svg
-                          version="1.0"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="22"
-                          height="22"
-                          viewBox="0 0 1280.000000 1280.000000"
-                          preserveAspectRatio="xMidYMid meet"
+                      <div className="flex items-center pl-2 py-1 ">
+                        S/ {Number(item.smartphone.offer2).toFixed(2)}
+                      </div>
+                      <div className="flex justify-around items-center pl-2 py-1">
+                        <button
+                          onClick={() => handleUpdateMenos(key)}
+                          className="relative flex justify-center  items-center bg-gray-700 w-[25px] h-[25px]   text-white text-2xl  font-bold  rounded-full  pb-1 "
                         >
-                          <g
-                            transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
-                            fill="#EF4444"
-                            stroke="none"
+                          -
+                        </button>
+
+                        <div className="flex justify-center  w-1/3">
+                          {item.cantidad}
+                        </div>
+
+                        <button
+                          onClick={() => handleUpdateMas(key)}
+                          className="flex justify-center  items-center bg-gray-700 w-[25px] h-[25px]  text-white text-2xl font-bold  rounded-full"
+                        >
+                          +
+                        </button>
+                      </div>
+                      <div className="flex justify-around items-center pl-2 py-1">
+                        <div>S/{Number(item.subtotal).toFixed(2)}</div>
+                        <button
+                          onClick={() => handleClearPedido(key)}
+                          className="flex justify-center cursor-pointer  w-[30px] "
+                        >
+                          <svg
+                            version="1.0"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="22"
+                            height="22"
+                            viewBox="0 0 1280.000000 1280.000000"
+                            preserveAspectRatio="xMidYMid meet"
                           >
-                            <path
-                              d="M6120 12774 c-674 -44 -1156 -133 -1717 -319 -614 -203 -1146 -474
+                            <g
+                              transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
+                              fill="#EF4444"
+                              stroke="none"
+                            >
+                              <path
+                                d="M6120 12774 c-674 -44 -1156 -133 -1717 -319 -614 -203 -1146 -474
 -1717 -875 -102 -71 -396 -307 -507 -406 -36 -33 -108 -95 -159 -139 -187
 -162 -546 -577 -797 -924 -632 -871 -1039 -1932 -1152 -2996 -102 -959 -8
 -1859 284 -2740 204 -612 540 -1258 920 -1766 41 -56 81 -111 87 -123 39 -73
@@ -539,15 +941,15 @@ l-1342 1342 -113 -108 c-62 -60 -669 -664 -1349 -1343 -679 -678 -1242 -1233
 -1250 -1233 -16 0 -799 779 -799 795 0 6 603 613 1340 1350 737 737 1340 1344
 1340 1348 0 14 -143 159 -1437 1457 -684 685 -1243 1250 -1243 1255 0 13 782
 795 794 795 5 0 614 -603 1352 -1340z"
-                            />
-                          </g>
-                        </svg>
-                      </button>
-                    </div>
-                  </React.Fragment>
-                ))}
+                              />
+                            </g>
+                          </svg>
+                        </button>
+                      </div>
+                    </React.Fragment>
+                  ))}
             </div>
-            <div className="w-[30%] border-red-500 border-2">
+            <div className="w-[30%] min-h-[200px] border-red-500 border-2">
               <div className="w-full h-[20%] flex justify-center items-center border-red-500 border-2">
                 <h1> la hora de donde la sacaste</h1>
               </div>
@@ -558,7 +960,7 @@ l-1342 1342 -113 -108 c-62 -60 -669 -664 -1349 -1343 -679 -678 -1242 -1233
                 </div>
               )}
 
-              <div className="w-full h-[40%] flex justify-center items-end py-3 border-red-500 border-2">
+              <div className="w-full h-[40%] min-h-[50px] pb-3 flex justify-center items-end  border-blue-500 border-2">
                 <input
                   type="button"
                   // onClick={(e) => handleId("id", `${id}`, e)}
@@ -578,6 +980,20 @@ l-1342 1342 -113 -108 c-62 -60 -669 -664 -1349 -1343 -679 -678 -1242 -1233
             </button>
           </div>
         </>
+      )}
+      {cestaEmpty && (
+        <div className="w-full flex flex-col justify-evenly items-center  w-full min-h-[93vh] border-red-500 border-2">
+          <h1 className="text-center text-3xl">No hay carrito disponoble</h1>
+
+          <div className="w-full flex justify-center  h-[40px]  my-3 ">
+            <button
+              className="flex justify-center items-center w-[12%] max-w-[100px]  text-white bg-red-500 cursor-pointer max-sm:w-[30%] max-sm:max-w-[100px]"
+              onClick={() => router.back()}
+            >
+              volver
+            </button>
+          </div>
+        </div>
       )}
     </>
   );

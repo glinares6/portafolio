@@ -39,14 +39,28 @@ export class CarritocompraService {
     });
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     console.log('metodo getOne');
-    return this.carritoCompraRepository.find({
-      where: { id: id },
-      relations: {
-        pedidos: true,
-      },
-    });
+
+    try {
+      const getOneCarrito = await this.carritoCompraRepository.find({
+        where: { id: id },
+        relations: {
+          pedidos: true,
+        },
+      });
+      if (getOneCarrito[0].pedidos) {
+        return getOneCarrito[0];
+      }
+    } catch (error) {
+      if (error) {
+        if (error.name === 'TypeError') {
+          return {
+            msg: 'carrito-compra  no encontrada',
+          };
+        }
+      }
+    }
   }
   async findOneSession(session: string) {
     console.log('metodo getOneSession');
