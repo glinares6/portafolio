@@ -53,7 +53,7 @@ const Page: React.FC = () => {
   const [especificaciones, setEspecificaciones] = useState(true);
   const [descripcion, setDescripcion] = useState(false);
 
-  const [sessionExitsEstado, setSessionExitsEstado] = useState(true);
+  // const [sessionExitsEstado, setSessionExitsEstado] = useState(true);
 
   const [sesionGlobalVerify, setSesionGlobalVerify] = useState("");
 
@@ -199,7 +199,7 @@ const Page: React.FC = () => {
       localStorage.setItem("localcarritobase", resCarritoCompra.sessioncarrito);
       setSesionGlobalVerify(resCarritoCompra.sessioncarrito);
       // newSessionGlobal = `${resCarritoCompra.sessioncarrito}`;
-      setSessionExitsEstado(true);
+      // setSessionExitsEstado(true);
 
       //* agrega al pedido
 
@@ -258,7 +258,9 @@ const Page: React.FC = () => {
 
       console.log("se actualizo el total carrito", resUpdateCarritoCompra);
     } else {
-      console.log("log data", sessionExitsEstado);
+      // console.log("log data", sessionExitsEstado);
+
+      console.log("sesion a verificar 1", sesionGlobalVerify);
 
       const sesionCarritoCompraBase = localStorage.getItem("localcarritobase");
       const sesionCarritoCompra = localStorage.getItem("sessioncarrito");
@@ -274,141 +276,147 @@ const Page: React.FC = () => {
           await deletePedidosList(item.id);
         });
 
-        await deleteCarritoCompraReq(resPt.id);
-        console.log("se elimino la sesion carrito-out", sesionCarritoCompra);
-
-        localStorage.removeItem("sessioncarrito");
-        localStorage.removeItem("localcarritobase");
-        return console.log("SE ELIMINAN  LAS SESIONES OUT");
+        setTimeout(async () => {
+          await deleteCarritoCompraReq(resPt.id);
+          console.log("SE ELIMINAN LAS SESIONES OUT", sesionCarritoCompra);
+          localStorage.removeItem("sessioncarrito");
+          localStorage.removeItem("localcarritobase");
+        }, 3000);
+        return console.log("se elimino la sesion carrito-out");
       }
       // console.log("dame el valor out", resCarritoBaseOut);
       // console.log("dame el valor 1", sesionCarritoCompraBase);
       // console.log("dame el valor 2", sesionCarritoCompra);
 
-      if (!sessionExitsEstado) {
-        {
-          console.log("se manupulo el estado");
+      // if (!sessionExitsEstado) {
 
-          localStorage.removeItem("sessioncarrito");
-          localStorage.removeItem("localcarritobase");
-          return console.log("SE ELIMINAN  LAS SESIONES");
-        }
-      }
+      //     console.log("se manupulo el estado");
 
-      if (sessionExitsEstado) {
-        //*cuando existe la session cariito
+      //     localStorage.removeItem("sessioncarrito");
+      //     localStorage.removeItem("localcarritobase");
+      //     return console.log("SE ELIMINAN  LAS SESIONES");
 
-        const getSessionCompra = localStorage.getItem("sessioncarrito");
+      // }
 
-        // newSessionGlobal = getSessionCompra;
-        // setSessionExits(`${getSessionCompra}`);
+      // if (sessionExitsEstado) {
+      //*cuando existe la session cariito
 
-        const resGetCarritoCompra = await getCarritoCompraReq(getSessionCompra);
+      // const getSessionCompra = localStorage.getItem("sessioncarrito");
 
-        // console.log("datos des server session getOne", resGetCarritoCompra[0].id);
+      // newSessionGlobal = getSessionCompra;
+      // setSessionExits(`${getSessionCompra}`);
 
-        //*condicion de la session
+      const resGetCarritoCompra = await getCarritoCompraReq(
+        sesionCarritoCompra
+      );
 
-        console.log(
-          "resultados de la solicitud semi-completa",
-          resGetCarritoCompra
+      // console.log("datos des server session getOne", resGetCarritoCompra[0].id);
+
+      //*condicion de la session
+
+      console.log(
+        "resultados de la solicitud semi-completa",
+        resGetCarritoCompra
+      );
+
+      if (resGetCarritoCompra.msg === "sesion no encontrada") {
+        console.log("recopilado", sesionCarritoCompraBase);
+
+        const resGetCarritoCompra = await getCarritoCompraReq(
+          sesionCarritoCompraBase
         );
 
-        if (resGetCarritoCompra.msg === "sesion no encontrada") {
-          console.log("recopilado", sesionGlobalVerify);
+        if (resGetCarritoCompra.pedidos) {
+          resGetCarritoCompra.pedidos.map(async (item: { id: any }) => {
+            //*eliminando los pedidos de la sesion
 
-          const resGetCarritoCompra = await getCarritoCompraReq(
-            sesionGlobalVerify
-          );
+            // const resPedidosDel = await fetch(
+            //   `${server}/pedidos/${item.id}`,
+            //   {
+            //     method: "DELETE",
+            //     headers: {
+            //       "Content-Type": "application/json",
+            //     },
+            //   }
+            // );
 
-          if (resGetCarritoCompra.pedidos) {
-            resGetCarritoCompra.pedidos.map(async (item: { id: any }) => {
-              //*eliminando los pedidos de la sesion
+            // await resPedidosDel.json();
 
-              // const resPedidosDel = await fetch(
-              //   `${server}/pedidos/${item.id}`,
-              //   {
-              //     method: "DELETE",
-              //     headers: {
-              //       "Content-Type": "application/json",
-              //     },
-              //   }
-              // );
+            await deletePedidosList(item.id);
+          });
+          console.log("se elimino la LISTA DE PEDIDOS");
+        }
+        //  //*eliminando el carrito compra
+        // console.log("id de CARRITO DE COMPRAS", resGetCarritoCompra.id);
 
-              // await resPedidosDel.json();
-
-              await deletePedidosList(item.id);
-
-              console.log("se elimino la LISTA DE PEDIDOS");
-            });
-          }
-          //  //*eliminando el carrito compra
-          // console.log("id de CARRITO DE COMPRAS", resGetCarritoCompra.id);
+        setTimeout(async () => {
           await deleteCarritoCompraReq(resGetCarritoCompra.id);
 
-          setSessionExitsEstado(false);
+          console.log("ELIMINANDO LA SESION", sesionGlobalVerify);
+          // setSessionExitsEstado(false);
           localStorage.removeItem("sessioncarrito");
           localStorage.removeItem("localcarritobase");
-          return console.log("eliminando la sesion ", sesionGlobalVerify);
-        }
-
-        // console.log("dato de pedidos", resGetCarritoCompra.pedidos.length);
-
-        //*verificar que me trae el servidor al enviar la sesion
-        const resGetIdCarritoCompra = resGetCarritoCompra.id;
-
-        const payloadCarrito = {
-          cantidad: 1,
-        };
-
-        const resPostPedido = await postPedidoReq(
-          resGetIdCarritoCompra,
-          getIdSmart,
-          payloadCarrito
-        );
-
-        console.log("se actualiza");
-        console.log("resPedidosYa +++", resPostPedido);
-
-        //*actualizar total carritoCompra - session-existe server
-
-        const resGetNewCarritoCompra = await getCarritoCompraReq(
-          getSessionCompra
-        );
-        console.log("datos des server session getOne", resGetNewCarritoCompra);
-
-        const dataResCarritoTotal = resGetNewCarritoCompra.pedidos.map(
-          (item: { subtotal: any }) => {
-            return Number(item.subtotal);
-          }
-        );
-
-        let sumaListCarrito = dataResCarritoTotal.reduce(
-          (total: any, num: any) => total + num,
-          0
-        );
-        console.log("arr-carrito - session exite", dataResCarritoTotal);
-        console.log(
-          "arr suma list-carrito - session exite",
-          sumaListCarrito.toFixed(2)
-        );
-
-        const payloadCarritoCompraUpdate = {
-          total: sumaListCarrito.toFixed(2),
-        };
-
-        const resUpdateCarritoCompra = await updateCarritoCompraReq(
-          resGetNewCarritoCompra.id,
-          payloadCarritoCompraUpdate
-        );
-
-        console.log(
-          "se actualizo el total carrito - sesion existe",
-          resUpdateCarritoCompra
-        );
-
-        console.log("log data", sessionExitsEstado);
+        }, 3000);
+        return console.log("eliminar carrito existente ");
       }
+
+      // console.log("dato de pedidos", resGetCarritoCompra.pedidos.length);
+
+      //*verificar que me trae el servidor al enviar la sesion
+      const resGetIdCarritoCompra = resGetCarritoCompra.id;
+
+      const payloadCarrito = {
+        cantidad: 1,
+      };
+
+      const resPostPedido = await postPedidoReq(
+        resGetIdCarritoCompra,
+        getIdSmart,
+        payloadCarrito
+      );
+
+      console.log("se actualiza");
+      console.log("resPedidosYa +++", resPostPedido);
+
+      //*actualizar total carritoCompra - session-existe server
+
+      const resGetNewCarritoCompra = await getCarritoCompraReq(
+        sesionCarritoCompra
+      );
+      console.log("datos des server session getOne", resGetNewCarritoCompra);
+
+      const dataResCarritoTotal = resGetNewCarritoCompra.pedidos.map(
+        (item: { subtotal: any }) => {
+          return Number(item.subtotal);
+        }
+      );
+
+      let sumaListCarrito = dataResCarritoTotal.reduce(
+        (total: any, num: any) => total + num,
+        0
+      );
+      console.log("arr-carrito - session exite", dataResCarritoTotal);
+      console.log(
+        "arr suma list-carrito - session exite",
+        sumaListCarrito.toFixed(2)
+      );
+
+      const payloadCarritoCompraUpdate = {
+        total: sumaListCarrito.toFixed(2),
+      };
+
+      const resUpdateCarritoCompra = await updateCarritoCompraReq(
+        resGetNewCarritoCompra.id,
+        payloadCarritoCompraUpdate
+      );
+
+      console.log(
+        "se actualizo el total carrito - sesion existe",
+        resUpdateCarritoCompra
+      );
+
+      // console.log("log data", sessionExitsEstado);
+      // }
     }
   };
 

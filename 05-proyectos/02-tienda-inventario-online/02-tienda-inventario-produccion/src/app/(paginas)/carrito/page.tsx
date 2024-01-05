@@ -39,56 +39,55 @@ export default function Page() {
         console.log("dato dado P", resCarritoPedidoP);
 
         if (resCarritoPedidoP.msg === "sesion no encontrada") {
-          const localCarritoUp = localStorage.getItem("sessioncarrito");
-          const localCarritoBase = localStorage.getItem("localcarritobase");
+          const getCarritoCompra = await fetch(
+            `${server}/carritocompra/${localSessionCarrito}/session`
+          );
 
-          if (localCarritoBase != localCarritoUp) {
-            const getCarritoCompra = await fetch(
-              `${server}/carritocompra/${localCarritoUp}/session`
+          const resGetCarritoCompraK = await getCarritoCompra.json();
+
+          if (resGetCarritoCompraK.pedidos) {
+            resGetCarritoCompraK.pedidos.map((item: { id: any }) => {
+              (async () => {
+                //*eliminando los pedidos de la sesion
+                const resPedidosDel = await fetch(
+                  `${server}/pedidos/${item.id}`,
+                  {
+                    method: "DELETE",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  }
+                );
+
+                await resPedidosDel.json();
+              })();
+            });
+          }
+
+          //  //*eliminando el carrito compra
+          setTimeout(async () => {
+            console.log("PEDIDO EXISTENTE", localSessionCarrito);
+
+            const resCarritoCompraDel = await fetch(
+              `${server}/carritocompra/${resGetCarritoCompraK.id}`,
+              {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
             );
 
-            const resGetCarritoCompraK = await getCarritoCompra.json();
-
-            if (resGetCarritoCompraK.pedidos) {
-              resGetCarritoCompraK.pedidos.map((item: { id: any }) => {
-                (async () => {
-                  //*eliminando los pedidos de la sesion
-                  const resPedidosDel = await fetch(
-                    `${server}/pedidos/${item.id}`,
-                    {
-                      method: "DELETE",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                    }
-                  );
-
-                  await resPedidosDel.json();
-                })();
-              });
-
-              //  //*eliminando el carrito compra
-
-              const resCarritoCompraDel = await fetch(
-                `${server}/carritocompra/${resGetCarritoCompraK.id}`,
-                {
-                  method: "DELETE",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-
-              await resCarritoCompraDel.json();
-            }
+            await resCarritoCompraDel.json();
 
             localStorage.removeItem("sessioncarrito");
             localStorage.removeItem("localcarritobase");
             setCestaEmpty(true);
-            return console.log(
-              "eliminar localPedidos-existente - error en la peticion v2"
-            );
-          }
+          }, 3000);
+
+          return console.log(
+            "eliminar localPedidos-existente - error en la peticion v2"
+          );
         }
       }
 
@@ -118,56 +117,55 @@ export default function Page() {
             )
           );
         } else {
-          const localCarritoUp = localStorage.getItem("sessioncarrito");
-          const localCarritoBase = localStorage.getItem("localcarritobase");
+          const getCarritoCompra = await fetch(
+            `${server}/carritocompra/${localCarritoBaseP}/session`
+          );
 
-          if (localCarritoBase != localCarritoUp) {
-            const getCarritoCompra = await fetch(
-              `${server}/carritocompra/${localCarritoBase}/session`
+          const resGetCarritoCompra = await getCarritoCompra.json();
+
+          if (resGetCarritoCompra.pedidos) {
+            resGetCarritoCompra.pedidos.map((item: { id: any }) => {
+              (async () => {
+                //*eliminando los pedidos de la sesion
+                const resPedidosDel = await fetch(
+                  `${server}/pedidos/${item.id}`,
+                  {
+                    method: "DELETE",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  }
+                );
+
+                await resPedidosDel.json();
+              })();
+            });
+          }
+
+          //  //*eliminando el carrito compra
+
+          setTimeout(async () => {
+            console.log("ELIMINAR CARRITO", localCarritoBaseP);
+
+            const resCarritoCompraDel = await fetch(
+              `${server}/carritocompra/${resGetCarritoCompra.id}`,
+              {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
             );
 
-            const resGetCarritoCompra = await getCarritoCompra.json();
+            await resCarritoCompraDel.json();
+            localStorage.removeItem("sessioncarrito");
+            localStorage.removeItem("localcarritobase");
+            setCestaEmpty(true);
+          }, 3000);
 
-            if (resGetCarritoCompra.pedidos) {
-              resGetCarritoCompra.pedidos.map((item: { id: any }) => {
-                (async () => {
-                  //*eliminando los pedidos de la sesion
-                  const resPedidosDel = await fetch(
-                    `${server}/pedidos/${item.id}`,
-                    {
-                      method: "DELETE",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                    }
-                  );
-
-                  await resPedidosDel.json();
-                })();
-              });
-
-              //  //*eliminando el carrito compra
-
-              const resCarritoCompraDel = await fetch(
-                `${server}/carritocompra/${resGetCarritoCompra.id}`,
-                {
-                  method: "DELETE",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-
-              await resCarritoCompraDel.json();
-              localStorage.removeItem("sessioncarrito");
-              localStorage.removeItem("localcarritobase");
-              setCestaEmpty(true);
-
-              return console.log(
-                "eliminar localPedidos-existente - error en la peticion v1"
-              );
-            }
-          }
+          return console.log(
+            "eliminar localPedidos-existente - error en la peticion v1"
+          );
         }
       } else {
         setCargaImg(false);
@@ -217,22 +215,27 @@ export default function Page() {
         }
 
         //  //*eliminando el carrito compra
-        const resCarritoCompraDel = await fetch(
-          `${server}/carritocompra/${resGetCarritoCompraK.id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        setTimeout(async () => {
+          console.log("ELIMINAR CARRITO-COMPRA", localSessionCarrito);
 
-        await resCarritoCompraDel.json();
+          const resCarritoCompraDel = await fetch(
+            `${server}/carritocompra/${resGetCarritoCompraK.id}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
-        localStorage.removeItem("sessioncarrito");
-        localStorage.removeItem("localcarritobase");
-        setCargaImg(false);
-        setCestaEmpty(true);
+          await resCarritoCompraDel.json();
+
+          localStorage.removeItem("sessioncarrito");
+          localStorage.removeItem("localcarritobase");
+          setCargaImg(false);
+          setCestaEmpty(true);
+        }, 3000);
+
         return console.log(
           "eliminar localPedidos-existente - error en la peticion v2 - v2"
         );
@@ -273,22 +276,27 @@ export default function Page() {
 
         //  //*eliminando el carrito compra
 
-        const resCarritoCompraDel = await fetch(
-          `${server}/carritocompra/${resGetCarritoCompraK.id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        setTimeout(async () => {
+          console.log("ELIMINAR EL CARRITO", localCarritoBaseP);
 
-        await resCarritoCompraDel.json();
+          const resCarritoCompraDel = await fetch(
+            `${server}/carritocompra/${resGetCarritoCompraK.id}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
-        localStorage.removeItem("sessioncarrito");
-        localStorage.removeItem("localcarritobase");
-        setCargaImg(false);
-        setCestaEmpty(true);
+          await resCarritoCompraDel.json();
+
+          localStorage.removeItem("sessioncarrito");
+          localStorage.removeItem("localcarritobase");
+          setCargaImg(false);
+          setCestaEmpty(true);
+        }, 3000);
+
         return console.log(
           "eliminar localPedidos-existente - error en la peticion v2 - v2"
         );
@@ -420,22 +428,26 @@ export default function Page() {
         }
         //  //*eliminando el carrito compra
 
-        const resCarritoCompraDel = await fetch(
-          `${server}/carritocompra/${resGetCarritoCompraK.id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        setTimeout(async () => {
+          console.log("ELIMINAR EL CARRITO", localSessionCarrito);
 
-        await resCarritoCompraDel.json();
+          const resCarritoCompraDel = await fetch(
+            `${server}/carritocompra/${resGetCarritoCompraK.id}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
-        localStorage.removeItem("sessioncarrito");
-        localStorage.removeItem("localcarritobase");
-        setCargaImg(false);
-        setCestaEmpty(true);
+          await resCarritoCompraDel.json();
+
+          localStorage.removeItem("sessioncarrito");
+          localStorage.removeItem("localcarritobase");
+          setCargaImg(false);
+          setCestaEmpty(true);
+        }, 3000);
         return console.log(
           "eliminar localPedidos-existente - error en la peticion v2 - v2"
         );
@@ -476,22 +488,27 @@ export default function Page() {
 
         //  //*eliminando el carrito compra
 
-        const resCarritoCompraDel = await fetch(
-          `${server}/carritocompra/${resGetCarritoCompraK.id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        setTimeout(async () => {
+          console.log("ELIMINACIÓN DEL CARRITO", localCarritoBaseP);
 
-        await resCarritoCompraDel.json();
+          const resCarritoCompraDel = await fetch(
+            `${server}/carritocompra/${resGetCarritoCompraK.id}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
-        localStorage.removeItem("sessioncarrito");
-        localStorage.removeItem("localcarritobase");
-        setCargaImg(false);
-        setCestaEmpty(true);
+          await resCarritoCompraDel.json();
+
+          localStorage.removeItem("sessioncarrito");
+          localStorage.removeItem("localcarritobase");
+          setCargaImg(false);
+          setCestaEmpty(true);
+        }, 3000);
+
         return console.log(
           "eliminar localPedidos-existente - error en la peticion v2 - v2"
         );
@@ -624,22 +641,27 @@ export default function Page() {
 
         //  //*eliminando el carrito compra
 
-        const resCarritoCompraDel = await fetch(
-          `${server}/carritocompra/${resGetCarritoCompraK.id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        setTimeout(async () => {
+          console.log("ELIMINAR CARRITO", localSessionCarrito);
 
-        await resCarritoCompraDel.json();
+          const resCarritoCompraDel = await fetch(
+            `${server}/carritocompra/${resGetCarritoCompraK.id}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
-        localStorage.removeItem("sessioncarrito");
-        localStorage.removeItem("localcarritobase");
-        setCargaImg(false);
-        setCestaEmpty(true);
+          await resCarritoCompraDel.json();
+
+          localStorage.removeItem("sessioncarrito");
+          localStorage.removeItem("localcarritobase");
+          setCargaImg(false);
+          setCestaEmpty(true);
+        }, 3000);
+
         return console.log(
           "eliminar localPedidos-existente - error en la peticion v2 - v2"
         );
@@ -679,22 +701,28 @@ export default function Page() {
         }
 
         //  //*eliminando el carrito compra
-        const resCarritoCompraDel = await fetch(
-          `${server}/carritocompra/${resGetCarritoCompraK.id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
 
-        await resCarritoCompraDel.json();
+        setTimeout(async () => {
+          console.log("ELIMINAR EL CARRITO", localCarritoBaseP);
 
-        localStorage.removeItem("sessioncarrito");
-        localStorage.removeItem("localcarritobase");
-        setCargaImg(false);
-        setCestaEmpty(true);
+          const resCarritoCompraDel = await fetch(
+            `${server}/carritocompra/${resGetCarritoCompraK.id}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          await resCarritoCompraDel.json();
+
+          localStorage.removeItem("sessioncarrito");
+          localStorage.removeItem("localcarritobase");
+          setCargaImg(false);
+          setCestaEmpty(true);
+        }, 3000);
+
         return console.log(
           "eliminar localPedidos-existente - error en la peticion v2 - v2"
         );
