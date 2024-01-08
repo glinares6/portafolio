@@ -9,8 +9,18 @@ type top = {
   id: number;
   total: number;
 };
+
 export default function Page() {
-  const { server } = carritoApp();
+  const {
+    server,
+    getCarritoReq,
+    getCarritoOneReq,
+    updateCarritoCompra,
+    deleteCarritoCompra,
+
+    updatePedidosReq,
+    deletePedidosReq,
+  } = carritoApp();
 
   const router = useRouter();
 
@@ -24,43 +34,67 @@ export default function Page() {
 
   const [cestaEmpty, setCestaEmpty] = useState(false);
 
+  // const { refactorizar } = carritoValidation();
+
+  const refactorizar = async (
+    localCarritoBaseP: any,
+    localSessionCarrito: any
+  ) => {
+    if (localCarritoBaseP) {
+      const resCarritoPedidoP = await getCarritoReq(localCarritoBaseP);
+
+      console.log("dato dado P", resCarritoPedidoP);
+
+      if (resCarritoPedidoP.msg === "sesion no encontrada") {
+        const resGetCarritoCompraK = await getCarritoReq(localSessionCarrito);
+
+        console.log("seleccion de editores ", resGetCarritoCompraK);
+
+        if (resGetCarritoCompraK.pedidos) {
+          resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
+            //*eliminando los pedidos de la sesion
+
+            await deletePedidosReq(item.id);
+          });
+        }
+
+        //  //*eliminando el carrito compra
+        setTimeout(async () => {
+          console.log("ELIMINAR CARRITO-COMPRA", localSessionCarrito);
+
+          await deleteCarritoCompra(resGetCarritoCompraK.id);
+
+          localStorage.removeItem("sessioncarrito");
+          localStorage.removeItem("localcarritobase");
+          setCargaImg(false);
+          setCestaEmpty(true);
+        }, 3000);
+
+        return console.log(
+          "eliminar localPedidos-existente - error en la peticion v2 - v2"
+        );
+      }
+    }
+  };
+
   useEffect(() => {
     (async () => {
       const localSessionCarrito = localStorage.getItem("sessioncarrito");
       const localCarritoBaseP = localStorage.getItem("localcarritobase");
 
       if (localCarritoBaseP) {
-        const getCarritoPedidoP = await fetch(
-          `${server}/carritocompra/${localCarritoBaseP}/session`
-        );
-
-        const resCarritoPedidoP = await getCarritoPedidoP.json();
+        const resCarritoPedidoP = await getCarritoReq(localCarritoBaseP);
 
         console.log("dato dado P", resCarritoPedidoP);
 
         if (resCarritoPedidoP.msg === "sesion no encontrada") {
-          const getCarritoCompra = await fetch(
-            `${server}/carritocompra/${localSessionCarrito}/session`
-          );
-
-          const resGetCarritoCompraK = await getCarritoCompra.json();
+          const resGetCarritoCompraK = await getCarritoReq(localSessionCarrito);
 
           if (resGetCarritoCompraK.pedidos) {
-            resGetCarritoCompraK.pedidos.map((item: { id: any }) => {
-              (async () => {
-                //*eliminando los pedidos de la sesion
-                const resPedidosDel = await fetch(
-                  `${server}/pedidos/${item.id}`,
-                  {
-                    method: "DELETE",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                  }
-                );
+            resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
+              //*eliminando los pedidos de la sesion
 
-                await resPedidosDel.json();
-              })();
+              await deletePedidosReq(item.id);
             });
           }
 
@@ -68,17 +102,7 @@ export default function Page() {
           setTimeout(async () => {
             console.log("PEDIDO EXISTENTE", localSessionCarrito);
 
-            const resCarritoCompraDel = await fetch(
-              `${server}/carritocompra/${resGetCarritoCompraK.id}`,
-              {
-                method: "DELETE",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-
-            await resCarritoCompraDel.json();
+            await deleteCarritoCompra(resGetCarritoCompraK.id);
 
             localStorage.removeItem("sessioncarrito");
             localStorage.removeItem("localcarritobase");
@@ -92,11 +116,7 @@ export default function Page() {
       }
 
       if (localSessionCarrito) {
-        const getCarritoPedido = await fetch(
-          `${server}/carritocompra/${localSessionCarrito}/session`
-        );
-
-        const resCarritoPedido = await getCarritoPedido.json();
+        const resCarritoPedido = await getCarritoReq(localSessionCarrito);
 
         console.log("dato dado", resCarritoPedido);
 
@@ -117,28 +137,13 @@ export default function Page() {
             )
           );
         } else {
-          const getCarritoCompra = await fetch(
-            `${server}/carritocompra/${localCarritoBaseP}/session`
-          );
-
-          const resGetCarritoCompra = await getCarritoCompra.json();
+          const resGetCarritoCompra = await getCarritoReq(localCarritoBaseP);
 
           if (resGetCarritoCompra.pedidos) {
-            resGetCarritoCompra.pedidos.map((item: { id: any }) => {
-              (async () => {
-                //*eliminando los pedidos de la sesion
-                const resPedidosDel = await fetch(
-                  `${server}/pedidos/${item.id}`,
-                  {
-                    method: "DELETE",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                  }
-                );
+            resGetCarritoCompra.pedidos.map(async (item: { id: any }) => {
+              //*eliminando los pedidos de la sesion
 
-                await resPedidosDel.json();
-              })();
+              await deletePedidosReq(item.id);
             });
           }
 
@@ -147,17 +152,7 @@ export default function Page() {
           setTimeout(async () => {
             console.log("ELIMINAR CARRITO", localCarritoBaseP);
 
-            const resCarritoCompraDel = await fetch(
-              `${server}/carritocompra/${resGetCarritoCompra.id}`,
-              {
-                method: "DELETE",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-
-            await resCarritoCompraDel.json();
+            await deleteCarritoCompra(resGetCarritoCompra.id);
             localStorage.removeItem("sessioncarrito");
             localStorage.removeItem("localcarritobase");
             setCestaEmpty(true);
@@ -183,34 +178,20 @@ export default function Page() {
     const localCarritoBaseP = localStorage.getItem("localcarritobase");
 
     if (localCarritoBaseP) {
-      const getCarritoPedidoP = await fetch(
-        `${server}/carritocompra/${localCarritoBaseP}/session`
-      );
-
-      const resCarritoPedidoP = await getCarritoPedidoP.json();
+      const resCarritoPedidoP = await getCarritoReq(localCarritoBaseP);
 
       console.log("dato dado P", resCarritoPedidoP);
 
       if (resCarritoPedidoP.msg === "sesion no encontrada") {
-        const getCarritoCompra = await fetch(
-          `${server}/carritocompra/${localSessionCarrito}/session`
-        );
-
-        const resGetCarritoCompraK = await getCarritoCompra.json();
+        const resGetCarritoCompraK = await getCarritoReq(localSessionCarrito);
 
         console.log("seleccion de editores ", resGetCarritoCompraK);
 
         if (resGetCarritoCompraK.pedidos) {
           resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
             //*eliminando los pedidos de la sesion
-            const resPedidosDel = await fetch(`${server}/pedidos/${item.id}`, {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
 
-            await resPedidosDel.json();
+            await deletePedidosReq(item.id);
           });
         }
 
@@ -218,17 +199,7 @@ export default function Page() {
         setTimeout(async () => {
           console.log("ELIMINAR CARRITO-COMPRA", localSessionCarrito);
 
-          const resCarritoCompraDel = await fetch(
-            `${server}/carritocompra/${resGetCarritoCompraK.id}`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-
-          await resCarritoCompraDel.json();
+          await deleteCarritoCompra(resGetCarritoCompraK.id);
 
           localStorage.removeItem("sessioncarrito");
           localStorage.removeItem("localcarritobase");
@@ -243,34 +214,20 @@ export default function Page() {
     }
 
     if (localSessionCarrito) {
-      const getCarritoPedidoP = await fetch(
-        `${server}/carritocompra/${localSessionCarrito}/session`
-      );
-
-      const resCarritoPedidoP = await getCarritoPedidoP.json();
+      const resCarritoPedidoP = await getCarritoReq(localSessionCarrito);
 
       console.log("dato dado P", resCarritoPedidoP);
 
       if (resCarritoPedidoP.msg === "sesion no encontrada") {
-        const getCarritoCompra = await fetch(
-          `${server}/carritocompra/${localCarritoBaseP}/session`
-        );
-
-        const resGetCarritoCompraK = await getCarritoCompra.json();
+        const resGetCarritoCompraK = await getCarritoReq(localCarritoBaseP);
 
         console.log("seleccion de editores ", resGetCarritoCompraK);
 
         if (resGetCarritoCompraK.pedidos) {
           resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
             //*eliminando los pedidos de la sesion
-            const resPedidosDel = await fetch(`${server}/pedidos/${item.id}`, {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
 
-            await resPedidosDel.json();
+            await deletePedidosReq(item.id);
           });
         }
 
@@ -279,17 +236,7 @@ export default function Page() {
         setTimeout(async () => {
           console.log("ELIMINAR EL CARRITO", localCarritoBaseP);
 
-          const resCarritoCompraDel = await fetch(
-            `${server}/carritocompra/${resGetCarritoCompraK.id}`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-
-          await resCarritoCompraDel.json();
+          await deleteCarritoCompra(resGetCarritoCompraK.id);
 
           localStorage.removeItem("sessioncarrito");
           localStorage.removeItem("localcarritobase");
@@ -310,30 +257,19 @@ export default function Page() {
       cantidad: listaPedido[key].cantidad,
     };
 
-    const resPedidosDel = await fetch(
-      `${server}/pedidos/${listaPedido[key].id}/${listaPedido[key].smartphone.id}/compra`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payloadMenos),
-      }
+    const resMasUpdate = await updatePedidosReq(
+      listaPedido[key].id,
+      listaPedido[key].smartphone.id,
+      payloadMenos
     );
-
-    const resMasUpdate = await resPedidosDel.json();
 
     console.log("update cantidad menos", resMasUpdate);
 
     const localSessionCarritoReq = localStorage.getItem("sessioncarrito");
 
-    const getCarritoPedidoReq = await fetch(
-      `${server}/carritocompra/${localSessionCarritoReq}/session`
-    );
+    const resCarritoPedidoReq = await getCarritoReq(localSessionCarritoReq);
 
-    const resCarritoPedidoReq = await getCarritoPedidoReq.json();
-
-    // console.log("carrito req get", resCarritoPedidoReq);
+    console.log("carrito req get- SABADO 06", resCarritoPedidoReq);
 
     setListaPedido(resCarritoPedidoReq.pedidos);
 
@@ -361,26 +297,16 @@ export default function Page() {
 
     console.log("lista actual- button", lista);
 
-    const resCarritoUpdateReq = await fetch(
-      `${server}/carritocompra/${lista.id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payloadCarritoTotal),
-      }
+    const resCarritoTotalUpdate = await updateCarritoCompra(
+      lista.id,
+      payloadCarritoTotal
     );
-
-    const resCarritoTotalUpdate = await resCarritoUpdateReq.json();
 
     console.log("update total-carrito", resCarritoTotalUpdate);
 
     //*mostramos los nuevos valores en lista  y pedidos
 
-    const resCarritoGet = await fetch(`${server}/carritocompra/${lista.id}`);
-
-    const resCarritoTotalGet = await resCarritoGet.json();
+    const resCarritoTotalGet = await getCarritoOneReq(lista.id);
 
     console.log("get carritoCompra - Origin Mas", resCarritoTotalGet);
 
@@ -396,58 +322,35 @@ export default function Page() {
     const localCarritoBaseP = localStorage.getItem("localcarritobase");
 
     if (localCarritoBaseP) {
-      const getCarritoPedidoP = await fetch(
-        `${server}/carritocompra/${localCarritoBaseP}/session`
-      );
-
-      const resCarritoPedidoP = await getCarritoPedidoP.json();
+      const resCarritoPedidoP = await getCarritoReq(localCarritoBaseP);
 
       console.log("dato dado P", resCarritoPedidoP);
 
       if (resCarritoPedidoP.msg === "sesion no encontrada") {
-        const getCarritoCompra = await fetch(
-          `${server}/carritocompra/${localSessionCarrito}/session`
-        );
-
-        const resGetCarritoCompraK = await getCarritoCompra.json();
+        const resGetCarritoCompraK = await getCarritoReq(localSessionCarrito);
 
         console.log("seleccion de editores ", resGetCarritoCompraK);
 
         if (resGetCarritoCompraK.pedidos) {
           resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
             //*eliminando los pedidos de la sesion
-            const resPedidosDel = await fetch(`${server}/pedidos/${item.id}`, {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
 
-            await resPedidosDel.json();
+            await deletePedidosReq(item.id);
           });
         }
+
         //  //*eliminando el carrito compra
-
         setTimeout(async () => {
-          console.log("ELIMINAR EL CARRITO", localSessionCarrito);
+          console.log("ELIMINAR CARRITO-COMPRA", localSessionCarrito);
 
-          const resCarritoCompraDel = await fetch(
-            `${server}/carritocompra/${resGetCarritoCompraK.id}`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-
-          await resCarritoCompraDel.json();
+          await deleteCarritoCompra(resGetCarritoCompraK.id);
 
           localStorage.removeItem("sessioncarrito");
           localStorage.removeItem("localcarritobase");
           setCargaImg(false);
           setCestaEmpty(true);
         }, 3000);
+
         return console.log(
           "eliminar localPedidos-existente - error en la peticion v2 - v2"
         );
@@ -455,53 +358,29 @@ export default function Page() {
     }
 
     if (localSessionCarrito) {
-      const getCarritoPedidoP = await fetch(
-        `${server}/carritocompra/${localSessionCarrito}/session`
-      );
-
-      const resCarritoPedidoP = await getCarritoPedidoP.json();
+      const resCarritoPedidoP = await getCarritoReq(localSessionCarrito);
 
       console.log("dato dado P", resCarritoPedidoP);
 
       if (resCarritoPedidoP.msg === "sesion no encontrada") {
-        const getCarritoCompra = await fetch(
-          `${server}/carritocompra/${localCarritoBaseP}/session`
-        );
-
-        const resGetCarritoCompraK = await getCarritoCompra.json();
+        const resGetCarritoCompraK = await getCarritoReq(localCarritoBaseP);
 
         console.log("seleccion de editores ", resGetCarritoCompraK);
 
         if (resGetCarritoCompraK.pedidos) {
           resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
             //*eliminando los pedidos de la sesion
-            const resPedidosDel = await fetch(`${server}/pedidos/${item.id}`, {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
 
-            await resPedidosDel.json();
+            await deletePedidosReq(item.id);
           });
         }
 
         //  //*eliminando el carrito compra
 
         setTimeout(async () => {
-          console.log("ELIMINACIÓN DEL CARRITO", localCarritoBaseP);
+          console.log("ELIMINAR EL CARRITO", localCarritoBaseP);
 
-          const resCarritoCompraDel = await fetch(
-            `${server}/carritocompra/${resGetCarritoCompraK.id}`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-
-          await resCarritoCompraDel.json();
+          await deleteCarritoCompra(resGetCarritoCompraK.id);
 
           localStorage.removeItem("sessioncarrito");
           localStorage.removeItem("localcarritobase");
@@ -524,28 +403,17 @@ export default function Page() {
       cantidad: listaPedido[key].cantidad,
     };
 
-    const resPedidosUpdateReq = await fetch(
-      `${server}/pedidos/${listaPedido[key].id}/${listaPedido[key].smartphone.id}/compra`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payloadMas),
-      }
+    const resMasUpdate = await updatePedidosReq(
+      listaPedido[key].id,
+      listaPedido[key].smartphone.id,
+      payloadMas
     );
-
-    const resMasUpdate = await resPedidosUpdateReq.json();
 
     console.log("update cantidad mas", resMasUpdate);
 
     const localSessionCarritoReq = localStorage.getItem("sessioncarrito");
 
-    const getCarritoPedidoReq = await fetch(
-      `${server}/carritocompra/${localSessionCarritoReq}/session`
-    );
-
-    const resCarritoPedidoReq = await getCarritoPedidoReq.json();
+    const resCarritoPedidoReq = await getCarritoReq(localSessionCarritoReq);
 
     // console.log("carrito req get", resCarritoPedidoReq);
 
@@ -573,26 +441,16 @@ export default function Page() {
 
     console.log("lista actual- button", lista);
 
-    const resCarritoUpdateReq = await fetch(
-      `${server}/carritocompra/${lista.id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payloadCarritoTotal),
-      }
+    const resCarritoTotalUpdate = await updateCarritoCompra(
+      lista.id,
+      payloadCarritoTotal
     );
-
-    const resCarritoTotalUpdate = await resCarritoUpdateReq.json();
 
     console.log("update total-carrito", resCarritoTotalUpdate);
 
     //*mostramos los nuevos valores en lista  y pedidos
 
-    const resCarritoGet = await fetch(`${server}/carritocompra/${lista.id}`);
-
-    const resCarritoTotalGet = await resCarritoGet.json();
+    const resCarritoTotalGet = await getCarritoOneReq(lista.id);
 
     console.log("get carritoCompra - Origin Mas", resCarritoTotalGet);
 
@@ -608,53 +466,28 @@ export default function Page() {
     const localCarritoBaseP = localStorage.getItem("localcarritobase");
 
     if (localCarritoBaseP) {
-      const getCarritoPedidoP = await fetch(
-        `${server}/carritocompra/${localCarritoBaseP}/session`
-      );
-
-      const resCarritoPedidoP = await getCarritoPedidoP.json();
+      const resCarritoPedidoP = await getCarritoReq(localCarritoBaseP);
 
       console.log("dato dado P", resCarritoPedidoP);
 
       if (resCarritoPedidoP.msg === "sesion no encontrada") {
-        const getCarritoCompra = await fetch(
-          `${server}/carritocompra/${localSessionCarrito}/session`
-        );
-
-        const resGetCarritoCompraK = await getCarritoCompra.json();
+        const resGetCarritoCompraK = await getCarritoReq(localSessionCarrito);
 
         console.log("seleccion de editores ", resGetCarritoCompraK);
 
         if (resGetCarritoCompraK.pedidos) {
           resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
             //*eliminando los pedidos de la sesion
-            const resPedidosDel = await fetch(`${server}/pedidos/${item.id}`, {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
 
-            await resPedidosDel.json();
+            await deletePedidosReq(item.id);
           });
         }
 
         //  //*eliminando el carrito compra
-
         setTimeout(async () => {
-          console.log("ELIMINAR CARRITO", localSessionCarrito);
+          console.log("ELIMINAR CARRITO-COMPRA", localSessionCarrito);
 
-          const resCarritoCompraDel = await fetch(
-            `${server}/carritocompra/${resGetCarritoCompraK.id}`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-
-          await resCarritoCompraDel.json();
+          await deleteCarritoCompra(resGetCarritoCompraK.id);
 
           localStorage.removeItem("sessioncarrito");
           localStorage.removeItem("localcarritobase");
@@ -669,34 +502,20 @@ export default function Page() {
     }
 
     if (localSessionCarrito) {
-      const getCarritoPedidoP = await fetch(
-        `${server}/carritocompra/${localSessionCarrito}/session`
-      );
-
-      const resCarritoPedidoP = await getCarritoPedidoP.json();
+      const resCarritoPedidoP = await getCarritoReq(localSessionCarrito);
 
       console.log("dato dado P", resCarritoPedidoP);
 
       if (resCarritoPedidoP.msg === "sesion no encontrada") {
-        const getCarritoCompra = await fetch(
-          `${server}/carritocompra/${localCarritoBaseP}/session`
-        );
-
-        const resGetCarritoCompraK = await getCarritoCompra.json();
+        const resGetCarritoCompraK = await getCarritoReq(localCarritoBaseP);
 
         console.log("seleccion de editores ", resGetCarritoCompraK);
 
         if (resGetCarritoCompraK.pedidos) {
           resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
             //*eliminando los pedidos de la sesion
-            const resPedidosDel = await fetch(`${server}/pedidos/${item.id}`, {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
 
-            await resPedidosDel.json();
+            await deletePedidosReq(item.id);
           });
         }
 
@@ -705,17 +524,7 @@ export default function Page() {
         setTimeout(async () => {
           console.log("ELIMINAR EL CARRITO", localCarritoBaseP);
 
-          const resCarritoCompraDel = await fetch(
-            `${server}/carritocompra/${resGetCarritoCompraK.id}`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-
-          await resCarritoCompraDel.json();
+          await deleteCarritoCompra(resGetCarritoCompraK.id);
 
           localStorage.removeItem("sessioncarrito");
           localStorage.removeItem("localcarritobase");
@@ -728,22 +537,13 @@ export default function Page() {
         );
       }
     }
-
+    await refactorizar(localCarritoBaseP, localSessionCarrito);
+    await refactorizar(localSessionCarrito, localCarritoBaseP);
     //*fin de la transmision
 
     console.log("dato del fondo", key);
 
-    const resPedidosDeleteReq = await fetch(
-      `${server}/pedidos/${listaPedido[key].id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    const resDeletePedido = await resPedidosDeleteReq.json();
+    const resDeletePedido = await deletePedidosReq(listaPedido[key].id);
 
     console.log("delete pedido", resDeletePedido);
 
@@ -751,11 +551,7 @@ export default function Page() {
 
     const localSessionCarritoReq = localStorage.getItem("sessioncarrito");
 
-    const getCarritoPedidoReq = await fetch(
-      `${server}/carritocompra/${localSessionCarritoReq}/session`
-    );
-
-    const resCarritoPedidoReq = await getCarritoPedidoReq.json();
+    const resCarritoPedidoReq = await getCarritoReq(localSessionCarritoReq);
 
     const getObjetoPedidoNew = resCarritoPedidoReq.pedidos
       .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
@@ -780,26 +576,16 @@ export default function Page() {
 
       console.log("lista actual- button", lista);
 
-      const resCarritoUpdateReq = await fetch(
-        `${server}/carritocompra/${lista.id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payloadCarritoTotal),
-        }
+      const resCarritoTotalUpdate = await updateCarritoCompra(
+        lista.id,
+        payloadCarritoTotal
       );
-
-      const resCarritoTotalUpdate = await resCarritoUpdateReq.json();
 
       console.log("update total-carrito", resCarritoTotalUpdate);
 
       //*mostramos los nuevos valores en lista  y pedidos
 
-      const resCarritoGet = await fetch(`${server}/carritocompra/${lista.id}`);
-
-      const resCarritoTotalGet = await resCarritoGet.json();
+      const resCarritoTotalGet = await getCarritoOneReq(lista.id);
 
       console.log("get carritoCompra - Origin", resCarritoTotalGet);
 
@@ -811,24 +597,14 @@ export default function Page() {
 
     if (getObjetoPedidoNew.length === 0) {
       //*eliminar carrito de compra origin
-      const resCarritoDeleteReq = await fetch(
-        `${server}/carritocompra/${lista.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
 
-      const resCarritoTotalDelete = await resCarritoDeleteReq.json();
+      const resCarritoTotalDelete = await deleteCarritoCompra(lista.id);
 
       console.log("delete-carrito-global", resCarritoTotalDelete);
 
       //*mostrar carrito de compra final vacio
-      const resCarritoGet = await fetch(`${server}/carritocompra/${lista.id}`);
 
-      const resCarritoTotalGet = await resCarritoGet.json();
+      const resCarritoTotalGet = await getCarritoOneReq(lista.id);
 
       console.log("get carritoCompra - Origin", resCarritoTotalGet);
 
@@ -855,21 +631,21 @@ export default function Page() {
             <h1 className="text-2xl">Lista de los pedidos </h1>
           </div>
 
-          <div className="w-full flex justify-evenly">
-            <div className="w-[50%] grid grid-cols-[150px_1fr_90px_90px_120px] grid-rows-[50px_repeat(3,1fr)]  w-[55%]  border-red-500 border-2 pb-2">
-              <div className="col-span-1   py-2 border-red-500 border-2">
+          <div className="w-full flex justify-evenly border-red-500 border-2  max-sm:flex-col">
+            <div className="w-[50%] grid grid-cols-[70px_1fr_120px_100px_120px] grid-rows-[50px_repeat(3,1fr)]  w-[55%]  border-red-500 border-2 pb-2  max-sm:px-1  max-sm:grid-cols-[50px_1fr_1fr_1fr_1fr] max-sm:w-full">
+              <div className="col-span-1   py-2 border-red-500 border-2 max-sm:hidden">
                 Producto
               </div>
-              <div className="col-span-1   py-2 border-red-500 border-2">
+              <div className="col-span-1   py-2 border-red-500 border-2 max-sm:hidden">
                 Producto
               </div>
-              <div className="flex justify-center col-span-1   py-2 border-red-500 border-2">
+              <div className="flex justify-center col-span-1   py-2 border-red-500 border-2 max-sm:hidden">
                 Percio
               </div>
-              <div className="flex justify-center col-span-1  py-2 border-red-500 border-2">
+              <div className="flex justify-center col-span-1  py-2 border-red-500 border-2 max-sm:hidden">
                 Cantidad
               </div>
-              <div className="flex justify-center col-span-1  py-2 border-red-500 border-2">
+              <div className="flex justify-center col-span-1  py-2 border-red-500 border-2 max-sm:hidden">
                 Total
               </div>
 
@@ -883,7 +659,7 @@ export default function Page() {
                         item.smartphone.picture.includes(".png") ||
                         item.smartphone.picture.includes(".jpg") ||
                         item.smartphone.picture.includes(".svg")) && (
-                        <div className="py-1 justify-center py-1">
+                        <div className="justify-center py-1 max-sm:row-span-2 max-sm:border-blue-500 max-sm:border-y-2 max-sm:border-l-2 max-sm:mt-2 ">
                           <Image
                             src={item.smartphone.picture}
                             width={50}
@@ -894,7 +670,7 @@ export default function Page() {
                       )}
                       {item.smartphone.picture.includes(".mp4") ||
                       item.smartphone.picture.includes(".mp3") ? (
-                        <div className="py-1 justify-center py-1">
+                        <div className=" justify-center py-1 max-sm:row-span-2 max-sm:border-blue-500 border-y-2 max-sm:border-l-2 max-sm:mt-2">
                           <video src={item.smartphone.picture} controls>
                             {item.smartphone.title}
                           </video>
@@ -903,21 +679,21 @@ export default function Page() {
                         ""
                       )}
 
-                      <div className="py-1 justify-center py-1 border-red-500 border-2">
+                      <div className="justify-center py-1  max-sm:col-span-4  max-sm:border-blue-500 max-sm:border-t-2 max-sm:border-r-2  max-sm:mt-2">
                         {item.smartphone.title}
                       </div>
-                      <div className="flex items-center pl-2 py-1 ">
+                      <div className="w-full  flex items-center pl-2 py-1   min-w-[100px]  max-sm:w-full  max-sm:border-blue-500 max-sm:border-b-2 ">
                         S/ {Number(item.smartphone.offer2).toFixed(2)}
                       </div>
-                      <div className="flex justify-around items-center pl-2 py-1">
+                      <div className="w-ful flex justify-around items-center  py-1   max-sm:col-span-2 max-sm:w-full max-sm:min-w-[85px] max-sm:border-blue-500 max-sm:border-b-2">
                         <button
                           onClick={() => handleUpdateMenos(key)}
-                          className="relative flex justify-center  items-center bg-gray-700 w-[25px] h-[25px]   text-white text-2xl  font-bold  rounded-full  pb-1 "
+                          className="relative flex justify-center  items-center bg-gray-700 w-[25px] h-[25px]   text-white text-2xl  font-bold  rounded-full  pb-1  "
                         >
                           -
                         </button>
 
-                        <div className="flex justify-center  w-1/3">
+                        <div className="flex justify-center  w-1/3  ">
                           {item.cantidad}
                         </div>
 
@@ -928,11 +704,13 @@ export default function Page() {
                           +
                         </button>
                       </div>
-                      <div className="flex justify-around items-center pl-2 py-1">
-                        <div>S/{Number(item.subtotal).toFixed(2)}</div>
+                      <div className="w-full max-w-[120px] flex justify-around items-center pl-2 py-1   max-sm:min-w-[120px]  max-sm:border-blue-500 max-sm:border-b-2 max-sm:border-r-2  ">
+                        <div className="w-[70%]">
+                          S/{Number(item.subtotal).toFixed(2)}
+                        </div>
                         <button
                           onClick={() => handleClearPedido(key)}
-                          className="flex justify-center cursor-pointer  w-[30px] "
+                          className="flex justify-center cursor-pointer  w-[30]"
                         >
                           <svg
                             version="1.0"
@@ -977,18 +755,18 @@ l-1342 1342 -113 -108 c-62 -60 -669 -664 -1349 -1343 -679 -678 -1242 -1233
                     </React.Fragment>
                   ))}
             </div>
-            <div className="w-[30%] min-h-[200px] border-red-500 border-2">
-              <div className="w-full h-[20%] flex justify-center items-center border-red-500 border-2">
+            <div className="w-[30%] min-h-[200px] border-red-500 border-2 max-sm:w-full">
+              <div className="w-full h-[20%] flex justify-center items-center border-red-500 border-2 max-sm:min-h-[50px]">
                 <h1> la hora de donde la sacaste</h1>
               </div>
 
               {cargaImg && (
-                <div className="w-full h-[40%] flex justify-end items-center  pr-3 border-red-500 border-2">
+                <div className="w-full h-[40%] flex justify-end items-center  pr-3 border-red-500 border-2 max-sm:min-h-[80px]">
                   <h1> Total &nbsp; S/{lista.total}</h1>
                 </div>
               )}
 
-              <div className="w-full h-[40%] min-h-[50px] pb-3 flex justify-center items-end  border-blue-500 border-2">
+              <div className="w-full h-[40%] min-h-[50px] pb-3 flex justify-center items-end  border-blue-500 border-2 max-sm:min-h-[100px]">
                 <input
                   type="button"
                   // onClick={(e) => handleId("id", `${id}`, e)}
