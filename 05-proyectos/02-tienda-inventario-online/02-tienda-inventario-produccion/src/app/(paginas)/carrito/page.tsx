@@ -632,7 +632,7 @@ export default function Page() {
           </div>
 
           <div className="w-full flex justify-evenly border-red-500 border-2   max-lg:flex-col max-lg:items-center max-lg:w-full">
-            <div className="w-[50%] grid grid-cols-[70px_1fr_120px_100px_120px]   w-[55%]  border-red-500 border-2 pb-2  max-lg:px-1  max-lg:grid-cols-[50px_1fr_1fr_1fr_1fr] max-sm:w-full max-lg:w-[60%] ">
+            <div className="w-[50%] grid grid-cols-[130px_1fr_120px_100px_120px]   w-[55%]  border-red-500 border-2 pb-2  max-lg:px-1  max-lg:grid-cols-[130px_1fr_1fr_1fr_1fr] max-sm:w-full max-lg:w-[60%] ">
               <div className="col-span-1   py-2 border-red-500 border-2 max-lg:hidden">
                 Producto
               </div>
@@ -659,19 +659,23 @@ export default function Page() {
                         item.smartphone.picture.includes(".png") ||
                         item.smartphone.picture.includes(".jpg") ||
                         item.smartphone.picture.includes(".svg")) && (
-                        <div className="justify-center py-1 max-lg:row-span-1 max-lg:border-blue-500 max-lg:border-t-2 max-lg:border-l-2 max-lg:mt-2 ">
+                        <div className="w-[130px] h-[120px] flex justify-center py-1 max-lg:row-span-1 max-lg:border-blue-500 max-lg:border-t-2 max-lg:border-l-2 max-lg:mt-2 ">
                           <Image
                             src={item.smartphone.picture}
-                            width={50}
-                            height={50}
+                            width="100"
+                            height="100"
                             alt="Picture of the author2"
                           />
                         </div>
                       )}
                       {item.smartphone.picture.includes(".mp4") ||
                       item.smartphone.picture.includes(".mp3") ? (
-                        <div className=" justify-center py-1 max-lg:row-span-1 max-lg:border-blue-500 border-t-2 max-lg:border-l-2 max-lg:mt-2">
-                          <video src={item.smartphone.picture} controls>
+                        <div className="w-[130px] h-[130px]  relative  py-1 max-lg:row-span-1  max-lg:border-blue-500 border-t-2 max-lg:border-l-2 max-lg:mt-2">
+                          <video
+                            className="absolute top-[-10%] w-[130px]  h-[130px] "
+                            src={item.smartphone.picture}
+                            controls
+                          >
                             {item.smartphone.title}
                           </video>
                         </div>
@@ -679,38 +683,10 @@ export default function Page() {
                         ""
                       )}
 
-                      <div className="justify-center py-1  max-lg:col-span-4  max-lg:border-blue-500 max-lg:border-t-2 max-lg:border-r-2  max-lg:mt-2 ">
-                        {item.smartphone.title}
-                      </div>
-                      <div className="w-full flex justify-center items-center pl-2 py-1   min-w-[100px]  max-lg:border-blue-500 max-lg:border-b-2   max-lg:border-l-2 max-lg:col-span-2  max-lg:w-full">
-                        S/ {Number(item.smartphone.offer2).toFixed(2)}
-                      </div>
-                      <div className="w-full flex justify-around items-center  py-1   max-lg:col-span-1 max-lg:w-full max-lg:min-w-[100px] max-lg:border-blue-500 max-lg:border-b-2">
-                        <button
-                          onClick={() => handleUpdateMenos(key)}
-                          className="relative flex justify-center  items-center bg-gray-700 w-[25px] h-[25px]   text-white text-2xl  font-bold  rounded-full  pb-1  "
-                        >
-                          -
-                        </button>
-
-                        <div className="flex justify-center  w-full max-lg:min-w-1/3 ">
-                          {item.cantidad}
-                        </div>
-
-                        <button
-                          onClick={() => handleUpdateMas(key)}
-                          className="flex justify-center  items-center bg-gray-700 w-[25px] h-[25px]  text-white text-2xl font-bold  rounded-full"
-                        >
-                          +
-                        </button>
-                      </div>
-                      <div className=" w-full flex justify-center  items-center  py-1   max-lg:min-w-[100px]  max-lg:border-blue-500   max-lg:border-b-2 max-lg:border-r-2 max-lg:col-span-2    ">
-                        <div className="ml-1 ">
-                          S/{Number(item.subtotal).toFixed(2)}
-                        </div>
+                      <div className="relative justify-center py-1 pl-1   max-lg:col-span-4  max-lg:border-blue-500 max-lg:border-t-2 max-lg:border-r-2  max-lg:mt-2 max-lg:pr-5">
                         <button
                           onClick={() => handleClearPedido(key)}
-                          className="flex justify-center cursor-pointer pl-2 "
+                          className="hidden absolute top-0 right-0 flex justify-center cursor-pointer   max-lg:block "
                         >
                           <svg
                             version="1.0"
@@ -751,17 +727,98 @@ l-1342 1342 -113 -108 c-62 -60 -669 -664 -1349 -1343 -679 -678 -1242 -1233
                             </g>
                           </svg>
                         </button>
+                        <div className="   max-lg:text-sm">
+                          {item.smartphone.title}
+                        </div>
+                      </div>
+                      <div className="w-full flex flex-col items-center pl-2 py-1   min-w-[100px]  max-lg:border-blue-500 max-lg:border-b-2   max-lg:border-l-2 max-lg:col-span-2  max-lg:w-full max-lg:text-sm max-lg:text-sm">
+                        <div>Precio</div>
+                        <div>
+                          {" "}
+                          S/ {Number(item.smartphone.offer2).toFixed(2)}
+                        </div>
+                      </div>
+                      <div className="w-full flex flex-col items-center   py-1   max-lg:col-span-1 max-lg:w-full max-lg:min-w-[100px] max-lg:border-blue-500 max-lg:border-b-2">
+                        <div className="max-lg:text-sm">Cantidad</div>
+                        <div className="w-full flex justify-center">
+                          <button
+                            onClick={() => handleUpdateMenos(key)}
+                            className="relative flex justify-center  items-center bg-gray-700 w-[23px] h-[23px]  text-white text-2xl  font-bold  rounded-full  pb-1  "
+                          >
+                            -
+                          </button>
+
+                          <div className="flex justify-center  w-[25px] max-lg:min-w-1/3  max-lg:text-sm">
+                            {item.cantidad}
+                          </div>
+
+                          <button
+                            onClick={() => handleUpdateMas(key)}
+                            className="flex justify-center  items-center bg-gray-700 w-[23px] h-[23px]  text-white text-2xl font-bold  rounded-full"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                      <div className=" w-full flex flex-col  items-center  py-1   max-lg:min-w-[100px]  max-lg:border-blue-500   max-lg:border-b-2 max-lg:border-r-2 max-lg:col-span-2  max-lg:text-sm   ">
+                        <div>Subtotal</div>
+                        <div className="flex">
+                          <div>S/{Number(item.subtotal).toFixed(2)}</div>
+                          <button
+                            onClick={() => handleClearPedido(key)}
+                            className="flex justify-center cursor-pointer pl-2 max-lg:hidden"
+                          >
+                            <svg
+                              version="1.0"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="22"
+                              height="22"
+                              viewBox="0 0 1280.000000 1280.000000"
+                              preserveAspectRatio="xMidYMid meet"
+                            >
+                              <g
+                                transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
+                                fill="#EF4444"
+                                stroke="none"
+                              >
+                                <path
+                                  d="M6120 12774 c-674 -44 -1156 -133 -1717 -319 -614 -203 -1146 -474
+-1717 -875 -102 -71 -396 -307 -507 -406 -36 -33 -108 -95 -159 -139 -187
+-162 -546 -577 -797 -924 -632 -871 -1039 -1932 -1152 -2996 -102 -959 -8
+-1859 284 -2740 204 -612 540 -1258 920 -1766 41 -56 81 -111 87 -123 39 -73
+370 -446 560 -631 442 -429 946 -801 1463 -1079 694 -374 1439 -612 2220 -711
+550 -69 1318 -59 1795 25 459 81 706 142 1065 263 505 171 1028 427 1465 719
+91 61 199 136 240 167 41 32 104 77 139 101 212 143 648 550 906 845 141 160
+221 265 425 555 229 324 461 733 612 1080 218 497 379 1045 458 1550 11 74 25
+162 30 195 5 33 16 148 25 255 8 107 20 234 25 281 13 111 13 491 0 594 -5 44
+-17 168 -25 275 -52 657 -234 1371 -510 1995 -55 126 -189 398 -235 480 -185
+329 -312 524 -507 783 -69 92 -174 223 -232 291 -58 68 -135 158 -171 201 -94
+111 -147 165 -314 322 -150 140 -405 358 -461 394 -16 10 -79 55 -140 100
+-621 458 -1349 813 -2080 1012 -556 152 -1037 219 -1630 226 -170 2 -335 2
+-365 0z m-1064 -4214 c738 -737 1348 -1340 1355 -1340 8 0 617 603 1354 1340
+737 737 1344 1340 1350 1340 15 0 795 -783 795 -799 0 -7 -535 -548 -1188
+-1202 -654 -654 -1258 -1262 -1342 -1350 l-153 -161 1341 -1341 c738 -738
+1342 -1347 1342 -1353 0 -15 -778 -794 -793 -794 -7 0 -616 604 -1354 1342
+l-1342 1342 -113 -108 c-62 -60 -669 -664 -1349 -1343 -679 -678 -1242 -1233
+-1250 -1233 -16 0 -799 779 -799 795 0 6 603 613 1340 1350 737 737 1340 1344
+1340 1348 0 14 -143 159 -1437 1457 -684 685 -1243 1250 -1243 1255 0 13 782
+795 794 795 5 0 614 -603 1352 -1340z"
+                                />
+                              </g>
+                            </svg>
+                          </button>
+                        </div>
                       </div>
                     </React.Fragment>
                   ))}
             </div>
             <div className="w-[30%] min-h-[200px] border-red-500 border-2 max-sm:w-full max-lg:w-[60%] ">
               <div className="w-full h-[20%] flex justify-center items-center border-red-500 border-2 max-lg:min-h-[50px] ">
-                <h1> la hora de donde la sacaste</h1>
+                <h1 className="max-lg:text-sm"> la hora de donde la sacaste</h1>
               </div>
 
               {cargaImg && (
-                <div className="w-full h-[40%] flex justify-end items-center  pr-3 border-red-500 border-2 max-lg:min-h-[80px]">
+                <div className="w-full h-[40%] flex justify-end items-center  pr-3 border-red-500 border-2 max-lg:min-h-[80px] max-lg:text-sm">
                   <h1> Total &nbsp; S/{lista.total}</h1>
                 </div>
               )}
