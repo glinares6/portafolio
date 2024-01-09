@@ -30,6 +30,7 @@ import { CarritocompraModule } from './carritocompra/carritocompra.module';
 import { Carritocompra } from './carritocompra/entities/carritocompra.entity';
 import { PedidosModule } from './pedidos/pedidos.module';
 import { Pedido } from './pedidos/entities/pedido.entity';
+import { jwtConstants } from './auth/constansts';
 
 @Module({
   imports: [
@@ -78,6 +79,6 @@ export class AppModule implements NestModule {
     consumer
       .apply(LoggerMiddleware)
       .forRoutes({ path: 'auth/login/all/*', method: RequestMethod.GET });
-    consumer.apply(session({ secret: 'keyboardcat' })).forRoutes('*');
+    consumer.apply(session({ secret: jwtConstants.secret })).forRoutes('*');
   }
 }
