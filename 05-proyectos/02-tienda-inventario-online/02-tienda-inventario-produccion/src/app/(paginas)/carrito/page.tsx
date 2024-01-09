@@ -673,6 +673,8 @@ export default function Page() {
                         <div className="w-[130px] h-[130px]  relative  py-1 max-lg:row-span-1  max-lg:border-blue-500 border-t-2 max-lg:border-l-2 max-lg:mt-2">
                           <video
                             className="absolute top-[-10%] w-[130px]  h-[130px] "
+                            width={130}
+                            height={130}
                             src={item.smartphone.picture}
                             controls
                           >
@@ -731,14 +733,14 @@ l-1342 1342 -113 -108 c-62 -60 -669 -664 -1349 -1343 -679 -678 -1242 -1233
                           {item.smartphone.title}
                         </div>
                       </div>
-                      <div className="w-full flex flex-col items-center pl-2 py-1   min-w-[100px]  max-lg:border-blue-500 max-lg:border-b-2   max-lg:border-l-2 max-lg:col-span-2  max-lg:w-full max-lg:text-sm max-lg:text-sm">
+                      <div className="w-full flex flex-col items-center pl-2 py-1    min-w-[100px]  max-lg:border-blue-500 max-lg:border-b-2   max-lg:border-l-2 max-lg:col-span-2  max-lg:w-full max-lg:text-sm max-lg:text-sm">
                         <div>Precio</div>
                         <div>
                           {" "}
                           S/ {Number(item.smartphone.offer2).toFixed(2)}
                         </div>
                       </div>
-                      <div className="w-full flex flex-col items-center   py-1   max-lg:col-span-1 max-lg:w-full max-lg:min-w-[100px] max-lg:border-blue-500 max-lg:border-b-2">
+                      <div className="w-full flex flex-col items-center   py-1  max-lg:col-span-1 max-lg:w-full max-lg:min-w-[100px] max-lg:border-blue-500 max-lg:border-b-2">
                         <div className="max-lg:text-sm">Cantidad</div>
                         <div className="w-full flex justify-center">
                           <button
@@ -748,7 +750,7 @@ l-1342 1342 -113 -108 c-62 -60 -669 -664 -1349 -1343 -679 -678 -1242 -1233
                             -
                           </button>
 
-                          <div className="flex justify-center  w-[25px] max-lg:min-w-1/3  max-lg:text-sm">
+                          <div className="flex justify-center  w-[40px] max-lg:min-w-1/3  max-lg:text-sm">
                             {item.cantidad}
                           </div>
 
@@ -760,7 +762,7 @@ l-1342 1342 -113 -108 c-62 -60 -669 -664 -1349 -1343 -679 -678 -1242 -1233
                           </button>
                         </div>
                       </div>
-                      <div className=" w-full flex flex-col  items-center  py-1   max-lg:min-w-[100px]  max-lg:border-blue-500   max-lg:border-b-2 max-lg:border-r-2 max-lg:col-span-2  max-lg:text-sm   ">
+                      <div className=" w-full flex flex-col  items-center  py-1    max-lg:min-w-[100px]  max-lg:border-blue-500   max-lg:border-b-2 max-lg:border-r-2 max-lg:col-span-2  max-lg:text-sm   ">
                         <div>Subtotal</div>
                         <div className="flex">
                           <div>S/{Number(item.subtotal).toFixed(2)}</div>
