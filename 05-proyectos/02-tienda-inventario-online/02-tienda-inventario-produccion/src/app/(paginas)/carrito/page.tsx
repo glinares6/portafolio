@@ -631,21 +631,21 @@ export default function Page() {
             <h1 className="text-2xl">Lista de los pedidos </h1>
           </div>
 
-          <div className="w-full flex justify-evenly border-red-500 border-2   max-lg:flex-col max-lg:items-center max-lg:w-full">
-            <div className="w-[50%] grid grid-cols-[130px_1fr_120px_100px_120px]   w-[55%]  border-red-500 border-2 pb-2  max-lg:px-1  max-lg:grid-cols-[130px_1fr_1fr_1fr_1fr] max-sm:w-full max-lg:w-[60%] ">
-              <div className="col-span-1   py-2 border-red-500 border-2 max-lg:hidden">
+          <div className="w-full flex justify-evenly  border-red-500 border-2   max-md:flex-col max-md:items-center max-md:w-full max-lg:justify-between ">
+            <div className="w-[45%] grid grid-cols-[130px_1fr_120px_100px_120px]   w-[55%]  border-red-500 border-2 pb-2  max-md:px-1  max-md:grid-cols-[130px_1fr_1fr_1fr_1fr] max-sm:w-full max-md:w-[60%] max-lg:w-[75%] max-xl:w-[60%] ">
+              <div className="col-span-1   py-2 border-red-500 border-2 max-md:hidden">
                 Producto
               </div>
-              <div className="col-span-1   py-2 border-red-500 border-2 max-lg:hidden">
+              <div className="col-span-1   py-2 border-red-500 border-2 max-md:hidden">
                 Producto
               </div>
-              <div className="flex justify-center col-span-1   py-2 border-red-500 border-2 max-lg:hidden">
+              <div className="flex justify-center col-span-1   py-2 border-red-500 border-2 max-md:hidden">
                 Percio
               </div>
-              <div className="flex justify-center col-span-1  py-2 border-red-500 border-2 max-lg:hidden">
+              <div className="flex justify-center col-span-1  py-2 border-red-500 border-2 max-md:hidden">
                 Cantidad
               </div>
-              <div className="flex justify-center col-span-1  py-2 border-red-500 border-2 max-lg:hidden">
+              <div className="flex justify-center col-span-1  py-2 border-red-500 border-2 max-md:hidden">
                 Total
               </div>
 
@@ -659,7 +659,7 @@ export default function Page() {
                         item.smartphone.picture.includes(".png") ||
                         item.smartphone.picture.includes(".jpg") ||
                         item.smartphone.picture.includes(".svg")) && (
-                        <div className="w-[130px] h-[120px] flex justify-center py-1 max-lg:row-span-1 max-lg:border-blue-500 max-lg:border-t-2 max-lg:border-l-2 max-lg:mt-2 ">
+                        <div className="w-[130px] h-[120px] flex justify-center py-1 max-md:row-span-1 max-md:border-blue-500 max-md:border-t-2 max-md:border-l-2 max-md:mt-2 ">
                           <Image
                             src={item.smartphone.picture}
                             width="100"
@@ -670,7 +670,7 @@ export default function Page() {
                       )}
                       {item.smartphone.picture.includes(".mp4") ||
                       item.smartphone.picture.includes(".mp3") ? (
-                        <div className="w-[130px] h-[130px]  relative  py-1 max-lg:row-span-1  max-lg:border-blue-500 border-t-2 max-lg:border-l-2 max-lg:mt-2">
+                        <div className="w-[130px] h-[130px]  relative  py-1 max-md:row-span-1  max-md:border-blue-500 border-t-2 max-md:border-l-2 max-md:mt-2">
                           <video
                             className="absolute top-[-10%] w-[130px]  h-[130px] "
                             width={130}
@@ -685,10 +685,10 @@ export default function Page() {
                         ""
                       )}
 
-                      <div className="relative justify-center py-1 pl-1   max-lg:col-span-4  max-lg:border-blue-500 max-lg:border-t-2 max-lg:border-r-2  max-lg:mt-2 max-lg:pr-5">
+                      <div className="relative justify-center py-1 pl-1   max-md:col-span-4  max-md:border-blue-500 max-md:border-t-2 max-md:border-r-2  max-md:mt-2 max-md:pr-5">
                         <button
                           onClick={() => handleClearPedido(key)}
-                          className="hidden absolute top-0 right-0 flex justify-center cursor-pointer   max-lg:block "
+                          className="hidden absolute top-0 right-0 flex justify-center cursor-pointer   max-md:block "
                         >
                           <svg
                             version="1.0"
@@ -729,19 +729,19 @@ l-1342 1342 -113 -108 c-62 -60 -669 -664 -1349 -1343 -679 -678 -1242 -1233
                             </g>
                           </svg>
                         </button>
-                        <div className="   max-lg:text-sm">
+                        <div className="   max-md:text-sm">
                           {item.smartphone.title}
                         </div>
                       </div>
-                      <div className="w-full flex flex-col items-center pl-2 py-1    min-w-[100px]  max-lg:border-blue-500 max-lg:border-b-2   max-lg:border-l-2 max-lg:col-span-2  max-lg:w-full max-lg:text-sm max-lg:text-sm">
+                      <div className="w-full flex flex-col items-center pl-2 py-1    min-w-[100px]  max-md:border-blue-500 max-md:border-b-2   max-md:border-l-2 max-md:col-span-2  max-md:w-full max-md:text-sm max-md:text-sm">
                         <div>Precio</div>
                         <div>
                           {" "}
                           S/ {Number(item.smartphone.offer2).toFixed(2)}
                         </div>
                       </div>
-                      <div className="w-full flex flex-col items-center   py-1  max-lg:col-span-1 max-lg:w-full max-lg:min-w-[100px] max-lg:border-blue-500 max-lg:border-b-2">
-                        <div className="max-lg:text-sm">Cantidad</div>
+                      <div className="w-full flex flex-col items-center   py-1  max-md:col-span-1 max-md:w-full max-md:min-w-[100px] max-md:border-blue-500 max-md:border-b-2">
+                        <div className="max-md:text-sm">Cantidad</div>
                         <div className="w-full flex justify-center">
                           <button
                             onClick={() => handleUpdateMenos(key)}
@@ -750,7 +750,7 @@ l-1342 1342 -113 -108 c-62 -60 -669 -664 -1349 -1343 -679 -678 -1242 -1233
                             -
                           </button>
 
-                          <div className="flex justify-center  w-[40px] max-lg:min-w-1/3  max-lg:text-sm">
+                          <div className="flex justify-center  w-[40px] max-md:min-w-1/3  max-md:text-sm">
                             {item.cantidad}
                           </div>
 
@@ -762,13 +762,13 @@ l-1342 1342 -113 -108 c-62 -60 -669 -664 -1349 -1343 -679 -678 -1242 -1233
                           </button>
                         </div>
                       </div>
-                      <div className=" w-full flex flex-col  items-center  py-1    max-lg:min-w-[100px]  max-lg:border-blue-500   max-lg:border-b-2 max-lg:border-r-2 max-lg:col-span-2  max-lg:text-sm   ">
+                      <div className=" w-full flex flex-col  items-center  py-1    max-md:min-w-[100px]  max-md:border-blue-500   max-md:border-b-2 max-md:border-r-2 max-md:col-span-2  max-md:text-sm   ">
                         <div>Subtotal</div>
                         <div className="flex">
                           <div>S/{Number(item.subtotal).toFixed(2)}</div>
                           <button
                             onClick={() => handleClearPedido(key)}
-                            className="flex justify-center cursor-pointer pl-2 max-lg:hidden"
+                            className="flex justify-center cursor-pointer pl-2 max-md:hidden"
                           >
                             <svg
                               version="1.0"
@@ -814,18 +814,18 @@ l-1342 1342 -113 -108 c-62 -60 -669 -664 -1349 -1343 -679 -678 -1242 -1233
                     </React.Fragment>
                   ))}
             </div>
-            <div className="w-[30%] min-h-[200px] border-red-500 border-2 max-sm:w-full max-lg:w-[60%] ">
-              <div className="w-full h-[20%] flex justify-center items-center border-red-500 border-2 max-lg:min-h-[50px] ">
-                <h1 className="max-lg:text-sm"> la hora de donde la sacaste</h1>
+            <div className="w-[30%] min-h-[200px] border-red-500 border-2 max-sm:w-full max-md:w-[60%] max-lg:w-[30%] max-xl:w-[30%] ">
+              <div className="w-full h-[20%] flex justify-center items-center border-red-500 border-2 max-md:min-h-[50px] ">
+                <h1 className="max-md:text-sm"> la hora de donde la sacaste</h1>
               </div>
 
               {cargaImg && (
-                <div className="w-full h-[40%] flex justify-end items-center  pr-3 border-red-500 border-2 max-lg:min-h-[80px] max-lg:text-sm">
+                <div className="w-full h-[40%] flex justify-end items-center  pr-3 border-red-500 border-2 max-md:min-h-[80px] max-md:text-sm">
                   <h1> Total &nbsp; S/{lista.total}</h1>
                 </div>
               )}
 
-              <div className="w-full h-[40%] min-h-[50px] pb-3 flex justify-center items-end  border-blue-500 border-2 max-lg:min-h-[100px]">
+              <div className="w-full h-[40%] min-h-[50px] pb-3 flex justify-center items-end  border-blue-500 border-2 max-md:min-h-[100px]">
                 <input
                   type="button"
                   // onClick={(e) => handleId("id", `${id}`, e)}
