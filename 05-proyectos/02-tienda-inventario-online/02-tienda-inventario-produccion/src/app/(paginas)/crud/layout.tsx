@@ -122,7 +122,7 @@ export default function Layout({
         </button>
 
         <div
-          className={`flex w-full max-sm:w-1/2 max-sm:flex-col ${
+          className={`border-blue 500 border-2 flex justify-evenly w-full max-sm:flex max-sm:w-1/2  max-sm:flex-col max-sm:items-start ${
             display
               ? "  max-sm:ransition-transform max-sm:duration-300  max-sm:linear  max-sm:h-[220px] max-sm:overflow-hidden  "
               : "   max-sm:ransition-transform max-sm:duration-300 max-sm:linear max-sm:h-[0px] max-sm:overflow-hidden	"
@@ -153,25 +153,25 @@ export default function Layout({
           {/* <Link rel="preload" className='border-red-500 border-2  w-1/2 h-full cursor-pointer  py-2 ' href={'/crud/aw'} >patch</Link> */}
           {/* <div className='border-red-500 border-2 cursor-pointer w-[25%] py-2 max-sm:w-full max-sm:mb-1'><Link href={'/crud/aw'} >patch</Link></div> */}
 
-          <button
+          {/* <button
             className="border-red-500 border-2 cursor-pointer w-[25%] py-2 max-sm:w-full max-sm:mb-1"
             onClick={() => {
               router.push("/crud/aw");
             }}
           >
             patch
-          </button>
+          </button> */}
 
           {/* <Link rel="preload" className='border-red-500 border-2  w-1/2 cursor-pointer  py-2 ' href={'/crud/az'} >delete </Link> */}
           {/* <div className='border-red-500 border-2 cursor-pointer w-[25%] py-2 max-sm:w-full max-sm:mb-1'><Link href={'/crud/az'} >delete </Link></div> */}
-          <button
+          {/* <button
             className="border-red-500 border-2 cursor-pointer w-[25%] py-2 max-sm:w-full max-sm:mb-1"
             onClick={() => {
               router.push("/crud/az");
             }}
           >
             delete
-          </button>
+          </button> */}
         </div>
       </div>
       {/* <Link href="/crud/at">analytics</Link>

@@ -108,7 +108,7 @@ const ListSmartphoneRp: React.FC<Props> = ({
               width="0"
               height="0"
               sizes="100vw"
-              className="w-[100%]  max-w-[550px] h-[100%] max-h-[900px] max-sm:w-[80%] max-sm:max-w-[350px] max-sm:h-[100%]"
+              className="w-[100%]  max-w-[550px] h-[100%] max-h-[85%] max-sm:w-[80%] max-sm:max-w-[350px] max-sm:h-[85%]"
               src={picture}
               alt="Picture of the author"
             />
@@ -125,19 +125,28 @@ const ListSmartphoneRp: React.FC<Props> = ({
         picture.includes(".svg") ? (
           <Image
             onClick={handleResizeImg}
-            className="w-auto h-auto px-9 "
             src={picture}
-            width="250"
-            height="300"
+            width="0"
+            height="0"
+            sizes="100vw"
             alt="Picture of the author"
+            className=" w-[80%] h-[300px] max-sm:h-[210px]"
           />
         ) : (
           ""
         )}
         {picture.includes(".mp4") || picture.includes(".mp3") ? (
-          <video src={picture} controls>
-            {title}
-          </video>
+          <div className="w-[80%] h-[300px] max-sm:h-[210px]">
+            <video
+              className="w-full h-full object-cover"
+              width={0}
+              height={0}
+              src={picture}
+              controls
+            >
+              {title}
+            </video>
+          </div>
         ) : (
           ""
         )}

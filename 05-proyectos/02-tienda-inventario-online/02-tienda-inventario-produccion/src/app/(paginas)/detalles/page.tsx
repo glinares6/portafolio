@@ -455,17 +455,25 @@ const Page: React.FC = () => {
                 <Image
                   // onClick={handleResizeImg}
                   src={dataGet.picture}
-                  width={280}
-                  height={280}
+                  width={0}
+                  height={0}
+                  sizes="100vw"
                   alt="Picture of the author2"
+                  className="w-[270px] h-[300px]"
                 />
               )}
 
             {(cargaImg && dataGet.picture.includes(".mp4")) ||
             (cargaImg && dataGet.picture.includes(".mp3")) ? (
-              <video src={dataGet.picture} controls>
-                {dataGet.title}
-              </video>
+              <div className="w-[270px] h-[300px]">
+                <video
+                  className="w-full h-full object-cover"
+                  src={dataGet.picture}
+                  controls
+                >
+                  {dataGet.title}
+                </video>
+              </div>
             ) : (
               ""
             )}

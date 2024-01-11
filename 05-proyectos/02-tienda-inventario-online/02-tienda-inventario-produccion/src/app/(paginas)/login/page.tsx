@@ -394,11 +394,11 @@ export default function Page() {
     <>
       <div
         className="border-red-500 border-2
-            flex   w-full  h-[calc(100vh-64px)]  justify-center items-center"
+            flex   w-full  h-[calc(100vh-64px)]  justify-center items-center "
       >
         <form
           onSubmit={handleSubmitForm}
-          className="flex flex-col border-green-500 border-2  w-[25%] h-[60%] min-w-[250px] min-h-[250px]   max-sm:w-[70%] max-sm:min-w-[200px]"
+          className="flex flex-col border-green-500 border-2  w-[25%] h-[60%] min-w-[250px] min-h-[250px]   max-sm:w-[70%] max-sm:min-w-[200px] max-lg:w-[60%] max-xl:w-[55%]"
         >
           <div className="flex justify-center  items-center w-full h-[15%] border-red-500 border-2">
             <div className="flex items-center  justify-center w-full h-[50%]  border-green-500 border-2">

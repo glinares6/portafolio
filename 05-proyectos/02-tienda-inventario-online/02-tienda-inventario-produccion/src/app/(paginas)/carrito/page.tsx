@@ -671,15 +671,17 @@ export default function Page() {
                       {item.smartphone.picture.includes(".mp4") ||
                       item.smartphone.picture.includes(".mp3") ? (
                         <div className="w-[130px] h-[130px]  relative  py-1 max-md:row-span-1  max-md:border-blue-500 border-t-2 max-md:border-l-2 max-md:mt-2">
-                          <video
-                            className="absolute top-[-10%] w-[130px]  h-[130px] "
-                            width={130}
-                            height={130}
-                            src={item.smartphone.picture}
-                            controls
-                          >
-                            {item.smartphone.title}
-                          </video>
+                          <div className="w-[130px] h-[120px]">
+                            <video
+                              className=" w-full  h-full object-cover "
+                              width={0}
+                              height={0}
+                              src={item.smartphone.picture}
+                              controls
+                            >
+                              {item.smartphone.title}
+                            </video>
+                          </div>
                         </div>
                       ) : (
                         ""

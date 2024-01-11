@@ -56,7 +56,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       <br />
       <h2>{testState}</h2>
-      <button onClick={handleLogout}>logout</button>
+
+      <div className="flex  my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
+        <button
+          className=" w-full text-white bg-red-500 cursor-pointer"
+          onClick={handleLogout}
+        >
+          logout
+        </button>
+      </div>
     </>
   );
 }
