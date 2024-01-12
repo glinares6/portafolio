@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRef } from "react";
 
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { UseContext } from "../contexts/authContext";
 interface Props {
   id: number;
   picture: string;
@@ -40,6 +41,8 @@ const ListSmartphone: React.FC<Props> = ({
     }
   });
 
+  const { cuentaState, setCuentaState }: any = useContext(UseContext);
+
   const router = useRouter();
 
   const handleId = (
@@ -71,10 +74,14 @@ const ListSmartphone: React.FC<Props> = ({
 
   return (
     <>
-      <div className="grid grid-cols-1 grid-rows-[1fr_200px_50px] border-purple-700 border-2">
+      <div
+        className={`grid grid-cols-1 grid-rows-[1fr_200px_50px]  border-purple-700 border-2`}
+      >
         {modalImg && (
           <div
-            className=" absolute z-30  flex left-0 justify-end w-[75%] max-sm:w-[90%]  cursor-pointer"
+            className={` absolute z-20 ${
+              cuentaState && "z-10"
+            }  flex left-0 justify-end w-[75%] max-sm:w-[90%]  cursor-pointer`}
             onClick={handleResizeImg}
           >
             {" "}
@@ -96,7 +103,10 @@ const ListSmartphone: React.FC<Props> = ({
           </div>
         )}
         {modalImg && (
-          <div className=" absolute z-20  flex left-0 justify-center w-full h-full   cursor-pointer">
+          <div
+            className={`absolute  z-10  ${cuentaState && "z-10"}
+            } flex left-0 justify-center w-full h-full   cursor-pointer`}
+          >
             {" "}
             {picture.includes(".webp") ||
             picture.includes(".jpeg") ||

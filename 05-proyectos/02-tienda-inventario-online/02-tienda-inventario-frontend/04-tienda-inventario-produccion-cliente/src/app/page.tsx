@@ -129,7 +129,7 @@ export default function Page() {
   return (
     <>
       <main>
-        <div className={`${cuentaState && "relative z-10 "}`}>
+        <div className={`${cuentaState && "z-10 "}`}>
           <MenuCuenta />
           <div className={` flex flex-col  items-center `}>
             <div className="flex item-center w-11/12  border-green-500 border-2 max-sm:flex-col  ">
