@@ -36,46 +36,46 @@ export default function Page() {
 
   // const { refactorizar } = carritoValidation();
 
-  const refactorizar = async (
-    localCarritoBaseP: any,
-    localSessionCarrito: any
-  ) => {
-    if (localCarritoBaseP) {
-      const resCarritoPedidoP = await getCarritoReq(localCarritoBaseP);
+  // const refactorizar = async (
+  //   localCarritoBaseP: any,
+  //   localSessionCarrito: any
+  // ) => {
+  //   if (localCarritoBaseP) {
+  //     const resCarritoPedidoP = await getCarritoReq(localCarritoBaseP);
 
-      console.log("dato dado P", resCarritoPedidoP);
+  //     console.log("dato dado P", resCarritoPedidoP);
 
-      if (resCarritoPedidoP.msg === "sesion no encontrada") {
-        const resGetCarritoCompraK = await getCarritoReq(localSessionCarrito);
+  //     if (resCarritoPedidoP.msg === "sesion no encontrada") {
+  //       const resGetCarritoCompraK = await getCarritoReq(localSessionCarrito);
 
-        console.log("seleccion de editores ", resGetCarritoCompraK);
+  //       console.log("seleccion de editores ", resGetCarritoCompraK);
 
-        if (resGetCarritoCompraK.pedidos) {
-          resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
-            //*eliminando los pedidos de la sesion
+  //       if (resGetCarritoCompraK.pedidos) {
+  //         resGetCarritoCompraK.pedidos.map(async (item: { id: any }) => {
+  //           //*eliminando los pedidos de la sesion
 
-            await deletePedidosReq(item.id);
-          });
-        }
+  //           await deletePedidosReq(item.id);
+  //         });
+  //       }
 
-        //  //*eliminando el carrito compra
-        setTimeout(async () => {
-          console.log("ELIMINAR CARRITO-COMPRA", localSessionCarrito);
+  //       //  //*eliminando el carrito compra
+  //       setTimeout(async () => {
+  //         console.log("ELIMINAR CARRITO-COMPRA", localSessionCarrito);
 
-          await deleteCarritoCompra(resGetCarritoCompraK.id);
+  //         await deleteCarritoCompra(resGetCarritoCompraK.id);
 
-          localStorage.removeItem("sessioncarrito");
-          localStorage.removeItem("localcarritobase");
-          setCargaImg(false);
-          setCestaEmpty(true);
-        }, 3000);
+  //         localStorage.removeItem("sessioncarrito");
+  //         localStorage.removeItem("localcarritobase");
+  //         setCargaImg(false);
+  //         setCestaEmpty(true);
+  //       }, 3000);
 
-        return console.log(
-          "eliminar localPedidos-existente - error en la peticion v2 - v2"
-        );
-      }
-    }
-  };
+  //       return console.log(
+  //         "eliminar localPedidos-existente - error en la peticion v2 - v2"
+  //       );
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     (async () => {
@@ -537,8 +537,8 @@ export default function Page() {
         );
       }
     }
-    await refactorizar(localCarritoBaseP, localSessionCarrito);
-    await refactorizar(localSessionCarrito, localCarritoBaseP);
+    // await refactorizar(localCarritoBaseP, localSessionCarrito);
+    // await refactorizar(localSessionCarrito, localCarritoBaseP);
     //*fin de la transmision
 
     console.log("dato del fondo", key);

@@ -1,8 +1,8 @@
 "use client";
 
 import { UseContext } from "@/app/contexts/authContext";
-import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { redirect, useRouter } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
 import userApp from "./hooks/user-App";
 
 export default function Page() {
@@ -36,6 +36,18 @@ export default function Page() {
 
   let resUserGet;
   let resUserGetEncrypt;
+
+  useEffect(() => {
+    if (!authState) {
+      return redirect("/");
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (!authState) {
+    return null;
+  }
 
   const handleSubmitForm = async (e: {
     [x: string]: any;

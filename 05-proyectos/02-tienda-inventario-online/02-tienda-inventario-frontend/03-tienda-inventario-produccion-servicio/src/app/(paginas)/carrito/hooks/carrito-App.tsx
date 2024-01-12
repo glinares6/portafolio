@@ -45,7 +45,7 @@ export default function carritoApp() {
       }
     );
 
-    await resCarritoCompraDel.json();
+    return resCarritoCompraDel.json();
   };
 
   //*PEDIDOS
