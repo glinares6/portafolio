@@ -30,6 +30,7 @@ export default function RootLayout({
   const [perfilAuth, setPerfilAuth] = useState(false);
 
   const [cuentaState, setCuentaState] = useState(false);
+  const [inicioState, setInicioState] = useState(false);
 
   const [userAuth, setUserAuth] = useState({});
 
@@ -49,6 +50,8 @@ export default function RootLayout({
           perfilAuth,
           cuentaState,
           setCuentaState,
+          inicioState,
+          setInicioState,
           setPerfilAuth,
           userAuth,
           setUserAuth,
@@ -66,10 +69,18 @@ export default function RootLayout({
             perfil
           </Link> */}
 
-                  <div className="text-white font-bold">
+                  <div
+                    className={`flex items-center h-full  text-white font-bold ${
+                      inicioState && "pointer-events-none cursor-auto"
+                    }`}
+                  >
                     {" "}
                     <Link
-                      onClick={() => setCuentaState(false)}
+                      className="flex items-center w-full h-full"
+                      onClick={() => {
+                        // setInicioState(false);
+                        setCuentaState(false);
+                      }}
                       rel="preload"
                       href="/contactos"
                       prefetch={false}
@@ -79,10 +90,17 @@ export default function RootLayout({
                   </div>
 
                   {/* <button className="text-white font-bold" onClick={() => route.push('/contactos')}>contactos</button> */}
-                  <div className="text-white font-bold">
+                  <div
+                    className={`flex items-center h-full   text-white font-bold ${
+                      inicioState && "pointer-events-none cursor-auto"
+                    }`}
+                  >
                     {" "}
                     <Link
-                      onClick={() => setCuentaState(false)}
+                      className="flex items-center w-full h-full"
+                      onClick={() => {
+                        setCuentaState(false);
+                      }}
                       rel="preload"
                       href="/productos"
                       prefetch={false}
@@ -101,7 +119,9 @@ export default function RootLayout({
               )} */}
                   {!authState && (
                     <button
-                      className="text-white font-bold"
+                      className={`h-full  text-white font-bold ${
+                        inicioState && "pointer-events-none cursor-auto"
+                      }`}
                       onClick={() => {
                         if (cuentaState) {
                           setCuentaState(false);
@@ -130,9 +150,15 @@ export default function RootLayout({
                     </div>
                   )}
 
-                  <div className="text-white font-bold">
+                  <div
+                    className={`text-white font-bold ${
+                      inicioState && "pointer-events-none cursor-auto"
+                    }`}
+                  >
                     <Link
-                      onClick={() => setCuentaState(false)}
+                      onClick={() => {
+                        setCuentaState(false);
+                      }}
                       rel="preload"
                       href="/carrito"
                       prefetch={false}
@@ -143,7 +169,7 @@ export default function RootLayout({
                         id="Capa_1"
                         xmlns="http://www.w3.org/2000/svg"
                         width="50px"
-                        height="50px"
+                        height="60px"
                         viewBox="0 0 902.86 902.86"
                       >
                         <g>
