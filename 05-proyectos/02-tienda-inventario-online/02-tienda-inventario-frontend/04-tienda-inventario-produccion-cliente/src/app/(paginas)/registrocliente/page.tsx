@@ -29,6 +29,8 @@ export default function Page() {
     } else {
       console.log("no hay pedido registrado");
     }
+
+	console.log("input-user",inpUser)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -103,7 +105,7 @@ export default function Page() {
                   id="textNombre"
                   className="flex justify-start items-center h-full border-blue-500 border-2 text-center"
                 >
-                  Usuario:
+                  Correo:
                 </label>
                 <input
                   className="h-full"
@@ -117,34 +119,15 @@ export default function Page() {
                     setPostAuth(false);
                     setHttpError(false);
                     setFieldNull(false);
+		
                   }}
                   required
                   autoComplete="off"
                 />
               </div>
-              <div className="flex flex-col   h-[25%] min-h-[60px]   border-green-500 border-2">
-                <label
-                  id="textPassword"
-                  className="flex justify-start items-center h-full border-blue-500 border-2 text-center"
-                >
-                  Contraseña:
-                </label>
-                <input
-                  className="h-full"
-                  type="password"
-                  name="textPassword"
-                  id="textPassword"
-                  value={inpPass}
-                  onChange={(e) => {
-                    setInpPass(e.target.value);
-                    setPostAuth(false);
-                    setHttpError(false);
-                    setFieldNull(false);
-                  }}
-                  required
-                  autoComplete="off"
-                />
-              </div>
+
+		
+             
               {postAuth && (
                 <div className="bg-green-600 text-white flex flex-col justify-center items-center   h-[10%] min-h-[45px]   border-green-500 border-2">
                   <p>Usuario creado</p>
@@ -166,7 +149,7 @@ export default function Page() {
                 <input
                   className="border-green-500 border-2 cursor-pointer w-full h-full"
                   type="submit"
-                  value="Registrarse"
+                  value="Continuar"
                   onClick={(e: any) => {
                     // console.log("e interno", e.target.form[0].value);
                     // console.log("e interno", e.target.form[1].value);
