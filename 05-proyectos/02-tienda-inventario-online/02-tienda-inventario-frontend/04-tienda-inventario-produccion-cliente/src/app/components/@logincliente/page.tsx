@@ -4,13 +4,14 @@ import { UseContext } from "@/app/contexts/authContext";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
-export default function RegistroCliente() {
+export default function LoginCliente() {
   const {
     setInicioState,
-    registroSwitch,
-    setRegistroSwitch,
+    loginSwitch,
     setLoginSwitch,
     setInicioSwitch,
+    registroSwitch,
+    setRegistroSwitch,
   }: any = useContext(UseContext);
 
   const route = useRouter();
@@ -20,17 +21,27 @@ export default function RegistroCliente() {
   return (
     <>
       <div
-        className={`relative h-full  flex flex-col justify-around items-center  transition-right duration-300  ease-in-out  ${
-          registroSwitch
-            ? "   w-full right-[0%] opacity-100  "
-            : " w-[0%]   -right-[300%] opacity-0  "
-        } `}
+        className={`relative h-full  flex flex-col justify-around items-center transition-right duration-300  ease-in-out  ${
+          loginSwitch
+            ? "      w-full right-[0%]  opacity-100"
+            : `  ${
+                registroSwitch
+                  ? " w-[0%]  right-[200%] opacity-0"
+                  : "     w-[0%]  -right-[200%] opacity-0"
+              }`
+        }  
+
+        
+     
+       
+  
+          `}
       >
         <button
           onClick={() => {
-            setInicioState(false); //*cierra la ventana
-            setInicioSwitch(false); //*cambia la primera ventana
-            setRegistroSwitch(false); //* cambia la segunda ventana
+            setInicioState(false); //* cierra la ventana
+            setInicioSwitch(false); //* cambia la primera ventana
+            setLoginSwitch(false); //*cambia la segunda ventana
           }}
           className={`absolute w-[30px] h-[45px]  top-0 right-[8px] z-30`}
         >
@@ -58,10 +69,10 @@ export default function RegistroCliente() {
         <button
           onClick={() => {
             // setInicioState(false);
-
             setTimeout(() => {
-              setLoginSwitch(true); //* vuelve a la ventana anterior
-              setRegistroSwitch(false); //*cambia la ventana actual
+              setInicioSwitch(false); //* vuelve a la  ventana anterior
+
+              setLoginSwitch(false); //*cambia la ventana actual
             }, 50);
           }}
           className={`absolute w-[30px] h-[45px]  top-0 left-[10px] z-30`}
@@ -93,7 +104,7 @@ export default function RegistroCliente() {
 
         <div className="flex flex-col justify-center w-[400px] gap-5 ">
           <div className="flex justify-center pt-3 max-sm:text-lg">
-            Ingresa tu correo
+            Iniciar Sesión
           </div>
 
           <div className="flex justify-center max-sm:text-sm">
@@ -101,29 +112,43 @@ export default function RegistroCliente() {
               Correo
             </button>
           </div>
+
+          <div className="flex justify-center max-sm:text-sm">
+            <button
+              onClick={() => {
+                // route.push("/logincliente");
+                // setTimeout(() => {
+                //   setInicioState(false);
+                // }, 3000);
+              }}
+              className="w-[80%] border-black border-2 h-[40px]  font-bold rounded-full"
+            >
+              Contraseña
+            </button>
+          </div>
         </div>
 
-        {/* <div className="w-[400px] flex justify-end gap-x-3 pr-5 max-sm:pr-10">
+        <div className="w-[400px] flex justify-end gap-x-3 pr-5 max-sm:pr-10">
           <h1 className="max-sm:text-sm">No tienes una cuenta ?</h1>
           <button
-            onClick={async () => {
+            onClick={() => {
               console.log(" presionado el boton enviar");
 
               //*si se cambia  el localCarrito
 
+              // setInicioState(false); //* cierra la ventana
+              // setInicioSwitch(false); //* cambia la primera ventana
+              // setLoginSwitch(false); //*cambia la segunda ventana
               // route.push("/registrocliente");
 
-              // setRegistroSwitch(false);
-
-              // setTimeout(() => {
-              //   setInicioSwitch(false);
-              // }, 1000);
+              setLoginSwitch(false); //*cambia la ventana actual
+              setRegistroSwitch(true); //* va a la siguiente ventana
             }}
             className="cursor-pointer max-sm:text-sm"
           >
-            <h1 className="text-blue-700 font-bold">Registrate</h1>
+            <h1 className="text-red-700 font-bold">Registrate</h1>
           </button>
-        </div> */}
+        </div>
 
         {/* <div className="w-[400px] h-full">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam nisi

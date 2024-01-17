@@ -2,14 +2,20 @@ import { useContext, useEffect, useState } from "react";
 import { UseContext } from "../contexts/authContext";
 import { useRouter } from "next/navigation";
 import RegistroCliente from "./@registrocliente/page";
+import LoginCliente from "./@logincliente/page";
 
 export default function MenuCuenta() {
-  const { cuentaState, setCuentaState, inicioState, setInicioState }: any =
-    useContext(UseContext);
-
-  const [inicioSwitch, setInicioSwitch] = useState(false);
-
-  const [registroSwitch, setRegistroSwitch] = useState(false);
+  const {
+    cuentaState,
+    setCuentaState,
+    inicioState,
+    setInicioState,
+    inicioSwitch,
+    setInicioSwitch,
+    registroSwitch,
+    loginSwitch,
+    setLoginSwitch,
+  }: any = useContext(UseContext);
 
   const route = useRouter();
 
@@ -42,20 +48,33 @@ export default function MenuCuenta() {
 
       {inicioState && (
         <div className="fixed z-30 backdrop-brightness-50 bg-white/30 w-full h-[calc(100vh-64px)]  border-red-500 border-2">
-          <div className=" w-[100%] h-[100vh] flex justify-center items-start   border-red-500 border-2 ">
+          <div className=" w-[100%] h-[calc(100vh-64px)]  flex justify-center items-start   border-red-500 border-2 ">
             <div
-              className={`relative flex   w-[400px] h-[50vh]  border-red-500 border-2 bg-white overflow-hidden  max-sm:w-full max-sm:h-full `}
+              className={`relative flex   w-[400px] h-[50vh]  border-red-500 border-2 bg-white  overflow-hidden max-sm:w-full max-sm:h-full `}
             >
-              <button
-                onClick={() => {
-                  setInicioState(false);
-                  setInicioSwitch(false);
-                  setRegistroSwitch(false);
-                }}
-                className={`absolute w-[30px] h-[45px]  top-0 right-[8px] z-30`}
+              <div
+                className={`relative h-full  flex flex-col justify-around  items-center  duration-300  ease-in-out transition-right
+                
+                ${
+                  inicioSwitch
+                    ? "  w-[0%]   right-[100%] opacity-0  "
+                    : "w-full  right-0  opacity-100  "
+                } 
+
+                    
+               
+                `}
               >
-                <div
-                  className=" flex justify-center items-center  w-full h-full
+                <button
+                  onClick={() => {
+                    setInicioState(false);
+                    setInicioSwitch(false);
+                    setLoginSwitch(false);
+                  }}
+                  className={`absolute w-[30px] h-[45px]  top-0 right-[8px] z-30`}
+                >
+                  <div
+                    className=" flex justify-center items-center  w-full h-full
                   before:content-['']  
                   before:absolute 
                   before:block 
@@ -72,18 +91,10 @@ export default function MenuCuenta() {
                   after:h-[20px]
                   after:-rotate-45
                   "
-                ></div>
-              </button>
-
-              <div
-                className={`relative h-full  flex flex-col justify-around  transition-right duration-500  ease-in-out ${
-                  inicioSwitch
-                    ? "w-[0%]   right-[100%] opacity-0 "
-                    : "w-full   right-0 opacity-100  "
-                } `}
-              >
-                <div className="flex flex-col justify-center w-full gap-5 ">
-                  <div className="flex justify-center pt-3 max-sm:text-lg">
+                  ></div>
+                </button>
+                <div className="flex flex-col justify-center w-[400px] gap-5 ">
+                  <div className="flex justify-center  max-sm:text-lg">
                     Iniciar Sesión
                   </div>
 
@@ -96,11 +107,15 @@ export default function MenuCuenta() {
                   <div className="flex justify-center max-sm:text-sm">
                     <button
                       onClick={() => {
-                        route.push("/logincliente");
+                        // route.push("/logincliente");
 
-                        setTimeout(() => {
-                          setInicioState(false);
-                        }, 3000);
+                        // setTimeout(() => {
+                        //   setInicioState(false);
+                        // }, 3000);
+
+                        setInicioSwitch(true);
+
+                        setLoginSwitch(true);
                       }}
                       className="w-[80%] border-black border-2 h-[40px]  font-bold rounded-full"
                     >
@@ -131,13 +146,10 @@ export default function MenuCuenta() {
                   </div>
                 </div>
 
-                <div className="flex justify-center max-sm:text-sm">
-                  {<RegistroCliente />}
-                </div>
-                <div className="w-full flex justify-end gap-x-3 pr-5">
+                {/* <div className="w-full flex justify-end gap-x-3 pr-5">
                   <h1 className="max-sm:text-sm">No tienes una cuenta ?</h1>
                   <button
-                    onClick={async () => {
+                    onClick={() => {
                       console.log(" presionado el boton enviar");
 
                       //*si se cambia  el localCarrito
@@ -154,18 +166,11 @@ export default function MenuCuenta() {
                   >
                     <h1 className="text-red-700 font-bold">Registrate</h1>
                   </button>
-                </div>
+                </div> */}
               </div>
 
-              <div
-                className={`flex h-full relative transition-right duration-500  ease-in-out ${
-                  registroSwitch
-                    ? "delay-2000  opacity-100 right-[0%] visible "
-                    : " w-[0%] opacity-0 -right-[50%] invisible "
-                }`}
-              >
-                <h1>datos de donde lo sacas</h1>
-              </div>
+              <LoginCliente />
+              <RegistroCliente />
             </div>
 
             {/* <div>

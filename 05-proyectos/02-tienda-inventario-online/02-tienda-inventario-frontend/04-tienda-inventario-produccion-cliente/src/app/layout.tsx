@@ -32,6 +32,11 @@ export default function RootLayout({
   const [cuentaState, setCuentaState] = useState(false);
   const [inicioState, setInicioState] = useState(false);
 
+  const [registroSwitch, setRegistroSwitch] = useState(false);
+  const [loginSwitch, setLoginSwitch] = useState(false);
+
+  const [inicioSwitch, setInicioSwitch] = useState(false);
+
   const [userAuth, setUserAuth] = useState({});
 
   const [pedidoList, setPedidoList] = useState({});
@@ -57,6 +62,12 @@ export default function RootLayout({
           setUserAuth,
           pedidoList,
           setPedidoList,
+          registroSwitch,
+          setRegistroSwitch,
+          inicioSwitch,
+          setInicioSwitch,
+          loginSwitch,
+          setLoginSwitch,
         }}
       >
         <html lang="en">
