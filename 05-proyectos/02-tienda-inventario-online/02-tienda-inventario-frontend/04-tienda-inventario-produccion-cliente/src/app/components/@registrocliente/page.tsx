@@ -67,7 +67,7 @@ export default function RegistroCliente() {
           className={`absolute w-[30px] h-[45px]  top-0 left-[10px] z-30`}
         >
           <div
-            className=" relative flex justify-center items-center  w-[2px] h-[17px]  bg-red-500  transform -rotate-90 left-[10px]  h-full
+            className=" relative flex justify-center items-center  w-[2px] h-[15px]  bg-red-500  transform -rotate-90 left-[10px]  h-full
                   before:content-['']  
                   before:absolute 
                   before:block 
