@@ -4,7 +4,7 @@ import { UseContext } from "@/app/contexts/authContext";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
-export default function RegistroCliente() {
+export default function CorreoCliente() {
   const {
     inicioSwitch,
     setInicioState,
@@ -13,6 +13,8 @@ export default function RegistroCliente() {
     loginSwitch,
     setLoginSwitch,
     setInicioSwitch,
+    correoSwitch,
+    setCorreoSwitch,
   }: any = useContext(UseContext);
 
   const route = useRouter();
@@ -23,7 +25,7 @@ export default function RegistroCliente() {
     <>
       <div
         className={`relative h-full  flex flex-col justify-around items-center  transition-right duration-300  ease-in-out  ${
-          registroSwitch
+          correoSwitch
             ? "   w-full right-[0%] opacity-100  "
             : " w-[0%]   -right-[300%] opacity-0  "
         } `}
@@ -32,7 +34,7 @@ export default function RegistroCliente() {
           onClick={() => {
             setInicioState(false); //*cierra la ventana
             setInicioSwitch(false); //*cambia la primera ventana
-            setRegistroSwitch(false); //* cambia la segunda ventana
+            setCorreoSwitch(false); //* cambia la segunda ventana
           }}
           className={`absolute w-[30px] h-[45px]  top-0 right-[8px] z-30`}
         >
@@ -62,8 +64,8 @@ export default function RegistroCliente() {
             // setInicioState(false);
 
             setTimeout(() => {
-              setLoginSwitch(true); //* vuelve a la ventana anterior
-              setRegistroSwitch(false); //*cambia la ventana actual
+              setInicioSwitch(false); //* vuelve a la ventana anterior
+              setCorreoSwitch(false); //*cambia la ventana actual
             }, 50);
           }}
           className={`absolute w-[25px] h-[25px]  top-[11px] left-[10px] z-30`}
@@ -95,7 +97,8 @@ export default function RegistroCliente() {
 
         <div className="flex flex-col justify-center w-[400px] gap-5 ">
           <div className="flex justify-center pt-3 max-sm:text-lg">
-            Ingresa tu correo
+            Ingresa tu correo &nbsp;
+            <span className="text-red-700">(Autenticar)</span>
           </div>
 
           <div className="flex justify-center max-sm:text-sm">

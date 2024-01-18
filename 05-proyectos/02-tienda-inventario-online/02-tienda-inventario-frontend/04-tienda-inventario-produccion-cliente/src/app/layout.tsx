@@ -34,6 +34,7 @@ export default function RootLayout({
 
   const [registroSwitch, setRegistroSwitch] = useState(false);
   const [loginSwitch, setLoginSwitch] = useState(false);
+  const [correoSwitch, setCorreoSwitch] = useState(false);
 
   const [inicioSwitch, setInicioSwitch] = useState(false);
 
@@ -68,6 +69,8 @@ export default function RootLayout({
           setInicioSwitch,
           loginSwitch,
           setLoginSwitch,
+          correoSwitch,
+          setCorreoSwitch,
         }}
       >
         <html lang="en">

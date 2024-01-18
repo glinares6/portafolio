@@ -3,6 +3,7 @@ import { UseContext } from "../contexts/authContext";
 import { useRouter } from "next/navigation";
 import RegistroCliente from "./@registrocliente/page";
 import LoginCliente from "./@logincliente/page";
+import CorreoCliente from "./@correocliente/page";
 
 export default function MenuCuenta() {
   const {
@@ -13,8 +14,11 @@ export default function MenuCuenta() {
     inicioSwitch,
     setInicioSwitch,
     registroSwitch,
+    setRegistroSwitch,
     loginSwitch,
     setLoginSwitch,
+    correoSwitch,
+    setCorreoSwitch,
   }: any = useContext(UseContext);
 
   const route = useRouter();
@@ -50,7 +54,7 @@ export default function MenuCuenta() {
         <div className="fixed z-30 backdrop-brightness-50 bg-white/30 w-full h-[calc(100vh-64px)]  border-red-500 border-2">
           <div className=" w-[100%] h-[calc(100vh-64px)]  flex justify-center items-start   border-red-500 border-2 ">
             <div
-              className={`relative flex   w-[400px] h-[50vh]  border-red-500 border-2 bg-white  overflow-hidden max-sm:w-full max-sm:h-full `}
+              className={`relative flex   w-[400px] h-[50vh]  border-red-500 border-2 bg-white overflow-hidden  max-sm:w-full max-sm:h-full `}
             >
               <div
                 className={`relative h-full  flex flex-col justify-around  items-center  duration-300  ease-in-out transition-right
@@ -99,7 +103,14 @@ export default function MenuCuenta() {
                   </div>
 
                   <div className="flex justify-center max-sm:text-sm">
-                    <button className="w-[80%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full">
+                    <button
+                      onClick={() => {
+                        setInicioSwitch(true);
+                        // setLoginSwitch(true);
+                        setCorreoSwitch(true);
+                      }}
+                      className="w-[80%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full"
+                    >
                       Recibir la clave de acceso por correo
                     </button>
                   </div>
@@ -168,7 +179,7 @@ export default function MenuCuenta() {
                   </button>
                 </div> */}
               </div>
-
+              <CorreoCliente />
               <LoginCliente />
               <RegistroCliente />
             </div>
