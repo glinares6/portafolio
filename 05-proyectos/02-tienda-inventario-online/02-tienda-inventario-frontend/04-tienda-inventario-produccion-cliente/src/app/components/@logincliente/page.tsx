@@ -75,10 +75,10 @@ export default function LoginCliente() {
               setLoginSwitch(false); //*cambia la ventana actual
             }, 50);
           }}
-          className={`absolute w-[30px] h-[45px]  top-0 left-[10px] z-30`}
+          className={`absolute w-[25px] h-[25px]  top-[11px] left-[10px] z-30 `}
         >
           <div
-            className=" relative flex justify-center items-center  w-[2px] h-[15px]  bg-red-500  transform -rotate-90 left-[10px]  h-full
+            className=" relative   w-[2px] h-[10px]  bg-red-500   transform -rotate-90 left-[10px]  h-full
                   before:content-['']  
                   before:absolute 
                   before:block 
