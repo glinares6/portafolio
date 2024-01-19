@@ -16,6 +16,9 @@ export default function LoginCliente() {
 
   const route = useRouter();
 
+  const [correoValue, setCorreoValue] = useState("");
+  const [passwordValue, setPasswordValue] = useState("");
+
   useEffect(() => {}, []);
 
   return (
@@ -70,6 +73,8 @@ export default function LoginCliente() {
           onClick={() => {
             // setInicioState(false);
             setTimeout(() => {
+              setCorreoValue("");
+              setPasswordValue("");
               setInicioSwitch(false); //* vuelve a la  ventana anterior
 
               setLoginSwitch(false); //*cambia la ventana actual
@@ -106,15 +111,19 @@ export default function LoginCliente() {
           <div className="flex justify-center pt-3 text-lg max-sm:text-sm ">
             Iniciar Sesión
           </div>
-          <div className="relative  flex justify-center  text-lg max-sm:text-lg">
+          <div className="relative  flex justify-center   max-sm:text-lg">
             <fieldset className=" w-[80%] border-gray-500 border-2 max-sm:w-[80%] ">
               <legend className="w-[90px] relative ml-[15px] pl-[5px] text-lg max-sm:text-sm">
                 Correo
               </legend>
-              <div className="w-full  pl-[5px] pb-[5px] max-sm:text-sm">
+              <div className="w-full  pl-[5px] pb-[5px] ">
                 <input
-                  className="w-full focus:outline-none "
+                  className="w-full focus:outline-none text-lg max-sm:text-sm"
                   type="email"
+                  onChange={(e) => {
+                    setCorreoValue(e.target.value);
+                  }}
+                  value={correoValue}
                   name=""
                   id=""
                   placeholder="email@mail.com"
@@ -129,13 +138,17 @@ export default function LoginCliente() {
               <legend className="w-[90px] relative ml-[15px] pl-[5px] text-lg max-sm:text-sm ">
                 Contraseña
               </legend>
-              <div className="w-full  pl-[5px] pb-[5px]">
+              <div className="w-full  pl-[5px] pb-[5px] ">
                 <input
-                  className="w-full focus:outline-none  text-lg max-sm:text-sm"
+                  className="w-full focus:outline-none  text-lg  max-sm:text-sm"
                   type="password"
+                  onChange={(e) => {
+                    setPasswordValue(e.target.value);
+                  }}
+                  value={passwordValue}
                   name=""
                   id=""
-                  placeholder="su contraseña"
+                  placeholder=""
                   autoComplete="off"
                   required
                 />
@@ -162,7 +175,8 @@ export default function LoginCliente() {
               // setInicioSwitch(false); //* cambia la primera ventana
               // setLoginSwitch(false); //*cambia la segunda ventana
               // route.push("/registrocliente");
-
+              setCorreoValue("");
+              setPasswordValue("");
               setLoginSwitch(false); //*cambia la ventana actual
               setRegistroSwitch(true); //* va a la siguiente ventana
             }}

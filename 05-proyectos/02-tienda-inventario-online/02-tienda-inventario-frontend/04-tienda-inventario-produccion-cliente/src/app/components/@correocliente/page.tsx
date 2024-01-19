@@ -17,6 +17,8 @@ export default function CorreoCliente() {
     setCorreoSwitch,
   }: any = useContext(UseContext);
 
+  const [correoValue, setCorreoValue]: any = useState("");
+
   const route = useRouter();
 
   useEffect(() => {}, []);
@@ -64,6 +66,7 @@ export default function CorreoCliente() {
             // setInicioState(false);
 
             setTimeout(() => {
+              setCorreoValue("");
               setInicioSwitch(false); //* vuelve a la ventana anterior
               setCorreoSwitch(false); //*cambia la ventana actual
             }, 50);
@@ -104,9 +107,13 @@ export default function CorreoCliente() {
               <legend className="w-[90px] relative ml-[15px] pl-[5px] text-lg max-sm:text-sm">
                 Correo
               </legend>
-              <div className="w-full  pl-[5px] pb-[5px] max-sm:text-sm">
+              <div className="w-full  pl-[5px] pb-[5px] ">
                 <input
-                  className="w-full focus:outline-none "
+                  className="w-full focus:outline-none  text-lg  max-sm:text-sm"
+                  onChange={(e) => {
+                    setCorreoValue(e.target.value);
+                  }}
+                  value={correoValue}
                   type="email"
                   name=""
                   id=""

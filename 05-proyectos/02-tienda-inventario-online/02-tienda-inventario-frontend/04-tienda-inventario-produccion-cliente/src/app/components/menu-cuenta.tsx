@@ -54,7 +54,7 @@ export default function MenuCuenta() {
         <div className="fixed z-30 backdrop-brightness-50 bg-white/30 w-full h-[calc(100vh-64px)]  border-red-500 border-2">
           <div className="fixed w-[100%] h-[calc(100vh-64px)]  flex justify-center items-start   border-red-500 border-2 overflow-y-scroll">
             <div
-              className={`relative flex   w-[400px] h-[50vh]  border-red-500 border-2 bg-white overflow-hidden  max-sm:w-full max-sm:h-full min-h-[450px]`}
+              className={`relative flex   w-[400px] h-[50vh]  border-red-500 border-2 bg-white overflow-hidden  max-sm:w-full max-sm:h-full min-h-[600px]`}
             >
               <div
                 className={`relative h-full  flex flex-col justify-around  items-center  duration-300  ease-in-out transition-right

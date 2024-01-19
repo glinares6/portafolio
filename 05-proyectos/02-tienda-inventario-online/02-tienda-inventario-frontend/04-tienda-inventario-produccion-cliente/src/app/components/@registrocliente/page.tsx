@@ -15,6 +15,8 @@ export default function RegistroCliente() {
     setInicioSwitch,
   }: any = useContext(UseContext);
 
+  const [correoValue, setCorreoValue] = useState("");
+
   const route = useRouter();
 
   useEffect(() => {}, []);
@@ -62,6 +64,7 @@ export default function RegistroCliente() {
             // setInicioState(false);
 
             setTimeout(() => {
+              setCorreoValue("");
               setInicioSwitch(false); //* vuelve a la ventana principal
               // setLoginSwitch(true); //* vuelve a la ventana logincliente
 
@@ -104,10 +107,14 @@ export default function RegistroCliente() {
               <legend className="w-[90px] relative ml-[15px] pl-[5px] text-lg max-sm:text-sm">
                 Correo
               </legend>
-              <div className="w-full  pl-[5px] pb-[5px] max-sm:text-sm">
+              <div className="w-full  pl-[5px] pb-[5px] ">
                 <input
-                  className="w-full focus:outline-none "
+                  className="w-full focus:outline-none text-lg  max-sm:text-sm "
                   type="email"
+                  onChange={(e) => {
+                    setCorreoValue(e.target.value);
+                  }}
+                  value={correoValue}
                   name=""
                   id=""
                   placeholder="email@mail.com"
