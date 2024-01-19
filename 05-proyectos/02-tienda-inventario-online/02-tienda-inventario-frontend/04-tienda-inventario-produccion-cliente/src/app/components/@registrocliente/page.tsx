@@ -22,7 +22,7 @@ export default function RegistroCliente() {
   return (
     <>
       <div
-        className={`relative h-full  flex flex-col justify-around items-center  transition-right duration-300  ease-in-out  ${
+        className={`relative h-full  flex flex-col justify-start items-center  transition-right duration-300  ease-in-out  ${
           registroSwitch
             ? "   w-full right-[0%] opacity-100  "
             : " w-[0%]   -right-[300%] opacity-0  "
@@ -62,8 +62,10 @@ export default function RegistroCliente() {
             // setInicioState(false);
 
             setTimeout(() => {
-              setLoginSwitch(true); //* vuelve a la ventana anterior
-              setRegistroSwitch(false); //*cambia la ventana actual
+              setInicioSwitch(false); //* vuelve a la ventana principal
+              // setLoginSwitch(true); //* vuelve a la ventana logincliente
+
+              setRegistroSwitch(false); //*oculta la ventana registrocliente
             }, 50);
           }}
           className={`absolute w-[25px] h-[25px]  top-[11px] left-[10px] z-30`}
@@ -93,14 +95,32 @@ export default function RegistroCliente() {
           ></div>
         </button>
 
-        <div className="flex flex-col justify-center w-[400px] gap-5 ">
-          <div className="flex justify-center pt-3 max-sm:text-lg">
+        <div className="flex flex-col justify-center w-[400px]  mt-8 gap-7 ">
+          <div className="flex justify-center pt-3 text-lg max-sm:text-sm ">
             Ingresa tu correo
           </div>
+          <div className="relative  flex justify-center  text-lg max-sm:text-lg">
+            <fieldset className=" w-[80%] border-gray-500 border-2 max-sm:w-[80%] ">
+              <legend className="w-[90px] relative ml-[15px] pl-[5px] text-lg max-sm:text-sm">
+                Correo
+              </legend>
+              <div className="w-full  pl-[5px] pb-[5px] max-sm:text-sm">
+                <input
+                  className="w-full focus:outline-none "
+                  type="email"
+                  name=""
+                  id=""
+                  placeholder="email@mail.com"
+                  autoComplete="off"
+                  required
+                />
+              </div>
+            </fieldset>
+          </div>
 
-          <div className="flex justify-center max-sm:text-sm">
+          <div className="flex justify-center text-lg max-sm:text-sm">
             <button className="w-[80%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full">
-              Correo
+              Continuar
             </button>
           </div>
         </div>

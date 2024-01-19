@@ -102,34 +102,56 @@ export default function LoginCliente() {
           ></div>
         </button>
 
-        <div className="flex flex-col justify-center w-[400px] gap-5 ">
-          <div className="flex justify-center pt-3 max-sm:text-lg">
+        <div className="flex flex-col justify-center w-[400px]  mt-8 gap-7 ">
+          <div className="flex justify-center pt-3 text-lg max-sm:text-sm ">
             Iniciar Sesión
           </div>
-
-          <div className="flex justify-center max-sm:text-sm">
-            <button className="w-[80%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full">
-              Correo
-            </button>
+          <div className="relative  flex justify-center  text-lg max-sm:text-lg">
+            <fieldset className=" w-[80%] border-gray-500 border-2 max-sm:w-[80%] ">
+              <legend className="w-[90px] relative ml-[15px] pl-[5px] text-lg max-sm:text-sm">
+                Correo
+              </legend>
+              <div className="w-full  pl-[5px] pb-[5px] max-sm:text-sm">
+                <input
+                  className="w-full focus:outline-none "
+                  type="email"
+                  name=""
+                  id=""
+                  placeholder="email@mail.com"
+                  autoComplete="off"
+                  required
+                />
+              </div>
+            </fieldset>
+          </div>
+          <div className="relative  flex justify-center  max-sm:text-lg">
+            <fieldset className=" w-[80%] border-gray-500 border-2 max-sm:w-[80%] ">
+              <legend className="w-[90px] relative ml-[15px] pl-[5px] text-lg max-sm:text-sm ">
+                Contraseña
+              </legend>
+              <div className="w-full  pl-[5px] pb-[5px]">
+                <input
+                  className="w-full focus:outline-none  text-lg max-sm:text-sm"
+                  type="password"
+                  name=""
+                  id=""
+                  placeholder="su contraseña"
+                  autoComplete="off"
+                  required
+                />
+              </div>
+            </fieldset>
           </div>
 
-          <div className="flex justify-center max-sm:text-sm">
-            <button
-              onClick={() => {
-                // route.push("/logincliente");
-                // setTimeout(() => {
-                //   setInicioState(false);
-                // }, 3000);
-              }}
-              className="w-[80%] border-black border-2 h-[40px]  font-bold rounded-full"
-            >
-              Contraseña
+          <div className="flex justify-center text-lg max-sm:text-sm">
+            <button className="w-[80%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full">
+              Ingresar
             </button>
           </div>
         </div>
 
         <div className="w-[400px] flex justify-end gap-x-3 pr-5 max-sm:pr-10">
-          <h1 className="max-sm:text-sm">No tienes una cuenta ?</h1>
+          <h1 className="text-lg max-sm:text-sm">No tienes una cuenta ?</h1>
           <button
             onClick={() => {
               console.log(" presionado el boton enviar");
@@ -146,7 +168,9 @@ export default function LoginCliente() {
             }}
             className="cursor-pointer max-sm:text-sm"
           >
-            <h1 className="text-red-700 font-bold">Registrate</h1>
+            <h1 className="text-lg max-sm:text-sm text-red-700 font-bold">
+              Registrate
+            </h1>
           </button>
         </div>
 

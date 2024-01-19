@@ -52,9 +52,9 @@ export default function MenuCuenta() {
 
       {inicioState && (
         <div className="fixed z-30 backdrop-brightness-50 bg-white/30 w-full h-[calc(100vh-64px)]  border-red-500 border-2">
-          <div className=" w-[100%] h-[calc(100vh-64px)]  flex justify-center items-start   border-red-500 border-2 ">
+          <div className="fixed w-[100%] h-[calc(100vh-64px)]  flex justify-center items-start   border-red-500 border-2 overflow-y-scroll">
             <div
-              className={`relative flex   w-[400px] h-[50vh]  border-red-500 border-2 bg-white overflow-hidden  max-sm:w-full max-sm:h-full `}
+              className={`relative flex   w-[400px] h-[50vh]  border-red-500 border-2 bg-white overflow-hidden  max-sm:w-full max-sm:h-full min-h-[450px]`}
             >
               <div
                 className={`relative h-full  flex flex-col justify-around  items-center  duration-300  ease-in-out transition-right
@@ -98,24 +98,25 @@ export default function MenuCuenta() {
                   ></div>
                 </button>
                 <div className="flex flex-col justify-center w-[400px] gap-5 ">
-                  <div className="flex justify-center  max-sm:text-lg">
+                  <div className="flex justify-center  text-lg max-sm:text-lg">
                     Iniciar Sesión
                   </div>
 
-                  <div className="flex justify-center max-sm:text-sm">
+                  <div className="flex justify-center text-lg max-sm:text-sm">
                     <button
                       onClick={() => {
-                        setInicioSwitch(true);
-                        // setLoginSwitch(true);
-                        setCorreoSwitch(true);
+                        setInicioSwitch(true); //*oculta el menuinicio
+
+                        setCorreoSwitch(true); //* va a la ventana correocliente
+                        // setRegistroSwitch(true); //* va a la ventana registrocliente
                       }}
-                      className="w-[80%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full"
+                      className="w-[90%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full max-sm:w-[80%]"
                     >
                       Recibir la clave de acceso por correo
                     </button>
                   </div>
 
-                  <div className="flex justify-center max-sm:text-sm">
+                  <div className="flex justify-center text-lg max-sm:text-sm">
                     <button
                       onClick={() => {
                         // route.push("/logincliente");
@@ -128,37 +129,39 @@ export default function MenuCuenta() {
 
                         setLoginSwitch(true);
                       }}
-                      className="w-[80%] border-black border-2 h-[40px]  font-bold rounded-full"
+                      className="w-[90%] border-black border-2 h-[40px]  font-bold rounded-full max-sm:w-[80%]"
                     >
                       Ingresar con correo y contraseña
                     </button>
                   </div>
 
-                  <div className="flex justify-center max-sm:text-sm">
+                  <div className="flex justify-center text-lg max-sm:text-sm">
                     <button
                       onClick={() => {
                         console.log("enviar valor por google");
                       }}
-                      className="w-[80%] border-black border-2 h-[40px]  font-bold rounded-full"
+                      className="w-[90%] border-black border-2 h-[40px]  font-bold rounded-full max-sm:w-[80%]"
                     >
                       Goggle
                     </button>
                   </div>
 
-                  <div className="flex justify-center max-sm:text-sm">
+                  <div className="flex justify-center text-lg max-sm:text-sm">
                     <button
                       onClick={() => {
                         console.log("enviar valor por facebook");
                       }}
-                      className="w-[80%] border-black border-2 h-[40px]  font-bold rounded-full"
+                      className="w-[90%] border-black border-2 h-[40px]  font-bold rounded-full max-sm:w-[80%]"
                     >
                       Facebook
                     </button>
                   </div>
                 </div>
 
-                {/* <div className="w-full flex justify-end gap-x-3 pr-5">
-                  <h1 className="max-sm:text-sm">No tienes una cuenta ?</h1>
+                <div className="w-full flex justify-end gap-x-3 pr-5">
+                  <h1 className="text-lg max-sm:text-sm">
+                    No tienes una cuenta ?
+                  </h1>
                   <button
                     onClick={() => {
                       console.log(" presionado el boton enviar");
@@ -167,17 +170,15 @@ export default function MenuCuenta() {
 
                       // route.push("/registrocliente");
 
-                      setInicioSwitch(true);
+                      setInicioSwitch(true); //*oculta el menu inicio
 
-                      setTimeout(() => {
-                        setRegistroSwitch(true);
-                      }, 1000);
+                      setRegistroSwitch(true); //*vuelve al registro
                     }}
-                    className="cursor-pointer max-sm:text-sm"
+                    className="cursor-pointer text-lg max-sm:text-sm"
                   >
                     <h1 className="text-red-700 font-bold">Registrate</h1>
                   </button>
-                </div> */}
+                </div>
               </div>
               <CorreoCliente />
               <LoginCliente />
