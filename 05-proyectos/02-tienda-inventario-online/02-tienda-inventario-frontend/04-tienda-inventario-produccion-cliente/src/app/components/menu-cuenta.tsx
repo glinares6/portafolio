@@ -51,13 +51,13 @@ export default function MenuCuenta() {
       )}
 
       {inicioState && (
-        <div className="fixed z-30 backdrop-brightness-50 bg-white/30 w-full h-[calc(100vh-64px)]  border-red-500 border-2">
-          <div className="fixed w-[100%] h-[calc(100vh-64px)]  flex justify-center items-start   border-red-500 border-2 overflow-y-scroll">
+        <div className="fixed z-30 backdrop-brightness-50 bg-white/30 w-full h-[calc(100vh-64px)]  border-red-500 border-2 max-sm:h-[calc(100vh-64px)]">
+          <div className="fixed w-[100%] h-[calc(100vh-64px)]  flex justify-center items-start   border-red-500 border-2 max-lg:overflow-y-scroll max-sm:h-full">
             <div
-              className={`relative flex   w-[400px] h-[50vh]  border-red-500 border-2 bg-white overflow-hidden  max-sm:w-full max-sm:h-full min-h-[600px]`}
+              className={`relative flex   w-[400px] h-[50vh]  border-red-500 border-2 bg-white overflow-hidden  max-sm:w-full max-sm:h-full min-h-[572px]`}
             >
               <div
-                className={`relative h-full  flex flex-col justify-around  items-center  duration-300  ease-in-out transition-right
+                className={`relative h-full  flex flex-col justify-start  items-center  duration-300  ease-in-out transition-right
                 
                 ${
                   inicioSwitch
@@ -97,8 +97,8 @@ export default function MenuCuenta() {
                   "
                   ></div>
                 </button>
-                <div className="flex flex-col justify-center w-[400px] gap-5 ">
-                  <div className="flex justify-center  text-lg max-sm:text-lg">
+                <div className="flex flex-col justify-center w-[400px] gap-5 pt-11 ">
+                  <div className="flex justify-center  text-lg max-sm:text-sm">
                     Iniciar Sesión
                   </div>
 
@@ -158,7 +158,7 @@ export default function MenuCuenta() {
                   </div>
                 </div>
 
-                <div className="w-full flex justify-end gap-x-3 pr-5">
+                <div className="w-full flex justify-end gap-x-3 pr-5 mt-[110px]">
                   <h1 className="text-lg max-sm:text-sm">
                     No tienes una cuenta ?
                   </h1>

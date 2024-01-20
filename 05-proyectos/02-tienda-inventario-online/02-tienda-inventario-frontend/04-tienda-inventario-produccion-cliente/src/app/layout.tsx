@@ -139,10 +139,10 @@ export default function RootLayout({
                       onClick={() => {
                         if (cuentaState) {
                           setCuentaState(false);
-                          console.log("la pagina se cierra");
+                          // console.log("la pagina se cierra");
                         } else {
                           setCuentaState(true);
-                          console.log("la pagina se abre");
+                          // console.log("la pagina se abre");
                         }
                       }}
                     >

@@ -98,39 +98,41 @@ export default function RegistroCliente() {
           ></div>
         </button>
 
-        <div className="flex flex-col justify-center w-[400px]  mt-8 gap-7 ">
-          <div className="flex justify-center pt-3 text-lg max-sm:text-sm ">
-            Ingresa tu correo
-          </div>
-          <div className="relative  flex justify-center  text-lg max-sm:text-lg">
-            <fieldset className=" w-[80%] border-gray-500 border-2 max-sm:w-[80%] ">
-              <legend className="w-[90px] relative ml-[15px] pl-[5px] text-lg max-sm:text-sm">
-                Correo
-              </legend>
-              <div className="w-full  pl-[5px] pb-[5px] ">
-                <input
-                  className="w-full focus:outline-none text-lg  max-sm:text-sm "
-                  type="email"
-                  onChange={(e) => {
-                    setCorreoValue(e.target.value);
-                  }}
-                  value={correoValue}
-                  name=""
-                  id=""
-                  placeholder="email@mail.com"
-                  autoComplete="off"
-                  required
-                />
-              </div>
-            </fieldset>
-          </div>
+        <form>
+          <div className="flex flex-col justify-center w-[400px]  mt-8 gap-7 ">
+            <div className="flex justify-center pt-3 text-lg max-sm:text-sm ">
+              Ingresa tu correo
+            </div>
+            <div className="relative  flex justify-center  text-lg max-sm:text-lg">
+              <fieldset className=" w-[80%] border-gray-500 border-2 max-sm:w-[80%] ">
+                <legend className="w-[90px] relative ml-[15px] pl-[5px] text-lg max-sm:text-sm">
+                  Correo
+                </legend>
+                <div className="w-full  pl-[5px] pb-[5px] ">
+                  <input
+                    className="w-full focus:outline-none text-lg  max-sm:text-sm "
+                    type="email"
+                    onChange={(e) => {
+                      setCorreoValue(e.target.value);
+                    }}
+                    value={correoValue}
+                    name="txtCorreoRegistro"
+                    id="txtCorreoRegistro"
+                    placeholder="email@mail.com"
+                    autoComplete="off"
+                    required
+                  />
+                </div>
+              </fieldset>
+            </div>
 
-          <div className="flex justify-center text-lg max-sm:text-sm">
-            <button className="w-[80%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full">
-              Continuar
-            </button>
+            <div className="flex justify-center text-lg max-sm:text-sm">
+              <button className="w-[80%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full">
+                Continuar
+              </button>
+            </div>
           </div>
-        </div>
+        </form>
 
         {/* <div className="w-[400px] flex justify-end gap-x-3 pr-5 max-sm:pr-10">
           <h1 className="max-sm:text-sm">No tienes una cuenta ?</h1>

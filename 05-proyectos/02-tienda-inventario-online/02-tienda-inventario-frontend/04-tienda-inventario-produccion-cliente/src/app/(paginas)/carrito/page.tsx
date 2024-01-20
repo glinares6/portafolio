@@ -36,7 +36,13 @@ export default function Page() {
 
   const [cestaEmpty, setCestaEmpty] = useState(false);
 
-  const { cuentaState, setPedidoList }: any = useContext(UseContext);
+  const {
+    cuentaState,
+    setPedidoList,
+    setInicioState,
+    setInicioSwitch,
+    setRegistroSwitch,
+  }: any = useContext(UseContext);
 
   // const { refactorizar } = carritoValidation();
 
@@ -723,8 +729,18 @@ export default function Page() {
     //   }
 
     // }
-    setPedidoList(lista);
-    router.push("/registrocliente");
+
+    //* se iba enviar al contecto global
+    // setPedidoList(lista);
+    // router.push("/registrocliente");
+
+    //* si no a inicioado sesion
+    console.log("en construcción");
+
+    // setInicioState(true); ///*muestra la ventana menu
+
+    // setInicioSwitch(true); //*oculta el menu inicio
+    // setRegistroSwitch(true); //*vuelve al registro
 
     //* si hay cliente -> ckeckout
   };
