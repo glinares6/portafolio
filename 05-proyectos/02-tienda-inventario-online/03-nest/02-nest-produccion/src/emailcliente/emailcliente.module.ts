@@ -3,7 +3,7 @@ import { EmailclienteService } from './emailcliente.service';
 import { EmailclienteController } from './emailcliente.controller';
 import { MailerModule } from '@nestjs-modules/mailer';
 
-import { join } from 'path';
+// import { join } from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Emailcliente } from './entities/emailcliente.entity';
@@ -25,7 +25,7 @@ import { Emailcliente } from './entities/emailcliente.entity';
         from: '"No Reply" <noreply@gmail.com>',
       },
       template: {
-        dir: join(__dirname, 'templates'),
+        dir: 'public/img/mail/templates',
         adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
         options: {
           strict: true,
