@@ -31,6 +31,8 @@ import { Carritocompra } from './carritocompra/entities/carritocompra.entity';
 import { PedidosModule } from './pedidos/pedidos.module';
 import { Pedido } from './pedidos/entities/pedido.entity';
 import { jwtConstants } from './auth/constansts';
+import { EmailclienteModule } from './emailcliente/emailcliente.module';
+import { Emailcliente } from './emailcliente/entities/emailcliente.entity';
 
 @Module({
   imports: [
@@ -57,6 +59,7 @@ import { jwtConstants } from './auth/constansts';
         Detallesmartphone,
         Carritocompra,
         Pedido,
+        Emailcliente,
       ],
       synchronize: true,
     }),
@@ -69,6 +72,7 @@ import { jwtConstants } from './auth/constansts';
     DetallesmartphoneModule,
     CarritocompraModule,
     PedidosModule,
+    EmailclienteModule,
   ],
   controllers: [AppController],
   providers: [AppService],

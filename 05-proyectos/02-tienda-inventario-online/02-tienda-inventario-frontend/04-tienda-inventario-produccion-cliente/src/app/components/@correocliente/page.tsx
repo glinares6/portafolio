@@ -2,7 +2,8 @@
 
 import { UseContext } from "@/app/contexts/authContext";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { FormEvent, MouseEvent, useContext, useState } from "react";
+import menuApp from "../hooks/menu-App";
 
 export default function CorreoCliente() {
   const {
@@ -19,7 +20,36 @@ export default function CorreoCliente() {
 
   const [correoValue, setCorreoValue]: any = useState("");
 
+  const { server } = menuApp();
+
   const route = useRouter();
+
+  const handleCorreoCliente = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("a presionado el boton", correoValue);
+
+    //*enviar codigo de verificación al correo del cliente
+
+    const payloadCorreoCliente = {
+      emailcliente: correoValue,
+    };
+
+    const reqCorreoClientePost = await fetch(`${server}/emailcliente`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payloadCorreoCliente),
+      credentials: "include",
+    });
+
+    const reqCorreoClienteOut = await reqCorreoClientePost.json();
+
+    console.log("res->correoCliente:", reqCorreoClienteOut);
+
+    //*luego de hacer el registro del cliente
+    setCorreoValue("");
+  };
 
   return (
     <>
@@ -95,7 +125,11 @@ export default function CorreoCliente() {
                   "
           ></div>
         </button>
-        <form>
+        <form
+          onSubmit={(e) => {
+            handleCorreoCliente(e);
+          }}
+        >
           <div className="flex flex-col justify-center w-[400px]  mt-8 gap-7 ">
             <div className="flex justify-center pt-3 text-lg max-sm:text-sm ">
               Ingresa tu correo
@@ -110,22 +144,27 @@ export default function CorreoCliente() {
                     className="w-full focus:outline-none  text-lg  max-sm:text-sm"
                     onChange={(e) => {
                       setCorreoValue(e.target.value);
+
+                      // console.log("aqo", e.target.value);
                     }}
                     value={correoValue}
                     type="email"
                     name="txtCorreoEmail"
                     id="txtCorreoEmail"
                     placeholder="email@mail.com"
+                    autoComplete="off"
                     required
                   />
                 </div>
               </fieldset>
             </div>
 
-            <div className="flex justify-center text-lg max-sm:text-sm">
-              <button className="w-[80%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full">
-                Continuar
-              </button>
+            <div className="flex justify-center  text-lg max-sm:text-sm">
+              <input
+                type="submit"
+                className="w-[80%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full cursor-pointer"
+                value="Continuar"
+              />
             </div>
           </div>
         </form>

@@ -81,9 +81,9 @@ export class SmartphoneController {
   @Post(':id/res')
   serveDatos(@Res() response: Response) {
     const pay = {
-      nombre: 'gianmarco',
-      nacionalidad: 'peruano',
-      edad: 30,
+      nombre: 'abc',
+      nacionalidad: 'xyz-c',
+      edad: 20,
     };
     response.status(HttpStatus.CREATED).json(pay);
   }

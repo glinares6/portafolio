@@ -2,7 +2,8 @@
 
 import { UseContext } from "@/app/contexts/authContext";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
+import menuApp from "../hooks/menu-App";
 
 export default function RegistroCliente() {
   const {
@@ -17,9 +18,37 @@ export default function RegistroCliente() {
 
   const [correoValue, setCorreoValue] = useState("");
 
+  const { server } = menuApp();
+
   const route = useRouter();
 
-  useEffect(() => {}, []);
+  const handleRegistroCLiente = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log("a presionado el boton", correoValue);
+
+    //*enviar codigo de verificación al correo del cliente
+
+    const payloadRegistroCliente = {
+      emailcliente: correoValue,
+    };
+
+    const reqRegistroClientePost = await fetch(`${server}/emailcliente/send`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payloadRegistroCliente),
+      credentials: "include",
+    });
+
+    const reqRegistroClienteOut = await reqRegistroClientePost.json();
+
+    console.log("res->registroCliente:", reqRegistroClienteOut);
+
+    //*luego de hacer el registro del cliente
+    setCorreoValue("");
+  };
 
   return (
     <>
@@ -98,7 +127,11 @@ export default function RegistroCliente() {
           ></div>
         </button>
 
-        <form>
+        <form
+          onSubmit={(e) => {
+            handleRegistroCLiente(e);
+          }}
+        >
           <div className="flex flex-col justify-center w-[400px]  mt-8 gap-7 ">
             <div className="flex justify-center pt-3 text-lg max-sm:text-sm ">
               Ingresa tu correo
@@ -127,9 +160,11 @@ export default function RegistroCliente() {
             </div>
 
             <div className="flex justify-center text-lg max-sm:text-sm">
-              <button className="w-[80%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full">
-                Continuar
-              </button>
+              <input
+                type="submit"
+                className="w-[80%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full cursor-pointer"
+                value="Continue"
+              />
             </div>
           </div>
         </form>

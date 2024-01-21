@@ -197,6 +197,19 @@ iniciamos el proyecto
         https://medium.com/@shkim04/how-to-use-session-in-next-js-3b7987fb42b4
 
 
+
+EMAIL
+    https://github.com/nest-modules/mailer#readme
+
+    https://nest-modules.github.io/mailer/docs/mailer.html#async-configuration
+
+    MEDIUM
+        https://blog.stackademic.com/implementing-email-service-in-nestjs-a-step-by-step-guide-42e03ef1fb05
+
+    NOTIZ.DEV
+        https://notiz.dev/blog/send-emails-with-nestjs
+
+
 tomar en cuenta 
     npm notice 
     npm notice New minor version of npm available! 9.6.1 -> 9.8.1
