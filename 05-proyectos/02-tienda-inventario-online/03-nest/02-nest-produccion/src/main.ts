@@ -18,7 +18,7 @@ async function bootstrap() {
   // app.use(express.urlencoded({ extended: true, limit: '10mb' }));
   // app.use(express.json({ limit: '10mb' }));
   app.enableCors({
-    origin: true, // Reemplaza con tu dominio de túnel
+    origin: '*', // Reemplaza con tu dominio de túnel
     methods: 'GET,PATCH,POST,DELETE',
     credentials: true,
   });
