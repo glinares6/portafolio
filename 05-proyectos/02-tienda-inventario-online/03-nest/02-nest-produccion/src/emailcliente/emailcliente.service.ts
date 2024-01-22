@@ -27,7 +27,7 @@ export class EmailclienteService {
       subject: `Welcome to Company: prueba`,
       template: './welcome',
       context: {
-        name: createEmailclienteDto.emailcliente,
+        name: `${createEmailclienteDto.emailcliente}`,
       },
     });
 
