@@ -25,7 +25,7 @@ export class EmailclienteService {
     await this.mailerService.sendMail({
       to: createEmailclienteDto.emailcliente,
       subject: `Welcome to Company: prueba`,
-      template: __dirname + '/welcome',
+      template: __dirname + '/template/welcome',
       context: {
         name: `datodesdeafuera@mil.com`,
       },
