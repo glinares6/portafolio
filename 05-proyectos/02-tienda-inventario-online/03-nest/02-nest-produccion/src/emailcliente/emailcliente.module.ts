@@ -3,8 +3,9 @@ import { EmailclienteService } from './emailcliente.service';
 import { EmailclienteController } from './emailcliente.controller';
 import { MailerModule } from '@nestjs-modules/mailer';
 
-// import { join } from 'path';
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { join } from 'path';
+// import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Emailcliente } from './entities/emailcliente.entity';
 
@@ -15,18 +16,19 @@ import { Emailcliente } from './entities/emailcliente.entity';
       transport: {
         host: 'smtp.gmail.com',
         port: Number(587),
-        secure: true,
+        secure: false,
         auth: {
           user: process.env.EMAIL_NAME || 'example@gmail.com',
           pass: process.env.EMAIL_PASSWORD || 'topSecret',
         },
       },
       defaults: {
-        from: '"No Reply" <noreply@gmail.com>',
+        from: '"Tean reply" <glinarese1@gmail.com>',
       },
       template: {
-        dir: 'public/img/mail/templates',
-        adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
+        dir: join(__dirname, 'templates'),
+        // adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
+        adapter: new EjsAdapter(),
         options: {
           strict: true,
         },

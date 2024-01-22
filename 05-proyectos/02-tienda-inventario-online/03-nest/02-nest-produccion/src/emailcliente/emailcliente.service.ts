@@ -16,22 +16,31 @@ export class EmailclienteService {
 
   async sendVerify(createEmailclienteDto: CreateEmailclienteDto) {
     //*ênviamos el correo a su bandeja
-
-    const url = `https://nest-vercel-master-servicio.vercel.app`;
     console.log('email desde afuera', createEmailclienteDto.emailcliente);
 
     //*agregamos los requerimientos de envio
 
+    // const subject = `Welcome to Company: prueba`;
+
     await this.mailerService.sendMail({
       to: createEmailclienteDto.emailcliente,
-      // from: '"Support Team" <support@example.com>', // override default from
-      subject: 'Bienvenido to Nice App! Confirm your Email',
-      template: './confirmation', // `.hbs` extension is appended automatically
+      subject: `Welcome to Company: prueba`,
+      template: './welcome',
       context: {
         name: createEmailclienteDto.emailcliente,
-        url,
       },
     });
+
+    // await this.mailerService.sendMail({
+    //   to: createEmailclienteDto.emailcliente,
+    //   // from: '"Support Team" <support@example.com>', // override default from
+    //   subject: 'Bienvenido to Nice App! Confirm your Email',
+    //   template: './confirmation', // `.hbs` extension is appended automatically
+    //   context: {
+    //     name: createEmailclienteDto.emailcliente,
+    //     url,
+    //   },
+    // });
 
     return {
       msg: `emailregistrocliente ${createEmailclienteDto.emailcliente}`,
