@@ -18,8 +18,8 @@ import { Emailcliente } from './entities/emailcliente.entity';
         port: Number(587),
         secure: false,
         auth: {
-          user: process.env.EMAIL_NAME || 'example@gmail.com',
-          pass: process.env.EMAIL_PASSWORD || 'topSecret',
+          user: `${process.env.EMAIL_NAME}` || 'example@gmail.com',
+          pass: `${process.env.EMAIL_PASSWORD}` || 'topSecret',
         },
       },
       defaults: {
