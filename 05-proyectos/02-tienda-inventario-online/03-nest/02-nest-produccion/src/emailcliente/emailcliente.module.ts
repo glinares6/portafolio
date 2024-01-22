@@ -28,7 +28,7 @@ import { Emailcliente } from './entities/emailcliente.entity';
         from: '"Tean reply" <glinarese1@gmail.com>',
       },
       template: {
-        dir: './templates',
+        dir: './src/emailcliente/templates',
         // adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
         adapter: new EjsAdapter(),
         options: {
