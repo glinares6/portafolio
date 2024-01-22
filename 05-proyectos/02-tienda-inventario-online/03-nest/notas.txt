@@ -209,6 +209,11 @@ EMAIL
     NOTIZ.DEV
         https://notiz.dev/blog/send-emails-with-nestjs
 
+        fix email with ejs 
+            <%= local.emailname %>
+
+            https://stackoverflow.com/questions/62217160/nestjs-email-failed-to-send-with-ejs-template-dynamic-data
+
 
 tomar en cuenta 
     npm notice 
