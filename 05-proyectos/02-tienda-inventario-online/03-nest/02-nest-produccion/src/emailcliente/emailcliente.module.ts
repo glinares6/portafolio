@@ -3,8 +3,8 @@ import { EmailclienteService } from './emailcliente.service';
 import { EmailclienteController } from './emailcliente.controller';
 import { MailerModule } from '@nestjs-modules/mailer';
 
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-// import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
+// import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Emailcliente } from './entities/emailcliente.entity';
 
@@ -29,8 +29,8 @@ import { Emailcliente } from './entities/emailcliente.entity';
       },
       template: {
         dir: process.cwd() + '/template/',
-        adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
-        // adapter: new EjsAdapter(),
+        // adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
+        adapter: new EjsAdapter(),
         options: {
           strict: true,
         },
