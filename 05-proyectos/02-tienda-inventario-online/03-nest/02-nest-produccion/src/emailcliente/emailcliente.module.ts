@@ -32,7 +32,7 @@ import { Emailcliente } from './entities/emailcliente.entity';
         // adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
         adapter: new EjsAdapter(),
         options: {
-          strict: false,
+          strict: true,
         },
       },
     }),

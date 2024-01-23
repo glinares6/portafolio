@@ -18,6 +18,8 @@ export class EmailclienteService {
     //*ênviamos el correo a su bandeja
     console.log('email desde afuera', createEmailclienteDto.emailcliente);
 
+    console.log('ruta relativa', process.cwd());
+
     //*agregamos los requerimientos de envio
 
     // const subject = `Welcome to Company: prueba`;
