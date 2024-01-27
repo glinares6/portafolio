@@ -20,8 +20,14 @@ import { Emailcliente } from './entities/emailcliente.entity';
         },
         secure: false,
         auth: {
-          user: `${process.env.EMAIL_NAME}` || 'example@gmail.com',
-          pass: `${process.env.EMAIL_PASSWORD}` || 'topSecret',
+          user:
+            `${process.env.EMAIL_NAME}` != 'undefined'
+              ? `${process.env.EMAIL_NAME}`
+              : 'email@gmail.com',
+          pass:
+            `${process.env.EMAIL_PASSWORD}` != 'undefined'
+              ? `${process.env.EMAIL_PASSWORD}`
+              : 'topsecret',
         },
       },
       defaults: {

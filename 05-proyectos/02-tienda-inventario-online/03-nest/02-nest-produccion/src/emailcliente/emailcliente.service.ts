@@ -18,10 +18,9 @@ export class EmailclienteService {
     //*ênviamos el correo a su bandeja
     console.log('email desde afuera', createEmailclienteDto.emailcliente);
 
-    console.log(
-      'ruta relativa arr',
-      process.cwd() + '../emailcliente/template',
-    );
+    console.log('ruta relativa arr', process.cwd() + '/emailcliente/template');
+
+    console.log('llevado al servidor !!', process.env.EMAIL_NAME);
 
     //*agregamos los requerimientos de envio
 
@@ -32,7 +31,7 @@ export class EmailclienteService {
       subject: `Welcome to Company: prueba`,
       template: 'welcome',
       context: {
-        name: `datodesdeafuera@mil.com`,
+        name: createEmailclienteDto.emailcliente,
       },
     });
 
