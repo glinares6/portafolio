@@ -1,8 +1,83 @@
-<p>Hola,mk <%= locals.name %>
-</p>
-<p>Please click below to confirm your email</p>
-<p>
-  <a href="https://nest-vercel-master-servicio.vercel.app/">Confirm</a>
-</p>
+<!DOCTYPE html>
+<html lang="en">
 
-<p>If you did not request this email you can safely ignore it.</p>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="/src/globals.css" type="text/css"> -->
+  <title>Document</title>
+
+  <style>
+    .al {
+      display: table;
+      padding: 5px;
+      border: red solid 1px;
+    }
+
+    .al__x {
+      display: table-row;
+      border: blue solid 1px;
+      padding: 5px;
+    }
+
+    .al__y {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+      padding: 5px;
+      width: 100px;
+      height: 40px;
+      border: #000000 solid 1px;
+      margin: 5px;
+    }
+
+    .texto__r1 {
+      font-size: 14px;
+      color: red;
+    }
+
+    .texto__r1--color {
+      color: blue;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div>
+    <!-- <p>Hola, <%= locals.name %>
+</p> -->
+    <!-- <p>Please click below to confirm your email</p> -->
+    <div class="al">
+      <div class="al__x">
+        <div class="al__y">
+          aula 1
+        </div>
+        <div class="al__y">
+          aula 2
+        </div>
+      </div>
+
+    </div>
+    <!-- <p>
+  <a href="https://nest-vercel-master-servicio.vercel.app/">Confirm</a>
+</p> -->
+    <!-- <div>
+    <p class="text-red-500"> Codigo de verificación :</p> <span class="text-red-500 text-xl">
+      <%= locals.numrandom %>
+    </span>
+  </div> -->
+    <div class="texto__r1">
+      Codigo de verificación :
+      <span class="texto__r1--color">
+        <%= locals.numrandom %>
+      </span>
+    </div>
+
+    <div>Si cree que fue un error , ignore ese mensaje.</div>
+  </div>
+
+
+</body>
+
+</html>

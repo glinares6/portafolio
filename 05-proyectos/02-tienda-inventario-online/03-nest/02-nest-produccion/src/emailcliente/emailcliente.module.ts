@@ -7,6 +7,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Emailcliente } from './entities/emailcliente.entity';
+// import { join } from 'path';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { Emailcliente } from './entities/emailcliente.entity';
           user:
             `${process.env.EMAIL_NAME}` != 'undefined'
               ? `${process.env.EMAIL_NAME}`
-              : 'email@gmail.com',
+              : 'mail@gmail.com',
           pass:
             `${process.env.EMAIL_PASSWORD}` != 'undefined'
               ? `${process.env.EMAIL_PASSWORD}`
@@ -31,9 +32,10 @@ import { Emailcliente } from './entities/emailcliente.entity';
         },
       },
       defaults: {
-        from: '"Tean reply" <glinarese1@gmail.com>',
+        from: '"Team reply" <glinarese1@gmail.com>',
       },
       template: {
+        // dir: join(process.cwd(), '/emailcliente/templates'),
         dir: './src/emailcliente/templates',
         // adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
         adapter: new EjsAdapter(),

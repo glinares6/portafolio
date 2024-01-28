@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Emailcliente } from './entities/emailcliente.entity';
 import { Repository } from 'typeorm';
 import { MailerService } from '@nestjs-modules/mailer';
+import { join } from 'path';
 
 @Injectable()
 export class EmailclienteService {
@@ -18,7 +19,10 @@ export class EmailclienteService {
     //*ênviamos el correo a su bandeja
     console.log('email desde afuera', createEmailclienteDto.emailcliente);
 
-    console.log('ruta relativa arr', process.cwd() + '/emailcliente/template');
+    console.log(
+      'ruta relativa arr',
+      join(process.cwd(), '../emailcliente/templates'),
+    );
 
     console.log('llevado al servidor !!', process.env.EMAIL_NAME);
 
@@ -26,12 +30,21 @@ export class EmailclienteService {
 
     // const subject = `Welcome to Company: prueba`;
 
+    //*agregamos codigo de verificación (6 digitos)
+
+    const min = Math.ceil(100000);
+    const max = Math.floor(999999);
+    const resultMathRandom = Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive
+
+    console.log('numero de 6 digitos', resultMathRandom);
+
     await this.mailerService.sendMail({
       to: createEmailclienteDto.emailcliente,
-      subject: `Welcome to Company: prueba`,
+      subject: `Codigo de verificación para su registro.`,
       template: 'welcome',
       context: {
         name: createEmailclienteDto.emailcliente,
+        numrandom: resultMathRandom,
       },
     });
 
