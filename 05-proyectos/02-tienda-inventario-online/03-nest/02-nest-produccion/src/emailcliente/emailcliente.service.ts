@@ -40,13 +40,19 @@ export class EmailclienteService {
 
     await this.mailerService.sendMail({
       to: createEmailclienteDto.emailcliente,
-      subject: `Codigo de verificación para su registro.`,
+      subject: `Ventana de verificación para su registro.`,
       template: 'welcome',
       context: {
         name: createEmailclienteDto.emailcliente,
         numrandom: resultMathRandom,
       },
     });
+
+    //*âgregar sesion al servidor
+    //*agregar la credential al fetch del cliente para que acepte la sesion
+    //*crea la interfaz para validar el codigo de verificación y
+
+    //*en el servidor crea una  nueva ruta para el registro del cliente -> tener en cuenta id,correo,pass,createAt,updateAt,envio(pendiente,despachado,entregado,cancelado),estado,A->N(pedidocliente) , por defecto el pass es vacio
 
     // await this.mailerService.sendMail({
     //   to: createEmailclienteDto.emailcliente,
