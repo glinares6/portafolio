@@ -37,10 +37,10 @@ export default function RegistroCliente() {
 
     const reqRegistroClientePost = await fetch(`${server}/emailcliente/send`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "include",
       body: JSON.stringify(payloadRegistroCliente),
     });
 

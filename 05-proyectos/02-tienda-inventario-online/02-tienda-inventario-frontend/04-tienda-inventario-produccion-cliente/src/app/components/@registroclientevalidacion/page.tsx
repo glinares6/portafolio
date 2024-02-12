@@ -75,10 +75,10 @@ export default function RegistroCLienteValidation() {
           `${server}/emailcliente`,
           {
             method: "POST",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
-            credentials: "include",
             body: JSON.stringify(payloadPasswordClienteValidate),
           }
         );
