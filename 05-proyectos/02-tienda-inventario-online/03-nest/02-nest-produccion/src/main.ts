@@ -13,6 +13,9 @@ async function bootstrap() {
       secret: jwtConstants.secret,
       resave: false,
       saveUninitialized: true,
+      cookie: {
+        secure: true,
+      },
     }),
   );
 
