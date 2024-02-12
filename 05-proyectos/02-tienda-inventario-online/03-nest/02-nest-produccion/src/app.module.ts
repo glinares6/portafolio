@@ -24,13 +24,13 @@ import { SesionModule } from './sesion/sesion.module';
 import { Sesion } from './sesion/entities/sesion.entity';
 import { DetallesmartphoneModule } from './detallesmartphone/detallesmartphone.module';
 
-import * as session from 'express-session';
+// import * as session from 'express-session';
 import { Detallesmartphone } from './detallesmartphone/entities/detallesmartphone.entity';
 import { CarritocompraModule } from './carritocompra/carritocompra.module';
 import { Carritocompra } from './carritocompra/entities/carritocompra.entity';
 import { PedidosModule } from './pedidos/pedidos.module';
 import { Pedido } from './pedidos/entities/pedido.entity';
-import { jwtConstants } from './auth/constansts';
+// import { jwtConstants } from './auth/constansts';
 import { EmailclienteModule } from './emailcliente/emailcliente.module';
 import { Emailcliente } from './emailcliente/entities/emailcliente.entity';
 
@@ -83,6 +83,6 @@ export class AppModule implements NestModule {
     consumer
       .apply(LoggerMiddleware)
       .forRoutes({ path: 'auth/login/all/*', method: RequestMethod.GET });
-    consumer.apply(session({ secret: jwtConstants.secret })).forRoutes('*');
+    // consumer.apply(session({ secret: jwtConstants.secret })).forRoutes('*');
   }
 }
