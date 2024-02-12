@@ -2,7 +2,6 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as session from 'express-session';
 import { jwtConstants } from './auth/constansts';
-import passport from 'passport';
 
 // import * as express from 'express';
 const port = process.env.PORT || 3000;
@@ -16,8 +15,6 @@ async function bootstrap() {
       saveUninitialized: true,
     }),
   );
-  app.use(passport.initialize());
-  app.use(passport.session());
 
   // app.use(express.urlencoded({ extended: true, limit: '10mb' }));
   // app.use(express.json({ limit: '10mb' }));
