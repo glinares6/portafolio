@@ -75,6 +75,7 @@ export default function RegistroCLienteValidation() {
           `${server}/emailcliente`,
           {
             method: "POST",
+            mode: "cors",
             credentials: "include",
             headers: {
               "Content-Type": "application/json",

@@ -37,6 +37,7 @@ export default function RegistroCliente() {
 
     const reqRegistroClientePost = await fetch(`${server}/emailcliente/send`, {
       method: "POST",
+      mode: "cors",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
