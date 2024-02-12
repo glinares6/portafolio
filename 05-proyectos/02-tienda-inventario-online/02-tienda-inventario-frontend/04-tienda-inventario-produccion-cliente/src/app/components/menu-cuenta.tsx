@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import RegistroCliente from "./@registrocliente/page";
 import LoginCliente from "./@logincliente/page";
 import CorreoCliente from "./@correocliente/page";
+import RegistroCLienteValidation from "./@registroclientevalidacion/page";
+import CorreoCLienteValidacion from "./@correoclientevalidacion/page";
 
 export default function MenuCuenta() {
   const {
@@ -19,6 +21,7 @@ export default function MenuCuenta() {
     setLoginSwitch,
     correoSwitch,
     setCorreoSwitch,
+    setCorreoValidationSwitch,
   }: any = useContext(UseContext);
 
   const route = useRouter();
@@ -51,10 +54,19 @@ export default function MenuCuenta() {
       )}
 
       {inicioState && (
-        <div className="fixed z-30 backdrop-brightness-50 bg-white/30 w-full h-[calc(100vh-64px)]  border-red-500 border-2 max-sm:h-[calc(100vh-64px)]">
+        <div
+          onKeyDown={(e) => {
+            if (e.key == "Tab") {
+              console.log("se hizo cli ck", e.key);
+              e.preventDefault();
+              e.stopPropagation();
+            }
+          }}
+          className="fixed z-30 backdrop-brightness-50 bg-white/30 w-full h-[calc(100vh-64px)]  border-red-500 border-2 max-sm:h-[calc(100vh-64px)]"
+        >
           <div className="fixed w-[100%] h-[calc(100vh-64px)]  flex justify-center items-start   border-red-500 border-2 max-lg:overflow-y-scroll max-sm:h-full">
             <div
-              className={`relative flex   w-[400px] h-[50vh]  border-red-500 border-2 bg-white overflow-hidden  max-sm:w-full max-sm:h-full min-h-[572px]`}
+              className={`relative flex   w-[400px] h-[50vh]  border-red-500 border-2 bg-white  max-sm:w-full  overflow-hidden max-sm:h-full min-h-[572px]`}
             >
               <div
                 className={`relative h-full  flex flex-col justify-start  items-center  duration-300  ease-in-out transition-right
@@ -74,6 +86,7 @@ export default function MenuCuenta() {
                     setInicioState(false);
                     setInicioSwitch(false);
                     setLoginSwitch(false);
+                    setCorreoValidationSwitch(false);
                   }}
                   className={`absolute w-[30px] h-[45px]  top-0 right-[8px] z-30`}
                 >
@@ -108,6 +121,8 @@ export default function MenuCuenta() {
                         setInicioSwitch(true); //*oculta el menuinicio
 
                         setCorreoSwitch(true); //* va a la ventana correocliente
+
+                        // setCorreoValidationSwitch(true); //* va a la ventana correovalidation
                         // setRegistroSwitch(true); //* va a la ventana registrocliente
                       }}
                       className="w-[90%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full max-sm:w-[80%]"
@@ -183,6 +198,8 @@ export default function MenuCuenta() {
               <CorreoCliente />
               <LoginCliente />
               <RegistroCliente />
+              <RegistroCLienteValidation />
+              <CorreoCLienteValidacion />
             </div>
 
             {/* <div>

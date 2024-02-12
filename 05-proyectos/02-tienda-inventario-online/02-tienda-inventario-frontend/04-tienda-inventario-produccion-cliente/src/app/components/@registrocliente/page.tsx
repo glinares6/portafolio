@@ -7,13 +7,13 @@ import menuApp from "../hooks/menu-App";
 
 export default function RegistroCliente() {
   const {
-    inicioSwitch,
     setInicioState,
     registroSwitch,
     setRegistroSwitch,
-    loginSwitch,
-    setLoginSwitch,
+    setRegistroValidationSwitch,
     setInicioSwitch,
+    registroValidationSwitch,
+    setCorreoValueCliente,
   }: any = useContext(UseContext);
 
   const [correoValue, setCorreoValue] = useState("");
@@ -27,6 +27,8 @@ export default function RegistroCliente() {
 
     console.log("a presionado el boton", correoValue);
 
+    setCorreoValueCliente(correoValue);
+
     //*enviar codigo de verificación al correo del cliente
 
     const payloadRegistroCliente = {
@@ -38,6 +40,7 @@ export default function RegistroCliente() {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(payloadRegistroCliente),
     });
 
@@ -45,17 +48,37 @@ export default function RegistroCliente() {
 
     console.log("res->registroCliente:", reqRegistroClienteOut);
 
+    //*nos dirigimos a la ventana de codigo de verificación
+    setRegistroSwitch(false); //*oculta el menu inicio
+
+    setRegistroValidationSwitch(true); //* muestra la ventana de verificación
+
     //*luego de hacer el registro del cliente
     setCorreoValue("");
   };
 
+  // const handleregistroCredential = async () => {
+  //   console.log("pense que era milagros");
+
+  //   const emailCLienteCredentials = await fetch(`${server}/emailcliente`, {
+  //     method: "GET",
+  //   });
+
+  //   const reqRegistroClienteCredentials = await emailCLienteCredentials.json();
+
+  //   console.log("res->", reqRegistroClienteCredentials);
+  // };
   return (
     <>
       <div
         className={`relative h-full  flex flex-col justify-start items-center  transition-right duration-300  ease-in-out  ${
           registroSwitch
             ? "   w-full right-[0%] opacity-100  "
-            : " w-[0%]   -right-[300%] opacity-0  "
+            : `${
+                registroValidationSwitch
+                  ? " w-[0%]   right-[400%] opacity-0  "
+                  : "  w-[0%]   -right-[400%] opacity-0"
+              }`
         } `}
       >
         <button
@@ -63,6 +86,7 @@ export default function RegistroCliente() {
             setInicioState(false); //*cierra la ventana
             setInicioSwitch(false); //*cambia la primera ventana
             setRegistroSwitch(false); //* cambia la segunda ventana
+            setRegistroValidationSwitch(false); //*cambiar a la tercera ventana
           }}
           className={`absolute w-[30px] h-[45px]  top-0 right-[8px] z-30`}
         >

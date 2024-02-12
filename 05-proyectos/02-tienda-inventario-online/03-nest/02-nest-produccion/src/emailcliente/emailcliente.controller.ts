@@ -6,27 +6,52 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { EmailclienteService } from './emailcliente.service';
 import { CreateEmailclienteDto } from './dto/create-emailcliente.dto';
 import { UpdateEmailclienteDto } from './dto/update-emailcliente.dto';
+import { Request } from 'express';
 
 @Controller('emailcliente')
 export class EmailclienteController {
   constructor(private readonly emailclienteService: EmailclienteService) {}
 
   @Post('send')
-  sendVerify(@Body() createEmailclienteDto: CreateEmailclienteDto) {
-    return this.emailclienteService.sendVerify(createEmailclienteDto);
+  sendVerify(
+    @Body() createEmailclienteDto: CreateEmailclienteDto,
+    @Req() request: Request,
+  ) {
+    return this.emailclienteService.sendVerify(createEmailclienteDto, request);
   }
+
   @Post()
-  create(@Body() createEmailclienteDto: CreateEmailclienteDto) {
-    return this.emailclienteService.create(createEmailclienteDto);
+  create(
+    @Body() createEmailclienteDto: CreateEmailclienteDto,
+    @Req() request: Request,
+  ) {
+    return this.emailclienteService.create(createEmailclienteDto, request);
+  }
+
+  @Post('sendcorreo')
+  sendCorreo(
+    @Body() createEmailclienteDto: CreateEmailclienteDto,
+    @Req() request: Request,
+  ) {
+    return this.emailclienteService.sendCorreo(createEmailclienteDto, request);
+  }
+
+  @Post('logincorreo')
+  loginCorreo(
+    @Body() createEmailclienteDto: CreateEmailclienteDto,
+    @Req() request: Request,
+  ) {
+    return this.emailclienteService.loginCorreo(createEmailclienteDto, request);
   }
 
   @Get()
-  findAll() {
-    return this.emailclienteService.findAll();
+  findAll(@Req() request: Request) {
+    return this.emailclienteService.findAll(request);
   }
 
   @Get(':id')

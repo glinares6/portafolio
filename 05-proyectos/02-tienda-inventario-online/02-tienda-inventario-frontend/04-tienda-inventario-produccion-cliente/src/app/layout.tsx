@@ -33,8 +33,17 @@ export default function RootLayout({
   const [inicioState, setInicioState] = useState(false);
 
   const [registroSwitch, setRegistroSwitch] = useState(false);
+  const [registroValidationSwitch, setRegistroValidationSwitch] =
+    useState(false);
+
   const [loginSwitch, setLoginSwitch] = useState(false);
+  const [correoValidationSwitch, setCorreoValidationSwitch] = useState(false);
+
+  const [correoLoginCliente, setCorreoLoginCliente] = useState("");
+
   const [correoSwitch, setCorreoSwitch] = useState(false);
+
+  const [correoValueCliente, setCorreoValueCliente] = useState("");
 
   const [inicioSwitch, setInicioSwitch] = useState(false);
 
@@ -65,12 +74,20 @@ export default function RootLayout({
           setPedidoList,
           registroSwitch,
           setRegistroSwitch,
+          registroValidationSwitch,
+          setRegistroValidationSwitch,
           inicioSwitch,
           setInicioSwitch,
           loginSwitch,
           setLoginSwitch,
+          correoValidationSwitch,
+          setCorreoValidationSwitch,
+          correoLoginCliente,
+          setCorreoLoginCliente,
           correoSwitch,
           setCorreoSwitch,
+          correoValueCliente,
+          setCorreoValueCliente,
         }}
       >
         <html lang="en">

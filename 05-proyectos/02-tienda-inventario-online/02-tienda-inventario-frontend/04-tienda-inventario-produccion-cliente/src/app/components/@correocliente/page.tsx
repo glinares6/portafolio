@@ -16,6 +16,9 @@ export default function CorreoCliente() {
     setInicioSwitch,
     correoSwitch,
     setCorreoSwitch,
+    correoValidationSwitch,
+    setCorreoValidationSwitch,
+    setCorreoLoginCliente,
   }: any = useContext(UseContext);
 
   const [correoValue, setCorreoValue]: any = useState("");
@@ -24,30 +27,41 @@ export default function CorreoCliente() {
 
   const route = useRouter();
 
-  const handleCorreoCliente = async (e: FormEvent<HTMLFormElement>) => {
+  const handleCorreoClienteValidation = async (
+    e: FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     console.log("a presionado el boton", correoValue);
 
+    setCorreoLoginCliente(correoValue);
+
     //*enviar codigo de verificación al correo del cliente
 
-    const payloadCorreoCliente = {
+    //* inicio
+    const payloadCorreoClienteVerify = {
       emailcliente: correoValue,
     };
 
-    const reqCorreoClientePost = await fetch(`${server}/emailcliente`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payloadCorreoCliente),
-      credentials: "include",
-    });
+    const reqCorreoClienteVerifyPost = await fetch(
+      `${server}/emailcliente/sendcorreo`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payloadCorreoClienteVerify),
+        credentials: "include",
+      }
+    );
 
-    const reqCorreoClienteOut = await reqCorreoClientePost.json();
+    const reqCorreoClienteVerifyOut = await reqCorreoClienteVerifyPost.json();
 
-    console.log("res->correoCliente:", reqCorreoClienteOut);
+    console.log("res->correoClienteVerify:", reqCorreoClienteVerifyOut);
 
-    //*luego de hacer el registro del cliente
+    //*fin
+    //*luego  de logar el cliente
+    setCorreoSwitch(false);
+    setCorreoValidationSwitch(true);
     setCorreoValue("");
   };
 
@@ -56,8 +70,10 @@ export default function CorreoCliente() {
       <div
         className={`relative h-full  flex flex-col justify-start items-center  transition-right duration-300  ease-in-out  ${
           correoSwitch
-            ? "   w-full right-[0%] opacity-100  "
-            : " w-[0%]   -right-[300%] opacity-0  "
+            ? " w-full right-[0%] opacity-100  "
+            : correoValidationSwitch
+            ? "  w-[0%]   right-[500%] opacity-0   "
+            : " w-[0%]   -right-[500%] opacity-0  "
         } `}
       >
         <button
@@ -65,6 +81,8 @@ export default function CorreoCliente() {
             setInicioState(false); //*cierra la ventana
             setInicioSwitch(false); //*cambia la primera ventana
             setCorreoSwitch(false); //* cambia la segunda ventana
+
+            setCorreoValidationSwitch(false); //* retorna a su posicion correovalidation
           }}
           className={`absolute w-[30px] h-[45px]  top-0 right-[8px] z-30`}
         >
@@ -97,6 +115,7 @@ export default function CorreoCliente() {
               setCorreoValue("");
               setInicioSwitch(false); //* vuelve a la ventana anterior
               setCorreoSwitch(false); //*cambia la ventana actual
+              // setCorreoValidationSwitch(false); //* retorna a su posicion inical correovalidation
             }, 50);
           }}
           className={`absolute w-[25px] h-[25px]  top-[11px] left-[10px] z-30`}
@@ -127,12 +146,12 @@ export default function CorreoCliente() {
         </button>
         <form
           onSubmit={(e) => {
-            handleCorreoCliente(e);
+            handleCorreoClienteValidation(e);
           }}
         >
           <div className="flex flex-col justify-center w-[400px]  mt-8 gap-7 ">
             <div className="flex justify-center pt-3 text-lg max-sm:text-sm ">
-              Ingresa tu correo
+              Ingresa tu correo aa
             </div>
             <div className="relative  flex justify-center  text-lg max-sm:text-lg">
               <fieldset className=" w-[80%] border-gray-500 border-2 max-sm:w-[80%] ">
