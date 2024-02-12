@@ -44,9 +44,6 @@ export class EmailclienteService {
 
     //*fin modo prueba
 
-    //*âgregar sesion al servidor (validar la condicion si llego el mensaje al cliente)
-    request.session.sessionemailclient = resultMathRandom;
-    console.log('session agregada emailclient -> ', request.session);
     //*inicio
     try {
       const reqSessionClienteSend = await this.mailerService.sendMail({
@@ -60,6 +57,10 @@ export class EmailclienteService {
       });
 
       console.log('framework -> ', reqSessionClienteSend);
+
+      //*âgregar sesion al servidor (validar la condicion si llego el mensaje al cliente)
+      request.session.sessionemailclient = resultMathRandom;
+      console.log('session agregada emailclient -> ', request.session);
 
       if (reqSessionClienteSend.response.includes('OK')) {
         return { msg: 'mensaje enviado' };
