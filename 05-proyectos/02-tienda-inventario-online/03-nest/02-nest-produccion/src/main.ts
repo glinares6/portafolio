@@ -13,6 +13,10 @@ async function bootstrap() {
       secret: jwtConstants.secret,
       resave: false,
       saveUninitialized: true,
+      cookie: {
+        secure: true,
+        httpOnly: true,
+      },
     }),
   );
 
@@ -20,10 +24,17 @@ async function bootstrap() {
   // app.use(express.json({ limit: '10mb' }));
   app.enableCors({
     origin: true, // Reemplaza con tu dominio de túnel
-    methods: 'GET,PATCH,POST,DELETE',
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+    allowedHeaders: [
+      'Content-Type',
+      'Origin',
+      'X-Requested-With',
+      'Accept',
+      'Authorization',
+    ],
+    exposedHeaders: ['Authorization'],
     credentials: true,
   });
-
   await app.listen(port);
 }
 bootstrap();
