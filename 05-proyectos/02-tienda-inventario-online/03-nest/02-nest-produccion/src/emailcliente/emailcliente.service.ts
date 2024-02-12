@@ -46,7 +46,7 @@ export class EmailclienteService {
 
     //*âgregar sesion al servidor (validar la condicion si llego el mensaje al cliente)
     request.session.sessionemailclient = resultMathRandom;
-    console.log('session agregada emailclient -> ', request.session);
+    console.log('session agregada emailclient validate -> ', request.session);
 
     //*inicio
     try {
