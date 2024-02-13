@@ -9,6 +9,7 @@ const port = process.env.PORT || 3000;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.use('trus proxy', 1);
   app.use(
     session({
       secret: jwtConstants.secret,
@@ -26,7 +27,7 @@ async function bootstrap() {
   // app.use(express.urlencoded({ extended: true, limit: '10mb' }));
   // app.use(express.json({ limit: '10mb' }));
   app.enableCors({
-    origin: 'null', // Reemplaza con tu dominio de túnel
+    origin: true, // Reemplaza con tu dominio de túnel
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
     credentials: true,
   });

@@ -215,6 +215,11 @@ EMAIL
             https://stackoverflow.com/questions/62217160/nestjs-email-failed-to-send-with-ejs-template-dynamic-data
 
 
+    FIX SESSION
+        https://gist.github.com/samsch/3c2c98c415e1d5b15e37a272aa0b77f1
+        app.use( session({ secret: jwtConstants.secret, resave: false, saveUninitialized: true, store: store, cookie: { secure: 'auto', httpOnly: 'auto', // sameSite:'None' },
+
+
 tomar en cuenta 
     npm notice 
     npm notice New minor version of npm available! 9.6.1 -> 9.8.1
