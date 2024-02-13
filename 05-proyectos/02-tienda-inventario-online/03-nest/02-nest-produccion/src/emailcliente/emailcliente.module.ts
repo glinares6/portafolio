@@ -24,11 +24,11 @@ import { Emailcliente } from './entities/emailcliente.entity';
           user:
             `${process.env.EMAIL_NAME}` != 'undefined'
               ? `${process.env.EMAIL_NAME}`
-              : 'glinarese1@gmail.com',
+              : 'mail@gmail.com',
           pass:
             `${process.env.EMAIL_PASSWORD}` != 'undefined'
               ? `${process.env.EMAIL_PASSWORD}`
-              : 'oiklirpffvjdrzng',
+              : 'topsecret',
         },
       },
       defaults: {

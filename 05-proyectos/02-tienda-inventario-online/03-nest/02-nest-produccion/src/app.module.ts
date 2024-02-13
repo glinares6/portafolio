@@ -33,6 +33,8 @@ import { Pedido } from './pedidos/entities/pedido.entity';
 // import { jwtConstants } from './auth/constansts';
 import { EmailclienteModule } from './emailcliente/emailcliente.module';
 import { Emailcliente } from './emailcliente/entities/emailcliente.entity';
+import session from 'express-session';
+import { jwtConstants } from './auth/constansts';
 
 @Module({
   imports: [
@@ -83,6 +85,6 @@ export class AppModule implements NestModule {
     consumer
       .apply(LoggerMiddleware)
       .forRoutes({ path: 'auth/login/all/*', method: RequestMethod.GET });
-    // consumer.apply(session({ secret: jwtConstants.secret })).forRoutes('*');
+    consumer.apply(session({ secret: jwtConstants.secret })).forRoutes('*');
   }
 }
