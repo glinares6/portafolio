@@ -41,7 +41,7 @@ export class EmailclienteController {
     return this.emailclienteService.sendCorreo(createEmailclienteDto, request);
   }
 
-  @Post('logincorreo')
+  @Get('logincorreo/auth')
   loginCorreo(
     @Body() createEmailclienteDto: CreateEmailclienteDto,
     @Req() request: Request,

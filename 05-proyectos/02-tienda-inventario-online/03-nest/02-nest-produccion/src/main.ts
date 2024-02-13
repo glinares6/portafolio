@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as session from 'express-session';
 import { jwtConstants } from './auth/constansts';
+import * as passport from 'passport';
 
 // import * as express from 'express';
 const port = process.env.PORT || 3000;
@@ -13,10 +14,6 @@ async function bootstrap() {
       secret: jwtConstants.secret,
       resave: false,
       saveUninitialized: true,
-      cookie: {
-        secure: true,
-        httpOnly: true,
-      },
     }),
   );
 
@@ -25,16 +22,12 @@ async function bootstrap() {
   app.enableCors({
     origin: true, // Reemplaza con tu dominio de túnel
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-    allowedHeaders: [
-      'Content-Type',
-      'Origin',
-      'X-Requested-With',
-      'Accept',
-      'Authorization',
-    ],
-    exposedHeaders: ['Authorization'],
     credentials: true,
   });
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+
   await app.listen(port);
 }
 bootstrap();
