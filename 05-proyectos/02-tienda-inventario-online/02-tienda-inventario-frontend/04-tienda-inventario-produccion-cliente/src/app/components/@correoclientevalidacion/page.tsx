@@ -72,7 +72,7 @@ export default function CorreoCLienteValidacion() {
           sessioncliente: correoValidationClienteValue,
         };
         const postCLienteRegisterValidte = await fetch(
-          `${server}/emailcliente/logincorreo/auth`,
+          `${server}/emailcliente/logincorreo`,
           {
             method: "POST",
             headers: {

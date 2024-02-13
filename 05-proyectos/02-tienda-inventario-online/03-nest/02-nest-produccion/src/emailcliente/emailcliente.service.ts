@@ -188,7 +188,7 @@ export class EmailclienteService {
       createEmailclienteDto.emailcliente,
     );
 
-    console.log('capturamos la sesion login-correo ???', request.session);
+    console.log('capturamos la sesion login-correo ???', request);
 
     console.log(
       'capturamos la sesion del input local',
@@ -197,9 +197,9 @@ export class EmailclienteService {
 
     //*validar si la sesion coincide
 
-    if (request.session.sessioncorreo == createEmailclienteDto.sessioncliente) {
+    if (request.sessioncorreo == createEmailclienteDto.sessioncliente) {
       return {
-        sesionlogincliente: request.session.sessioncorreo,
+        sesionlogincliente: request.sessioncorreo,
       };
     } else {
       return {

@@ -12,7 +12,7 @@ async function bootstrap() {
     session({
       secret: jwtConstants.secret,
       resave: false,
-      saveUninitialized: true,
+      saveUninitialized: false,
     }),
   );
 
