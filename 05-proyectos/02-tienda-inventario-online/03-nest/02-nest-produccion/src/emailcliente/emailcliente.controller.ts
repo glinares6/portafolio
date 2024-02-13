@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Req,
+  Session,
 } from '@nestjs/common';
 import { EmailclienteService } from './emailcliente.service';
 import { CreateEmailclienteDto } from './dto/create-emailcliente.dto';
@@ -44,7 +45,7 @@ export class EmailclienteController {
   @Post('logincorreo')
   loginCorreo(
     @Body() createEmailclienteDto: CreateEmailclienteDto,
-    @Req() request: Request,
+    @Session() request: Record<string, any>,
   ) {
     return this.emailclienteService.loginCorreo(createEmailclienteDto, request);
   }

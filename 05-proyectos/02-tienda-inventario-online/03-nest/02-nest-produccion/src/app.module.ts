@@ -33,7 +33,7 @@ import { Pedido } from './pedidos/entities/pedido.entity';
 // import { jwtConstants } from './auth/constansts';
 import { EmailclienteModule } from './emailcliente/emailcliente.module';
 import { Emailcliente } from './emailcliente/entities/emailcliente.entity';
-import session from 'express-session';
+import * as session from 'express-session';
 import { jwtConstants } from './auth/constansts';
 
 @Module({
