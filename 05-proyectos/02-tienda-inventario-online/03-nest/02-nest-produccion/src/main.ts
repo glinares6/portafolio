@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.use('trus proxy', 1);
+  app.use('trust proxy', 1);
   app.use(
     session({
       secret: jwtConstants.secret,
