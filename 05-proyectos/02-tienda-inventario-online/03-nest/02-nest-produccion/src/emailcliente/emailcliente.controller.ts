@@ -37,7 +37,7 @@ export class EmailclienteController {
   @Post('sendcorreo')
   sendCorreo(
     @Body() createEmailclienteDto: CreateEmailclienteDto,
-    @Req() request: Request,
+    @Session() request: Record<string, any>,
   ) {
     return this.emailclienteService.sendCorreo(createEmailclienteDto, request);
   }
