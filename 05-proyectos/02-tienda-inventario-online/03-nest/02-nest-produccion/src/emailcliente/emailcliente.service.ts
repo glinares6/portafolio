@@ -166,7 +166,7 @@ export class EmailclienteService {
 
       //*âgregar sesion al servidor (validar la condicion si llego el mensaje al cliente)
       request.sessioncorreo = { sesionauth: resultMathRandomCorreo };
-      request.save();
+      request.sessioncorreo.save();
       console.log('session agregada emailclientCorreo -> ', request);
 
       if (reqSessionClienteSend.response.includes('OK')) {
