@@ -165,8 +165,8 @@ export class EmailclienteService {
       console.log('framework -> ', reqSessionClienteSend);
 
       //*âgregar sesion al servidor (validar la condicion si llego el mensaje al cliente)
-      request.session.sessioncorreo = resultMathRandomCorreo;
-      console.log('session agregada emailclientCorreo -> ', request.session);
+      request.sessioncorreo = { sesionauth: resultMathRandomCorreo };
+      console.log('session agregada emailclientCorreo -> ', request);
 
       if (reqSessionClienteSend.response.includes('OK')) {
         return { msg: 'mensaje enviado' };
@@ -199,7 +199,7 @@ export class EmailclienteService {
 
     if (request.sessioncorreo == createEmailclienteDto.sessioncliente) {
       return {
-        sesionlogincliente: request.sessioncorreo,
+        sesionlogincliente: request.sessioncorreo.sesionauth,
       };
     } else {
       return {
