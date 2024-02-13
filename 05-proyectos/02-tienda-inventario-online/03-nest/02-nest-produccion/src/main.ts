@@ -11,8 +11,8 @@ async function bootstrap() {
   app.use(
     session({
       secret: jwtConstants.secret,
-      resave: false,
-      saveUninitialized: false,
+      resave: true,
+      saveUninitialized: true,
     }),
   );
 
