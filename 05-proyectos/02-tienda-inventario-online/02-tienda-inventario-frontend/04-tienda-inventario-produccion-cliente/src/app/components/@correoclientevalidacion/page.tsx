@@ -67,20 +67,20 @@ export default function CorreoCLienteValidacion() {
         //* validamos si es nuevo registro o si ya existe
         console.log("ok......");
 
-        // const payloadPasswordClienteValidate = {
-        //   emailcliente: correoLoginCliente,
-        //   sessioncliente: correoValidationClienteValue,
-        // };
+        const payloadPasswordClienteValidate = {
+          emailcliente: correoLoginCliente,
+          sessioncliente: correoValidationClienteValue,
+        };
         const postCLienteRegisterValidte = await fetch(
           `${server}/emailcliente/logincorreo/auth`,
           {
-            method: "GET",
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             credentials: "include",
 
-            // body: JSON.stringify(payloadPasswordClienteValidate),
+            body: JSON.stringify(payloadPasswordClienteValidate),
           }
         );
 

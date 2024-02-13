@@ -183,33 +183,29 @@ export class EmailclienteService {
   }
 
   async loginCorreo(createEmailclienteDto: CreateEmailclienteDto, request) {
-    // console.log(
-    //   'llego o no al servidor loginCorreo',
-    //   createEmailclienteDto.emailcliente,
-    // );
+    console.log(
+      'llego o no al servidor loginCorreo',
+      createEmailclienteDto.emailcliente,
+    );
 
     console.log('capturamos la sesion login-correo ???', request.session);
 
-    // console.log(
-    //   'capturamos la sesion del input local',
-    //   createEmailclienteDto.sessioncliente,
-    // );
+    console.log(
+      'capturamos la sesion del input local',
+      createEmailclienteDto.sessioncliente,
+    );
 
     //*validar si la sesion coincide
 
-    // if (request.session.sessioncorreo == createEmailclienteDto.sessioncliente) {
-    //   return {
-    //     sesionlogincliente: request.session.sessioncorreo,
-    //   };
-    // } else {
-    //   return {
-    //     msg: 'la sesion no coincide - vuelve a ingresar',
-    //   };
-    // }
-
-    return {
-      sesionlogincliente: request.session.sessioncorreo,
-    };
+    if (request.session.sessioncorreo == createEmailclienteDto.sessioncliente) {
+      return {
+        sesionlogincliente: request.session.sessioncorreo,
+      };
+    } else {
+      return {
+        msg: 'la sesion no coincide - vuelve a ingresar',
+      };
+    }
   }
 
   findAll(request) {
