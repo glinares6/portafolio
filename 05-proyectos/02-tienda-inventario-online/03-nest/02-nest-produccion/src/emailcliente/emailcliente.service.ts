@@ -46,29 +46,49 @@ export class EmailclienteService {
 
     //*âgregar sesion al servidor (validar la condicion si llego el mensaje al cliente)
     request.session.sessionemailclient = resultMathRandom;
+
     console.log('session agregada emailclient validate -> ', request.session);
 
     //*inicio
+
     try {
-      const reqSessionClienteSend = await this.mailerService.sendMail({
-        to: createEmailclienteDto.emailcliente,
-        subject: `Ventana de verificación para su registro.`,
-        template: 'welcome',
-        context: {
-          name: createEmailclienteDto.emailcliente,
-          numrandom: resultMathRandom,
-        },
-      });
+      console.log('comparativa de la sesion local y la sesion del servidor ');
+      createEmailclienteDto.sessioncliente = resultMathRandom;
+      await this.emailClienteRepository.save(createEmailclienteDto);
 
-      console.log('framework -> ', reqSessionClienteSend);
+      //* enviamos el correo
+      try {
+        const reqSessionClienteSend = await this.mailerService.sendMail({
+          to: createEmailclienteDto.emailcliente,
+          subject: `Ventana de verificación para su registro.`,
+          template: 'welcome',
+          context: {
+            name: createEmailclienteDto.emailcliente,
+            numrandom: resultMathRandom,
+          },
+        });
 
-      if (reqSessionClienteSend.response.includes('OK')) {
-        return { msg: 'mensaje enviado' };
+        console.log('framework -> ', reqSessionClienteSend);
+
+        if (reqSessionClienteSend.response.includes('OK')) {
+          //*creamos el cliente user
+          return { msg: 'mensaje enviado' };
+        }
+      } catch (error) {
+        if (error.responseCode === 535) {
+          return {
+            msg: 'el servidor no puede enviar mensaje',
+          };
+        }
       }
     } catch (error) {
-      if (error.responseCode === 535) {
+      if (error.name === 'QueryFailedError') {
         return {
-          msg: 'el servidor no puede enviar mensaje',
+          msg: 'cliente existente - valide nuevamente el correo',
+        };
+      } else {
+        return {
+          msg: 'error inesperado del servidor',
         };
       }
     }
@@ -104,30 +124,75 @@ export class EmailclienteService {
       createEmailclienteDto.sessioncliente,
     );
 
-    //* conparamos la condicion de la sesion para poder regisrtrar
+    //* accedemos al usuario por su correo
+    const getClientCorreo = await this.emailClienteRepository.find({
+      where: {
+        emailcliente: createEmailclienteDto.emailcliente,
+      },
+    });
 
-    if (
-      createEmailclienteDto.sessioncliente == request.session.sessionemailclient
-    ) {
-      try {
-        console.log('comparativa de la sesion local y la sesion del servidor ');
-        return await this.emailClienteRepository.save(createEmailclienteDto);
-      } catch (error) {
-        if (error.name === 'QueryFailedError') {
-          return {
-            msg: 'cliente existente - vuelva a registrar',
-          };
-        } else {
-          return {
-            msg: 'error inesperado del servidor',
-          };
+    try {
+      console.log(
+        'damle el dato del del server',
+        getClientCorreo[0].sessioncliente,
+      );
+
+      //* comparamos la session del correo con la de la bd
+
+      if (
+        createEmailclienteDto.sessioncliente ==
+        getClientCorreo[0].sessioncliente
+      ) {
+        console.log('los valores coinciden');
+        //*actualizamos su estado a 1
+
+        createEmailclienteDto.estado = 1;
+        await this.emailClienteRepository.update(getClientCorreo[0].id, {
+          estado: createEmailclienteDto.estado,
+        });
+        return {
+          msg: 'sesion valida uyt',
+        };
+      } else {
+        console.log('los valores no coinciden intente otra vez ');
+
+        if (getClientCorreo[0].id) {
+          await this.emailClienteRepository.delete(getClientCorreo[0].id);
         }
+
+        return {
+          msg: 'sesion invalida -vuelva a registrar',
+        };
       }
-    } else {
+    } catch (error) {
       return {
-        msg: 'sesion invalida -vuelva a registrar',
+        msg: 'sesion no accesible, vuelva a registrar',
       };
     }
+    //* conparamos la condicion de la sesion para poder regisrtrar
+
+    // if (
+    //   createEmailclienteDto.sessioncliente == request.session.sessionemailclient
+    // ) {
+    //   try {
+    //     console.log('comparativa de la sesion local y la sesion del servidor ');
+    //     return await this.emailClienteRepository.save(createEmailclienteDto);
+    //   } catch (error) {
+    //     if (error.name === 'QueryFailedError') {
+    //       return {
+    //         msg: 'cliente existente - vuelva a registrar',
+    //       };
+    //     } else {
+    //       return {
+    //         msg: 'error inesperado del servidor',
+    //       };
+    //     }
+    //   }
+    // } else {
+    //   return {
+    //     msg: 'sesion invalida -vuelva a registrar',
+    //   };
+    // }
   }
 
   async sendCorreo(createEmailclienteDto: CreateEmailclienteDto, request) {
@@ -149,36 +214,98 @@ export class EmailclienteService {
     //*modo prueba
     // request.session.sessioncorreo = resultMathRandomCorreo;
     // return { msg: 'mensaje enviado' };
-
-    //*inicio
+    console.log('session agregada emailclientCorreo -> ', request);
     try {
-      const reqSessionClienteSend = await this.mailerService.sendMail({
-        to: createEmailclienteDto.emailcliente,
-        subject: `Ventana de verificación para el login.`,
-        template: 'logincorreo',
-        context: {
-          nameCorreo: createEmailclienteDto.emailcliente,
-          numrandomCorreo: resultMathRandomCorreo,
+      //* del correo extraemos el id
+      const getCorreoCLientRes = await this.emailClienteRepository.find({
+        where: {
+          emailcliente: createEmailclienteDto.emailcliente,
         },
       });
 
-      console.log('framework -> ', reqSessionClienteSend);
+      console.log('id del usuario login', getCorreoCLientRes[0].id);
 
-      //*âgregar sesion al servidor (validar la condicion si llego el mensaje al cliente)
-      request.sessioncorreo = { sesionauth: resultMathRandomCorreo };
-      request.save();
-      console.log('session agregada emailclientCorreo -> ', request);
+      //*validamos si el usuario esta verificado
 
-      if (reqSessionClienteSend.response.includes('OK')) {
-        return { msg: 'mensaje enviado' };
-      }
-    } catch (error) {
-      if (error.responseCode === 535) {
+      if (getCorreoCLientRes[0].estado == 0) {
+        await this.emailClienteRepository.delete(getCorreoCLientRes[0].id);
+
         return {
-          msg: 'el servidor no puede enviar mensaje',
+          msg: 'usuario no verificado , vuelva a registrar',
         };
       }
+
+      createEmailclienteDto.sessioncliente = resultMathRandomCorreo;
+      await this.emailClienteRepository.update(getCorreoCLientRes[0].id, {
+        sessioncliente: createEmailclienteDto.sessioncliente,
+      });
+
+      try {
+        const reqSessionClienteSend = await this.mailerService.sendMail({
+          to: createEmailclienteDto.emailcliente,
+          subject: `Ventana de verificación para el login.`,
+          template: 'logincorreo',
+          context: {
+            nameCorreo: createEmailclienteDto.emailcliente,
+            numrandomCorreo: resultMathRandomCorreo,
+          },
+        });
+
+        console.log('framework -> ', reqSessionClienteSend);
+
+        //*âgregar sesion al servidor (validar la condicion si llego el mensaje al cliente)
+        request.sessioncorreo = resultMathRandomCorreo;
+        request.save();
+        console.log('session agregada emailclientCorreo -> ', request);
+
+        if (reqSessionClienteSend.response.includes('OK')) {
+          return { msg: 'mensaje enviado' };
+        }
+      } catch (error) {
+        if (error.responseCode === 535) {
+          return {
+            msg: 'el servidor no puede enviar mensaje',
+          };
+        }
+      }
+    } catch (error) {
+      console.log('name', error.name);
+
+      console.log('usuario no existe en la bd , no puede logear');
+      return {
+        msg: 'usuario no existe en la bd , no puede logear',
+      };
     }
+
+    //*inicio
+    // try {
+    //   const reqSessionClienteSend = await this.mailerService.sendMail({
+    //     to: createEmailclienteDto.emailcliente,
+    //     subject: `Ventana de verificación para el login.`,
+    //     template: 'logincorreo',
+    //     context: {
+    //       nameCorreo: createEmailclienteDto.emailcliente,
+    //       numrandomCorreo: resultMathRandomCorreo,
+    //     },
+    //   });
+
+    //   console.log('framework -> ', reqSessionClienteSend);
+
+    //   //*âgregar sesion al servidor (validar la condicion si llego el mensaje al cliente)
+    //   request.sessioncorreo = { sesionauth: resultMathRandomCorreo };
+    //   request.save();
+    //   console.log('session agregada emailclientCorreo -> ', request);
+
+    //   if (reqSessionClienteSend.response.includes('OK')) {
+    //     return { msg: 'mensaje enviado' };
+    //   }
+    // } catch (error) {
+    //   if (error.responseCode === 535) {
+    //     return {
+    //       msg: 'el servidor no puede enviar mensaje',
+    //     };
+    //   }
+    // }
 
     //*fin
   }
@@ -196,16 +323,36 @@ export class EmailclienteService {
       createEmailclienteDto.sessioncliente,
     );
 
-    //*validar si la sesion coincide
+    //* extraemos la sesion usando el correo
+    try {
+      const resCorreoLoginValidateFind = await this.emailClienteRepository.find(
+        {
+          where: {
+            emailcliente: createEmailclienteDto.emailcliente,
+          },
+        },
+      );
 
-    if (request.sessioncorreo == createEmailclienteDto.sessioncliente) {
-      return {
-        sesionlogincliente: request.sessioncorreo.sesionauth,
-      };
-    } else {
-      return {
-        msg: 'la sesion no coincide - vuelve a ingresar',
-      };
+      // console.log(resCorreoLoginValidateFind[0]);
+
+      //*validar si la sesion coincide
+
+      if (
+        resCorreoLoginValidateFind[0].sessioncliente ==
+        createEmailclienteDto.sessioncliente
+      ) {
+        return {
+          sesioncorreologincliente:
+            resCorreoLoginValidateFind[0].sessioncliente,
+          correologincliente: createEmailclienteDto.emailcliente,
+        };
+      } else {
+        return {
+          msg: 'la sesion no coincide - vuelve a ingresar',
+        };
+      }
+    } catch (error) {
+      console.log('error del servidor logincorreovalidate -> ', error.name);
     }
   }
 
@@ -220,7 +367,11 @@ export class EmailclienteService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} emailcliente`;
+    return this.emailClienteRepository.find({
+      where: {
+        id: id,
+      },
+    });
   }
 
   update(id: number, updateEmailclienteDto: UpdateEmailclienteDto) {

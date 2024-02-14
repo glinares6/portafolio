@@ -93,29 +93,29 @@ export default function CorreoCLienteValidacion() {
         );
 
         //*inicio
-        if (
-          resPostClienteRegisterValidate.msg ===
-          "cliente existente - vuelva a registrar"
-        ) {
-          console.log("llega  o no el mensaje ");
-          setAlertCorreoCLienteValidate(true);
-          setMsgCorreoClienteValidate(`Usuario existente, vuelva a registrar`);
-          setBgAlertClienteValidate(true);
-          inputElementValidateClienteValue.focus();
+        // if (
+        //   resPostClienteRegisterValidate.msg ===
+        //   "cliente existente - vuelva a registrar"
+        // ) {
+        //   console.log("llega  o no el mensaje ");
+        //   setAlertCorreoCLienteValidate(true);
+        //   setMsgCorreoClienteValidate(`Usuario existente, vuelva a registrar`);
+        //   setBgAlertClienteValidate(true);
+        //   inputElementValidateClienteValue.focus();
 
-          setDisableButtonClientRegisterValidate(true); //*desactivar botton
-          return true;
-        }
-        if (
-          resPostClienteRegisterValidate.msg ===
-          "sesion invalida -vuelva a registrar"
-        ) {
-          setAlertCorreoCLienteValidate(true);
-          setMsgCorreoClienteValidate(`sesion invalida - vuelva intentar`);
-          setBgAlertClienteValidate(true);
-          inputElementValidateClienteValue.focus();
-          return true;
-        }
+        //   setDisableButtonClientRegisterValidate(true); //*desactivar botton
+        //   return true;
+        // }
+        // if (
+        //   resPostClienteRegisterValidate.msg ===
+        //   "sesion invalida -vuelva a registrar"
+        // ) {
+        //   setAlertCorreoCLienteValidate(true);
+        //   setMsgCorreoClienteValidate(`sesion invalida - vuelva intentar`);
+        //   setBgAlertClienteValidate(true);
+        //   inputElementValidateClienteValue.focus();
+        //   return true;
+        // }
 
         //*fin
 
@@ -147,8 +147,18 @@ export default function CorreoCLienteValidacion() {
         //* agregamos la sesion  al navegador
         sessionStorage.setItem(
           "correoLoginCliente",
-          resPostClienteRegisterValidate.sesionlogincliente
+          resPostClienteRegisterValidate.correologincliente
         );
+        sessionStorage.setItem(
+          "sessionCorreoLoginCliente",
+          resPostClienteRegisterValidate.sesioncorreologincliente
+        );
+
+        //todo habilitar el perfil para añadir detalles de su información A -> A (perfilcliente)
+
+        //todo context perfil -> menu , redirigir accesos si la sesion es valida o no
+
+        //todo creamos nuevas rutas en el backend para dar privilegios al usuario (perfilcliente,checkout(metodos de pago),comprasCliente(pendiente,despachado,entregado))
 
         setTimeout(() => {
           setInicioSwitch(false); //* vuelve a la  ventana anterior

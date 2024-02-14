@@ -7,7 +7,7 @@ export class CreateEmailclienteDto {
 
   estado: number;
 
-  sessioncliente: string;
+  sessioncliente: number;
 
   createAt: Date;
 

@@ -17,8 +17,11 @@ export class Emailcliente {
   @Column({ default: '' })
   passcliente: string;
 
-  @Column({ default: 1 })
+  @Column({ default: 0 })
   estado: number;
+
+  @Column({ default: 1 })
+  sessioncliente: number;
 
   @CreateDateColumn({
     type: 'timestamptz',
