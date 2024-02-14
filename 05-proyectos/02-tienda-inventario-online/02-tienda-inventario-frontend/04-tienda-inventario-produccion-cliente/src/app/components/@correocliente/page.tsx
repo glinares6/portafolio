@@ -2,7 +2,7 @@
 
 import { UseContext } from "@/app/contexts/authContext";
 import { useRouter } from "next/navigation";
-import { FormEvent, MouseEvent, useContext, useState } from "react";
+import { FormEvent, MouseEvent, useContext, useRef, useState } from "react";
 import menuApp from "../hooks/menu-App";
 
 export default function CorreoCliente() {
@@ -23,9 +23,21 @@ export default function CorreoCliente() {
 
   const [correoValue, setCorreoValue]: any = useState("");
 
+  const [alertCorreoCLienteLoginValidate, setAlertCorreoCLienteLoginValidate] =
+    useState(false);
+  const [bgAlertClienteLoginValidate, setBgAlertClienteLoginValidate] =
+    useState(false);
+
+  const [msgCorreoClienteLoginValidate, setMsgCorreoClienteLoginValidate] =
+    useState("");
+
   const { server } = menuApp();
 
   const route = useRouter();
+
+  const inputCorreoValidateLoginRef = useRef(null);
+  let inputElementValidateClienteValue: any =
+    inputCorreoValidateLoginRef.current;
 
   const handleCorreoClienteValidation = async (
     e: FormEvent<HTMLFormElement>
@@ -58,6 +70,34 @@ export default function CorreoCliente() {
 
     console.log("res->correoClienteVerify:", reqCorreoClienteVerifyOut);
 
+    if (
+      reqCorreoClienteVerifyOut.msg ===
+      "usuario no verificado , vuelva a registrar"
+    ) {
+      setCorreoValue("");
+      setMsgCorreoClienteLoginValidate(
+        "Usuario no verificado , vuelva a registrar"
+      );
+      setBgAlertClienteLoginValidate(true);
+      setAlertCorreoCLienteLoginValidate(true); //* mostrar alerta de correo sin verificar
+      inputElementValidateClienteValue.focus();
+      return true;
+    }
+
+    if (
+      reqCorreoClienteVerifyOut.msg ===
+      "usuario no existe en la bd , no puede logear"
+    ) {
+      setCorreoValue("");
+      setMsgCorreoClienteLoginValidate(
+        "Usuario no existe , vuelva a registrar"
+      );
+      setBgAlertClienteLoginValidate(true);
+      setAlertCorreoCLienteLoginValidate(true); //* mostrar alerta de correo sin verificar
+      inputElementValidateClienteValue.focus();
+      return true;
+    }
+
     //*fin
     //*luego  de logar el cliente
     setCorreoSwitch(false);
@@ -83,6 +123,8 @@ export default function CorreoCliente() {
             setCorreoSwitch(false); //* cambia la segunda ventana
 
             setCorreoValidationSwitch(false); //* retorna a su posicion correovalidation
+
+            setAlertCorreoCLienteLoginValidate(false); //* oculta alerta de correo sin verificar
           }}
           className={`absolute w-[30px] h-[45px]  top-0 right-[8px] z-30`}
         >
@@ -116,6 +158,8 @@ export default function CorreoCliente() {
               setInicioSwitch(false); //* vuelve a la ventana anterior
               setCorreoSwitch(false); //*cambia la ventana actual
               // setCorreoValidationSwitch(false); //* retorna a su posicion inical correovalidation
+
+              setAlertCorreoCLienteLoginValidate(false); //* oculta alerta de correo sin verificar
             }, 50);
           }}
           className={`absolute w-[25px] h-[25px]  top-[11px] left-[10px] z-30`}
@@ -160,9 +204,12 @@ export default function CorreoCliente() {
                 </legend>
                 <div className="w-full  pl-[5px] pb-[5px] ">
                   <input
+                    ref={inputCorreoValidateLoginRef}
                     className="w-full focus:outline-none  text-lg  max-sm:text-sm"
                     onChange={(e) => {
                       setCorreoValue(e.target.value);
+                      setAlertCorreoCLienteLoginValidate(false);
+                      setBgAlertClienteLoginValidate(false);
 
                       // console.log("aqo", e.target.value);
                     }}
@@ -178,6 +225,21 @@ export default function CorreoCliente() {
               </fieldset>
             </div>
 
+            {alertCorreoCLienteLoginValidate && (
+              <div className="relative  flex justify-center   max-sm:text-lg">
+                <div className=" w-[80%] h-[50px] border-gray-500 border-2 max-sm:w-[80%] ">
+                  <div
+                    className={`flex justify-center items-center w-full h-full  text-md max-sm:text-sm ${
+                      bgAlertClienteLoginValidate
+                        ? "bg-yellow-200 font-bold text-gray-950"
+                        : "bg-red-500 font-bold text-white"
+                    }`}
+                  >
+                    {msgCorreoClienteLoginValidate}
+                  </div>
+                </div>
+              </div>
+            )}
             <div className="flex justify-center  text-lg max-sm:text-sm">
               <input
                 type="submit"

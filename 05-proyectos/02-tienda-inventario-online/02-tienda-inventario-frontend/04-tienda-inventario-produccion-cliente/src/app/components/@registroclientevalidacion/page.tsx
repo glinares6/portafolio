@@ -116,6 +116,18 @@ export default function RegistroCLienteValidation() {
           return true;
         }
 
+        if (
+          resPostClienteRegisterValidate.msg ===
+          "sesion no accesible, vuelva a registrar"
+        ) {
+          setAlertCorreoCLienteValidate(true);
+          setMsgCorreoClienteValidate(
+            `sesion no accesible- vuelva a registrar`
+          );
+          setBgAlertClienteValidate(true);
+          inputElementValidateClienteValue.focus();
+          return true;
+        }
         //*registrar usuario
 
         setAlertCorreoCLienteValidate(true);

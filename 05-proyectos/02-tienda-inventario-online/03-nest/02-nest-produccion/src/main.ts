@@ -14,13 +14,13 @@ async function bootstrap() {
       secret: jwtConstants.secret,
       resave: false,
       saveUninitialized: true,
-      rolling: true,
-      cookie: {
-        secure: true,
-        httpOnly: false,
-        sameSite: 'none',
-        maxAge: 60 * 60 * 24 * 1000,
-      },
+      // rolling: true,
+      // cookie: {
+      //   secure: true,
+      //   httpOnly: false,
+      //   sameSite: 'none',
+      //   maxAge: 60 * 60 * 24 * 1000,
+      // },
     }),
   );
 

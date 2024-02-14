@@ -18,6 +18,12 @@ export default function RegistroCliente() {
 
   const [correoValue, setCorreoValue] = useState("");
 
+  const [alertRegistroCLienteValidate, setAlertRegistroCLienteValidate] =
+    useState(false);
+  const [bgAlertClienteValidate, setBgAlertClienteValidate] = useState(false);
+
+  const [msgCorreoClienteValidate, setMsgCorreoClienteValidate] = useState("");
+
   const { server } = menuApp();
 
   const route = useRouter();
@@ -49,11 +55,24 @@ export default function RegistroCliente() {
 
     console.log("res->registroCliente:", reqRegistroClienteOut);
 
+    if (
+      reqRegistroClienteOut.msg ===
+      "cliente existente - valide nuevamente el correo"
+    ) {
+      setMsgCorreoClienteValidate("cliente existente - vuelva a registrar");
+
+      setBgAlertClienteValidate(true);
+      setAlertRegistroCLienteValidate(true);
+      setCorreoValue("");
+      return true;
+    }
+
     //*nos dirigimos a la ventana de codigo de verificación
     setRegistroSwitch(false); //*oculta el menu inicio
 
     setRegistroValidationSwitch(true); //* muestra la ventana de verificación
 
+    setAlertRegistroCLienteValidate(false); //* oculta verificar correo
     //*luego de hacer el registro del cliente
     setCorreoValue("");
   };
@@ -88,6 +107,8 @@ export default function RegistroCliente() {
             setInicioSwitch(false); //*cambia la primera ventana
             setRegistroSwitch(false); //* cambia la segunda ventana
             setRegistroValidationSwitch(false); //*cambiar a la tercera ventana
+
+            setAlertRegistroCLienteValidate(false); //* oculta la alera de correo existente
           }}
           className={`absolute w-[30px] h-[45px]  top-0 right-[8px] z-30`}
         >
@@ -122,6 +143,8 @@ export default function RegistroCliente() {
               // setLoginSwitch(true); //* vuelve a la ventana logincliente
 
               setRegistroSwitch(false); //*oculta la ventana registrocliente
+
+              setAlertRegistroCLienteValidate(false); //* oculta la alera de correo existente
             }, 50);
           }}
           className={`absolute w-[25px] h-[25px]  top-[11px] left-[10px] z-30`}
@@ -183,10 +206,29 @@ export default function RegistroCliente() {
               </fieldset>
             </div>
 
+            {alertRegistroCLienteValidate && (
+              <div className="relative  flex justify-center   max-sm:text-lg">
+                <div className=" w-[80%] h-[50px] border-gray-500 border-2 max-sm:w-[80%] ">
+                  <div
+                    className={`flex justify-center items-center w-full h-full  text-md max-sm:text-sm ${
+                      bgAlertClienteValidate
+                        ? "bg-yellow-200 font-bold text-gray-950"
+                        : "bg-red-500 font-bold text-white"
+                    }`}
+                  >
+                    {msgCorreoClienteValidate}
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="flex justify-center text-lg max-sm:text-sm">
               <input
                 type="submit"
-                className="w-[80%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full cursor-pointer"
+                className={`w-[80%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full cursor-pointer ${
+                  alertRegistroCLienteValidate &&
+                  "opacity-50 pointer-events-none"
+                } `}
                 value="Continue"
               />
             </div>
