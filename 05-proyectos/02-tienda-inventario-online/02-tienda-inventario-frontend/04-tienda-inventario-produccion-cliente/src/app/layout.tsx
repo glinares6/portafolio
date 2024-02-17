@@ -35,6 +35,8 @@ export default function RootLayout({
   const [registroSwitch, setRegistroSwitch] = useState(false);
   const [registroValidationSwitch, setRegistroValidationSwitch] =
     useState(false);
+  const [registroContrasenaClienteSwitch, setRegistroContrasenaClienteSwitch] =
+    useState(false);
 
   const [loginSwitch, setLoginSwitch] = useState(false);
   const [correoValidationSwitch, setCorreoValidationSwitch] = useState(false);
@@ -76,6 +78,8 @@ export default function RootLayout({
           setRegistroSwitch,
           registroValidationSwitch,
           setRegistroValidationSwitch,
+          registroContrasenaClienteSwitch,
+          setRegistroContrasenaClienteSwitch,
           inicioSwitch,
           setInicioSwitch,
           loginSwitch,

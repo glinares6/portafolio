@@ -34,6 +34,17 @@ export class EmailclienteController {
     return this.emailclienteService.create(createEmailclienteDto, request);
   }
 
+  @Post('passverify')
+  passRegisterConfirm(
+    @Body() createEmailclienteDto: CreateEmailclienteDto,
+    @Req() request: Request,
+  ) {
+    return this.emailclienteService.passRegisterConfirm(
+      createEmailclienteDto,
+      request,
+    );
+  }
+
   @Post('sendcorreo')
   sendCorreo(
     @Body() createEmailclienteDto: CreateEmailclienteDto,
@@ -48,6 +59,17 @@ export class EmailclienteController {
     @Session() request: Record<string, any>,
   ) {
     return this.emailclienteService.loginCorreo(createEmailclienteDto, request);
+  }
+
+  @Post('emailpass')
+  emailClienteLogin(
+    @Body() createEmailclienteDto: CreateEmailclienteDto,
+    @Req() request: Request,
+  ) {
+    return this.emailclienteService.emailclienteLogin(
+      createEmailclienteDto,
+      request,
+    );
   }
 
   @Get()

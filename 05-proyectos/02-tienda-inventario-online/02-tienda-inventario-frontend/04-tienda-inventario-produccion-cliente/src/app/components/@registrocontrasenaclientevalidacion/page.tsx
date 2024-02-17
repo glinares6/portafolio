@@ -1,11 +1,10 @@
 "use client";
-
 import { UseContext } from "@/app/contexts/authContext";
 import { useRouter } from "next/navigation";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import menuApp from "../hooks/menu-App";
 
-export default function LoginCliente() {
+export default function RegistroContrasenaClienteValidacion() {
   const {
     setInicioState,
     loginSwitch,
@@ -13,160 +12,136 @@ export default function LoginCliente() {
     setInicioSwitch,
     registroSwitch,
     setRegistroSwitch,
+    registroContrasenaClienteSwitch,
+    setRegistroContrasenaClienteSwitch,
+    correoValueCliente,
   }: any = useContext(UseContext);
-
-  const { server } = menuApp();
 
   const route = useRouter();
 
-  const [correoValue, setCorreoValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
+  const { server } = menuApp();
+
+  const [pass1Value, setPass1Value] = useState("");
+  const [pass2Value, setPass2Value] = useState("");
 
   const [
-    alertEmailPassLoginCLienteValidate,
-    setAlertEmailPassLoginCLienteValidate,
+    alertPassRegisterCLienteValidate,
+    setAlertPassRegisterCLienteValidate,
   ] = useState(false);
 
-  const [bgAlertEmailPassClienteValidate, setBgAlertEmailPassClienteValidate] =
+  const [bgAlertPassClienteValidate, setBgAlertPassClienteValidate] =
     useState(false);
 
-  const [bgConfirmEmailPassClient, setBgConfirmEmailPassClient] =
+  const [bgConfirmPassClientUpdate, setBgConfirmPassClientUpdate] =
     useState(false);
 
-  const [
-    msgEmailPassLoginClienteValidate,
-    setMsgEmailPassLoginClienteValidate,
-  ] = useState("");
-
-  useEffect(() => {}, []);
+  const [msgPassRegisterClienteValidate, setMsgPassRegisterClienteValidate] =
+    useState("");
 
   const handleLoginFormCliente = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("fuente de soda");
 
-    console.log("valor 1", correoValue);
-    console.log("valor2", passwordValue);
+    console.log("valor 1", pass1Value);
+    console.log("valor2", pass2Value);
 
-    const payloadEmailPassLoginValidation = {
-      emailcliente: correoValue,
-      passcliente: passwordValue,
-    };
+    console.log("correo del cliente", correoValueCliente);
 
-    const reqEmailPassLoginClientPost = await fetch(
-      `${server}/emailcliente/emailpass`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(payloadEmailPassLoginValidation),
+    //*validamos si ambas contraseñas coinciden
+
+    if (pass1Value === pass2Value) {
+      console.log("las contraseñas son iguales");
+
+      console.log("pass ahora ", pass2Value);
+
+      const payloadPassVerifyRegister = {
+        emailcliente: correoValueCliente,
+        passcliente: pass2Value.trim(),
+      };
+      const reqPassRegisterVerify = await fetch(
+        `${server}/emailcliente/passverify`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(payloadPassVerifyRegister),
+        }
+      );
+
+      const resPassRegisterVerify = await reqPassRegisterVerify.json();
+
+      console.log("resPasswordClienteVerify ->", resPassRegisterVerify);
+
+      if (
+        resPassRegisterVerify.msg === "la contraseña debe ser mayor a  5 cifras"
+      ) {
+        setPass1Value("");
+        setPass2Value("");
+        setAlertPassRegisterCLienteValidate(true); //*muestra la barra de alerta
+
+        setBgAlertPassClienteValidate(true); //* muestra el colo de  fondo
+
+        setMsgPassRegisterClienteValidate(
+          `contraseña mayor a 5 cifras no ${pass2Value.length} cifra(s)`
+        );
+        return true;
       }
-    );
 
-    const resEmailPassClienteLogin = await reqEmailPassLoginClientPost.json();
+      if (
+        resPassRegisterVerify.msg ===
+        "actualizo la contraseña - registercliente"
+      ) {
+        setPass1Value("");
+        setPass2Value("");
+        setAlertPassRegisterCLienteValidate(true); //*muestra la barra de alerta
 
-    console.log("resEmailPassCLientePost ->", resEmailPassClienteLogin);
+        setBgAlertPassClienteValidate(false); //* muestra el colo de  fondo
 
-    if (
-      resEmailPassClienteLogin.msg ===
-      "el usuario no esta registrado - logincliente"
-    ) {
-      setAlertEmailPassLoginCLienteValidate(true); //* muestra la barra de alerta
-      setBgAlertEmailPassClienteValidate(false); //* color de fondo del alert
-      setBgConfirmEmailPassClient(false); //* variación del fondo segun la condición
+        setMsgPassRegisterClienteValidate(`actualizo la contraseña - cliente`);
 
-      setMsgEmailPassLoginClienteValidate("usuario no registrado");
+        setBgConfirmPassClientUpdate(true);
 
-      setCorreoValue("");
-      setPasswordValue("");
-      return true;
-    }
-    if (
-      resEmailPassClienteLogin.msg ===
-      "usuario y/o contraseña invalidos - emailpasscliente"
-    ) {
-      setAlertEmailPassLoginCLienteValidate(true); //* muestra la barra de alerta
-      setBgAlertEmailPassClienteValidate(true); //* color de fondo del alert
-      setBgConfirmEmailPassClient(false); //* variación del fondo segun la condición
+        setTimeout(() => {
+          setInicioSwitch(false); //* vuelve a la  ventana anterior
+          setRegistroContrasenaClienteSwitch(false); //*cambia la ventana actual
 
-      setMsgEmailPassLoginClienteValidate("usuario y/o contraseña no validos");
+          setAlertPassRegisterCLienteValidate(false); //*local -> quita el alert
+        }, 2500);
 
-      setCorreoValue("");
-      setPasswordValue("");
-      return true;
-    }
-    if (
-      resEmailPassClienteLogin.msg ===
-      "no asigno contraseña - ingrese por correo"
-    ) {
-      setAlertEmailPassLoginCLienteValidate(true); //* muestra la barra de alerta
-      setBgAlertEmailPassClienteValidate(false); //* color de fondo del alert
-      setBgConfirmEmailPassClient(false); //* variación del fondo segun la condición
+        return true;
+      }
 
-      setMsgEmailPassLoginClienteValidate(
-        "no asigno contraseña - ingrese por correo"
-      );
+      setPass1Value("");
+      setPass2Value("");
+    } else {
+      setPass1Value("");
+      setPass2Value("");
+      setAlertPassRegisterCLienteValidate(true); //*muestra la barra de alerta
 
-      setCorreoValue("");
-      setPasswordValue("");
-      return true;
+      setBgAlertPassClienteValidate(false); //* muestra el colo de  fondo
+
+      setBgConfirmPassClientUpdate(false); //* cambiar a red el  fondo alert
+      setMsgPassRegisterClienteValidate("las contraseñas no coinciden");
+      return console.log("msg", {
+        msg: "las contraseñas no coinciden",
+      });
     }
 
-    if (
-      resEmailPassClienteLogin.msg ===
-      "usuario no autorizado , vuelva a registrar"
-    ) {
-      setAlertEmailPassLoginCLienteValidate(true); //* muestra la barra de alerta
-      setBgAlertEmailPassClienteValidate(false); //* color de fondo del alert
-      setBgConfirmEmailPassClient(false); //* variación del fondo segun la condición
-
-      setMsgEmailPassLoginClienteValidate(
-        "usuario no verificado - vuelva a registrar"
-      );
-
-      setCorreoValue("");
-      setPasswordValue("");
-      return true;
-    }
-
-    setAlertEmailPassLoginCLienteValidate(true); //* muestra la barra de alerta
-    setBgAlertEmailPassClienteValidate(false); //* color de fondo del alert
-    setBgConfirmEmailPassClient(true); //* variación del fondo segun la condición
-
-    setMsgEmailPassLoginClienteValidate("usuario - contraseña coinciden");
-
-    setCorreoValue("");
-    setPasswordValue("");
-
-    //* agregamos la sesion  al navegador
-    sessionStorage.setItem(
-      "correoLoginCliente",
-      resEmailPassClienteLogin.correocliente
-    );
-    sessionStorage.setItem(
-      "sessionCorreoLoginCliente",
-      resEmailPassClienteLogin.sessioncliente
-    );
-
-    setTimeout(() => {
-      setInicioState(false); //*cierra la ventana y vuelva a su valor original
-
-      setAlertEmailPassLoginCLienteValidate(false); //* oculta la barra de alerta
-    }, 2500);
+    //todo
+    //* primero validamos que el estado del usuario creado sea verificado
   };
 
   return (
     <>
       <div
         className={`relative h-full  flex flex-col justify-start items-center transition-right duration-300  ease-in-out    ${
-          loginSwitch
+          registroContrasenaClienteSwitch
             ? "      w-full right-[0%]  opacity-100"
-            : `  ${
-                registroSwitch
-                  ? " w-[0%]  right-[200%] opacity-0"
-                  : "     w-[0%]  -right-[200%] opacity-0"
-              }`
+            : `  " w-[0%]  -right-[500%] opacity-0"
+                  
+              `
         }  
 
         
@@ -177,11 +152,14 @@ export default function LoginCliente() {
       >
         <button
           onClick={() => {
+            setPass1Value("");
+            setPass2Value("");
+
             setInicioState(false); //* cierra la ventana
             setInicioSwitch(false); //* cambia la primera ventana
-            setLoginSwitch(false); //*cambia la segunda ventana
+            // setLoginSwitch(false); //*cambia la segunda ventana
 
-            setAlertEmailPassLoginCLienteValidate(false); //* oculta la barra de alerta
+            setRegistroContrasenaClienteSwitch(false); //* retorn la validación de correo a su estado inicial
           }}
           className={`absolute w-[30px] h-[45px]  top-0 right-[8px] z-30`}
         >
@@ -210,13 +188,13 @@ export default function LoginCliente() {
           onClick={() => {
             // setInicioState(false);
             setTimeout(() => {
-              setCorreoValue("");
-              setPasswordValue("");
+              setPass1Value("");
+              setPass2Value("");
+
+              //   setLoginSwitch(false); //*cambia la ventana actual
+
               setInicioSwitch(false); //* vuelve a la  ventana anterior
-
-              setLoginSwitch(false); //*cambia la ventana actual
-
-              setAlertEmailPassLoginCLienteValidate(false); //* oculta la barra de alerta
+              setRegistroContrasenaClienteSwitch(false); //* retorn la validación de correo a su estado inicial
             }, 50);
           }}
           className={`absolute w-[25px] h-[25px]  top-[11px] left-[10px] z-30 `}
@@ -253,25 +231,25 @@ export default function LoginCliente() {
         >
           <div className="flex flex-col justify-center w-[400px]  mt-8 gap-7 ">
             <div className="flex justify-center pt-3 text-lg max-sm:text-sm ">
-              Iniciar Sesión
+              Confirmarción de contraseña
             </div>
             <div className="relative  flex justify-center   max-sm:text-lg">
               <fieldset className=" w-[80%] border-gray-500 border-2 max-sm:w-[80%] ">
                 <legend className="w-[90px] relative ml-[15px] pl-[5px] text-lg max-sm:text-sm">
-                  Correo
+                  Contraseña
                 </legend>
                 <div className="w-full  pl-[5px] pb-[5px] ">
                   <input
                     className="w-full focus:outline-none text-lg max-sm:text-sm"
-                    type="email"
+                    type="password"
                     onChange={(e) => {
-                      setCorreoValue(e.target.value);
-                      setAlertEmailPassLoginCLienteValidate(false);
+                      setPass1Value(e.target.value);
+                      setAlertPassRegisterCLienteValidate(false);
                     }}
-                    value={correoValue}
-                    name="txtCorreoLogin"
-                    id="txtCorreoLogin"
-                    placeholder="email@mail.com"
+                    value={pass1Value}
+                    name="passwordRegisterValidation"
+                    id="passwordRegisterClientValidation"
+                    placeholder="escriba su contraseña"
                     autoComplete="off"
                     required
                   />
@@ -288,13 +266,13 @@ export default function LoginCliente() {
                     className="w-full focus:outline-none  text-lg  max-sm:text-sm"
                     type="password"
                     onChange={(e) => {
-                      setPasswordValue(e.target.value);
-                      setAlertEmailPassLoginCLienteValidate(false);
+                      setPass2Value(e.target.value);
+                      setAlertPassRegisterCLienteValidate(false);
                     }}
-                    value={passwordValue}
-                    name="txtPasswordLogin"
-                    id="txtPasswordLogin"
-                    placeholder="txtPasswordLogin"
+                    value={pass2Value}
+                    name="passwordVerifyRegisterValidation"
+                    id="passwordVerifyRegisterValidation"
+                    placeholder="vuelva a escribir su contraseña"
                     autoComplete="off"
                     required
                   />
@@ -302,21 +280,21 @@ export default function LoginCliente() {
               </fieldset>
             </div>
 
-            {alertEmailPassLoginCLienteValidate && (
+            {alertPassRegisterCLienteValidate && (
               <div className="relative  flex justify-center   max-sm:text-lg">
                 <div className=" w-[80%] h-[50px] border-gray-500 border-2 max-sm:w-[80%] ">
                   <div
                     className={`flex justify-center items-center w-full h-full  text-md max-sm:text-sm ${
-                      bgAlertEmailPassClienteValidate
+                      bgAlertPassClienteValidate
                         ? "bg-yellow-200 font-bold text-gray-950"
                         : `${
-                            bgConfirmEmailPassClient
+                            bgConfirmPassClientUpdate
                               ? "bg-black font-bold text-white"
                               : "bg-red-500 font-bold text-white"
                           }`
                     }`}
                   >
-                    {msgEmailPassLoginClienteValidate}
+                    {msgPassRegisterClienteValidate}
                   </div>
                 </div>
               </div>
@@ -324,12 +302,12 @@ export default function LoginCliente() {
 
             <div className="flex justify-center text-lg max-sm:text-sm">
               <button className="w-[80%] border-red-700 border-2 h-[40px] text-red-700 font-bold rounded-full">
-                Ingresar
+                Confirmar
               </button>
             </div>
           </div>
         </form>
-        <div className="w-full flex justify-end gap-x-3 pr-5 max-sm:pr-10 mt-[100px] max-md:w-[400px]">
+        {/* <div className="w-full flex justify-end gap-x-3 pr-5 max-sm:pr-10 mt-[100px] max-md:w-[400px]">
           <div className="w-[75%] flex justify-end">
             <h1 className="text-lg max-sm:text-sm">No tienes una cuenta ?</h1>
           </div>
@@ -354,16 +332,6 @@ export default function LoginCliente() {
               value={"Registrate"}
             />
           </div>
-        </div>
-
-        {/* <div className="w-[400px] h-full">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam nisi
-          nam accusantium officia vero odio architecto eligendi est? Neque ea
-          eaque dolore perferendis tempora nobis facere enim ad laudantium quas.
-          Amet totam asperiores voluptatem iusto facere, sunt minus, ad laborum
-          reprehenderit temporibus omnis aperiam consectetur modi aspernatur
-          sint ullam ab quisquam et? Nihil culpa distinctio quidem sequi ut sit
-          esse.
         </div> */}
       </div>
     </>
