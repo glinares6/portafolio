@@ -349,6 +349,7 @@ export default function LoginCliente() {
                 setPasswordValue("");
                 setLoginSwitch(false); //*cambia la ventana actual
                 setRegistroSwitch(true); //* va a la siguiente ventana
+                setAlertEmailPassLoginCLienteValidate(false); //* muestra la barra de alerta
               }}
               className=" cursor-pointer max-sm:text-sm "
               value={"Registrate"}
