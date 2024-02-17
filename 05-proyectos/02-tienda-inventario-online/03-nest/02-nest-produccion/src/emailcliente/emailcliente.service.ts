@@ -356,6 +356,154 @@ export class EmailclienteService {
     }
   }
 
+  async passRegisterConfirm(
+    createEmailclienteDto: CreateEmailclienteDto,
+    request,
+  ) {
+    console.log('correo-pass-verify', createEmailclienteDto.emailcliente);
+
+    console.log(
+      'contrasena verify-confirm',
+      createEmailclienteDto.passcliente.length,
+    );
+
+    console.log('session verify-confirmation', request.session);
+
+    try {
+      const reqClientRegisterGet = await this.emailClienteRepository.find({
+        where: {
+          emailcliente: createEmailclienteDto.emailcliente,
+        },
+      });
+
+      //* validamos que sean de 5 cifras
+
+      try {
+        if (createEmailclienteDto.passcliente.length >= 5) {
+          //* agregamos la contraseña al usuario
+
+          await this.emailClienteRepository.update(reqClientRegisterGet[0].id, {
+            passcliente: createEmailclienteDto.passcliente,
+          });
+
+          return {
+            msg: 'actualizo la contraseña - registercliente',
+          };
+        }
+        return { msg: 'la contraseña debe ser mayor a  5 cifras' };
+      } catch (error) {
+        console.log(error.name);
+
+        return {
+          msg: 'error del servidor - update password cliente',
+        };
+      }
+    } catch (error) {
+      console.log('error ->', error.name);
+
+      return {
+        msg: 'error al buscar el cliente',
+      };
+    }
+  }
+
+  async emailclienteLogin(
+    createEmailclienteDto: CreateEmailclienteDto,
+    request,
+  ) {
+    console.log('correo del login', createEmailclienteDto.emailcliente);
+
+    console.log('contrasela del login', createEmailclienteDto.passcliente);
+
+    console.log('session del cliente', request.session);
+
+    //*validamos que que el estado sea 1
+    //* accedemos a su información porcorreo
+
+    const resEmailPassClientGet = await this.emailClienteRepository.find({
+      where: {
+        emailcliente: createEmailclienteDto.emailcliente,
+      },
+    });
+
+    if (resEmailPassClientGet.length == 0) {
+      return {
+        msg: 'el usuario no esta registrado - logincliente',
+      };
+    }
+
+    try {
+      if (resEmailPassClientGet[0].estado === 1) {
+        //* usuario validado no tiene contraseña
+
+        if (resEmailPassClientGet[0].passcliente === '') {
+          return {
+            msg: 'no asigno contraseña - ingrese por correo',
+          };
+        }
+
+        //* validamos que el uauario y la contraseña coincidan
+
+        if (
+          resEmailPassClientGet[0].emailcliente ===
+            createEmailclienteDto.emailcliente &&
+          resEmailPassClientGet[0].passcliente ===
+            createEmailclienteDto.passcliente
+        ) {
+          //* actualizamos la session del cliente
+
+          //*agregamos la nueva sesion  (6 digitos)
+
+          const min = Math.ceil(100000);
+          const max = Math.floor(999999);
+          const resultMathRandomEmailPass = Math.floor(
+            Math.random() * (max - min + 1) + min,
+          ); // The maximum is inclusive
+
+          console.log(
+            'numero de 6 digitos correoVerify -updatecliente',
+            resultMathRandomEmailPass,
+          );
+
+          await this.emailClienteRepository.update(
+            resEmailPassClientGet[0].id,
+            {
+              sessioncliente: resultMathRandomEmailPass,
+            },
+          );
+
+          //* mostrar los cambios añadidos
+
+          const resEmailPassNewGet = await this.emailClienteRepository.find({
+            where: {
+              emailcliente: createEmailclienteDto.emailcliente,
+            },
+          });
+          return {
+            correocliente: resEmailPassNewGet[0].emailcliente,
+            sessioncliente: resEmailPassNewGet[0].sessioncliente,
+          };
+        } else {
+          return {
+            msg: 'usuario y/o contraseña invalidos - emailpasscliente',
+          };
+        }
+      }
+
+      if (resEmailPassClientGet[0].estado === 0) {
+        await this.emailClienteRepository.delete(resEmailPassClientGet[0].id);
+
+        return {
+          msg: 'usuario no autorizado , vuelva a registrar',
+        };
+      }
+    } catch (error) {
+      console.log(error);
+      return {
+        msg: 'error autorizacion - loginCliente',
+      };
+    }
+  }
   findAll(request) {
     console.log('respuesta session cliente', request.session);
 

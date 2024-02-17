@@ -15,6 +15,8 @@ export default function RegistroCLienteValidation() {
     setRegistroSwitch,
     registroValidationSwitch,
     setRegistroValidationSwitch,
+    registroContrasenaClienteSwitch,
+    setRegistroContrasenaClienteSwitch,
     correoValueCliente,
     setCorreoValueCliente,
   }: any = useContext(UseContext);
@@ -67,6 +69,7 @@ export default function RegistroCLienteValidation() {
         //* validamos si es nuevo registro o si ya existe
         console.log("ok......");
 
+        //* inicio
         const payloadPasswordClienteValidate = {
           emailcliente: correoValueCliente,
           sessioncliente: correoValidationClienteValue,
@@ -86,6 +89,12 @@ export default function RegistroCLienteValidation() {
 
         const resPostClienteRegisterValidate =
           await postCLienteRegisterValidte.json();
+
+        //*fin
+
+        // const resPostClienteRegisterValidate = {
+        //   msg: "prueba a discreción",
+        // };
 
         console.log(
           "resClientRegisterValidate xrs => ",
@@ -109,10 +118,12 @@ export default function RegistroCLienteValidation() {
           resPostClienteRegisterValidate.msg ===
           "sesion invalida -vuelva a registrar"
         ) {
+          setCorreoValidationClienteValue("");
           setAlertCorreoCLienteValidate(true);
           setMsgCorreoClienteValidate(`sesion invalida - vuelva intentar`);
           setBgAlertClienteValidate(true);
           inputElementValidateClienteValue.focus();
+
           return true;
         }
 
@@ -120,6 +131,7 @@ export default function RegistroCLienteValidation() {
           resPostClienteRegisterValidate.msg ===
           "sesion no accesible, vuelva a registrar"
         ) {
+          setCorreoValidationClienteValue("");
           setAlertCorreoCLienteValidate(true);
           setMsgCorreoClienteValidate(
             `sesion no accesible- vuelva a registrar`
@@ -136,13 +148,27 @@ export default function RegistroCLienteValidation() {
 
         setBgAlertRegisterSucessValidate(true);
 
+        //* vamos a la nueva ventana para adicionar la contraseña(2 pasos) a la cuenta cliente
+
         setTimeout(() => {
-          setInicioSwitch(false); //* vuelve a la  ventana anterior
-          setRegistroValidationSwitch(false); //*cambia la ventana actual
+          // setInicioSwitch(false); //* vuelve a la  ventana anterior
+          // setRegistroValidationSwitch(false); //*cambia la ventana actual
 
           setAlertCorreoCLienteValidate(false); //*local -> quita el alert
+
+          setRegistroValidationSwitch(false); //* oculta a la isquierda la validacion de registro
+          setRegistroContrasenaClienteSwitch(true); //* mostrarme verificación de contraseña
         }, 2500);
 
+        //*^inicio
+        // setTimeout(() => {
+        //   setInicioSwitch(false); //* vuelve a la  ventana anterior
+        //   setRegistroValidationSwitch(false); //*cambia la ventana actual
+
+        //   setAlertCorreoCLienteValidate(false); //*local -> quita el alert
+        // }, 2500);
+
+        // //*fin
         // console.log("USUARIO REGISTRADO - CLIENTE VALIDATE !!!!!");
       } else {
         console.log("no es un numero de 6 digitos");
@@ -164,7 +190,13 @@ export default function RegistroCLienteValidation() {
         className={`relative h-full  flex flex-col justify-start items-center transition-right duration-300  ease-in-out    ${
           registroValidationSwitch
             ? "      w-full right-[0%]  opacity-100"
-            : " w-[0%]  -right-[400%] opacity-0"
+            : `
+            ${
+              registroContrasenaClienteSwitch
+                ? " w-[0%]  right-[400%] opacity-0"
+                : " w-[0%]  -right-[400%] opacity-0"
+            }
+            `
         }  
 
         

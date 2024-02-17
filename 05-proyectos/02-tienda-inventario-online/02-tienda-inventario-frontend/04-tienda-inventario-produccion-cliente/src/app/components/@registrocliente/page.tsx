@@ -2,7 +2,7 @@
 
 import { UseContext } from "@/app/contexts/authContext";
 import { useRouter } from "next/navigation";
-import { FormEvent, useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useRef, useState } from "react";
 import menuApp from "../hooks/menu-App";
 
 export default function RegistroCliente() {
@@ -28,6 +28,9 @@ export default function RegistroCliente() {
 
   const route = useRouter();
 
+  const registerClienteRef: any = useRef(null);
+
+  let inputElementRegisterClienteValue: any = registerClienteRef.current;
   const handleRegistroCLiente = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -63,6 +66,7 @@ export default function RegistroCliente() {
 
       setBgAlertClienteValidate(true);
       setAlertRegistroCLienteValidate(true);
+      inputElementRegisterClienteValue.focus();
       setCorreoValue("");
       return true;
     }
@@ -191,9 +195,11 @@ export default function RegistroCliente() {
                 <div className="w-full  pl-[5px] pb-[5px] ">
                   <input
                     className="w-full focus:outline-none text-lg  max-sm:text-sm "
+                    ref={registerClienteRef}
                     type="email"
                     onChange={(e) => {
                       setCorreoValue(e.target.value);
+                      setAlertRegistroCLienteValidate(false);
                     }}
                     value={correoValue}
                     name="txtCorreoRegistro"

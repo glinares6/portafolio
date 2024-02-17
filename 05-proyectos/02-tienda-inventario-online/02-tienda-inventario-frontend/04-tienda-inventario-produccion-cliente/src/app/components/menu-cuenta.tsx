@@ -6,6 +6,7 @@ import LoginCliente from "./@logincliente/page";
 import CorreoCliente from "./@correocliente/page";
 import RegistroCLienteValidation from "./@registroclientevalidacion/page";
 import CorreoCLienteValidacion from "./@correoclientevalidacion/page";
+import RegistroContrasenaClienteValidacion from "./@registrocontrasenaclientevalidacion/page";
 
 export default function MenuCuenta() {
   const {
@@ -66,7 +67,7 @@ export default function MenuCuenta() {
         >
           <div className="fixed w-[100%] h-[calc(100vh-64px)]  flex justify-center items-start   border-red-500 border-2 max-lg:overflow-y-scroll max-sm:h-full">
             <div
-              className={`relative flex   w-[400px] h-[50vh]  border-red-500 border-2 bg-white  max-sm:w-full  overflow-hidden max-sm:h-full min-h-[572px]`}
+              className={`relative flex   w-[400px] h-[50vh]  border-red-500 border-2 bg-white  max-sm:w-full  overflow-hidden  max-sm:h-full min-h-[572px]`}
             >
               <div
                 className={`relative h-full  flex flex-col justify-start  items-center  duration-300  ease-in-out transition-right
@@ -199,6 +200,7 @@ export default function MenuCuenta() {
               <LoginCliente />
               <RegistroCliente />
               <RegistroCLienteValidation />
+              <RegistroContrasenaClienteValidacion />
               <CorreoCLienteValidacion />
             </div>
 
