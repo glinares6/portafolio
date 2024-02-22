@@ -97,6 +97,21 @@ export default function LoginCliente() {
       return true;
     }
     if (
+      resEmailPassClienteLogin.msg === "error en las credenciales -loginCliente"
+    ) {
+      setAlertEmailPassLoginCLienteValidate(true); //* muestra la barra de alerta
+      setBgAlertEmailPassClienteValidate(false); //* color de fondo del alert
+      setBgConfirmEmailPassClient(false); //* variación del fondo segun la condición
+
+      setMsgEmailPassLoginClienteValidate(
+        "error en las credenciales , vuelva a registrar"
+      );
+
+      setCorreoValue("");
+      setPasswordValue("");
+      return true;
+    }
+    if (
       resEmailPassClienteLogin.msg ===
       "no asigno contraseña - ingrese por correo"
     ) {
