@@ -104,7 +104,7 @@ export default function LoginCliente() {
       setBgConfirmEmailPassClient(false); //* variación del fondo segun la condición
 
       setMsgEmailPassLoginClienteValidate(
-        "error en las credenciales , vuelva a registrar"
+        "error en las credenciales - ingrese por correo"
       );
 
       setCorreoValue("");
