@@ -5,6 +5,8 @@ export class CreateEmailclienteDto {
 
   passcliente: string;
 
+  bufferiv: string;
+
   estado: number;
 
   sessioncliente: number;

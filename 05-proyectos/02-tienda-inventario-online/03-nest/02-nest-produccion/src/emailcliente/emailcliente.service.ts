@@ -6,6 +6,8 @@ import { Emailcliente } from './entities/emailcliente.entity';
 import { Repository } from 'typeorm';
 import { MailerService } from '@nestjs-modules/mailer';
 import { join } from 'path';
+import { createCipheriv, createDecipheriv, randomBytes, scrypt } from 'crypto';
+import { promisify } from 'util';
 
 @Injectable()
 export class EmailclienteService {
@@ -53,6 +55,31 @@ export class EmailclienteService {
 
     try {
       console.log('comparativa de la sesion local y la sesion del servidor ');
+
+      // const iv = randomBytes(16);
+
+      // console.log('random-bytes', iv);
+
+      // const bufferIv = iv.toString('base64');
+
+      // const password = 'cLav3s3cr3t4d3num3r0s';
+
+      // const key = (await promisify(scrypt)(password, 'salt', 32)) as Buffer;
+      // const cipher = createCipheriv('aes-256-ctr', key, iv);
+
+      // const textToEncrypt = 'NestdelavidaaTodo';
+      // const encryptedText = Buffer.concat([
+      //   cipher.update(textToEncrypt),
+      //   cipher.final(),
+      // ]);
+
+      // //*ênviamos al servidor el fuffer como texto
+      // const passString = encryptedText.toString('base64');
+      // console.log('texto encriptado-buffer', encryptedText);
+      // console.log('texto encriptado', encryptedText.toString('base64'));
+
+      // createEmailclienteDto.passcliente = passString;
+      // createEmailclienteDto.bufferiv = bufferIv;
       createEmailclienteDto.sessioncliente = resultMathRandom;
       await this.emailClienteRepository.save(createEmailclienteDto);
 
@@ -382,8 +409,36 @@ export class EmailclienteService {
         if (createEmailclienteDto.passcliente.length >= 5) {
           //* agregamos la contraseña al usuario
 
+          //* encriptamos la contraseña
+
+          const iv = randomBytes(16);
+
+          console.log('random-bytes', iv);
+
+          const bufferIv = iv.toString('base64');
+
+          const password = process.env.BUFFER_IV || 'cLav3s3cr3t4d3num3r0s';
+
+          const key = (await promisify(scrypt)(password, 'salt', 32)) as Buffer;
+          const cipher = createCipheriv('aes-256-ctr', key, iv);
+
+          //*agregamos el pass-cliente
+          const textToEncrypt = createEmailclienteDto.passcliente;
+          const encryptedText = Buffer.concat([
+            cipher.update(textToEncrypt),
+            cipher.final(),
+          ]);
+
+          //*ênviamos al servidor el buffer como texto
+          console.log('texto encriptado', encryptedText.toString('base64'));
+          const passString = encryptedText.toString('base64');
+
+          createEmailclienteDto.passcliente = passString;
+          createEmailclienteDto.bufferiv = bufferIv;
+
           await this.emailClienteRepository.update(reqClientRegisterGet[0].id, {
             passcliente: createEmailclienteDto.passcliente,
+            bufferiv: createEmailclienteDto.bufferiv,
           });
 
           return {
@@ -436,56 +491,115 @@ export class EmailclienteService {
       if (resEmailPassClientGet[0].estado === 1) {
         //* usuario validado no tiene contraseña
 
-        if (resEmailPassClientGet[0].passcliente === '') {
+        if (
+          resEmailPassClientGet[0].passcliente === '' &&
+          resEmailPassClientGet[0].bufferiv === ''
+        ) {
           return {
             msg: 'no asigno contraseña - ingrese por correo',
           };
         }
 
-        //* validamos que el uauario y la contraseña coincidan
+        //*desencryptamos el paass
 
-        if (
-          resEmailPassClientGet[0].emailcliente ===
-            createEmailclienteDto.emailcliente &&
-          resEmailPassClientGet[0].passcliente ===
-            createEmailclienteDto.passcliente
-        ) {
-          //* actualizamos la session del cliente
+        try {
+          //* valores previos como iv, key
 
-          //*agregamos la nueva sesion  (6 digitos)
+          //* key
 
-          const min = Math.ceil(100000);
-          const max = Math.floor(999999);
-          const resultMathRandomEmailPass = Math.floor(
-            Math.random() * (max - min + 1) + min,
-          ); // The maximum is inclusive
+          const password = process.env.BUFFER_IV || 'cLav3s3cr3t4d3num3r0s';
+
+          const key = (await promisify(scrypt)(password, 'salt', 32)) as Buffer;
+
+          //*îv
+
+          //* convertimos de base64 a buffer para que sea tratado como archivo
+
+          const bufferPassClient = Buffer.from(
+            resEmailPassClientGet[0].passcliente,
+            'base64',
+          );
+
+          const bufferIvPassKey = Buffer.from(
+            resEmailPassClientGet[0].bufferiv,
+            'base64',
+          );
+
+          //* desencriptar
+
+          const decipher = createDecipheriv(
+            'aes-256-ctr',
+            key,
+            bufferIvPassKey,
+          );
+          const decryptedText = Buffer.concat([
+            decipher.update(bufferPassClient),
+            decipher.final(),
+          ]);
 
           console.log(
-            'numero de 6 digitos correoVerify -updatecliente',
-            resultMathRandomEmailPass,
+            'texto a desencryptar-buffer -email client',
+            decryptedText,
+          );
+          console.log(
+            'texto a desencryptar -get emailclient',
+            decryptedText.toString('utf-8'),
           );
 
-          await this.emailClienteRepository.update(
-            resEmailPassClientGet[0].id,
-            {
-              sessioncliente: resultMathRandomEmailPass,
-            },
-          );
+          const descryptPass = decryptedText.toString('utf-8');
 
-          //* mostrar los cambios añadidos
+          //*fin
+          //* validamos que el uauario y la contraseña coincidan
 
-          const resEmailPassNewGet = await this.emailClienteRepository.find({
-            where: {
-              emailcliente: createEmailclienteDto.emailcliente,
-            },
-          });
+          if (
+            resEmailPassClientGet[0].emailcliente ===
+              createEmailclienteDto.emailcliente &&
+            descryptPass === createEmailclienteDto.passcliente
+          ) {
+            //* actualizamos la session del cliente
+
+            //*agregamos la nueva sesion  (6 digitos)
+
+            const min = Math.ceil(100000);
+            const max = Math.floor(999999);
+            const resultMathRandomEmailPass = Math.floor(
+              Math.random() * (max - min + 1) + min,
+            ); // The maximum is inclusive
+
+            console.log(
+              'numero de 6 digitos correoVerify -updatecliente',
+              resultMathRandomEmailPass,
+            );
+
+            await this.emailClienteRepository.update(
+              resEmailPassClientGet[0].id,
+              {
+                sessioncliente: resultMathRandomEmailPass,
+              },
+            );
+
+            //* mostrar los cambios añadidos
+
+            const resEmailPassNewGet = await this.emailClienteRepository.find({
+              where: {
+                emailcliente: createEmailclienteDto.emailcliente,
+              },
+            });
+            return {
+              correocliente: resEmailPassNewGet[0].emailcliente,
+              sessioncliente: resEmailPassNewGet[0].sessioncliente,
+            };
+          } else {
+            return {
+              msg: 'usuario y/o contraseña invalidos - emailpasscliente',
+            };
+          }
+        } catch (error) {
+          console.log(error.name);
+
+          await this.emailClienteRepository.delete(resEmailPassClientGet[0].id);
           return {
-            correocliente: resEmailPassNewGet[0].emailcliente,
-            sessioncliente: resEmailPassNewGet[0].sessioncliente,
-          };
-        } else {
-          return {
-            msg: 'usuario y/o contraseña invalidos - emailpasscliente',
+            msg: 'error en las credenciales -loginCliente',
           };
         }
       }
@@ -498,19 +612,29 @@ export class EmailclienteService {
         };
       }
     } catch (error) {
-      console.log(error);
+      console.log('errror ->', error.name);
       return {
         msg: 'error autorizacion - loginCliente',
       };
     }
   }
-  findAll(request) {
+
+  async findAll(request) {
     console.log('respuesta session cliente', request.session);
 
-    return this.emailClienteRepository.find({
+    return await this.emailClienteRepository.find({
       order: {
         id: 'DESC',
       },
+      select: [
+        'id',
+        'emailcliente',
+        'passcliente',
+        'estado',
+        'sessioncliente',
+        'createAt',
+        'updatedAt',
+      ],
     });
   }
 

@@ -17,6 +17,9 @@ export class Emailcliente {
   @Column({ default: '' })
   passcliente: string;
 
+  @Column({ default: '' })
+  bufferiv: string;
+
   @Column({ default: 0 })
   estado: number;
 
