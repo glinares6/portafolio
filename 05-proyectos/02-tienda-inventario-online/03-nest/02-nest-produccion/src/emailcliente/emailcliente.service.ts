@@ -597,7 +597,6 @@ export class EmailclienteService {
         } catch (error) {
           console.log(error.name);
 
-          await this.emailClienteRepository.delete(resEmailPassClientGet[0].id);
           return {
             msg: 'error en las credenciales -loginCliente',
           };
