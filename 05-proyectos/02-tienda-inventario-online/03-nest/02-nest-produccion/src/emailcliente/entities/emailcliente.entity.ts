@@ -1,5 +1,3 @@
-import { Perfilcliente } from '../../perfilcliente/entities/perfilcliente.entity';
-
 import {
   Column,
   CreateDateColumn,
@@ -9,6 +7,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
+import { Perfilcliente } from '../../perfilcliente/entities/perfilcliente.entity';
 
 @Entity()
 export class Emailcliente {

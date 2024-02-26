@@ -13,6 +13,6 @@ import { EmailclienteModule } from 'src/emailcliente/emailcliente.module';
   ],
   controllers: [PerfilclienteController],
   providers: [PerfilclienteService],
-  exports: [PerfilclienteService],
+  exports: [TypeOrmModule],
 })
 export class PerfilclienteModule {}
