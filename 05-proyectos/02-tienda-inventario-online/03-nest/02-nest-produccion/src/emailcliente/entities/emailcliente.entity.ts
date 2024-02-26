@@ -1,13 +1,12 @@
 import {
+  Entity,
+  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
-
 import { Perfilcliente } from '../../perfilcliente/entities/perfilcliente.entity';
 
 @Entity()

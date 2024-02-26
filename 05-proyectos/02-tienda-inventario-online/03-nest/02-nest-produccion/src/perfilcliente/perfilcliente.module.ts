@@ -4,13 +4,9 @@ import { PerfilclienteController } from './perfilcliente.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Perfilcliente } from './entities/perfilcliente.entity';
 import { Emailcliente } from 'src/emailcliente/entities/emailcliente.entity';
-import { EmailclienteModule } from 'src/emailcliente/emailcliente.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Perfilcliente, Emailcliente]),
-    EmailclienteModule,
-  ],
+  imports: [TypeOrmModule.forFeature([Perfilcliente, Emailcliente])],
   controllers: [PerfilclienteController],
   providers: [PerfilclienteService],
   exports: [TypeOrmModule],
