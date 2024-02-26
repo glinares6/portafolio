@@ -31,8 +31,10 @@ import { Carritocompra } from './carritocompra/entities/carritocompra.entity';
 import { PedidosModule } from './pedidos/pedidos.module';
 import { Pedido } from './pedidos/entities/pedido.entity';
 // import { jwtConstants } from './auth/constansts';
+import { PerfilclienteModule } from './perfilcliente/perfilcliente.module';
 import { EmailclienteModule } from './emailcliente/emailcliente.module';
 import { Emailcliente } from './emailcliente/entities/emailcliente.entity';
+import { Perfilcliente } from './perfilcliente/entities/perfilcliente.entity';
 // import * as session from 'express-session';
 // import { jwtConstants } from './auth/constansts';
 
@@ -62,6 +64,7 @@ import { Emailcliente } from './emailcliente/entities/emailcliente.entity';
         Carritocompra,
         Pedido,
         Emailcliente,
+        Perfilcliente,
       ],
       synchronize: true,
     }),
@@ -75,6 +78,7 @@ import { Emailcliente } from './emailcliente/entities/emailcliente.entity';
     CarritocompraModule,
     PedidosModule,
     EmailclienteModule,
+    PerfilclienteModule,
   ],
   controllers: [AppController],
   providers: [AppService],
