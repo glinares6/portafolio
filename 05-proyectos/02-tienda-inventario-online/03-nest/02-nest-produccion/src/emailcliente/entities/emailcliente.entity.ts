@@ -1,7 +1,10 @@
+import { Perfilcliente } from 'src/perfilcliente/entities/perfilcliente.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -37,4 +40,8 @@ export class Emailcliente {
     default: () => 'CURRENT_TIMESTAMP AT TIME ZONE America/Lima',
   })
   updatedAt: Date;
+
+  @OneToOne(() => Perfilcliente)
+  @JoinColumn()
+  perfilcliente: Perfilcliente;
 }

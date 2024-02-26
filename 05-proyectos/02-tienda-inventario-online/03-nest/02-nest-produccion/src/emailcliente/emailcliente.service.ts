@@ -634,6 +634,9 @@ export class EmailclienteService {
         'createAt',
         'updatedAt',
       ],
+      relations: {
+        perfilcliente: true,
+      },
     });
   }
 
@@ -643,6 +646,25 @@ export class EmailclienteService {
         id: id,
       },
     });
+  }
+
+  async findEmailOne(sesioncorreo: string) {
+    const resGetClienteFindCorreo = await this.emailClienteRepository.find({
+      where: {
+        emailcliente: sesioncorreo,
+      },
+      relations: {
+        perfilcliente: true,
+      },
+    });
+
+    if (resGetClienteFindCorreo.length == 0) {
+      return {
+        msg: 'error al buscar por correo en el servidor',
+      };
+    }
+
+    return resGetClienteFindCorreo;
   }
 
   update(id: number, updateEmailclienteDto: UpdateEmailclienteDto) {

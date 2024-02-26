@@ -48,7 +48,16 @@ export default function MenuCuenta() {
             >
               Iniciar Sesión
             </button>
-            <button className="flex justify-start pl-1 w-full ">Perfil</button>
+            <button
+              onClick={() => {
+                route.push("perfilcliente");
+
+                setCuentaState(false);
+              }}
+              className="flex justify-start pl-1 w-full "
+            >
+              Perfil
+            </button>
             <button className="flex justify-start pl-1 w-full ">Compras</button>
           </div>
         </div>

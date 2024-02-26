@@ -82,6 +82,11 @@ export class EmailclienteController {
     return this.emailclienteService.findOne(+id);
   }
 
+  @Get(':sesioncorreo/sesionemail')
+  findEmailOne(@Param('sesioncorreo') sesioncorreo: string) {
+    return this.emailclienteService.findEmailOne(sesioncorreo);
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,
