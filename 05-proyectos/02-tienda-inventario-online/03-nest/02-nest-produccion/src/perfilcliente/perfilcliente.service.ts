@@ -4,7 +4,7 @@ import { UpdatePerfilclienteDto } from './dto/update-perfilcliente.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Perfilcliente } from './entities/perfilcliente.entity';
-import { Emailcliente } from 'src/emailcliente/entities/emailcliente.entity';
+import { Emailcliente } from '../emailcliente/entities/emailcliente.entity';
 
 @Injectable()
 export class PerfilclienteService {
