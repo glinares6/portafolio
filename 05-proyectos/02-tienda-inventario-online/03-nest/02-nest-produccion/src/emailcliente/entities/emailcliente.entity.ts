@@ -1,13 +1,13 @@
+import { Perfilcliente } from 'src/perfilcliente/entities/perfilcliente.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  // OneToOne,
-  // JoinColumn,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
-// import { Perfilcliente } from '../../perfilcliente/entities/perfilcliente.entity';
 
 @Entity()
 export class Emailcliente {
@@ -41,7 +41,7 @@ export class Emailcliente {
   })
   updatedAt: Date;
 
-  // @OneToOne(() => Perfilcliente, (perfilcliente) => perfilcliente.emailcliente)
-  // @JoinColumn()
-  // perfilcliente: Perfilcliente;
+  @OneToOne(() => Perfilcliente, (perfilcliente) => perfilcliente.emailcliente)
+  @JoinColumn()
+  perfilcliente: Perfilcliente;
 }
