@@ -1,4 +1,5 @@
-import { Perfilcliente } from 'src/perfilcliente/entities/perfilcliente.entity';
+import { Perfilcliente } from '../../perfilcliente/entities/perfilcliente.entity';
+
 import {
   Column,
   CreateDateColumn,
