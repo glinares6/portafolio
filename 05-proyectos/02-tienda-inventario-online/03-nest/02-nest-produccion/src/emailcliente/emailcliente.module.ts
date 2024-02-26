@@ -7,11 +7,12 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Emailcliente } from './entities/emailcliente.entity';
+import { Perfilcliente } from 'src/perfilcliente/entities/perfilcliente.entity';
 // import { join } from 'path';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Emailcliente]),
+    TypeOrmModule.forFeature([Emailcliente, Perfilcliente]),
     MailerModule.forRoot({
       transport: {
         host: 'smtp.gmail.com',

@@ -9,5 +9,6 @@ import { Emailcliente } from 'src/emailcliente/entities/emailcliente.entity';
   imports: [TypeOrmModule.forFeature([Perfilcliente, Emailcliente])],
   controllers: [PerfilclienteController],
   providers: [PerfilclienteService],
+  exports: [PerfilclienteService],
 })
 export class PerfilclienteModule {}
