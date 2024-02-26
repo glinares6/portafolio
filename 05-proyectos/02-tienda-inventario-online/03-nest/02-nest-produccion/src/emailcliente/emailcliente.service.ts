@@ -634,9 +634,9 @@ export class EmailclienteService {
         'createAt',
         'updatedAt',
       ],
-      // relations: {
-      //   perfilcliente: true,
-      // },
+      relations: {
+        perfilcliente: true,
+      },
     });
   }
 
@@ -653,9 +653,9 @@ export class EmailclienteService {
       where: {
         emailcliente: sesioncorreo,
       },
-      // relations: {
-      //   perfilcliente: true,
-      // },
+      relations: {
+        perfilcliente: true,
+      },
     });
 
     if (resGetClienteFindCorreo.length == 0) {
