@@ -1,4 +1,5 @@
 import { Emailcliente } from 'src/emailcliente/entities/emailcliente.entity';
+
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
