@@ -48,6 +48,6 @@ import { Perfilcliente } from 'src/perfilcliente/entities/perfilcliente.entity';
   ],
   controllers: [EmailclienteController],
   providers: [EmailclienteService],
-  exports: [EmailclienteService],
+  exports: [TypeOrmModule],
 })
 export class EmailclienteModule {}
