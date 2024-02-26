@@ -41,7 +41,7 @@ export class Emailcliente {
   })
   updatedAt: Date;
 
-  @OneToOne(() => Perfilcliente)
+  @OneToOne(() => Perfilcliente, (perfilcliente) => perfilcliente.emailcliente)
   @JoinColumn()
   perfilcliente: Perfilcliente;
 }
