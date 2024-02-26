@@ -4,7 +4,6 @@ import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import perfilClienteApp from "./hooks/perfilCliente-App";
 import MenuCuenta from "@/app/components/menu-cuenta";
-import { Perfilcliente } from "../../../../../../03-nest/02-nest-produccion/src/perfilcliente/entities/perfilcliente.entity";
 
 export default function Page() {
   const [foundLoginValue, setFoundLoginValue] = useState("");
