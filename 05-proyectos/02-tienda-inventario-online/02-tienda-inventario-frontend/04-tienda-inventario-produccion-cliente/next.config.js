@@ -9,6 +9,12 @@ const nextConfig = {
         pathname: "/public/img/**",
       },
       {
+        protocol: "http",
+        hostname: "localhost",
+        // port: "3000",
+        pathname: "/perfilcliente/**/**",
+      },
+      {
         protocol: "https",
         hostname: "nest-image-dev.onrender.com",
         // port: "3000",
@@ -21,6 +27,9 @@ const nextConfig = {
         pathname: "/public/img/**",
       },
     ],
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self';script-src 'none'; sandox;",
   },
   // reactStrictMode: false,
 };

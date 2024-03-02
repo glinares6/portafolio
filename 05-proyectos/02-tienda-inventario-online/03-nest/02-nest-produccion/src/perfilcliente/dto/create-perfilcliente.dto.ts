@@ -15,6 +15,10 @@ export class CreatePerfilclienteDto {
 
   fecha: string;
 
+  dataimg: Buffer;
+
+  ext: string;
+
   correoLoginCliente: string;
 
   sessionCorreoLoginCliente: number;

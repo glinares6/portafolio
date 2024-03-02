@@ -220,6 +220,16 @@ EMAIL
         app.use( session({ secret: jwtConstants.secret, resave: false, saveUninitialized: true, store: store, cookie: { secure: 'auto', httpOnly: 'auto', // sameSite:'None' },
 
 
+UPLOAD DATABASE IMAGE TYPEORM
+    https://stackoverflow.com/questions/55498140/saving-buffer-on-postgres-bytea-with-typeorm-only-store-10-bytes
+
+    https://www.appsloveworld.com/postgresql/100/27/saving-buffer-on-postgres-bytea-with-typeorm-only-store-10-bytes
+
+    https://wanago.io/2021/11/01/api-nestjs-storing-files-postgresql-database/
+
+    https://github.com/typeorm/typeorm/issues/2878 
+
+
 tomar en cuenta 
     npm notice 
     npm notice New minor version of npm available! 9.6.1 -> 9.8.1

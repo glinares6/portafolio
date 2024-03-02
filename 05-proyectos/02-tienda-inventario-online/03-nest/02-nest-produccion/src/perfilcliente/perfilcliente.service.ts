@@ -5,6 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Perfilcliente } from './entities/perfilcliente.entity';
 import { Emailcliente } from 'src/emailcliente/entities/emailcliente.entity';
+import { createReadStream } from 'fs';
+import * as fs from 'fs';
 
 @Injectable()
 export class PerfilclienteService {
@@ -19,6 +21,12 @@ export class PerfilclienteService {
       'dateando loas valores si pasan',
       createPerfilclienteDto.correoLoginCliente,
     );
+
+    console.log('buffer del frontEnd', createPerfilclienteDto.dataimg);
+
+    // return {
+    //   msg: 'enviado del frontfotodata',
+    // };
 
     //* validar si el correo y la session coinciden
 
@@ -69,6 +77,7 @@ export class PerfilclienteService {
               telefono: createPerfilclienteDto.telefono,
               genero: createPerfilclienteDto.genero,
               fecha: createPerfilclienteDto.fecha,
+              dataimg: createPerfilclienteDto.dataimg,
             },
           );
 
@@ -96,11 +105,112 @@ export class PerfilclienteService {
     }
   }
 
+  async bufferData(emailcliente, file) {
+    if (file) {
+      return new Promise<Buffer>((resolve, reject) => {
+        const chunks: Buffer[] = [];
+        const readStream = createReadStream(file.path);
+        readStream.on('data', (chunk: any) => {
+          chunks.push(chunk);
+        });
+        readStream.on('end', () => {
+          const buffer = Buffer.concat(chunks);
+
+          console.log('el buffer final-> ', buffer);
+
+          console.log('data frontend', emailcliente);
+
+          //*recuperamos el id del perfil conociendo su correo
+          (async () => {
+            const reqEmailBufferGet = await this.emailClienteRepository.find({
+              where: { emailcliente: emailcliente },
+              relations: {
+                perfilcliente: true,
+              },
+            });
+
+            console.log(
+              'getclientBuffer - perfil',
+              reqEmailBufferGet[0].perfilcliente.id,
+            );
+            const extBuffer = file.path.split('.').at(-1);
+
+            //*actualizamos la foto del perfil cliente
+            await this.perfilClienteRepository.update(
+              reqEmailBufferGet[0].perfilcliente.id,
+              {
+                dataimg: buffer,
+                ext: extBuffer,
+              },
+            );
+
+            //*eliminamos el archivo local
+            console.log('data del archivo', file);
+            const nameFile = file.filename;
+            await fs.unlinkSync(file.path);
+            console.log(`archivo ${nameFile} eliminado`);
+          })();
+
+          //*guardamos el buffer en el perfilcliente
+
+          resolve(buffer);
+        });
+        readStream.on('error', (error) => {
+          reject(error);
+        });
+      });
+    } else {
+      return {
+        msg: 'no selecciono imagen',
+      };
+    }
+  }
+
+  async imgBufferGo(email) {
+    console.log('email - perfilcliente', email);
+
+    //*obtenemos el id perfil con el correo
+
+    const resIdPerfilGet = await this.emailClienteRepository.find({
+      where: {
+        emailcliente: email,
+      },
+      relations: {
+        perfilcliente: true,
+      },
+    });
+
+    const image: any = await this.perfilClienteRepository.find({
+      where: {
+        id: resIdPerfilGet[0].perfilcliente.id,
+      },
+    });
+
+    console.log('yyy', image);
+    console.log('ext saliente-> ', image[0]?.ext);
+
+    return {
+      imgBuffer: image[0]?.dataimg,
+      extBuffer: image[0]?.ext,
+    };
+  }
+
   findAll() {
     return this.perfilClienteRepository.find({
       order: {
         id: 'DESC',
       },
+      select: [
+        'id',
+        'nombre',
+        'apellido1',
+        'apellido2',
+        'direccion',
+        'telefono',
+        'genero',
+        'fecha',
+        'ext',
+      ],
       relations: {
         emailcliente: true,
       },

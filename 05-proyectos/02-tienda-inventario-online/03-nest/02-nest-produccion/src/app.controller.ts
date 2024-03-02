@@ -1,6 +1,5 @@
-import { Controller, Get, Res } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { Response } from 'express';
 import { Cron } from '@nestjs/schedule';
 
 @Controller()
@@ -23,8 +22,8 @@ export class AppController {
   }
 
   @Get('ping')
-  getPing(@Res() res: Response) {
-    return this.appService.getPing(res);
+  getPing() {
+    return this.appService.getPing();
   }
 
   // @Get('expose')

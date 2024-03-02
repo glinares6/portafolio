@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import perfilClienteApp from "./hooks/perfilCliente-App";
 import MenuCuenta from "@/app/components/menu-cuenta";
+import Image from "next/image";
 
 export default function Page() {
   const [foundLoginValue, setFoundLoginValue] = useState("");
@@ -28,6 +29,19 @@ export default function Page() {
     useState("");
   const [generoPerfilClienteValue, setGeneroPerfilClienteValue] = useState("");
   const [fechaPerfilClienteValue, setFechaPerfilClienteValue] = useState("");
+
+  const [fotoPerfilClienteValue, setFotoPerfilClienteValue]: any = useState();
+  const [fotoBase64PerfilClienteValue, setFotoBase64PerfilClienteValue]: any =
+    useState();
+
+  const [urlFotoDecode, setUrlFotoDecode] = useState("");
+  const [extFotoBufferState, setExtFotoBufferState] = useState("");
+  const [fotoBufferStateBoolean, setFotoBufferStateBoolean] = useState(false);
+
+  const [imgLocalSwitch, setImgLocalSwitch] = useState(true);
+  const [multimediaLocalSwitch, setMultimediaLocalSwitch] = useState(true);
+
+  const [urlStreamLabState, setUrlStreamLabState]: any = useState();
 
   const [generoPerfilState, setGeneroPerfilState] = useState(false);
   //*^alerta de mensaje
@@ -69,6 +83,30 @@ export default function Page() {
   const { server } = perfilClienteApp();
 
   useEffect(() => {
+    (async () => {
+      const emailClienteBufferUrl =
+        sessionStorage.getItem("correoLoginCliente");
+
+      const response = await fetch(
+        `${server}/perfilcliente/${emailClienteBufferUrl}/buffer`
+      );
+      const data = await response.blob();
+
+      // console.log("datanormal-buffer-team", data);
+
+      //*convertimos el buffer a base 64
+      // const base64String1 = Buffer.from(data).toString("base64");
+
+      console.log("convertido de base 64 haber", data);
+
+      setUrlStreamLabState(data);
+
+      // setTimeout(() => {
+      //   route.push("/perfilcliente");
+      //   route.refresh();
+      //   setFotoBufferStateBoolean(true);
+      // }, 2000);
+    })();
     //* verificar si el usuario a iniciado sesion
 
     const getCorreoLoginCliente = sessionStorage.getItem("correoLoginCliente");
@@ -76,6 +114,8 @@ export default function Page() {
     const getSessionLoginCliente = sessionStorage.getItem(
       "sessionCorreoLoginCliente"
     );
+
+    setUrlFotoDecode(`${server}/perfilcliente/${getCorreoLoginCliente}/buffer`);
 
     if (getCorreoLoginCliente && getSessionLoginCliente) {
       //* buscamos si la sesion del cliente es valida
@@ -127,6 +167,8 @@ export default function Page() {
               resCorreoCLienteFindGet[0].perfilcliente.fecha
             );
 
+            setFotoBufferStateBoolean(true);
+            setExtFotoBufferState(resCorreoCLienteFindGet[0].perfilcliente.ext);
             setGeneroPerfilState(true);
             //* verificamos si la sesion asociada al cliente es la  misma que la sesión aspciada al servidor
 
@@ -319,21 +361,147 @@ export default function Page() {
 
     console.log("resDataPerfilClientePost ->", resDataPerfilClientePost);
     if (resDataPerfilClientePost.msg === "actualizo el  perfilcliente") {
+      //* en caso se requiera actualizar file(foto)
+
+      setFotoBufferStateBoolean(false);
+      // const reader = new FileReader();
+      // const arrayBuffer = reader.result;
+
+      // console.log("arraybuffer->", arrayBuffer);
+
+      // const respBufferFoto = await fotoPerfilClienteValue.arrayBuffer();
+      // const buffer: any = Buffer.from(respBufferFoto, "base64");
+
+      // console.log("bbb", buffer);
+
+      console.log("test dato -update", fotoPerfilClienteValue);
+
+      const payloadFileFoto = new FormData();
+      payloadFileFoto.append("file", fotoPerfilClienteValue);
+
+      // const payloadFileFoto = new FormData();
+      // payloadFileFoto.append("file", new Blob([buffer]));
+
+      // console.log("respayloadbufferSucess", payloadFileFoto);
+
+      const emailClienteBuffer = sessionStorage.getItem("correoLoginCliente");
+      const reqDataPerfilClientePo = await fetch(
+        `${server}/perfilcliente/${emailClienteBuffer}/prueba`,
+        {
+          method: "POST",
+
+          body: payloadFileFoto,
+        }
+      );
+
+      const resDataPerfilClientePost = await reqDataPerfilClientePo.json();
+
+      console.log("resDataPerfilClientePost -> ", resDataPerfilClientePost);
+
+      //*mostramos en pantalla
+
       setAlertRegisterPerfilCLienteValidate(true);
 
       setBgAlertPerfilClienteValidate(true);
 
       // setBgConfirmPerfilClientUpdate(true);
       setMsgPerfiClienteValidate("actualizo el perfil");
+      setFotoBufferStateBoolean(true);
+
+      // location.reload();
+
+      setTimeout(async () => {
+        const emailClienteBufferUrl =
+          sessionStorage.getItem("correoLoginCliente");
+
+        const response = await fetch(
+          `${server}/perfilcliente/${emailClienteBufferUrl}/buffer`
+        );
+        const data = await response.blob();
+
+        // console.log("datanormal-buffer-team", data);
+
+        //* verificamos la nueva extension
+
+        const reqCorreoCLienteFindUpdate = await fetch(
+          `${server}/emailcliente/${sessionStorage.getItem(
+            "correoLoginCliente"
+          )}/sesionemail`
+        );
+
+        const resCorreoCLienteFindUpdate =
+          await reqCorreoCLienteFindUpdate.json();
+
+        setExtFotoBufferState(resCorreoCLienteFindUpdate[0].perfilcliente.ext);
+
+        setUrlStreamLabState(data);
+      }, 2000);
     }
 
     if (resDataPerfilClientePost.msg === "registro el perfilcliente") {
+      //*en caso seleccione un file ( foto)
+
+      console.log("test dato -update", fotoPerfilClienteValue);
+
+      const payloadFileFoto = new FormData();
+      payloadFileFoto.append("file", fotoPerfilClienteValue);
+
+      // const payloadFileFoto = new FormData();
+      // payloadFileFoto.append("file", new Blob([buffer]));
+
+      // console.log("respayloadbufferSucess", payloadFileFoto);
+
+      const emailClienteBuffer = sessionStorage.getItem("correoLoginCliente");
+      const reqDataPerfilClientePo = await fetch(
+        `${server}/perfilcliente/${emailClienteBuffer}/prueba`,
+        {
+          method: "POST",
+
+          body: payloadFileFoto,
+        }
+      );
+
+      const resDataPerfilClientePost = await reqDataPerfilClientePo.json();
+
+      console.log("resDataPerfilClientePost -> ", resDataPerfilClientePost);
+
       setAlertRegisterPerfilCLienteValidate(true);
 
       setBgAlertPerfilClienteValidate(false);
 
       setBgConfirmPerfilClientUpdate(true);
       setMsgPerfiClienteValidate("registro  el perfil");
+
+      setFotoBufferStateBoolean(true);
+
+      // location.reload();
+
+      setTimeout(async () => {
+        const emailClienteBufferUrl =
+          sessionStorage.getItem("correoLoginCliente");
+
+        const response = await fetch(
+          `${server}/perfilcliente/${emailClienteBufferUrl}/buffer`
+        );
+        const data = await response.blob();
+
+        // console.log("datanormal-buffer-team", data);
+
+        //* verificamos la nueva extension
+
+        const reqCorreoCLienteFindUpdate = await fetch(
+          `${server}/emailcliente/${sessionStorage.getItem(
+            "correoLoginCliente"
+          )}/sesionemail`
+        );
+
+        const resCorreoCLienteFindUpdate =
+          await reqCorreoCLienteFindUpdate.json();
+
+        setExtFotoBufferState(resCorreoCLienteFindUpdate[0].perfilcliente.ext);
+
+        setUrlStreamLabState(data);
+      }, 2000);
     }
     if (
       resDataPerfilClientePost.msg ===
@@ -353,6 +521,18 @@ export default function Page() {
 
       setBgConfirmPerfilClientUpdate(false);
       setMsgPerfiClienteValidate("el correo no registrado");
+    }
+
+    if (
+      resDataPerfilClientePost.msg ===
+      "error al autozar el registro del perfilcliente"
+    ) {
+      setAlertRegisterPerfilCLienteValidate(true);
+
+      setBgAlertPerfilClienteValidate(false);
+
+      setBgConfirmPerfilClientUpdate(false);
+      setMsgPerfiClienteValidate("Error al actualizar perfil");
     }
   };
 
@@ -386,6 +566,7 @@ export default function Page() {
             <form
               className="flex flex-col justify-center w-full "
               onSubmit={(e) => handlePerfilClienteSubmit(e)}
+              encType="multipart/form-data"
             >
               <div className="  w-full flex justify-center   max-sm:text-lg">
                 <fieldset className=" w-[90%] border-gray-500 border-2 max-sm:w-[90%] ">
@@ -568,6 +749,79 @@ export default function Page() {
                 </fieldset>
               </div>
 
+              <div className="relative  w-full flex justify-center  max-sm:text-lg max-sm:w-[100%] max-sm:justify-center max-sm:gap-1">
+                <fieldset className=" w-[90%] border-gray-500 border-2 max-sm:w-[90%] ">
+                  <legend className="w-[90px] relative ml-[15px] pl-[5px] text-lg max-sm:text-sm">
+                    Foto
+                  </legend>
+
+                  <div className="w-full flex justify-center   pb-[5px] ">
+                    <input
+                      className=" w-[95%] focus:outline-none text-lg max-sm:text-sm"
+                      type="file"
+                      name="fotoPerfilClienteValue"
+                      id="fotoPerfilClienteValue"
+                      onChange={async (e) => {
+                        if (!e.target.files) return;
+                        setFotoPerfilClienteValue(e.target.files[0]);
+                        setAlertRegisterPerfilCLienteValidate(false);
+
+                        const emailClienteBufferUrl =
+                          sessionStorage.getItem("correoLoginCliente");
+
+                        const response = await fetch(
+                          `${server}/perfilcliente/${emailClienteBufferUrl}/buffer`
+                        );
+                        const data = await response.blob();
+
+                        setFotoBufferStateBoolean(true);
+                        // console.log("datanormal-buffer-team", data);
+                        setUrlStreamLabState(data);
+                      }}
+                    />
+                  </div>
+                </fieldset>
+              </div>
+
+              {fotoBufferStateBoolean ? (
+                <div className="w-full flex justify-center pt-3 cursor-pointer  max-sm:w-full">
+                  {extFotoBufferState.includes("webp") ||
+                  extFotoBufferState.includes("jpeg") ||
+                  extFotoBufferState.includes("png") ||
+                  extFotoBufferState.includes("jpg") ||
+                  extFotoBufferState.includes("svg") ? (
+                    <Image
+                      src={URL.createObjectURL(urlStreamLabState)}
+                      width="0"
+                      height="0"
+                      sizes="100vw"
+                      alt="Picture of the author"
+                      className=" w-[80%] h-[300px] max-sm:h-[210px]"
+                    />
+                  ) : (
+                    ""
+                  )}
+
+                  {extFotoBufferState.includes("mp4") ||
+                  extFotoBufferState.includes("mp3") ? (
+                    <div className="w-[80%] h-[300px] max-sm:h-[210px]">
+                      <video
+                        className="w-full h-full object-cover"
+                        width={0}
+                        height={0}
+                        src={URL.createObjectURL(urlStreamLabState)}
+                        controls
+                      >
+                        file de prueba
+                      </video>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              ) : (
+                <div></div>
+              )}
               {alertRegisterPerfilCLienteValidate && (
                 <div className="relative pt-5 flex justify-center   max-sm:text-lg">
                   <div className=" w-[90%] h-[50px] border-gray-500 border-2 max-sm:w-[90%] ">
