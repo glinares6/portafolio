@@ -99,7 +99,12 @@ export default function Page() {
 
       console.log("convertido de base 64 haber", data);
 
-      setUrlStreamLabState(data);
+      if (data.size > 33) {
+        setFotoBufferStateBoolean(true);
+        setUrlStreamLabState(data);
+      } else {
+        console.log({ msg: "no hay elemento que mostrar" });
+      }
 
       // setTimeout(() => {
       //   route.push("/perfilcliente");
@@ -167,7 +172,7 @@ export default function Page() {
               resCorreoCLienteFindGet[0].perfilcliente.fecha
             );
 
-            setFotoBufferStateBoolean(true);
+            // setFotoBufferStateBoolean(true);
             setExtFotoBufferState(resCorreoCLienteFindGet[0].perfilcliente.ext);
             setGeneroPerfilState(true);
             //* verificamos si la sesion asociada al cliente es la  misma que la sesión aspciada al servidor
@@ -479,7 +484,6 @@ export default function Page() {
       setTimeout(async () => {
         const emailClienteBufferUrl =
           sessionStorage.getItem("correoLoginCliente");
-
         const response = await fetch(
           `${server}/perfilcliente/${emailClienteBufferUrl}/buffer`
         );

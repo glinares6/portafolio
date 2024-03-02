@@ -3,6 +3,7 @@
 import { FormEvent, useContext, useRef, useState } from "react";
 import menuApp from "../hooks/menu-App";
 import { UseContext } from "@/app/contexts/authContext";
+import { useRouter } from "next/navigation";
 
 export default function CorreoCLienteValidacion() {
   const { server } = menuApp();
@@ -40,6 +41,7 @@ export default function CorreoCLienteValidacion() {
     setDisableButtonClientRegisterValidate,
   ] = useState(false);
 
+  const route = useRouter();
   const inputCorreoValidateRef = useRef(null);
   let inputElementValidateClienteValue: any = inputCorreoValidateRef.current;
 
@@ -167,6 +169,8 @@ export default function CorreoCLienteValidacion() {
 
           setInicioState(false); //*cierra la ventana y vuelva a su valor original
           setAlertCorreoCLienteValidate(false); //*local -> quita el alert
+
+          route.push("/");
 
           //todo adicionar el acceso a su perfil* para agregar más detalles al usuario (clienteperfil)
 
