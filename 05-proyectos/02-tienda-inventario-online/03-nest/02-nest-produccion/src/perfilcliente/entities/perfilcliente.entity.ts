@@ -21,6 +21,15 @@ export class Perfilcliente {
   @Column({ type: 'date' })
   fecha: string;
 
+  @Column({
+    type: 'bytea',
+    nullable: true,
+  })
+  dataimg: Buffer;
+
+  @Column({ default: '' })
+  ext: string;
+
   @OneToOne(() => Emailcliente, (emailcliente) => emailcliente.perfilcliente)
   emailcliente: Emailcliente;
 }
