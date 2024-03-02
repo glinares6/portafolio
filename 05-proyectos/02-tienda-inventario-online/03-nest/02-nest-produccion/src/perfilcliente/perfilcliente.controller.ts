@@ -61,8 +61,11 @@ export class PerfilclienteController {
   @Get(':email/buffer')
   async imgBufferGo(@Param('email') email: string, @Res() res: Response) {
     const imageBuffer = await this.perfilclienteService.imgBufferGo(email);
+
     if (!imageBuffer.imgBuffer) {
-      return res.status(404).send('Image not found');
+      return res.status(200).json({
+        msg: 'not file stream buffer ',
+      });
     }
 
     console.log('ext-de afuera', imageBuffer.extBuffer);

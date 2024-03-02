@@ -167,32 +167,39 @@ export class PerfilclienteService {
   }
 
   async imgBufferGo(email) {
-    console.log('email - perfilcliente', email);
+    try {
+      console.log('email - perfilcliente', email);
 
-    //*obtenemos el id perfil con el correo
+      //*obtenemos el id perfil con el correo
 
-    const resIdPerfilGet = await this.emailClienteRepository.find({
-      where: {
-        emailcliente: email,
-      },
-      relations: {
-        perfilcliente: true,
-      },
-    });
+      const resIdPerfilGet = await this.emailClienteRepository.find({
+        where: {
+          emailcliente: email,
+        },
+        relations: {
+          perfilcliente: true,
+        },
+      });
 
-    const image: any = await this.perfilClienteRepository.find({
-      where: {
-        id: resIdPerfilGet[0].perfilcliente.id,
-      },
-    });
+      const image: any = await this.perfilClienteRepository.find({
+        where: {
+          id: resIdPerfilGet[0].perfilcliente.id,
+        },
+      });
 
-    console.log('yyy', image);
-    console.log('ext saliente-> ', image[0]?.ext);
+      console.log('info perfil', image);
+      console.log('ext saliente-> ', image[0]?.ext);
 
-    return {
-      imgBuffer: image[0]?.dataimg,
-      extBuffer: image[0]?.ext,
-    };
+      return {
+        imgBuffer: image[0]?.dataimg,
+        extBuffer: image[0]?.ext,
+      };
+    } catch (error) {
+      console.log('buffer interno fix');
+      return {
+        msg: 'error buffer interno',
+      };
+    }
   }
 
   findAll() {

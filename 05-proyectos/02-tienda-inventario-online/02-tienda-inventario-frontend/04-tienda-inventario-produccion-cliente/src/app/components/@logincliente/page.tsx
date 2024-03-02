@@ -168,6 +168,8 @@ export default function LoginCliente() {
       setInicioState(false); //*cierra la ventana y vuelva a su valor original
 
       setAlertEmailPassLoginCLienteValidate(false); //* oculta la barra de alerta
+
+      route.push("/");
     }, 2500);
   };
 
