@@ -230,6 +230,12 @@ UPLOAD DATABASE IMAGE TYPEORM
     https://github.com/typeorm/typeorm/issues/2878 
 
 
+FIX IMAGE BUFFER STREAM
+        https://stackoverflow.com/questions/66600991/how-to-fetch-and-display-blob-images
+        https://stackoverflow.com/questions/9267899/arraybuffer-to-base64-encoded-string
+        https://es.stackoverflow.com/questions/477377/mostrar-imagen-en-react-js-enviando-datos-de-node-js-y-mysql
+        https://stackoverflow.com/questions/65392241/how-convert-type-data-buffer-to-image-in-react-js
+
 tomar en cuenta 
     npm notice 
     npm notice New minor version of npm available! 9.6.1 -> 9.8.1
