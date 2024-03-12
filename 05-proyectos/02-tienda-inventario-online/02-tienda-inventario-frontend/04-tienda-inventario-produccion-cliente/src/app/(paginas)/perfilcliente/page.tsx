@@ -78,39 +78,34 @@ export default function Page() {
   const [msgPassRegisterClienteValidate, setMsgPassRegisterClienteValidate] =
     useState("");
 
+  const [bufferFileLoad, setBufferFileLoad] = useState();
+
   const route = useRouter();
 
   const { server } = perfilClienteApp();
 
   useEffect(() => {
     (async () => {
-      const emailClienteBufferUrl =
-        sessionStorage.getItem("correoLoginCliente");
-
-      const response = await fetch(
-        `${server}/perfilcliente/${emailClienteBufferUrl}/buffer`
-      );
-      const data = await response.blob();
-
+      //*extraemos el archivo de la url
+      // const emailClienteBufferUrl =
+      //   sessionStorage.getItem("correoLoginCliente");
+      // const response = await fetch(
+      //   `${server}/perfilcliente/${emailClienteBufferUrl}/buffer`
+      // );
+      // const data = await response.blob();
       // console.log("datanormal-buffer-team", data);
-
       //*convertimos el buffer a base 64
       // const base64String1 = Buffer.from(data).toString("base64");
-
-      console.log("convertido de base 64 haber", data);
-
-      if (data.size > 33) {
-        setFotoBufferStateBoolean(true);
-        setUrlStreamLabState(data);
-      } else {
-        console.log({ msg: "no hay elemento que mostrar" });
-      }
-
-      // setTimeout(() => {
-      //   route.push("/perfilcliente");
-      //   route.refresh();
+      // console.log("convertido de base 64 haber", data);
+      //* desde la url buffer
+      // if (data.size > 33) {
       //   setFotoBufferStateBoolean(true);
-      // }, 2000);
+      //   setUrlStreamLabState(data);
+      // } else {
+      //   console.log({ msg: "no hay elemento que mostrar" });
+      // }
+      //*agregamos al renderizado el archivo en forma de url
+      //todo  src={URL.createObjectURL(urlStreamLabState)}
     })();
     //* verificar si el usuario a iniciado sesion
 
@@ -172,7 +167,24 @@ export default function Page() {
               resCorreoCLienteFindGet[0].perfilcliente.fecha
             );
 
-            // setFotoBufferStateBoolean(true);
+            //*base 64 a image
+
+            // const base64String: any = btoa(
+            //   String.fromCharCode(
+            //     ...new Uint8Array(
+            //       resCorreoCLienteFindGet[0].perfilcliente.dataimg
+            //     )
+            //   )
+            // );
+
+            const buffer = Buffer.from(
+              resCorreoCLienteFindGet[0].perfilcliente.dataimg
+            );
+            const base64String: any = buffer.toString("base64");
+
+            setBufferFileLoad(base64String);
+
+            setFotoBufferStateBoolean(true);
             setExtFotoBufferState(resCorreoCLienteFindGet[0].perfilcliente.ext);
             setGeneroPerfilState(true);
             //* verificamos si la sesion asociada al cliente es la  misma que la sesión aspciada al servidor
@@ -404,25 +416,23 @@ export default function Page() {
       console.log("resDataPerfilClientePost -> ", resDataPerfilClientePost);
 
       //*mostramos en pantalla
-
       setAlertRegisterPerfilCLienteValidate(true);
 
       setBgAlertPerfilClienteValidate(true);
 
       // setBgConfirmPerfilClientUpdate(true);
-      setMsgPerfiClienteValidate("actualizo el perfil");
-      setFotoBufferStateBoolean(true);
 
-      // location.reload();
+      setMsgPerfiClienteValidate("actualizo el perfil");
 
       setTimeout(async () => {
-        const emailClienteBufferUrl =
-          sessionStorage.getItem("correoLoginCliente");
+        //todo extraemos el blob de la url
+        // const emailClienteBufferUrl =
+        //   sessionStorage.getItem("correoLoginCliente");
 
-        const response = await fetch(
-          `${server}/perfilcliente/${emailClienteBufferUrl}/buffer`
-        );
-        const data = await response.blob();
+        // const response = await fetch(
+        //   `${server}/perfilcliente/${emailClienteBufferUrl}/buffer`
+        // );
+        // const data = await response.blob();
 
         // console.log("datanormal-buffer-team", data);
 
@@ -439,8 +449,21 @@ export default function Page() {
 
         setExtFotoBufferState(resCorreoCLienteFindUpdate[0].perfilcliente.ext);
 
-        setUrlStreamLabState(data);
-      }, 2000);
+        // setUrlStreamLabState(data);
+
+        //* refresca desde la bd
+        const buffer = Buffer.from(
+          resCorreoCLienteFindUpdate[0].perfilcliente.dataimg
+        );
+        const base64String: any = buffer.toString("base64");
+
+        setBufferFileLoad(base64String);
+
+        //*mensaje en pantalla
+        setFotoBufferStateBoolean(true);
+      }, 1000);
+
+      // location.reload();
     }
 
     if (resDataPerfilClientePost.msg === "registro el perfilcliente") {
@@ -477,17 +500,16 @@ export default function Page() {
       setBgConfirmPerfilClientUpdate(true);
       setMsgPerfiClienteValidate("registro  el perfil");
 
-      setFotoBufferStateBoolean(true);
-
       // location.reload();
 
       setTimeout(async () => {
-        const emailClienteBufferUrl =
-          sessionStorage.getItem("correoLoginCliente");
-        const response = await fetch(
-          `${server}/perfilcliente/${emailClienteBufferUrl}/buffer`
-        );
-        const data = await response.blob();
+        //todo extraemos el buffer al registrar
+        // const emailClienteBufferUrl =
+        //   sessionStorage.getItem("correoLoginCliente");
+        // const response = await fetch(
+        //   `${server}/perfilcliente/${emailClienteBufferUrl}/buffer`
+        // );
+        // const data = await response.blob();
 
         // console.log("datanormal-buffer-team", data);
 
@@ -504,8 +526,17 @@ export default function Page() {
 
         setExtFotoBufferState(resCorreoCLienteFindUpdate[0].perfilcliente.ext);
 
-        setUrlStreamLabState(data);
-      }, 2000);
+        // setUrlStreamLabState(data);
+
+        //* refresca desde la bd
+        const buffer = Buffer.from(
+          resCorreoCLienteFindUpdate[0].perfilcliente.dataimg
+        );
+        const base64String: any = buffer.toString("base64");
+
+        setBufferFileLoad(base64String);
+        setFotoBufferStateBoolean(true);
+      }, 1000);
     }
     if (
       resDataPerfilClientePost.msg ===
@@ -770,17 +801,33 @@ export default function Page() {
                         setFotoPerfilClienteValue(e.target.files[0]);
                         setAlertRegisterPerfilCLienteValidate(false);
 
-                        const emailClienteBufferUrl =
-                          sessionStorage.getItem("correoLoginCliente");
+                        // const emailClienteBufferUrl =
+                        //   sessionStorage.getItem("correoLoginCliente");
 
-                        const response = await fetch(
-                          `${server}/perfilcliente/${emailClienteBufferUrl}/buffer`
+                        //*extraccion del buffer bia blob
+                        // const response = await fetch(
+                        //   `${server}/perfilcliente/${emailClienteBufferUrl}/buffer`
+                        // );
+                        // const data = await response.blob();
+
+                        // setFotoBufferStateBoolean(true);
+                        // // console.log("datanormal-buffer-team", data);
+                        // setUrlStreamLabState(data);
+
+                        //*mostramos la extension
+
+                        const reqCorreoCLienteFindUpdate = await fetch(
+                          `${server}/emailcliente/${sessionStorage.getItem(
+                            "correoLoginCliente"
+                          )}/sesionemail`
                         );
-                        const data = await response.blob();
 
-                        setFotoBufferStateBoolean(true);
-                        // console.log("datanormal-buffer-team", data);
-                        setUrlStreamLabState(data);
+                        const resCorreoCLienteFindUpdate =
+                          await reqCorreoCLienteFindUpdate.json();
+
+                        setExtFotoBufferState(
+                          resCorreoCLienteFindUpdate[0].perfilcliente.ext
+                        );
                       }}
                     />
                   </div>
@@ -792,10 +839,21 @@ export default function Page() {
                   {extFotoBufferState.includes("webp") ||
                   extFotoBufferState.includes("jpeg") ||
                   extFotoBufferState.includes("png") ||
-                  extFotoBufferState.includes("jpg") ||
-                  extFotoBufferState.includes("svg") ? (
+                  extFotoBufferState.includes("jpg") ? (
                     <Image
-                      src={URL.createObjectURL(urlStreamLabState)}
+                      src={`data:image/${extFotoBufferState};base64,${bufferFileLoad}`}
+                      width="0"
+                      height="0"
+                      sizes="100vw"
+                      alt="Picture of the author"
+                      className=" w-[80%] h-[300px] max-sm:h-[210px]"
+                    />
+                  ) : (
+                    ""
+                  )}
+                  {extFotoBufferState.includes("svg") ? (
+                    <Image
+                      src={`data:image/${extFotoBufferState}+xml;base64,${bufferFileLoad}`}
                       width="0"
                       height="0"
                       sizes="100vw"
@@ -806,14 +864,27 @@ export default function Page() {
                     ""
                   )}
 
-                  {extFotoBufferState.includes("mp4") ||
-                  extFotoBufferState.includes("mp3") ? (
+                  {extFotoBufferState.includes("mp4") && (
                     <div className="w-[80%] h-[300px] max-sm:h-[210px]">
                       <video
                         className="w-full h-full object-cover"
                         width={0}
                         height={0}
-                        src={URL.createObjectURL(urlStreamLabState)}
+                        src={`data:video/${extFotoBufferState};base64,${bufferFileLoad}`}
+                        controls
+                      >
+                        file de prueba
+                      </video>
+                    </div>
+                  )}
+
+                  {extFotoBufferState.includes("mp3") ? (
+                    <div className="w-[80%] h-[300px] max-sm:h-[210px]">
+                      <video
+                        className="w-full h-full object-cover"
+                        width={0}
+                        height={0}
+                        src={`data:audio/${extFotoBufferState};base64,${bufferFileLoad}`}
                         controls
                       >
                         file de prueba
