@@ -77,7 +77,7 @@ export class PerfilclienteService {
               telefono: createPerfilclienteDto.telefono,
               genero: createPerfilclienteDto.genero,
               fecha: createPerfilclienteDto.fecha,
-              dataimg: createPerfilclienteDto.dataimg,
+              // dataimg: createPerfilclienteDto.dataimg,
             },
           );
 

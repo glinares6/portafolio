@@ -177,12 +177,14 @@ export default function Page() {
             //   )
             // );
 
-            const buffer = Buffer.from(
-              resCorreoCLienteFindGet[0].perfilcliente.dataimg
-            );
-            const base64String: any = buffer.toString("base64");
+            if (resCorreoCLienteFindGet[0].perfilcliente.dataimg != null) {
+              const buffer = Buffer.from(
+                resCorreoCLienteFindGet[0].perfilcliente.dataimg
+              );
+              const base64String: any = buffer.toString("base64");
 
-            setBufferFileLoad(base64String);
+              setBufferFileLoad(base64String);
+            }
 
             setFotoBufferStateBoolean(true);
             setExtFotoBufferState(resCorreoCLienteFindGet[0].perfilcliente.ext);
@@ -452,12 +454,14 @@ export default function Page() {
         // setUrlStreamLabState(data);
 
         //* refresca desde la bd
-        const buffer = Buffer.from(
-          resCorreoCLienteFindUpdate[0].perfilcliente.dataimg
-        );
-        const base64String: any = buffer.toString("base64");
+        if (resCorreoCLienteFindUpdate[0].perfilcliente.dataimg != null) {
+          const buffer = Buffer.from(
+            resCorreoCLienteFindUpdate[0].perfilcliente.dataimg
+          );
+          const base64String: any = buffer.toString("base64");
 
-        setBufferFileLoad(base64String);
+          setBufferFileLoad(base64String);
+        }
 
         //*mensaje en pantalla
         setFotoBufferStateBoolean(true);
@@ -529,12 +533,15 @@ export default function Page() {
         // setUrlStreamLabState(data);
 
         //* refresca desde la bd
-        const buffer = Buffer.from(
-          resCorreoCLienteFindUpdate[0].perfilcliente.dataimg
-        );
-        const base64String: any = buffer.toString("base64");
+        if (resCorreoCLienteFindUpdate[0].perfilcliente.dataimg != null) {
+          const buffer = Buffer.from(
+            resCorreoCLienteFindUpdate[0].perfilcliente.dataimg
+          );
+          const base64String: any = buffer.toString("base64");
 
-        setBufferFileLoad(base64String);
+          setBufferFileLoad(base64String);
+        }
+
         setFotoBufferStateBoolean(true);
       }, 1000);
     }
