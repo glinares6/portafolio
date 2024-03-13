@@ -649,22 +649,29 @@ export class EmailclienteService {
   }
 
   async findEmailOne(sesioncorreo: string) {
-    const resGetClienteFindCorreo = await this.emailClienteRepository.find({
-      where: {
-        emailcliente: sesioncorreo,
-      },
-      relations: {
-        perfilcliente: true,
-      },
-    });
+    try {
+      const resGetClienteFindCorreo = await this.emailClienteRepository.find({
+        where: {
+          emailcliente: sesioncorreo,
+        },
+        relations: {
+          perfilcliente: true,
+        },
+      });
 
-    if (resGetClienteFindCorreo.length == 0) {
+      if (resGetClienteFindCorreo.length == 0) {
+        return {
+          msg: 'error al buscar por correo en el servidor',
+        };
+      }
+
+      return resGetClienteFindCorreo;
+    } catch (error) {
+      console.log('error-emailclienteData- findEmailOne', error.name);
       return {
-        msg: 'error al buscar por correo en el servidor',
+        msg: 'demora al envio de data(servidor) - findEmailOne - emailcliente',
       };
     }
-
-    return resGetClienteFindCorreo;
   }
 
   update(id: number, updateEmailclienteDto: UpdateEmailclienteDto) {
