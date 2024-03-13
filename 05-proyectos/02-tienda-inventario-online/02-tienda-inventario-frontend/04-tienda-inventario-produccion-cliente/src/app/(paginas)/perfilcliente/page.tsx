@@ -122,12 +122,7 @@ export default function Page() {
 
       (async () => {
         const reqCorreoCLienteFindGet = await fetch(
-          `${server}/emailcliente/${getCorreoLoginCliente}/sesionemail`,
-          {
-            method: "GET",
-            mode: "no-cors",
-            credentials: "include",
-          }
+          `${server}/emailcliente/${getCorreoLoginCliente}/sesionemail`
         );
 
         const resCorreoCLienteFindGet = await reqCorreoCLienteFindGet.json();
