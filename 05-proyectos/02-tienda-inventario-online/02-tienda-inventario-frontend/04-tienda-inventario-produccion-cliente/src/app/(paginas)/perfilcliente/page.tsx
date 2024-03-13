@@ -125,7 +125,7 @@ export default function Page() {
           `${server}/emailcliente/${getCorreoLoginCliente}/sesionemail`,
           {
             method: "GET",
-            mode: "cors",
+            mode: "no-cors",
             credentials: "include",
           }
         );
