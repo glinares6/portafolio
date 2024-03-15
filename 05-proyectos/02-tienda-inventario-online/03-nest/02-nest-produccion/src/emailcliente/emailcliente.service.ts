@@ -362,6 +362,13 @@ export class EmailclienteService {
 
       // console.log(resCorreoLoginValidateFind[0]);
 
+      //*validar si el correo existe
+      if (resCorreoLoginValidateFind.length == 0) {
+        return {
+          msg: 'el usuario no esta registrado - logincliente',
+        };
+      }
+
       //*validar si la sesion coincide
 
       if (
