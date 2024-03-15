@@ -311,7 +311,7 @@ export default function LoginCliente() {
                     value={passwordValue}
                     name="txtPasswordLogin"
                     id="txtPasswordLogin"
-                    placeholder="txtPasswordLogin"
+                    placeholder="passwordLogin"
                     autoComplete="off"
                     required
                   />

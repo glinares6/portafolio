@@ -7,6 +7,7 @@ import CorreoCliente from "./@correocliente/page";
 import RegistroCLienteValidation from "./@registroclientevalidacion/page";
 import CorreoCLienteValidacion from "./@correoclientevalidacion/page";
 import RegistroContrasenaClienteValidacion from "./@registrocontrasenaclientevalidacion/page";
+import menuApp from "./hooks/menu-App";
 
 export default function MenuCuenta() {
   const {
@@ -27,10 +28,86 @@ export default function MenuCuenta() {
 
   const route = useRouter();
 
+  const { server } = menuApp();
+
   useEffect(() => {
-    setCuentaState(false);
+    // setCuentaState(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleComrasClienteValidate = async () => {
+    console.log("yo llegue primero");
+
+    //*validar si el usuario esta registrado
+    //* si no a inicioado sesion
+    console.log("en construcción");
+
+    // const payloadCarritoValidatePost = {
+    //   emailcliente: sessionStorage.getItem("correoLoginCliente"),
+    //   sessioncliente: sessionStorage.getItem("sessionCorreoLoginCliente"),
+    // };
+
+    // const reqSessionValidateCarritoPost = await fetch(
+    //   `${server}/emailcliente/logincorreo`,
+    //   {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(payloadCarritoValidatePost),
+    //   }
+    // );
+
+    // const resSessionValidateCarritoPost =
+    //   await reqSessionValidateCarritoPost.json();
+
+    // console.log("resSessionValidatePost -> ", resSessionValidateCarritoPost);
+
+    // if (
+    //   resSessionValidateCarritoPost.msg ===
+    //   "el usuario no esta registrado - logincliente"
+    // ) {
+    //   //*creamos un estado
+    //   // setCarritoState(false);
+    //   // setClientCarritoVerifyState(true);
+
+    //   setCuentaState(false);
+    //   // setInicioSwitch(false); //*muestra el menu inicio
+    //   // setLoginSwitch(false); //*oculta el login del contexto
+
+    //   sessionStorage.removeItem("correoLoginCliente");
+    //   sessionStorage.removeItem("sessionCorreoLoginCliente");
+
+    //   setTimeout(() => {
+    //     route.push("/compras");
+    //   }, 500);
+    //   return true;
+    // }
+
+    // if (
+    //   resSessionValidateCarritoPost.msg ===
+    //   "la sesion no coincide - vuelve a ingresar"
+    // ) {
+    //   sessionStorage.removeItem("correoLoginCliente");
+    //   sessionStorage.removeItem("sessionCorreoLoginCliente");
+
+    //   setCuentaState(false);
+    //   setInicioState(true); ///*muestra la ventana menu
+
+    //   setInicioSwitch(false); //*muestra el menu inicio
+    //   // setRegistroSwitch(false); //*vuelve al registro
+
+    //     setTimeout(() => {
+    //       route.push("/compras");
+    //     }, 500);
+
+    //   return true;
+    // }
+
+    setCuentaState(false);
+    // setInicioState(false);
+    route.push("/compras");
+  };
   return (
     <>
       {cuentaState && (
@@ -58,7 +135,12 @@ export default function MenuCuenta() {
             >
               Perfil
             </button>
-            <button className="flex justify-start pl-1 w-full ">Compras</button>
+            <button
+              onClick={handleComrasClienteValidate}
+              className="flex justify-start pl-1 w-full "
+            >
+              Compras
+            </button>
           </div>
         </div>
       )}
@@ -93,6 +175,7 @@ export default function MenuCuenta() {
               >
                 <button
                   onClick={() => {
+                    setCuentaState(false);
                     setInicioState(false);
                     setInicioSwitch(false);
                     setLoginSwitch(false);
