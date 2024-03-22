@@ -802,7 +802,73 @@ export default function Page() {
     //* guardar los pedidos del carrito en el usuario
 
     //* ir a ventana compras y mostrar todos los productos por fecha que tiene el usuaio
-    router.push("/compras");
+
+    //*creamos la tabla compra (BASE)
+
+    //* si la sesion compra existe no existe
+
+    if (!sessionStorage.getItem("sessionCompra")) {
+      const reqCompraValidatePost = await fetch(`${server}/compras`, {
+        method: "POST",
+      });
+
+      const resCompraValidatePost = await reqCompraValidatePost.json();
+
+      console.log("resCompraValidatePost->", resCompraValidatePost);
+
+      sessionStorage.setItem(
+        "sessionCompra",
+        resCompraValidatePost.sessioncompra
+      );
+    }
+
+    //* guardamos el carrito en la tabla compra (onetomany)
+
+    const payloadListaCompraSucess = {
+      sessioncompra: sessionStorage.getItem("sessionCompra"),
+      sessioncarrito: localStorage.getItem("localcarritobase"),
+    };
+
+    const reqListaCompraSucessPost = await fetch(`${server}/listacompra`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payloadListaCompraSucess),
+    });
+
+    const resListaCompraSucessPost = await reqListaCompraSucessPost.json();
+
+    console.log("resCompraSucessPost", resListaCompraSucessPost);
+
+    //TODO eliminamos el carritocompra
+
+    //*Relacionamos la tabla compra con el email cliente
+
+    const payloadCompraClienteRelationsSucess = {
+      sessioncompra: sessionStorage.getItem("sessionCompra"),
+      emailclientebase: sessionStorage.getItem("correoLoginCliente"),
+      sessionclientebase: sessionStorage.getItem("sessionCorreoLoginCliente"),
+    };
+
+    const reqCompraClienteRelationsPost = await fetch(
+      `${server}/compras/buycliente`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payloadCompraClienteRelationsSucess),
+      }
+    );
+
+    const resCompraClienteRelationsPost =
+      await reqCompraClienteRelationsPost.json();
+
+    console.log("resCompraClienteRelationsPost", resCompraClienteRelationsPost);
+
+    //* al final redirigimos a compras
+    // router.push("/compras");
   };
   return (
     <>

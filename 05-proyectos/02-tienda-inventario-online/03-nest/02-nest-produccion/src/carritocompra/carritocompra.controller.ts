@@ -25,6 +25,11 @@ export class CarritocompraController {
     return this.carritocompraService.create(createCarritocompraDto, request);
   }
 
+  // @Post('buy')
+  // buyCarrito(@Body() createCarritocompraDto: CreateCarritocompraDto) {
+  //   return this.carritocompraService.buyCompra(createCarritocompraDto);
+  // }
+
   @Get()
   findAll() {
     return this.carritocompraService.findAll();

@@ -1,5 +1,12 @@
 import { Carritocompra } from 'src/carritocompra/entities/carritocompra.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Pedido {
@@ -14,6 +21,18 @@ export class Pedido {
 
   @Column('decimal', { default: 0 })
   subtotal: number;
+
+  @CreateDateColumn({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP AT TIME ZONE America/Lima',
+  })
+  createAt: Date;
+
+  @UpdateDateColumn({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP AT TIME ZONE America/Lima',
+  })
+  updateAt: Date;
 
   @ManyToOne(() => Carritocompra, (carritoCompra) => carritoCompra.pedidos)
   carritocompra: Carritocompra;

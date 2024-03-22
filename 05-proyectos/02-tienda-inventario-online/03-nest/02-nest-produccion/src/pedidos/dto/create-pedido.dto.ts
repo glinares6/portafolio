@@ -3,4 +3,6 @@ export class CreatePedidoDto {
   smartphone: Record<string, any>;
   cantidad: number;
   subtotal: number;
+  createAt: Date;
+  updateAt: Date;
 }
