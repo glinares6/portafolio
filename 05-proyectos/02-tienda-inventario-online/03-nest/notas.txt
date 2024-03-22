@@ -198,47 +198,53 @@ iniciamos el proyecto
 
 
 
-EMAIL
-    https://github.com/nest-modules/mailer#readme
+    EMAIL
+        https://github.com/nest-modules/mailer#readme
 
-    https://nest-modules.github.io/mailer/docs/mailer.html#async-configuration
+        https://nest-modules.github.io/mailer/docs/mailer.html#async-configuration
 
-    MEDIUM
-        https://blog.stackademic.com/implementing-email-service-in-nestjs-a-step-by-step-guide-42e03ef1fb05
+        MEDIUM
+            https://blog.stackademic.com/implementing-email-service-in-nestjs-a-step-by-step-guide-42e03ef1fb05
 
-    NOTIZ.DEV
-        https://notiz.dev/blog/send-emails-with-nestjs
+        NOTIZ.DEV
+            https://notiz.dev/blog/send-emails-with-nestjs
 
-        fix email with ejs 
-            <%= local.emailname %>
+            fix email with ejs 
+                <%= local.emailname %>
 
-            https://stackoverflow.com/questions/62217160/nestjs-email-failed-to-send-with-ejs-template-dynamic-data
-
-
-    FIX SESSION
-        https://gist.github.com/samsch/3c2c98c415e1d5b15e37a272aa0b77f1
-        app.use( session({ secret: jwtConstants.secret, resave: false, saveUninitialized: true, store: store, cookie: { secure: 'auto', httpOnly: 'auto', // sameSite:'None' },
+                https://stackoverflow.com/questions/62217160/nestjs-email-failed-to-send-with-ejs-template-dynamic-data
 
 
-UPLOAD DATABASE IMAGE TYPEORM
-    https://stackoverflow.com/questions/55498140/saving-buffer-on-postgres-bytea-with-typeorm-only-store-10-bytes
-
-    https://www.appsloveworld.com/postgresql/100/27/saving-buffer-on-postgres-bytea-with-typeorm-only-store-10-bytes
-
-    https://wanago.io/2021/11/01/api-nestjs-storing-files-postgresql-database/
-
-    https://github.com/typeorm/typeorm/issues/2878 
+        FIX SESSION
+            https://gist.github.com/samsch/3c2c98c415e1d5b15e37a272aa0b77f1
+            app.use( session({ secret: jwtConstants.secret, resave: false, saveUninitialized: true, store: store, cookie: { secure: 'auto', httpOnly: 'auto', // sameSite:'None' },
 
 
-FIX IMAGE BUFFER STREAM
-        https://stackoverflow.com/questions/66600991/how-to-fetch-and-display-blob-images
-        https://stackoverflow.com/questions/9267899/arraybuffer-to-base64-encoded-string
-        https://es.stackoverflow.com/questions/477377/mostrar-imagen-en-react-js-enviando-datos-de-node-js-y-mysql
-        https://stackoverflow.com/questions/65392241/how-convert-type-data-buffer-to-image-in-react-js
+    TYPEORM
+        UPLOAD DATABASE IMAGE TYPEORM
+            https://stackoverflow.com/questions/55498140/saving-buffer-on-postgres-bytea-with-typeorm-only-store-10-bytes
 
-tomar en cuenta 
-    npm notice 
-    npm notice New minor version of npm available! 9.6.1 -> 9.8.1
-    npm notice Changelog: https://github.com/npm/cli/releases/tag/v9.8.1
-    npm notice Run npm install -g npm@9.8.1 to update!
-    npm notice 
+            https://www.appsloveworld.com/postgresql/100/27/saving-buffer-on-postgres-bytea-with-typeorm-only-store-10-bytes
+
+            https://wanago.io/2021/11/01/api-nestjs-storing-files-postgresql-database/
+
+            https://github.com/typeorm/typeorm/issues/2878 
+
+        FIX FILTER FIELD RELATIONS USING TYPEORM
+            https://stackoverflow.com/questions/59645009/how-to-return-only-some-columns-of-a-relations-with-typeorm
+
+
+    FIX IMAGE BUFFER STREAM
+            https://stackoverflow.com/questions/66600991/how-to-fetch-and-display-blob-images
+            https://stackoverflow.com/questions/9267899/arraybuffer-to-base64-encoded-string
+            https://es.stackoverflow.com/questions/477377/mostrar-imagen-en-react-js-enviando-datos-de-node-js-y-mysql
+            https://stackoverflow.com/questions/65392241/how-convert-type-data-buffer-to-image-in-react-js
+
+   
+
+    tomar en cuenta 
+        npm notice 
+        npm notice New minor version of npm available! 9.6.1 -> 9.8.1
+        npm notice Changelog: https://github.com/npm/cli/releases/tag/v9.8.1
+        npm notice Run npm install -g npm@9.8.1 to update!
+        npm notice 

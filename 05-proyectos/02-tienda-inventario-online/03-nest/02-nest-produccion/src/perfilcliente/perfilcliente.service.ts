@@ -218,9 +218,7 @@ export class PerfilclienteService {
         'fecha',
         'ext',
       ],
-      relations: {
-        emailcliente: true,
-      },
+      relations: { emailcliente: true },
     });
   }
 

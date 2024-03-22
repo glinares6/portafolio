@@ -1,3 +1,4 @@
+import { Compra } from 'src/compras/entities/compra.entity';
 import { Perfilcliente } from 'src/perfilcliente/entities/perfilcliente.entity';
 import {
   Entity,
@@ -7,6 +8,7 @@ import {
   UpdateDateColumn,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity()
@@ -44,4 +46,7 @@ export class Emailcliente {
   @OneToOne(() => Perfilcliente, (perfilcliente) => perfilcliente.emailcliente)
   @JoinColumn()
   perfilcliente: Perfilcliente;
+
+  @OneToMany(() => Compra, (compra) => compra.emailcliente)
+  compra: Compra[];
 }

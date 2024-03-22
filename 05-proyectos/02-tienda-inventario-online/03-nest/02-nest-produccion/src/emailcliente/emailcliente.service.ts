@@ -631,18 +631,38 @@ export class EmailclienteService {
     return await this.emailClienteRepository.find({
       order: {
         id: 'DESC',
+        compra: {
+          id: 'DESC',
+          listacompra: {
+            id: 'DESC',
+          },
+        },
       },
-      select: [
-        'id',
-        'emailcliente',
-        'passcliente',
-        'estado',
-        'sessioncliente',
-        'createAt',
-        'updatedAt',
-      ],
+      select: {
+        id: true,
+        emailcliente: true,
+        passcliente: true,
+        estado: true,
+        sessioncliente: true,
+        createAt: true,
+        updatedAt: true,
+        perfilcliente: {
+          id: true,
+          nombre: true,
+          apellido1: true,
+          apellido2: true,
+          direccion: true,
+          telefono: true,
+          genero: true,
+          fecha: true,
+          ext: true,
+        },
+      },
       relations: {
         perfilcliente: true,
+        compra: {
+          listacompra: true,
+        },
       },
     });
   }
