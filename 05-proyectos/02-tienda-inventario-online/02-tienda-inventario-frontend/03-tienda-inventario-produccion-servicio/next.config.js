@@ -20,6 +20,12 @@ const nextConfig = {
         // port: "3000",
         pathname: "/public/img/**",
       },
+      {
+        protocol: "https",
+        hostname: "portafolio-piloto.onrender.com",
+        // port: "3000",
+        pathname: "/public/img/**",
+      },
     ],
   },
   // reactStrictMode: false,
