@@ -41,6 +41,9 @@ export default function Page() {
   const [clientCarritoVerifyState, setClientCarritoVerifyState] =
     useState(false);
 
+  const [msgClientCarritoVerifyState, setMsgClientCarritoVerifyState] =
+    useState("");
+
   const {
     cuentaState,
     setPedidoList,
@@ -97,8 +100,16 @@ export default function Page() {
     (async () => {
       const localSessionCarrito = localStorage.getItem("sessioncarrito");
       const localCarritoBaseP = localStorage.getItem("localcarritobase");
-
+      
       setCarritoState(true);
+      if(!localCarritoBaseP || !localSessionCarrito){
+        setCargaImg(false);
+        setCestaEmpty(true);
+       return  console.log('el valor de almacenamiento local no existe');
+        
+      } 
+
+
       if (localCarritoBaseP) {
         const resCarritoPedidoP = await getCarritoReq(localCarritoBaseP);
 
@@ -131,6 +142,7 @@ export default function Page() {
           );
         }
       }
+
 
       if (localSessionCarrito) {
         const resCarritoPedido = await getCarritoReq(localSessionCarrito);
@@ -570,8 +582,9 @@ export default function Page() {
 
     const resCarritoPedidoReq = await getCarritoReq(localSessionCarritoReq);
 
+    //* Ordenamos la posicion y mostrando el subtotal
     const getObjetoPedidoNew = resCarritoPedidoReq.pedidos
-      .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
+      .sort((a: { id: number }, b: { id: number }) =>  b.id - a.id)
       .map((item: { id: any; subtotal: any }) => Number(item.subtotal));
 
     console.log("traer los datos", getObjetoPedidoNew);
@@ -649,6 +662,26 @@ export default function Page() {
     const localSessionCarrito = localStorage.getItem("sessioncarrito");
     const localCarritoBaseP = localStorage.getItem("localcarritobase");
 
+  
+
+    if(!localSessionCarrito || !localCarritoBaseP ){
+     
+      setCarritoState(false);
+      setClientCarritoVerifyState(true);
+
+      setMsgClientCarritoVerifyState("Vuelva agregar pedidos - error al guardar.");
+
+      setTimeout(() => {
+        router.push("/");
+      }, 2500);
+      // setCestaEmpty(true)
+      // setInicioState(true); ///*muestra la ventana menu
+      // setInicioSwitch(false); //*mostrar el menu inicio
+      return console.log('no existe valor para eliminar , intente otra vez ');
+      
+    }
+
+ 
     if (localCarritoBaseP) {
       const resCarritoPedidoP = await getCarritoReq(localCarritoBaseP);
 
@@ -722,6 +755,8 @@ export default function Page() {
       }
     }
 
+
+   
     // const localSessionCarritoRes = localStorage.getItem("sessioncarrito");
 
     // if (localSessionCarritoRes) {
@@ -772,11 +807,14 @@ export default function Page() {
       setCarritoState(false);
       setClientCarritoVerifyState(true);
 
+      setMsgClientCarritoVerifyState("El usuario no esta registrado");
+
       setInicioSwitch(false); //*muestra el menu inicio
       setLoginSwitch(false); //*oculta el login del contexto
 
       sessionStorage.removeItem("correoLoginCliente");
       sessionStorage.removeItem("sessionCorreoLoginCliente");
+      sessionStorage.removeItem("sessionCompra");
 
       setTimeout(() => {
         router.push("/");
@@ -790,6 +828,7 @@ export default function Page() {
     ) {
       sessionStorage.removeItem("correoLoginCliente");
       sessionStorage.removeItem("sessionCorreoLoginCliente");
+      sessionStorage.removeItem("sessionCompra");
       setInicioState(true); ///*muestra la ventana menu
       setInicioSwitch(false); //*mostrar el menu inicio
       // setLoginSwitch(false); //*oculta el login del contexto
@@ -799,10 +838,6 @@ export default function Page() {
     }
 
     //* si hay cliente -> ckeckout
-    //* guardar los pedidos del carrito en el usuario
-
-    //* ir a ventana compras y mostrar todos los productos por fecha que tiene el usuaio
-
     //*creamos la tabla compra (BASE)
 
     //* si la sesion compra existe no existe
@@ -821,6 +856,8 @@ export default function Page() {
         resCompraValidatePost.sessioncompra
       );
     }
+
+
 
     //* guardamos el carrito en la tabla compra (onetomany)
 
@@ -841,8 +878,31 @@ export default function Page() {
 
     console.log("resCompraSucessPost", resListaCompraSucessPost);
 
-    //TODO eliminamos el carritocompra
+    //*verificar si la listacompra es valida
+    if (
+      resListaCompraSucessPost.msg ===
+      "error al listar las compras - listacompra - post"
+    ) {
+      //*creamos un estado
+      setCarritoState(false);
+      setClientCarritoVerifyState(true);
 
+      setMsgClientCarritoVerifyState("Error al listar compras");
+
+      setInicioSwitch(false); //*muestra el menu inicio
+
+      setLoginSwitch(false); //*oculta el login del contexto
+
+      sessionStorage.removeItem("sessionCompra");
+
+      setTimeout(() => {
+        router.push("/");
+      }, 2500);
+      return true;
+    }
+
+
+    //* guardar los pedidos del carrito en el usuario
     //*Relacionamos la tabla compra con el email cliente
 
     const payloadCompraClienteRelationsSucess = {
@@ -867,9 +927,70 @@ export default function Page() {
 
     console.log("resCompraClienteRelationsPost", resCompraClienteRelationsPost);
 
+
+
+      //TODO eliminamos el carritocompra
+      //* eliminamos los pedidos
+
+      const localCarritoBaseBuy =localStorage.getItem("sessioncarrito") || localStorage.getItem("localcarritobase")
+      
+      //*eliminamos los pedidos del carrito
+      const resGetCarritoComprak = await getCarritoReq(localCarritoBaseBuy);
+
+      if (resGetCarritoComprak.pedidos) {
+        resGetCarritoComprak.pedidos.map(async (item: { id: any }) => {
+
+          await deletePedidosReq(item.id);
+        });
+      }
+
+       //*eliminando el carrito compra
+       setTimeout(async () => {
+        console.log("SESSION  EXISTENTE BUY", localCarritoBaseBuy);
+
+        await deleteCarritoCompra(resGetCarritoComprak.id);
+
+
+
+        localStorage.removeItem("sessioncarrito");
+        localStorage.removeItem("localcarritobase");
+        // setCestaEmpty(true);
+
+         //*mostramos el carrito de compras nuevamente 
+
+          //*mostrar carrito de compra final vacio
+
+      const resCarritoTotalGetBuy = await getCarritoOneReq(lista.id);
+
+      console.log("get carritoCompra Buy - Sucess", resCarritoTotalGetBuy);
+
+      if (resCarritoTotalGetBuy.msg === "carrito-compra  no encontrada") {
+
+
+        // setCestaEmpty(true);
+        setCargaImg(true);
+        setLista({
+          id: 0,
+          total: 0,
+        });
+        setListaPedido([]);
+      return   console.log("longitud de la muestra Buy", 0);
+      }
+
+      }, 3000);
+
+     
+
+
+
+
+ //todo ir a ventana compras y mostrar todos los productos por fecha que tiene el usuaio
     //* al final redirigimos a compras
     // router.push("/compras");
   };
+
+
+ 
   return (
     <>
       {carritoState && (
@@ -880,21 +1001,21 @@ export default function Page() {
               <div className="flex items-center w-full h-[50px] pl-3 border-red-500 border-2">
                 <h1 className="text-2xl">Lista de los pedidos </h1>
               </div>
-              <div className="w-full flex justify-evenly  border-red-500 border-2   max-md:flex-col max-md:items-center max-md:w-full max-lg:justify-between ">
+              <div className="flex w-full border-2 border-red-500 justify-evenly max-md:flex-col max-md:items-center max-md:w-full max-lg:justify-between ">
                 <div className="w-[45%] grid grid-cols-[130px_1fr_120px_100px_120px]   w-[55%]  border-red-500 border-2 pb-2  max-md:px-1  max-md:grid-cols-[130px_1fr_1fr_1fr_1fr] max-sm:w-full max-md:w-[60%] max-lg:w-[75%] max-xl:w-[60%] ">
-                  <div className="col-span-1   py-2 border-red-500 border-2 max-md:hidden">
+                  <div className="col-span-1 py-2 border-2 border-red-500 max-md:hidden">
                     Producto
                   </div>
-                  <div className="col-span-1   py-2 border-red-500 border-2 max-md:hidden">
+                  <div className="col-span-1 py-2 border-2 border-red-500 max-md:hidden">
                     Producto
                   </div>
-                  <div className="flex justify-center col-span-1   py-2 border-red-500 border-2 max-md:hidden">
+                  <div className="flex justify-center col-span-1 py-2 border-2 border-red-500 max-md:hidden">
                     Percio
                   </div>
-                  <div className="flex justify-center col-span-1  py-2 border-red-500 border-2 max-md:hidden">
+                  <div className="flex justify-center col-span-1 py-2 border-2 border-red-500 max-md:hidden">
                     Cantidad
                   </div>
-                  <div className="flex justify-center col-span-1  py-2 border-red-500 border-2 max-md:hidden">
+                  <div className="flex justify-center col-span-1 py-2 border-2 border-red-500 max-md:hidden">
                     Total
                   </div>
                   {cargaImg &&
@@ -909,21 +1030,21 @@ export default function Page() {
                             item.smartphone.picture.includes(".png") ||
                             item.smartphone.picture.includes(".jpg") ||
                             item.smartphone.picture.includes(".svg")) && (
-                            <div className="w-[130px] h-[120px] flex justify-center py-1 max-md:row-span-1 max-md:border-blue-500 max-md:border-t-2 max-md:border-l-2 max-md:mt-2 ">
-                              <Image
-                                src={item.smartphone.picture}
-                                width="100"
-                                height="100"
-                                alt="Picture of the author2"
-                              />
-                            </div>
-                          )}
+                              <div className="w-[130px] h-[120px] flex justify-center py-1 max-md:row-span-1 max-md:border-blue-500 max-md:border-t-2 max-md:border-l-2 max-md:mt-2 ">
+                                <Image
+                                  src={item.smartphone.picture}
+                                  width="100"
+                                  height="100"
+                                  alt="Picture of the author2"
+                                />
+                              </div>
+                            )}
                           {item.smartphone.picture.includes(".mp4") ||
-                          item.smartphone.picture.includes(".mp3") ? (
+                            item.smartphone.picture.includes(".mp3") ? (
                             <div className="w-[130px] h-[130px]  relative  py-1 max-md:row-span-1  max-md:border-blue-500 border-t-2 max-md:border-l-2 max-md:mt-2">
                               <div className="w-[130px] h-[120px]">
                                 <video
-                                  className=" w-full  h-full object-cover "
+                                  className="object-cover w-full h-full "
                                   width={0}
                                   height={0}
                                   src={item.smartphone.picture}
@@ -936,10 +1057,10 @@ export default function Page() {
                           ) : (
                             ""
                           )}
-                          <div className="relative justify-center py-1 pl-1   max-md:col-span-4  max-md:border-blue-500 max-md:border-t-2 max-md:border-r-2  max-md:mt-2 max-md:pr-5">
+                          <div className="relative justify-center py-1 pl-1 max-md:col-span-4 max-md:border-blue-500 max-md:border-t-2 max-md:border-r-2 max-md:mt-2 max-md:pr-5">
                             <button
                               onClick={() => handleClearPedido(key)}
-                              className="hidden absolute top-0 right-0 flex justify-center cursor-pointer   max-md:block "
+                              className="absolute top-0 right-0 flex justify-center hidden cursor-pointer max-md:block "
                             >
                               <svg
                                 version="1.0"
@@ -980,7 +1101,7 @@ export default function Page() {
                                 </g>
                               </svg>
                             </button>
-                            <div className="   max-md:text-sm">
+                            <div className=" max-md:text-sm">
                               {item.smartphone.title}
                             </div>
                           </div>
@@ -993,7 +1114,7 @@ export default function Page() {
                           </div>
                           <div className="w-full flex flex-col items-center   py-1  max-md:col-span-1 max-md:w-full max-md:min-w-[100px] max-md:border-blue-500 max-md:border-b-2">
                             <div className="max-md:text-sm">Cantidad</div>
-                            <div className="w-full flex justify-center">
+                            <div className="flex justify-center w-full">
                               <button
                                 onClick={() => handleUpdateMenos(key)}
                                 className="relative flex justify-center  items-center bg-gray-700 w-[23px] h-[23px]  text-white text-2xl  font-bold  rounded-full  pb-1  "
@@ -1017,7 +1138,7 @@ export default function Page() {
                               <div>S/{Number(item.subtotal).toFixed(2)}</div>
                               <button
                                 onClick={() => handleClearPedido(key)}
-                                className="flex justify-center cursor-pointer pl-2 max-md:hidden"
+                                className="flex justify-center pl-2 cursor-pointer max-md:hidden"
                               >
                                 <svg
                                   version="1.0"
@@ -1080,7 +1201,7 @@ export default function Page() {
                       type="button"
                       // onClick={(e) => handleId("id", `${id}`, e)}
                       onClick={handleValidateClient}
-                      className="w-3/5 font-bold text-white h-10 bg-red-600 rounded-3xl cursor-pointer "
+                      className="w-3/5 h-10 font-bold text-white bg-red-600 cursor-pointer rounded-3xl "
                       value="CONTINUAR"
                     />
                   </div>
@@ -1098,7 +1219,7 @@ export default function Page() {
           )}
           {cestaEmpty && (
             <div className="w-full flex flex-col justify-evenly items-center  w-full min-h-[93vh] border-red-500 border-2">
-              <h1 className="text-center text-3xl">
+              <h1 className="text-3xl text-center">
                 No hay carrito disponoble
               </h1>
               <div className="w-full flex justify-center  h-[40px]  my-3 ">
@@ -1116,11 +1237,11 @@ export default function Page() {
       {clientCarritoVerifyState && (
         <div className="w-full min-h-[calc(100vh-64px)] flex justify-center items-center border-red-500 border-2 max-sm:border-blue-500 max-sm:border-2 ">
           <MenuCuenta />
-          <div className="w-full flex flex-col gap-4">
-            <div className="flex justify-center text-2xl">
-              El usuario no esta registrado
+          <div className="flex flex-col justify-evenly w-full min-h-[100vh] ">
+            <div className=" flex items-center w-full  text-2xl justify-center">
+              {msgClientCarritoVerifyState}
             </div>
-            <div className="w-full flex justify-center">
+            <div className="flex justify-center w-full  items-center ">
               <button
                 className="w-[100px] h-[40px] min-w-[100px] text-white bg-red-500 cursor-pointer"
                 onClick={() => router.back()}

@@ -1,14 +1,17 @@
 "use client";
 import MenuCuenta from "@/app/components/menu-cuenta";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { Key, useContext, useEffect, useState } from "react";
 import comprasApp from "./hooks/compras-App";
 import { UseContext } from "@/app/contexts/authContext";
+import React from "react";
 
 export default function Page() {
   const [comprasState, setComprasState] = useState(false);
   const [clientComprasVerifyState, setClientComprasVerifyState] =
     useState(false);
+
+  const [valuekeyResize, setValuekeyResize]: any = useState();
 
   const [msgComprasValue, setMsgComprasValue] = useState("");
   const {
@@ -112,6 +115,48 @@ export default function Page() {
         return true;
       }
 
+      //*previamente se ha validado que el correo y la sesión sean correctos
+      //*mostrar el listado de todas las compras
+
+      const payloadEmailClienteCompraPost = {
+        emailcliente: sessionStorage.getItem("correoLoginCliente"),
+        sessioncliente: sessionStorage.getItem("sessionCorreoLoginCliente"),
+      };
+
+      const reqEmailListCompra = await fetch(
+        `${server}/emailcliente/listcompras`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payloadEmailClienteCompraPost),
+        }
+      );
+
+      const resEmailListCompra = await reqEmailListCompra.json();
+
+      //  const resultDataEmailClienteItems= resEmailListCompra.compra.map((id: { listacompra: any; }) => {if(id.listacompra.length> 0){
+      // id.listacompra.map((item: { carritocompra: any; }) => { if(item.carritocompra){item.carritocompra.total}})
+      // ;
+      //  }
+      const resultDataEmailClienteItems = resEmailListCompra.compra.filter(
+        (item: { listacompra: any }) =>
+          item.listacompra.length > 0 && item.listacompra
+      );
+
+      console.log(
+        "numero de valores de la lista compra",
+        resultDataEmailClienteItems
+      );
+
+      setValuekeyResize(resultDataEmailClienteItems);
+
+      //*muestra el elemento unitario
+      //  const resEmailfilterSucess = resultDataEmailClienteItems.map((item: { listacompra: any; }) => item.listacompra.map((item: { carritocompra: any; }) => item.carritocompra ))[0][0].id
+
+      //  console.log('resEmailCompra - listcompra ->',resEmailfilterSucess);
+
       setComprasState(true);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -125,6 +170,116 @@ export default function Page() {
         {comprasState && (
           <div>
             <h1>bienvenido a la ventana compras</h1>
+
+            {valuekeyResize.map((item: any, key: any) => (
+              <div className="w-full h-full border-red-500 border-2 max-sm:w-full " key={key}>
+                <ul className="w-full">
+
+                  <div className="fflex w-full">
+                  <li className="bg-yellow-500 text-back w-full">
+                    {item.createAt.split("T")[0].replace(/-+/g, "/")} Hora
+                    sesion : {item.createAt.split("T")[1].slice(0, 8)}
+                  </li>
+               
+
+                  </div>
+              
+                  {item.listacompra.map(
+                    (
+                      item2: {
+                        id: any;
+                        carritocompra: {
+                          pedidos: any;
+                          id: any;
+                          createAt: any;
+                          sessioncarrito: any;
+                          total: any;
+                        };
+                      },
+                      key2: Key | any
+                    ) => (
+                      <React.Fragment key={key2}>
+                        <div className="flex   max-sm:w-full" key={key2}>
+                          <li className="w-[35px] content-center text-center  px-5 border-red-500 border-2 max-sm:px-0 ">
+                            {item2.id}
+                          </li>
+
+                          <div className="flex max-sm:flex-col border-black border-2 w-full max-sm:w-[90%]">
+                            <div className="w-[200px] flex flex-col items-center justify-center h-full gap-y-2 max-sm:w-full   border-red-500 border-2">
+                              <li
+                                className="  flex   "
+                                key={key2}
+                              >
+                                {item2.carritocompra &&
+                                  item2.carritocompra.createAt
+                                    .split("T")[0]
+                                    .replace(/-+/g, "/")}{" "}
+                                {item2.carritocompra &&
+                                  item2.carritocompra.createAt
+                                    .split("T")[1]
+                                    .slice(0, 8)}
+                              </li>
+
+                              <li className="w-full flex justify-center    ">
+                                Total:{" "}
+                                {item2.carritocompra &&
+                                  item2.carritocompra.total}
+                              </li>
+                            </div>
+                            <div className="w-full flex flex-col max-sm:w-full ">
+                              {item2.carritocompra &&
+                                item2.carritocompra.pedidos.map(
+                                  (
+                                    item3: {
+                                      id: any;
+                                      cantidad: any;
+                                      subtotal: any;
+                                      smartphone: any;
+                                      updateAt: any;
+                                    },
+                                    key3: any
+                                  ) => (
+                                    <React.Fragment key={key3}>
+                                      <div className="w-full flex items-center h-full  border-green-500 border-2 max-sm:flex max-sm:flex-col ">
+                                        <div className="w-[50%] flex flex-col max-sm:w-full">
+                                          <li className="flex  w-full px-16">
+                                            {item3.updateAt
+                                              .split("T")[0]
+                                              .replace(/-+/g, "/")}{" "}
+                                            &nbsp; Hora pedido: &nbsp;{" "}
+                                            {item3.updateAt
+                                              .split("T")[1]
+                                              .slice(0, 8)}
+                                          </li>
+                                        </div>
+
+                                        <div className="w-[50%] flex flex-col max-sm:w-full ">
+                                          <li className=" w-full max-sm:w-[300px] flex flex-col  px-20 border-blue-500 border-2 max-sm:px-0 ">
+                                            {item3.smartphone.title}
+                                          </li>
+                                          <li className=" w-full max-sm:w-[300px] flex flex-col  px-20 border-blue-500 border-2 max-sm:px-0">
+                                            Cantidad: {item3.cantidad}
+                                          </li>
+                                          <li className=" w-full max-sm:w-[300px] flex flex-col  px-20 border-blue-500 border-2 max-sm:px-0">
+                                            Picture ...
+                                          </li>
+                                          <li className=" w-full max-sm:w-[300px] flex flex-col  px-20 border-red-500 border-2 max-sm:px-0">
+                                            Subtotal: {item3.subtotal}
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </React.Fragment>
+                                  )
+                                )}
+                            </div>
+                          </div>
+                        </div>
+                      </React.Fragment>
+                    )
+                  )}
+                </ul>
+              </div>
+            ))}
           </div>
         )}
         {clientComprasVerifyState && (

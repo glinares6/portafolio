@@ -582,11 +582,11 @@ export default function Page() {
     <>
       {loginCorreoState && (
         <div className=" z-10 min-h-[calc(100vh-64px)] border-red-500 border-2 w-full  flex flex-col  justify-center items-center gap-4">
-          <div className=" text-2xl">{foundLoginValue}</div>
+          <div className="flex justify-center text-2xl text-center ">{foundLoginValue}</div>
 
-          <div className="text-xl flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
+          <div className="text-xl flex w-full my-2  justify-center   cursor-pointer min-w-[650px] h-[40px]">
             <button
-              className="w-1/6 text-white bg-red-500 cursor-pointer"
+              className="w-[150px] text-white bg-red-500 cursor-pointer"
               onClick={() => route.back()}
             >
               volver
@@ -595,12 +595,12 @@ export default function Page() {
         </div>
       )}
       {loginCorreoSuccessState && (
-        <div className="relative  w-full  z-10 min-h-[calc(100vh-64px)] z-10  border-red-500 border-2 w-full  flex  justify-center items-center gap-4  max-md:flex max-md:flex-col max-md:w-full max-md:justify-center max-md:items-center ">
+        <div className="relative  w-full  min-h-[calc(100vh-64px)] z-10  border-red-500 border-2   flex  justify-center items-center gap-4  max-md:flex max-md:flex-col max-md:w-full max-md:justify-center max-md:items-center ">
           <div className="absolute top-0 left-0">
             <MenuCuenta />
           </div>
 
-          <div className="w-[40%]   min-h-[80vh] flex  flex-col border-blue-500 border-2 justify-start items-center  max-md:w-full gap-4 max-md:w-full max-sm:gap-2 ">
+          <div className="w-[40%]   min-h-[80vh] flex  flex-col border-blue-500 border-2 justify-start items-center  max-md:w-full gap-4  max-sm:gap-2 ">
             <div className="w-full flex justify-center max-sm:text-sm">
               Información del Cliente
             </div>
@@ -933,7 +933,7 @@ export default function Page() {
             </form>
           </div>
 
-          <div className=" w-[40%] min-h-[80vh] flex flex-col  justify-around min-h-[80vh] border-blue-500 border-2  max-md:w-full">
+          <div className=" w-[40%] min-h-[80vh] flex flex-col  justify-around border-blue-500 border-2  max-md:w-full">
             <form
               className="flex justify-center w-full "
               onSubmit={(e) => {
@@ -1019,7 +1019,7 @@ export default function Page() {
               </div>
             </form>
 
-            <div className="text-xl flex w-full my-2  justify-center   cursor-pointer w-[100px] h-[40px]">
+            <div className="text-xl flex w-full my-2  justify-center   cursor-pointer min-w-[100px] h-[40px]">
               <button
                 className="min-w-[100px] text-white bg-blue-500 cursor-pointer"
                 onClick={() => route.back()}

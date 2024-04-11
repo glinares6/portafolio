@@ -72,6 +72,11 @@ export class EmailclienteController {
     );
   }
 
+  @Post('listcompras')
+  emailListCompra(@Body() createEmailclienteDto: CreateEmailclienteDto) {
+    return this.emailclienteService.emailListCompra(createEmailclienteDto);
+  }
+
   @Get()
   findAll(@Req() request: Request) {
     return this.emailclienteService.findAll(request);
