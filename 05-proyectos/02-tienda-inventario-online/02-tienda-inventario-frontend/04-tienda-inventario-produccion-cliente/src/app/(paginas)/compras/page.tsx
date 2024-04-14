@@ -242,6 +242,16 @@ export default function Page() {
                                   ) => (
                                     <React.Fragment key={key3}>
                                       <div className="grid grid-cols-[1fr,4fr]  border-green-500 border-2  ">
+                                      <div className="max-lg:hidden content-center text-center max-sm:py-1  min-lg:block">
+                                          <li className="border-red-500 border-2 text-white bg-red-700">Pedido</li>
+                                        </div>
+                                        <div className="grid grid-cols-4 max-lg:hidden content-center text-center max-sm:py-1   min-lg:block ">
+                                          <li className="border-red-500 border-2 text-white bg-red-700">Foto</li>
+                                          <li className="border-red-500 border-2 text-white bg-red-700">Titulo</li>
+                                          <li className="border-red-500 border-2 text-white bg-red-700">Cantidad</li>
+                                          <li className="border-red-500 border-2 text-white bg-red-700">Subtotal</li>
+                                        </div>
+
                                         <div className="flex flex-col justify-center text-center">
                                           <li>
                                             {" "}
@@ -255,8 +265,7 @@ export default function Page() {
                                               .slice(0, 8)}
                                           </li>
                                         </div>
-
-                                        <div className="grid grid-cols-4 max-sm:grid max-sm:grid-cols-2 ">
+                                        <div className="grid grid-cols-4 max-sm:grid max-sm:grid-cols-1 max-md:grid-cols-2 max-md:py-1/2">
                                         <div className=" flex justify-center items-center ">
                                           {item3.smartphone.picture.includes(
                                             ".webp"
@@ -305,13 +314,13 @@ export default function Page() {
                                             ""
                                           )}  
                                         </div>
-                                        <div className="content-center text-center">
+                                        <div className="content-center text-center max-sm:py-1 ">
                                           <li>{item3.smartphone.title}</li>
                                         </div>
-                                        <div className="content-center text-center">
+                                        <div className="content-center text-center max-sm:py-1">
                                           <li>Cantidad: {item3.cantidad}</li>
                                         </div>
-                                        <div className="content-center text-center">
+                                        <div className="content-center text-center max-sm:py-1">
                                           <li>Subtotal: {item3.subtotal}</li>
                                         </div>
                                         </div>
