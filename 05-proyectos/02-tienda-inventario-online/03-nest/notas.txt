@@ -244,6 +244,8 @@ iniciamos el proyecto
         https://es.stackoverflow.com/questions/61400/obtener-nombre-de-d%C3%ADa-y-mes-de-una-fecha-dada-por-el-usuario-en-un-input-date-js
         https://es.stackoverflow.com/questions/442838/cambiar-posicion-de-un-array
           return cad.split("").reverse().join("");
+        https://www.npmjs.com/package/date-fns-tz
+        
     tomar en cuenta 
         npm notice 
         npm notice New minor version of npm available! 9.6.1 -> 9.8.1
