@@ -28,7 +28,7 @@ export default function Page() {
 
       setPreferentId(resPaymentBackend.id);
 
-      initMercadoPago(process.env.NEXT_PUBLIC_WALLET_KEY || "YOUR_PUBLIC_KEY", {
+      initMercadoPago(process.env.NEXT_PUBLIC_WALLET || "YOUR_PUBLIC_KEY", {
         locale: "es-PE",
       });
 
