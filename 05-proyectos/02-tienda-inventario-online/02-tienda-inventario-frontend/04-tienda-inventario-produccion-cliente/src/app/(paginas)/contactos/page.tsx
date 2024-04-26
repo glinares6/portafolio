@@ -28,6 +28,9 @@ export default function Page() {
 
       setPreferentId(resPaymentBackend.id);
 
+      console.log('llave privada',process.env.NEXT_PUBLIC_WALLET);
+      
+
       initMercadoPago(process.env.NEXT_PUBLIC_WALLET || "YOUR_PUBLIC_KEY", {
         locale: "es-PE",
       });
