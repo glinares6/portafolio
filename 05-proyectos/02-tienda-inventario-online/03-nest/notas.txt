@@ -245,6 +245,21 @@ iniciamos el proyecto
         https://es.stackoverflow.com/questions/442838/cambiar-posicion-de-un-array
           return cad.split("").reverse().join("");
         https://www.npmjs.com/package/date-fns-tz
+
+    MERCADO-PAGO
+        demo
+            https://www.mercadopago.com.pe/developers/es/live-demo/checkout-pro
+        checkout
+            https://www.mercadopago.com.pe/developers/es/docs/checkout-pro/integrate-checkout-pro/web#editor_6
+            obtener-preference-id
+                https://www.mercadopago.com.pe/developers/es/reference/preferences/_checkout_preferences_id/get
+
+            buscar-preferencias_id
+                https://www.mercadopago.com.pe/developers/es/reference/preferences/_checkout_preferences_search/get
+        ejemplo
+            https://github.com/mercadopago/checkout-payment-sample/blob/master/client/reactjs/src/App.jsx
+
+            
         
     tomar en cuenta 
         npm notice 
