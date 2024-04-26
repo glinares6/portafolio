@@ -7,11 +7,11 @@ import MercadoPagoConfig, { Preference } from 'mercadopago';
 export class CheckoutService {
  async create(createCheckoutDto: CreateCheckoutDto) {
 
-    console.log('AIUDA_PE');
+    console.log('AIUDA_PE',process.env.CHECKOUT_ACCESS_TOKEN);
     
     const client = new MercadoPagoConfig({
       accessToken:
-        process.env.CHECKOUT_ACCESS_TOKEN || 'YOUR_ACCESS_TOKEN',
+        process.env.CHECKOUT_ACCESS_TOKEN,
     });
 
     const preference = new Preference(client);
