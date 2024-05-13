@@ -625,6 +625,53 @@ export class EmailclienteService {
     }
   }
 
+  async emailListCompra(createEmailclienteDto: CreateEmailclienteDto){
+    try {
+      const resGetClienteFindCorreo = await this.emailClienteRepository.find({
+        order:{
+          id: 'DESC',
+          compra: {
+            id: 'DESC',
+            listacompra: {
+              id: 'DESC',
+            },
+          },
+        },
+        where: {
+          emailcliente: createEmailclienteDto.emailcliente,
+        },
+        select: {
+          id:true,
+          emailcliente:true,
+          sessioncliente:true,
+          perfilcliente: {
+            id: true,
+            ext: true,
+          },
+        },
+        relations: {
+          perfilcliente: true,
+          compra: {
+            listacompra: true,
+          },
+        },
+      });
+
+      if (resGetClienteFindCorreo.length == 0) {
+        return {
+          msg: 'error al buscar por correo en el servidor',
+        };
+      }
+
+      return await resGetClienteFindCorreo[0];
+    } catch (error) {
+      console.log('error-emailclienteData- findEmailOne', error.name);
+      return {
+        msg: 'demora al envio de data(servidor) - findEmailOne - emailcliente',
+      };
+    }
+  }
+
   async findAll(request) {
     console.log('respuesta session cliente', request.session);
 
@@ -678,11 +725,37 @@ export class EmailclienteService {
   async findEmailOne(sesioncorreo: string) {
     try {
       const resGetClienteFindCorreo = await this.emailClienteRepository.find({
+        order:{
+          id: 'DESC',
+          compra: {
+            id: 'DESC',
+            listacompra: {
+              id: 'DESC',
+            },
+          },
+        },
         where: {
           emailcliente: sesioncorreo,
         },
+        select: {
+          perfilcliente: {
+            id: true,
+            nombre: true,
+            apellido1: true,
+            apellido2: true,
+            direccion: true,
+            telefono: true,
+            genero: true,
+            fecha: true,
+            dataimg:true,
+            ext: true,
+          },
+        },
         relations: {
           perfilcliente: true,
+          compra: {
+            listacompra: true,
+          },
         },
       });
 

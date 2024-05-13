@@ -57,7 +57,7 @@ export class ListacompraService {
       msg: 'error al listar las compras - listacompra - post',
     };
 
-    return this.listaCompraRepository.save(createListacompraDto);
+    // return this.listaCompraRepository.save(createListacompraDto);
   }
 
   findAll() {

@@ -240,11 +240,37 @@ iniciamos el proyecto
             https://es.stackoverflow.com/questions/477377/mostrar-imagen-en-react-js-enviando-datos-de-node-js-y-mysql
             https://stackoverflow.com/questions/65392241/how-convert-type-data-buffer-to-image-in-react-js
 
-   
+   DATE
+        https://es.stackoverflow.com/questions/61400/obtener-nombre-de-d%C3%ADa-y-mes-de-una-fecha-dada-por-el-usuario-en-un-input-date-js
+        https://es.stackoverflow.com/questions/442838/cambiar-posicion-de-un-array
+          return cad.split("").reverse().join("");
+        https://www.npmjs.com/package/date-fns-tz
 
+    MERCADO-PAGO
+        demo
+            https://www.mercadopago.com.pe/developers/es/live-demo/checkout-pro
+        checkout
+            https://www.mercadopago.com.pe/developers/es/docs/checkout-pro/integrate-checkout-pro/web#editor_6
+            obtener-preference-id
+                https://www.mercadopago.com.pe/developers/es/reference/preferences/_checkout_preferences_id/get
+
+            buscar-preferencias_id
+                https://www.mercadopago.com.pe/developers/es/reference/preferences/_checkout_preferences_search/get
+        ejemplo
+            https://github.com/mercadopago/checkout-payment-sample/blob/master/client/reactjs/src/App.jsx
+
+            
+        
     tomar en cuenta 
         npm notice 
         npm notice New minor version of npm available! 9.6.1 -> 9.8.1
         npm notice Changelog: https://github.com/npm/cli/releases/tag/v9.8.1
         npm notice Run npm install -g npm@9.8.1 to update!
         npm notice 
+
+
+        npm notice
+        npm notice New minor version of npm available! 10.2.4 -> 10.5.0
+        npm notice Changelog: https://github.com/npm/cli/releases/tag/v10.5.0
+        npm notice Run npm install -g npm@10.5.0 to update!
+        npm notice

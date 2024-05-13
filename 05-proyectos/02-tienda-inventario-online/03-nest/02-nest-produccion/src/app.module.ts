@@ -31,6 +31,7 @@ import { Carritocompra } from './carritocompra/entities/carritocompra.entity';
 import { PedidosModule } from './pedidos/pedidos.module';
 import { Pedido } from './pedidos/entities/pedido.entity';
 // import { jwtConstants } from './auth/constansts';
+import { CheckoutModule } from './checkout/checkout.module';
 import { ListacompraModule } from './listacompra/listacompra.module';
 import { ComprasModule } from './compras/compras.module';
 import { PerfilclienteModule } from './perfilcliente/perfilcliente.module';
@@ -88,6 +89,7 @@ import { Listacompra } from './listacompra/entities/listacompra.entity';
     PerfilclienteModule,
     ComprasModule,
     ListacompraModule,
+    CheckoutModule,
   ],
   controllers: [AppController],
   providers: [AppService],
